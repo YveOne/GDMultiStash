@@ -2,6 +2,10 @@
 v1.7
 - The usage of stashes is now getting updated correctly
 - Added autostart support for GrimCam
+- Updated setup window
+- Added option to automaticly switch back to main stash when ingame stash closed
+- Updated localization
+    +label_auto_back_to_main
 
 v1.6
 - Text align of column ID is now left (makes it easer to read the names)

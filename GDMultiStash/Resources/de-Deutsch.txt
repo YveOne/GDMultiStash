@@ -48,6 +48,7 @@ label_max_backups_off = 0 (Keine Backups)
 label_max_backups_unlimited = -1 (Unbegrenzt)
 label_overlay_width = Overlay Breite:
 label_overlay_scale = Overlay Größe:
+label_auto_back_to_main = Wechsel zum Haupt-Stash wenn Stash geschlossen wurde
 
 confirm_closing = Grim Dawn läuft noch!\nDennoch schließen?
 confirm_delete_stash = Ausgewählte Stashes löschen?\nDies kann nicht rückgängig gemacht werden!

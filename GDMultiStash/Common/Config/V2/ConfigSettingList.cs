@@ -27,6 +27,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("ConfirmClosing")] public bool ConfirmClosing = true;
         [XmlElement("CloseWithGrimDawn")] public bool CloseWithGrimDawn = true;
         [XmlElement("ConfirmStashDelete")] public bool ConfirmStashDelete = true;
+        [XmlElement("AutoBackToMain")] public bool AutoBackToMain = true;
 
         [XmlElement("AutoStartGD")] public bool AutoStartGD = false;
         [XmlElement("AutoStartGDCommand")] public string AutoStartGDCommand = "";
@@ -58,6 +59,10 @@ namespace GDMultiStash.Common.Config
                 Language = Language,
                 GamePath = GamePath,
 
+                ShowExpansion = ShowExpansion,
+                ShowSoftcore = ShowSoftcore,
+                ShowHardcore = ShowHardcore,
+
                 MaxBackups = MaxBackups,
 
                 OverlayWidth = OverlayWidth,
@@ -66,6 +71,7 @@ namespace GDMultiStash.Common.Config
                 ConfirmClosing = ConfirmClosing,
                 CloseWithGrimDawn = CloseWithGrimDawn,
                 ConfirmStashDelete = ConfirmStashDelete,
+                AutoBackToMain = AutoBackToMain,
 
                 AutoStartGD = AutoStartGD,
                 AutoStartGDCommand = AutoStartGDCommand,
@@ -98,6 +104,10 @@ namespace GDMultiStash.Common.Config
             Language = s.Language;
             GamePath = s.GamePath;
 
+            ShowExpansion = s.ShowExpansion;
+            ShowSoftcore = s.ShowSoftcore;
+            ShowHardcore = s.ShowHardcore;
+
             MaxBackups = s.MaxBackups;
 
             OverlayWidth = s.OverlayWidth;
@@ -106,6 +116,7 @@ namespace GDMultiStash.Common.Config
             ConfirmClosing = s.ConfirmClosing;
             CloseWithGrimDawn = s.CloseWithGrimDawn;
             ConfirmStashDelete = s.ConfirmStashDelete;
+            AutoBackToMain = s.AutoBackToMain;
 
             AutoStartGD = s.AutoStartGD;
             AutoStartGDCommand = s.AutoStartGDCommand;

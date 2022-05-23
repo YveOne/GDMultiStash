@@ -30,17 +30,13 @@
         {
             this.setupTabControl = new System.Windows.Forms.TabControl();
             this.commonTabPage = new System.Windows.Forms.TabPage();
-            this.createShortcutButton = new System.Windows.Forms.Button();
             this.autoStartGDCheckBox = new System.Windows.Forms.CheckBox();
-            this.closeWithGrimDawnCheckBox = new System.Windows.Forms.CheckBox();
-            this.confirmStashDeleteCheckBox = new System.Windows.Forms.CheckBox();
             this.autoStartGDGroupBox = new System.Windows.Forms.GroupBox();
             this.autoStartStartNowButton = new System.Windows.Forms.Button();
             this.autoStartGDCommandLabel = new System.Windows.Forms.Label();
             this.autoStartGDArgumentsTextBox = new System.Windows.Forms.TextBox();
             this.autoStartGDCommandComboBox = new System.Windows.Forms.ComboBox();
             this.autoStartGDArgumentsLabel = new System.Windows.Forms.Label();
-            this.confirmClosingCheckBox = new System.Windows.Forms.CheckBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.languageListView = new System.Windows.Forms.ListView();
@@ -52,17 +48,22 @@
             this.behaviourTabPage = new System.Windows.Forms.TabPage();
             this.overlayScaleValueLabel = new System.Windows.Forms.Label();
             this.overlayScaleLabel = new System.Windows.Forms.Label();
+            this.confirmStashDeleteCheckBox = new System.Windows.Forms.CheckBox();
+            this.closeWithGrimDawnCheckBox = new System.Windows.Forms.CheckBox();
             this.overlayScaleTrackBar = new System.Windows.Forms.TrackBar();
             this.overlayWidthValueLabel = new System.Windows.Forms.Label();
+            this.confirmClosingCheckBox = new System.Windows.Forms.CheckBox();
             this.overlayWidthLabel = new System.Windows.Forms.Label();
             this.overlayWidthTrackBar = new System.Windows.Forms.TrackBar();
             this.maxBackupsValueLabel = new System.Windows.Forms.Label();
             this.maxBackupsLabel = new System.Windows.Forms.Label();
             this.maxBackupsTrackBar = new System.Windows.Forms.TrackBar();
+            this.createShortcutButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.saveButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
             this.restartButton = new System.Windows.Forms.Button();
+            this.autoBackToMainCheckBox = new System.Windows.Forms.CheckBox();
             this.setupTabControl.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.autoStartGDGroupBox.SuspendLayout();
@@ -83,17 +84,13 @@
             this.setupTabControl.Location = new System.Drawing.Point(0, 0);
             this.setupTabControl.Name = "setupTabControl";
             this.setupTabControl.SelectedIndex = 0;
-            this.setupTabControl.Size = new System.Drawing.Size(554, 386);
+            this.setupTabControl.Size = new System.Drawing.Size(554, 288);
             this.setupTabControl.TabIndex = 0;
             // 
             // commonTabPage
             // 
-            this.commonTabPage.Controls.Add(this.createShortcutButton);
             this.commonTabPage.Controls.Add(this.autoStartGDCheckBox);
-            this.commonTabPage.Controls.Add(this.closeWithGrimDawnCheckBox);
-            this.commonTabPage.Controls.Add(this.confirmStashDeleteCheckBox);
             this.commonTabPage.Controls.Add(this.autoStartGDGroupBox);
-            this.commonTabPage.Controls.Add(this.confirmClosingCheckBox);
             this.commonTabPage.Controls.Add(this.panel2);
             this.commonTabPage.Controls.Add(this.gamePathSearchButton);
             this.commonTabPage.Controls.Add(this.gamePathTextBox);
@@ -102,22 +99,10 @@
             this.commonTabPage.Location = new System.Drawing.Point(4, 22);
             this.commonTabPage.Name = "commonTabPage";
             this.commonTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.commonTabPage.Size = new System.Drawing.Size(546, 360);
+            this.commonTabPage.Size = new System.Drawing.Size(546, 262);
             this.commonTabPage.TabIndex = 0;
             this.commonTabPage.Text = "Common";
             this.commonTabPage.UseVisualStyleBackColor = true;
-            // 
-            // createShortcutButton
-            // 
-            this.createShortcutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.createShortcutButton.AutoSize = true;
-            this.createShortcutButton.Location = new System.Drawing.Point(6, 331);
-            this.createShortcutButton.Name = "createShortcutButton";
-            this.createShortcutButton.Size = new System.Drawing.Size(256, 23);
-            this.createShortcutButton.TabIndex = 3;
-            this.createShortcutButton.Text = "Create Shortcut";
-            this.createShortcutButton.UseVisualStyleBackColor = true;
-            this.createShortcutButton.Click += new System.EventHandler(this.CreateShortcutButton_Click);
             // 
             // autoStartGDCheckBox
             // 
@@ -130,29 +115,6 @@
             this.autoStartGDCheckBox.Text = "Auto start Grim Dawn";
             this.autoStartGDCheckBox.UseVisualStyleBackColor = true;
             this.autoStartGDCheckBox.CheckedChanged += new System.EventHandler(this.AutoStartGDCheckBox_CheckedChanged);
-            // 
-            // closeWithGrimDawnCheckBox
-            // 
-            this.closeWithGrimDawnCheckBox.AutoSize = true;
-            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(6, 244);
-            this.closeWithGrimDawnCheckBox.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
-            this.closeWithGrimDawnCheckBox.Name = "closeWithGrimDawnCheckBox";
-            this.closeWithGrimDawnCheckBox.Size = new System.Drawing.Size(238, 17);
-            this.closeWithGrimDawnCheckBox.TabIndex = 1;
-            this.closeWithGrimDawnCheckBox.Text = "Close GDMultiStash when Grim Dawn closed";
-            this.closeWithGrimDawnCheckBox.UseVisualStyleBackColor = true;
-            this.closeWithGrimDawnCheckBox.CheckedChanged += new System.EventHandler(this.CloseWithGrimDawnCheckBox_CheckedChanged);
-            // 
-            // confirmStashDeleteCheckBox
-            // 
-            this.confirmStashDeleteCheckBox.AutoSize = true;
-            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(6, 290);
-            this.confirmStashDeleteCheckBox.Name = "confirmStashDeleteCheckBox";
-            this.confirmStashDeleteCheckBox.Size = new System.Drawing.Size(140, 17);
-            this.confirmStashDeleteCheckBox.TabIndex = 2;
-            this.confirmStashDeleteCheckBox.Text = "Confirm deleting stashes";
-            this.confirmStashDeleteCheckBox.UseVisualStyleBackColor = true;
-            this.confirmStashDeleteCheckBox.CheckedChanged += new System.EventHandler(this.ConfirmStashDeleteCheckBox_CheckedChanged);
             // 
             // autoStartGDGroupBox
             // 
@@ -211,17 +173,6 @@
             this.autoStartGDArgumentsLabel.Size = new System.Drawing.Size(60, 13);
             this.autoStartGDArgumentsLabel.TabIndex = 7;
             this.autoStartGDArgumentsLabel.Text = "Arguments:";
-            // 
-            // confirmClosingCheckBox
-            // 
-            this.confirmClosingCheckBox.AutoSize = true;
-            this.confirmClosingCheckBox.Location = new System.Drawing.Point(6, 267);
-            this.confirmClosingCheckBox.Name = "confirmClosingCheckBox";
-            this.confirmClosingCheckBox.Size = new System.Drawing.Size(246, 17);
-            this.confirmClosingCheckBox.TabIndex = 0;
-            this.confirmClosingCheckBox.Text = "Confirm closing when Grim Dawn is still running";
-            this.confirmClosingCheckBox.UseVisualStyleBackColor = true;
-            this.confirmClosingCheckBox.CheckedChanged += new System.EventHandler(this.ConfirmClosingCheckBox_CheckedChanged);
             // 
             // panel2
             // 
@@ -303,10 +254,14 @@
             // 
             // behaviourTabPage
             // 
+            this.behaviourTabPage.Controls.Add(this.autoBackToMainCheckBox);
             this.behaviourTabPage.Controls.Add(this.overlayScaleValueLabel);
             this.behaviourTabPage.Controls.Add(this.overlayScaleLabel);
+            this.behaviourTabPage.Controls.Add(this.confirmStashDeleteCheckBox);
+            this.behaviourTabPage.Controls.Add(this.closeWithGrimDawnCheckBox);
             this.behaviourTabPage.Controls.Add(this.overlayScaleTrackBar);
             this.behaviourTabPage.Controls.Add(this.overlayWidthValueLabel);
+            this.behaviourTabPage.Controls.Add(this.confirmClosingCheckBox);
             this.behaviourTabPage.Controls.Add(this.overlayWidthLabel);
             this.behaviourTabPage.Controls.Add(this.overlayWidthTrackBar);
             this.behaviourTabPage.Controls.Add(this.maxBackupsValueLabel);
@@ -315,7 +270,7 @@
             this.behaviourTabPage.Location = new System.Drawing.Point(4, 22);
             this.behaviourTabPage.Name = "behaviourTabPage";
             this.behaviourTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.behaviourTabPage.Size = new System.Drawing.Size(546, 360);
+            this.behaviourTabPage.Size = new System.Drawing.Size(546, 262);
             this.behaviourTabPage.TabIndex = 1;
             this.behaviourTabPage.Text = "Behaviour";
             this.behaviourTabPage.UseVisualStyleBackColor = true;
@@ -340,6 +295,29 @@
             this.overlayScaleLabel.TabIndex = 10;
             this.overlayScaleLabel.Text = "Overlay Scale:";
             // 
+            // confirmStashDeleteCheckBox
+            // 
+            this.confirmStashDeleteCheckBox.AutoSize = true;
+            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(6, 177);
+            this.confirmStashDeleteCheckBox.Name = "confirmStashDeleteCheckBox";
+            this.confirmStashDeleteCheckBox.Size = new System.Drawing.Size(140, 17);
+            this.confirmStashDeleteCheckBox.TabIndex = 2;
+            this.confirmStashDeleteCheckBox.Text = "Confirm deleting stashes";
+            this.confirmStashDeleteCheckBox.UseVisualStyleBackColor = true;
+            this.confirmStashDeleteCheckBox.CheckedChanged += new System.EventHandler(this.ConfirmStashDeleteCheckBox_CheckedChanged);
+            // 
+            // closeWithGrimDawnCheckBox
+            // 
+            this.closeWithGrimDawnCheckBox.AutoSize = true;
+            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(6, 131);
+            this.closeWithGrimDawnCheckBox.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.closeWithGrimDawnCheckBox.Name = "closeWithGrimDawnCheckBox";
+            this.closeWithGrimDawnCheckBox.Size = new System.Drawing.Size(238, 17);
+            this.closeWithGrimDawnCheckBox.TabIndex = 1;
+            this.closeWithGrimDawnCheckBox.Text = "Close GDMultiStash when Grim Dawn closed";
+            this.closeWithGrimDawnCheckBox.UseVisualStyleBackColor = true;
+            this.closeWithGrimDawnCheckBox.CheckedChanged += new System.EventHandler(this.CloseWithGrimDawnCheckBox_CheckedChanged);
+            // 
             // overlayScaleTrackBar
             // 
             this.overlayScaleTrackBar.AutoSize = false;
@@ -360,6 +338,17 @@
             this.overlayWidthValueLabel.Size = new System.Drawing.Size(53, 20);
             this.overlayWidthValueLabel.TabIndex = 8;
             this.overlayWidthValueLabel.Text = "label1";
+            // 
+            // confirmClosingCheckBox
+            // 
+            this.confirmClosingCheckBox.AutoSize = true;
+            this.confirmClosingCheckBox.Location = new System.Drawing.Point(6, 154);
+            this.confirmClosingCheckBox.Name = "confirmClosingCheckBox";
+            this.confirmClosingCheckBox.Size = new System.Drawing.Size(246, 17);
+            this.confirmClosingCheckBox.TabIndex = 0;
+            this.confirmClosingCheckBox.Text = "Confirm closing when Grim Dawn is still running";
+            this.confirmClosingCheckBox.UseVisualStyleBackColor = true;
+            this.confirmClosingCheckBox.CheckedChanged += new System.EventHandler(this.ConfirmClosingCheckBox_CheckedChanged);
             // 
             // overlayWidthLabel
             // 
@@ -415,6 +404,18 @@
             this.maxBackupsTrackBar.TabIndex = 3;
             this.maxBackupsTrackBar.Scroll += new System.EventHandler(this.MaxBackupsTrackBar_Scroll);
             // 
+            // createShortcutButton
+            // 
+            this.createShortcutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.createShortcutButton.AutoSize = true;
+            this.createShortcutButton.Location = new System.Drawing.Point(130, 300);
+            this.createShortcutButton.Name = "createShortcutButton";
+            this.createShortcutButton.Size = new System.Drawing.Size(256, 23);
+            this.createShortcutButton.TabIndex = 3;
+            this.createShortcutButton.Text = "Create Shortcut";
+            this.createShortcutButton.UseVisualStyleBackColor = true;
+            this.createShortcutButton.Click += new System.EventHandler(this.CreateShortcutButton_Click);
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -424,13 +425,13 @@
             this.panel1.Location = new System.Drawing.Point(9, 9);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(554, 386);
+            this.panel1.Size = new System.Drawing.Size(554, 288);
             this.panel1.TabIndex = 1;
             // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(488, 398);
+            this.saveButton.Location = new System.Drawing.Point(488, 300);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 2;
@@ -441,7 +442,7 @@
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(407, 398);
+            this.applyButton.Location = new System.Drawing.Point(407, 300);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 3;
@@ -453,7 +454,7 @@
             // 
             this.restartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.restartButton.AutoSize = true;
-            this.restartButton.Location = new System.Drawing.Point(9, 398);
+            this.restartButton.Location = new System.Drawing.Point(9, 300);
             this.restartButton.Name = "restartButton";
             this.restartButton.Size = new System.Drawing.Size(115, 23);
             this.restartButton.TabIndex = 10;
@@ -461,11 +462,23 @@
             this.restartButton.UseVisualStyleBackColor = true;
             this.restartButton.Click += new System.EventHandler(this.RestartButton_Click);
             // 
+            // autoBackToMainCheckBox
+            // 
+            this.autoBackToMainCheckBox.AutoSize = true;
+            this.autoBackToMainCheckBox.Location = new System.Drawing.Point(6, 200);
+            this.autoBackToMainCheckBox.Name = "autoBackToMainCheckBox";
+            this.autoBackToMainCheckBox.Size = new System.Drawing.Size(218, 17);
+            this.autoBackToMainCheckBox.TabIndex = 12;
+            this.autoBackToMainCheckBox.Text = "Switch to main Stash when Stash closed";
+            this.autoBackToMainCheckBox.UseVisualStyleBackColor = true;
+            this.autoBackToMainCheckBox.CheckedChanged += new System.EventHandler(this.autoBackToMainCheckBox_CheckedChanged);
+            // 
             // SetupDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 428);
+            this.ClientSize = new System.Drawing.Size(572, 330);
+            this.Controls.Add(this.createShortcutButton);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.saveButton);
@@ -528,5 +541,6 @@
         private System.Windows.Forms.Label overlayScaleValueLabel;
         private System.Windows.Forms.Label overlayScaleLabel;
         private System.Windows.Forms.TrackBar overlayScaleTrackBar;
+        private System.Windows.Forms.CheckBox autoBackToMainCheckBox;
     }
 }

@@ -331,6 +331,11 @@ namespace GDMultiStash
                 get { return _config.Settings.ConfirmStashDelete; }
             }
 
+            public static bool AutoBackToMain
+            {
+                get { return _config.Settings.AutoBackToMain; }
+            }
+
             public static bool AutoStartGD
             {
                 get { return _config.Settings.AutoStartGD; }

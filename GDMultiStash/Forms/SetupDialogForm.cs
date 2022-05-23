@@ -68,6 +68,7 @@ namespace GDMultiStash.Forms
             confirmStashDeleteCheckBox.Checked = _settings.ConfirmStashDelete;
             autoStartGDCheckBox.Checked = _settings.AutoStartGD;
             autoStartGDGroupBox.Enabled = _settings.AutoStartGD;
+            autoBackToMainCheckBox.Checked = _settings.AutoBackToMain;
             maxBackupsTrackBar.Value = Math.Max(
                 maxBackupsTrackBar.Minimum,
                 Math.Min(
@@ -204,6 +205,7 @@ namespace GDMultiStash.Forms
             maxBackupsLabel.Text = L["label_max_backups"];
             overlayScaleLabel.Text = L["label_overlay_scale"];
             overlayWidthLabel.Text = L["label_overlay_width"];
+            autoBackToMainCheckBox.Text = L["label_auto_back_to_main"];
 
             _notice_shortcut_created = L["notice_shortcut_created"];
             _err_gd_already_running = L["err_gd_already_running"];
@@ -283,6 +285,12 @@ namespace GDMultiStash.Forms
         private void ConfirmStashDeleteCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _settings.ConfirmStashDelete = confirmStashDeleteCheckBox.Checked;
+            applyButton.Enabled = true;
+        }
+
+        private void autoBackToMainCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _settings.AutoBackToMain = autoBackToMainCheckBox.Checked;
             applyButton.Enabled = true;
         }
 

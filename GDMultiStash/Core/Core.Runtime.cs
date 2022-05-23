@@ -14,6 +14,33 @@ namespace GDMultiStash
         internal static partial class Runtime
         {
 
+            #region MainStashID
+
+            public static int MainStashID
+            {
+                get
+                {
+                    switch (CurrentExpansion)
+                    {
+                        case GrimDawnGameExpansion.BaseGame:
+                            if (CurrentMode == GrimDawnGameMode.SC) return Config.Main0SCID;
+                            if (CurrentMode == GrimDawnGameMode.HC) return Config.Main0HCID;
+                            break;
+                        case GrimDawnGameExpansion.AshesOfMalmouth:
+                            if (CurrentMode == GrimDawnGameMode.SC) return Config.Main1SCID;
+                            if (CurrentMode == GrimDawnGameMode.HC) return Config.Main1HCID;
+                            break;
+                        case GrimDawnGameExpansion.ForgottenGods:
+                            if (CurrentMode == GrimDawnGameMode.SC) return Config.Main2SCID;
+                            if (CurrentMode == GrimDawnGameMode.HC) return Config.Main2HCID;
+                            break;
+                    }
+                    return -1;
+                }
+            }
+
+            #endregion
+
             #region ActiveStashID
 
             public delegate void ActiveStashChangedEventHandler(object sender, EventArgs e);
@@ -237,6 +264,13 @@ namespace GDMultiStash
                                 LoadCurrentStash();
                             })).Start();
                         }
+                    }
+                };
+                StashStatusChanged += delegate {
+                    if (!_stashOpened && !_stashReopening && Config.AutoBackToMain)
+                    {
+                        // we dont need to use reopen because stash is closed
+                        Stashes.SwitchToStash(MainStashID);
                     }
                 };
             }
