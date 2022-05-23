@@ -19,21 +19,18 @@
     <ClInclude Include="GrimTypes.h" />
     <ClInclude Include="HookLog.h" />
     <ClInclude Include="SetHardcore.h" />
-    <ClInclude Include="SettingsReader.h" />
     <ClInclude Include="SetTransferOpen.h" />
     <ClInclude Include="DataQueue.h" />
     <ClInclude Include="Exports.h" />
     <ClInclude Include="MessageType.h" />
     <ClInclude Include="SaveTransferStash.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Vec3f.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseMethodHook.cpp" />
     <ClCompile Include="GrimTypes.cpp" />
     <ClCompile Include="HookLog.cpp" />
     <ClCompile Include="SetHardcore.cpp" />
-    <ClCompile Include="SettingsReader.cpp" />
     <ClCompile Include="SetTransferOpen.cpp" />
     <ClCompile Include="DataQueue.cpp" />
     <ClCompile Include="dllmain.cpp" />

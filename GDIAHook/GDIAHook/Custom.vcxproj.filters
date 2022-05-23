@@ -33,9 +33,6 @@
     <ClInclude Include="Exports.h">
       <Filter>CoreHooks</Filter>
     </ClInclude>
-    <ClInclude Include="Vec3f.h">
-      <Filter>CoreHooks</Filter>
-    </ClInclude>
     <ClInclude Include="GrimTypes.h">
       <Filter>Shared</Filter>
     </ClInclude>
@@ -48,7 +45,6 @@
     <ClInclude Include="SetHardcore.h">
       <Filter>CoreHooks\Stash</Filter>
     </ClInclude>
-    <ClInclude Include="SettingsReader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -78,6 +74,5 @@
     <ClCompile Include="SetHardcore.cpp">
       <Filter>CoreHooks\Stash</Filter>
     </ClCompile>
-    <ClCompile Include="SettingsReader.cpp" />
   </ItemGroup>
 </Project>
