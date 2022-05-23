@@ -182,6 +182,8 @@ namespace GDMultiStash.Common.Overlay
         {
             _resetWidth |= _resetScale;
             _resetHeight |= _resetScale;
+            _resetX |= _resetScale;
+            _resetY |= _resetScale;
             if (_parent != null)
             {
                 _resetVisible |= _parent._resetVisible;
@@ -189,8 +191,8 @@ namespace GDMultiStash.Common.Overlay
                 _resetScale |= _parent._resetScale;
                 _resetWidth |= _parent._resetWidth || _resetScale;
                 _resetHeight |= _parent._resetHeight || _resetScale;
-                _resetX |= _parent._resetX || _resetWidth;
-                _resetY |= _parent._resetY || _resetHeight;
+                _resetX |= _parent._resetX || _resetWidth || _resetScale;
+                _resetY |= _parent._resetY || _resetHeight || _resetScale;
             }
             if (_resetVisible) Visible = _visible;
             if (_resetAlpha) Alpha = _alpha;
