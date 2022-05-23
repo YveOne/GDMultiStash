@@ -180,6 +180,8 @@ namespace GDMultiStash.Common.Overlay
 
         public virtual void End()
         {
+            _resetWidth |= _resetScale;
+            _resetHeight |= _resetScale;
             if (_parent != null)
             {
                 _resetVisible |= _parent._resetVisible;

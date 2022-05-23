@@ -71,8 +71,6 @@ namespace GDMultiStash.Common.Overlay
                 float _scaleTotalLast = _scaleTotal;
                 _scaleTotal = value * (_parent != null ? _parent._scaleTotal : 1);
                 _resetScale |= _scaleTotal != _scaleTotalLast;
-                _resetWidth |= _resetScale;
-                _resetHeight |= _resetScale;
             }
         }
 

@@ -22,8 +22,9 @@ namespace GDMultiStash.Common.Overlay
             get { return _anchorPoint; }
             set
             {
-                _anchorPoint = value;
                 ParentPoint = value;
+                if (_anchorPoint == value) return;
+                _anchorPoint = value;
                 switch (value)
                 {
                     case Anchor.TopLeft:
@@ -70,6 +71,7 @@ namespace GDMultiStash.Common.Overlay
             get { return _parentPoint; }
             set
             {
+                if (_parentPoint == value) return;
                 _parentPoint = value;
                 switch (value)
                 {
