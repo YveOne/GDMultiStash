@@ -107,9 +107,10 @@ namespace GDMultiStash.Forms
             _autoStartCommandsList.Clear();
             AddAutoStartCommand(_settings.AutoStartGDCommand);
             AddAutoStartCommand(GrimDawn.Steam.GameStartCommand);
-            AddAutoStartCommand(Path.Combine(_settings.GamePath, "GrimInternals64.exe"));
-            AddAutoStartCommand(Path.Combine(_settings.GamePath, "x64", "Grim Dawn.exe"));
             //AddAutoStartCommand(Path.Combine(_settings.GamePath, "Grim Dawn.exe"));
+            AddAutoStartCommand(Path.Combine(_settings.GamePath, "x64", "Grim Dawn.exe"));
+            AddAutoStartCommand(Path.Combine(_settings.GamePath, "GrimInternals64.exe"));
+            AddAutoStartCommand(Path.Combine(_settings.GamePath, "GrimCam.exe"));
             autoStartGDCommandComboBox.DataSource = new BindingSource(_autoStartCommandsList, null);
             autoStartGDCommandComboBox.SelectedIndex = 0; // we dont need to set selected index because current selected one will always be index 0
             autoStartGDCommandComboBox.DisplayMember = "Value";
@@ -128,7 +129,12 @@ namespace GDMultiStash.Forms
             if (_autoStartCommandsList.ContainsKey(command)) return;
             if (command.EndsWith("GrimInternals64.exe"))
             {
-                _autoStartCommandsList.Add(command, "Grim Internals (64bit)");
+                _autoStartCommandsList.Add(command, "Grim Internals");
+                return;
+            }
+            if (command.EndsWith("GrimCam.exe"))
+            {
+                _autoStartCommandsList.Add(command, "GrimCam");
                 return;
             }
             if (command.EndsWith(Path.Combine("x64", "Grim Dawn.exe")))
@@ -136,11 +142,11 @@ namespace GDMultiStash.Forms
                 _autoStartCommandsList.Add(command, "Grim Dawn.exe (64bit)");
                 return;
             }
-            if (command.EndsWith("Grim Dawn.exe"))
-            {
-                _autoStartCommandsList.Add(command, "Grim Dawn.exe (32bit)");
-                return;
-            }
+            //if (command.EndsWith("Grim Dawn.exe"))
+            //{
+            //    _autoStartCommandsList.Add(command, "Grim Dawn.exe (32bit)");
+            //    return;
+            //}
             _autoStartCommandsList.Add(command, command);
         }
 

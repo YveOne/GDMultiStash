@@ -1,4 +1,7 @@
 
+v1.7
+- The usage of stashes is now getting updated correctly
+
 v1.6
 - Text align of column ID is now left (makes it easer to read the names)
 - Font of ingame window is now getting clipped correctly if too large
