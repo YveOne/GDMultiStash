@@ -1,0 +1,12 @@
+**/.vs/
+/_bin/*
+/_misc/tool to get itemsizes/bin/
+/_misc/tool to get itemsizes/obj/
+/D3DHook/obj/
+/GDIAHook/GDIAHook/x64/Release/
+/GDIALib/bin/
+/GDIALib/obj/
+/GDMultiStash/Connected Services/
+/GDMultiStash/obj/
+/packages/
+/GDMultiStash.exe

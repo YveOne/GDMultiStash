@@ -1,0 +1,43 @@
+
+v1.6
+- Text align of column ID is now left (makes it easer to read the names)
+- Font of ingame window is now getting clipped correctly if too large
+- Language files in "Data/Locales" are now getting updated automaticly on version update
+- Fixed a bug where overlay elements x/y/width/height did not get updated properly
+- Overlay scrollbar now getting updated properly when visible stashes changed
+- Added option to change overlay width
+- Added option to change overlay scaling
+- Updated itemsizes list
+- Updated localization:
+    +label_overlay_width
+    +label_overlay_scale
+
+v1.5
+- Fixed opacy bug in ingame stash list items
+- Fixed exception when right clicking empty listview area
+
+v1.4
+- GDMultiStash now also supports the base game and Ashes of Malmouth expansion
+- Four additional new stashes are beeing created on startup (for missing expansions of old version)
+- GDMultiStash now should theoretically work with running GDItemAssistant
+- Added new column in listview to show stash expansions
+- Columns "last change" and "usage" are no more editiable by user
+- Added select box for expansion in "add stash" dialog
+- Added textbox for expansion in "import stash" dialog
+- Ingame list now only showing stashes for current mode AND expension
+- Updated export of single stashes to respect expansions and modes in extensions
+- Added new menu to main window in top right corner to change stash display
+- Changed localization (just delete "Locales" dir in your "Data" dir to update lang files):
+    -save
+    -load
+    +all
+    +button_load
+    +label_expansion
+    -main_stash_sc
+    -main_stash_hc
+    +main_stash_0sc
+    +main_stash_0hc
+    +main_stash_1sc
+    +main_stash_1hc
+    +main_stash_2sc
+    +main_stash_2hc

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="CoreHooks">
+      <UniqueIdentifier>{d7793ae7-36e6-4b2d-b13b-a96817b4219d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Setup">
+      <UniqueIdentifier>{20930370-ff39-4302-be6c-3bd3493aba5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shared">
+      <UniqueIdentifier>{777d6945-1330-4415-86b9-6cf0b9958333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CoreHooks\Stash">
+      <UniqueIdentifier>{af07545a-97de-4a4c-9bc3-ffbfc51487a5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Setup</Filter>
+    </ClInclude>
+    <ClInclude Include="DataQueue.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageType.h">
+      <Filter>CoreHooks</Filter>
+    </ClInclude>
+    <ClInclude Include="SaveTransferStash.h">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseMethodHook.h">
+      <Filter>CoreHooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Exports.h">
+      <Filter>CoreHooks</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec3f.h">
+      <Filter>CoreHooks</Filter>
+    </ClInclude>
+    <ClInclude Include="GrimTypes.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="HookLog.h">
+      <Filter>Shared</Filter>
+    </ClInclude>
+    <ClInclude Include="SetTransferOpen.h">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClInclude>
+    <ClInclude Include="SetHardcore.h">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClInclude>
+    <ClInclude Include="SettingsReader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Setup</Filter>
+    </ClCompile>
+    <ClCompile Include="DataQueue.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="SaveTransferStash.cpp">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseMethodHook.cpp">
+      <Filter>CoreHooks</Filter>
+    </ClCompile>
+    <ClCompile Include="GrimTypes.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="HookLog.cpp">
+      <Filter>Shared</Filter>
+    </ClCompile>
+    <ClCompile Include="SetTransferOpen.cpp">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClCompile>
+    <ClCompile Include="SetHardcore.cpp">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClCompile>
+    <ClCompile Include="SettingsReader.cpp" />
+  </ItemGroup>
+</Project>
