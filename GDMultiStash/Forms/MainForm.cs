@@ -517,12 +517,13 @@ namespace GDMultiStash.Forms
                 menu.Items.Add(L["export_stash"], null, delegate (object s, EventArgs e) {
 
                     List<string> filters = new List<string>();
-                    if (stash.SC == stash.HC || stash.SC) filters.Add("Softcore ({0})|*{1}t");
-                    if (stash.SC == stash.HC || stash.HC) filters.Add("Hardcore ({0})|*{1}h");
+                    if (stash.SC == stash.HC || stash.SC) filters.Add("Softcore ({0})|*{1}");
+                    if (stash.SC == stash.HC || stash.HC) filters.Add("Hardcore ({0})|*{2}");
 
                     string filter = string.Format(string.Join("|", filters),
                         GrimDawnLib.GrimDawn.GetExpansionName(stash.Expansion),
-                        GrimDawnLib.GrimDawn.GetExpansionExtensionPart(stash.Expansion)
+                        GrimDawnLib.GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnLib.GrimDawnGameMode.SC),
+                        GrimDawnLib.GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnLib.GrimDawnGameMode.HC)
                         );
 
                     using (var dialog = new SaveFileDialog()

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 using GrimDawnLib;
 
@@ -202,6 +203,14 @@ namespace GDMultiStash
                         Console.WriteLine("  reopening... skipped");
                         return;
                     }
+                    /*
+                    string extension = GrimDawn.GetTransferExtension(_currentExpansion, _currentMode);
+                    SleepFor(1000, () =>
+                    {
+                        if (!lastWriteTimes.ContainsKey(extension)) return false;
+                        return lastWriteTimes[extension] >= DateTime.Now.AddMilliseconds(-500);
+                    });
+                    */
                     StashStatusChanged?.Invoke(null, EventArgs.Empty);
                 }
             }
@@ -252,6 +261,7 @@ namespace GDMultiStash
 
             static Runtime()
             {
+
                 WindowFocusChanged += delegate
                 {
                     if (WindowFocused)
@@ -266,13 +276,17 @@ namespace GDMultiStash
                         }
                     }
                 };
+
                 StashStatusChanged += delegate {
                     if (!_stashOpened && !_stashReopening && Config.AutoBackToMain)
                     {
+                        // debug: when stash closed GD could still be writing to transfer file
+                        WaitForStashWritten();
                         // we dont need to use reopen because stash is closed
                         Stashes.SwitchToStash(MainStashID);
                     }
                 };
+
             }
 
             private static bool _needLoadStash = false;
@@ -289,19 +303,26 @@ namespace GDMultiStash
 
             private static bool _stashReopening = false;
 
-            private delegate bool SleepForConditionDelegate();
-            private static void SleepFor(int time, SleepForConditionDelegate condition = null)
+            private delegate bool WaitForConditionDelegate();
+            private static void WaitFor(int time, WaitForConditionDelegate condition = null, int delay = 10)
             {
                 long timeout = Environment.TickCount + time;
                 while(Environment.TickCount < timeout)
                 {
-                    if (condition != null)
-                        if (!condition()) return;
-                    System.Threading.Thread.Sleep(1);
+                    if (condition != null && condition()) return;
+                    System.Threading.Thread.Sleep(delay);
                     Application.DoEvents();
                 }
             }
-
+            private static void WaitForStashWritten()
+            {
+                string transferFile = GrimDawn.GetTransferFile(_currentExpansion, _currentMode);
+                DateTime timeout = DateTime.Now.AddMilliseconds(-500);
+                WaitFor(1000, () =>
+                {
+                    return File.GetLastWriteTime(transferFile) >= timeout;
+                }, 33);
+            }
 
 
 
@@ -314,14 +335,14 @@ namespace GDMultiStash
                 ushort keyInteract = GrimDawn.Keybindings.GetKeyBinding(GrimDawnKey.Interact).Primary;
                 int triesLeft;
 
-                SleepFor(100);
+                //WaitFor(100);
 
                 triesLeft = 3;
                 while (triesLeft > 0 && _stashOpened)
                 {
                     triesLeft -= 1;
                     Native.Keyboard.SendKey(keyEscape);
-                    SleepFor(1000, () => _stashOpened);
+                    WaitFor(1000, () => !_stashOpened);
                     if (_stashOpened)
                         Console.WriteLine("ReopenStash() failed! stash not closed. Tries left: " + triesLeft);
                     else
@@ -333,16 +354,16 @@ namespace GDMultiStash
                     return;
                 }
 
-                SleepFor(100);
+                WaitForStashWritten();
                 action();
-                SleepFor(100);
+                //WaitFor(100);
 
                 triesLeft = 3;
                 while (triesLeft > 0 && !_stashOpened)
                 {
                     triesLeft -= 1;
                     Native.Keyboard.SendKey(keyInteract);
-                    SleepFor(1000, () => !_stashOpened);
+                    WaitFor(1000, () => _stashOpened);
                     if (!_stashOpened)
                         Console.WriteLine("ReopenStash() failed! stash not reopened. Tries left: " + triesLeft);
                     else
@@ -353,6 +374,8 @@ namespace GDMultiStash
                     Console.WriteLine("ReopenStash() failed! stash not reopened!");
                     return;
                 }
+
+                //WaitFor(100); // wait for StashStatusChanged event to fire when stash closed
             }
 
             private static void ReopenStashAction(Action action)

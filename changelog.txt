@@ -4,6 +4,7 @@ v1.7
 - Added autostart support for GrimCam
 - Updated setup window
 - Added option to automaticly switch back to main stash when ingame stash closed
+- Improved stash changing - made it safier and faster
 - Updated localization
     +label_auto_back_to_main
 

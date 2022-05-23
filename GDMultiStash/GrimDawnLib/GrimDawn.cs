@@ -34,9 +34,9 @@ namespace GrimDawnLib
     public static partial class GrimDawn
     {
 
-        private static readonly string DocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Grim Dawn");
-        private static readonly string DocumentsSavePath = Path.Combine(DocumentsPath, "save");
-        private static readonly string DocumentsSettingsPath = Path.Combine(DocumentsPath, "Settings");
+        public static readonly string DocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Grim Dawn");
+        public static readonly string DocumentsSavePath = Path.Combine(DocumentsPath, "save");
+        public static readonly string DocumentsSettingsPath = Path.Combine(DocumentsPath, "Settings");
 
         private static readonly Dictionary<GrimDawnGameExpansion, string> GameExpansionNames = new Dictionary<GrimDawnGameExpansion, string>
             {
@@ -80,9 +80,14 @@ namespace GrimDawnLib
             };
         }
 
-        public static string GetExpansionExtensionPart(GrimDawnGameExpansion expansion)
+        public static string GetTransferExtension(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
-            return "." + expansion2extension[expansion];
+            return "." + expansion2extension[exp] + mode2extension[mode];
+        }
+
+        public static string GetTransferFile(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        {
+            return Path.Combine(DocumentsSavePath, "transfer" + GetTransferExtension(exp, mode));
         }
 
 
@@ -120,8 +125,6 @@ namespace GrimDawnLib
             // TODO... could be done better
             return Directory.Exists(DocumentsPath);
         }
-
-
 
 
 
