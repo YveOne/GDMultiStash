@@ -30,6 +30,11 @@ namespace GDMultiStash.Overlay
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
+            Elements.MainWindow._BackgroundLeftResource = Viewport.Resources.CreateImageResource(
+                    Properties.Resources.background_left,
+                    System.Drawing.Imaging.ImageFormat.Png
+                    );
+
             Elements.VerticalScrollBar._ScrollBarResource = Viewport.Resources.CreateImageResource(
                     Properties.Resources.ScrollBarInner,
                     System.Drawing.Imaging.ImageFormat.Png

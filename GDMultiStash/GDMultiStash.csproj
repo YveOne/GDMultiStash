@@ -221,6 +221,7 @@
     <None Include="Resources\icon32.ico" />
     <Content Include="icon64.ico" />
     <Content Include="Resources\background.png" />
+    <Content Include="Resources\background_left.png" />
     <Content Include="Resources\ButtonSmallDown.png" />
     <Content Include="Resources\ButtonSmallOver.png" />
     <Content Include="Resources\ButtonSmallUp.png" />

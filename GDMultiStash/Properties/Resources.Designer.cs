@@ -73,6 +73,16 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap background_left {
+            get {
+                object obj = ResourceManager.GetObject("background_left", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ButtonSmallDown {
             get {
                 object obj = ResourceManager.GetObject("ButtonSmallDown", resourceCulture);
@@ -109,12 +119,10 @@ namespace GDMultiStash.Properties {
         ///err_no_stash_selected = Kein Stash ausgewählt!
         ///err_cannot_delete_stash = Stash &quot;{0}&quot; kann nicht gelöscht werden: {1}
         ///err_stash_is_active = Stash ist gerade aktiv
+        ///err_gdms_already_running = GDMultiStash läuft bereits!
         ///
         ///window_setup = Einstellungen
-        ///window_create_stash = Stash erstellen
-        ///window_import_stash = Stash importieren
-        ///
-        ///setu [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///window_create_stash = Stash er [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string de_Deutsch {
             get {
@@ -131,13 +139,11 @@ namespace GDMultiStash.Properties {
         ///err_no_stash_selected = No stash selected!
         ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
         ///err_stash_is_active = Stash is currently active
+        ///err_gdms_already_running = GDMultiStash is already running!
         ///
         ///window_setup = Setup
         ///window_create_stash = Create Stash
-        ///window_import_stash = Import Stash
-        ///
-        ///setup_tab_common = Common
-        ///setup_tab_beha [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string en_English {
             get {

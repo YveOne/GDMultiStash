@@ -3,6 +3,10 @@ v1.8
 - New feature: To import transfer files drag and drop them directly onto the window
 - New feature: Reerange stashes (change order of stashes) by using drag & drop
 - Added mutex to allow only one running instance of GDMultiStash at a time
+- Added buttons to select/unselect all stashes in listview
+- Updated localization
+    +button_select_all
+    +button_unselect_all
 
 v1.7
 - The usage of stashes is now getting updated correctly

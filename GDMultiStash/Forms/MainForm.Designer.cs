@@ -41,6 +41,8 @@
             this.showExpansionComboBox = new System.Windows.Forms.ComboBox();
             this.showSoftCoreComboBox = new System.Windows.Forms.CheckBox();
             this.showHardCoreComboBox = new System.Windows.Forms.CheckBox();
+            this.selectAllButton = new System.Windows.Forms.Button();
+            this.unselectAllButton = new System.Windows.Forms.Button();
             this.topMenuStrip.SuspendLayout();
             this.bottomMenuStrip.SuspendLayout();
             this.backgroundPanel.SuspendLayout();
@@ -183,12 +185,34 @@
             this.showHardCoreComboBox.TabIndex = 24;
             this.showHardCoreComboBox.UseVisualStyleBackColor = true;
             // 
+            // selectAllButton
+            // 
+            this.selectAllButton.Location = new System.Drawing.Point(0, 426);
+            this.selectAllButton.Name = "selectAllButton";
+            this.selectAllButton.Size = new System.Drawing.Size(125, 23);
+            this.selectAllButton.TabIndex = 25;
+            this.selectAllButton.Text = "Select all";
+            this.selectAllButton.UseVisualStyleBackColor = true;
+            this.selectAllButton.Click += new System.EventHandler(this.SelectAllButton_Click);
+            // 
+            // unselectAllButton
+            // 
+            this.unselectAllButton.Location = new System.Drawing.Point(124, 426);
+            this.unselectAllButton.Name = "unselectAllButton";
+            this.unselectAllButton.Size = new System.Drawing.Size(125, 23);
+            this.unselectAllButton.TabIndex = 26;
+            this.unselectAllButton.Text = "Unselect all";
+            this.unselectAllButton.UseVisualStyleBackColor = true;
+            this.unselectAllButton.Click += new System.EventHandler(this.UnselectAllButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(619, 450);
+            this.Controls.Add(this.unselectAllButton);
+            this.Controls.Add(this.selectAllButton);
             this.Controls.Add(this.showHardCoreComboBox);
             this.Controls.Add(this.showSoftCoreComboBox);
             this.Controls.Add(this.showExpansionComboBox);
@@ -227,5 +251,7 @@
         private System.Windows.Forms.ComboBox showExpansionComboBox;
         private System.Windows.Forms.CheckBox showSoftCoreComboBox;
         private System.Windows.Forms.CheckBox showHardCoreComboBox;
+        private System.Windows.Forms.Button selectAllButton;
+        private System.Windows.Forms.Button unselectAllButton;
     }
 }

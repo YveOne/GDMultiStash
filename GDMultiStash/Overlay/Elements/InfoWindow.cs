@@ -24,7 +24,7 @@ namespace GDMultiStash.Overlay.Elements
 
         public InfoWindow()
         {
-            X = 0;
+            X = 6;
             Y = 605;
             Width = 265;
             Height = 127;
@@ -58,7 +58,7 @@ namespace GDMultiStash.Overlay.Elements
 
             _saveButton = new InfoButton()
             {
-                X = 5,
+                X = 6,
                 Y = -5,
                 AnchorPoint = Anchor.BottomLeft,
             };
@@ -66,7 +66,7 @@ namespace GDMultiStash.Overlay.Elements
 
             _loadButton = new InfoButton()
             {
-                X = 5 + 5 + 125,
+                X = 6 + 6 + 120,
                 Y = -5,
                 AnchorPoint = Anchor.BottomLeft,
             };

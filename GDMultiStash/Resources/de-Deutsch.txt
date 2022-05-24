@@ -31,6 +31,8 @@ button_import = Importieren
 button_create_shortcut = Verknüpfung auf dem Desktop erstellen
 button_start_now = Jetzt\nstarten
 button_restart = Neustarten
+button_select_all = Alle auswählen
+button_unselect_all = Alle Abwählen
 
 label_confirm_closing = Bestätige das Schließen wenn Grim Dawn noch läuft
 label_close_with_gd = Schließe GDMultiStash wenn Grim Dawn geschlossen wurde

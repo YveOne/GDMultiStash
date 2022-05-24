@@ -25,7 +25,7 @@ namespace GDMultiStash.Overlay.Elements
         public InfoButton()
         {
             Font = _Font;
-            Width = 125;
+            Width = 120;
             Height = 22;
             Color = Color.FromArgb(255, 209, 191, 153);
         }

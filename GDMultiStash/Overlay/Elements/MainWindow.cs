@@ -14,6 +14,7 @@ namespace GDMultiStash.Overlay.Elements
     {
 
         public static D3DHook.Hook.Common.IImageResource _BackgroundResource;
+        public static D3DHook.Hook.Common.IImageResource _BackgroundLeftResource;
 
         private readonly FadeAnimation _fadeAnimation;
         private const float fadeMin = 0.1f;
@@ -42,6 +43,13 @@ namespace GDMultiStash.Overlay.Elements
             {
                 Resource = _BackgroundResource,
                 AnchorPoint = Anchor.TopRight,
+            });
+
+            AddChild(new ImageElement()
+            {
+                Resource = _BackgroundLeftResource,
+                AnchorPoint = Anchor.TopLeft,
+                X = -5,
             });
 
             _stashList = new StashList()

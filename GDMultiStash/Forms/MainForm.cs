@@ -31,7 +31,6 @@ namespace GDMultiStash.Forms
             Text = "GD MultiStash";
 
             stashesListView.ButtonClick += StashesListView_ButtonClick;
-            stashesListView.ItemSelectionChanged += StashesListView_ItemSelectionChanged;
             stashesListView.CellRightClick += StashesListView_CellRightClick;
             stashesListView.SubItemChecking += StashesListView_SubItemChecking;
             stashesListView.CellEditFinished += StashesListView_CellEditFinished;
@@ -269,7 +268,6 @@ namespace GDMultiStash.Forms
 
 
 
-
             StashesDragHandler dragHandler = new StashesDragHandler(stashesListView);
             dragHandler.DragSource.DragEnd += delegate {
                 UpdateObjects();
@@ -371,6 +369,9 @@ namespace GDMultiStash.Forms
             createStashButton.Text = L["create_stash"];
             importStashesButton.Text = L["import_stashes"];
 
+            selectAllButton.Text = L["button_select_all"];
+            unselectAllButton.Text = L["button_unselect_all"];
+
             _confirm_delete_stash = L["confirm_delete_stash"];
             _err_cannot_delete_stash = L["err_cannot_delete_stash"];
             _err_stash_is_active = L["err_stash_is_active"];
@@ -464,11 +465,6 @@ namespace GDMultiStash.Forms
 
             Core.Runtime.NotifyStashesChanged();
             stashesListView.Sort();
-        }
-
-        private void StashesListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            //if (!Editing) e.Item.Selected = false;
         }
 
         private void StashesListView_CellRightClick(object sender, CellRightClickEventArgs args)
@@ -620,6 +616,20 @@ namespace GDMultiStash.Forms
 
         #region Events
 
+        private void SelectAllButton_Click(object sender, EventArgs e)
+        {
+            stashesListView.Focus();
+            foreach (OLVListItem item in stashesListView.Items)
+                item.Selected = true;
+        }
+
+        private void UnselectAllButton_Click(object sender, EventArgs e)
+        {
+            stashesListView.Focus();
+            foreach (OLVListItem item in stashesListView.Items)
+                item.Selected = false;
+        }
+
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             Core.Windows.ShowSetupDialog(false);
@@ -648,10 +658,10 @@ namespace GDMultiStash.Forms
             }
         }
 
+
+
+
         #endregion
-
-
-
 
     }
 }
