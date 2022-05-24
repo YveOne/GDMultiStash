@@ -516,7 +516,9 @@ namespace GDMultiStash.Forms
                 restoreButtn.DropDownItems.AddRange(Array.ConvertAll<string, ToolStripItem>(Core.Stashes.GetBackupFiles(stash.ID), delegate (string file) {
                     string fileName = System.IO.Path.GetFileName(file);
                     string fileDate = System.IO.File.GetLastWriteTime(file).ToString();
-                    return new ToolStripMenuItem(fileName + " - " + fileDate, null, delegate (object s, EventArgs e) {
+                    string usageText = Common.TransferFile.FromFile(file).UsageText;
+                    string itemText = string.Format("{0} - {1} - {2}", fileName, fileDate, usageText);
+                    return new ToolStripMenuItem(itemText, null, delegate (object s, EventArgs e) {
                         if (Core.Runtime.IsStashOpened(stash.ID))
                         {
                             Core.Runtime.RequestLoadingStash();

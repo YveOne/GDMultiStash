@@ -13,20 +13,16 @@ namespace GDMultiStash.Forms
         private readonly StashesDragSource _dragSource;
         private readonly StashesDropSink _dropSink;
 
-        private readonly List<Common.Stash> _draggingStashes = new List<Common.Stash>();
-        public List<Common.Stash> DraggingStashes => _draggingStashes;
+        public ObjectListView ListView => _olv;
+        public StashesDragSource DragSource => _dragSource;
 
         public StashesDragHandler(ObjectListView olv)
         {
             _olv = olv;
             _dragSource = new StashesDragSource(this);
             _dragSource.DragStart += delegate {
-                _draggingStashes.Clear();
-                foreach (OLVListItem item in olv.SelectedItems)
-                    _draggingStashes.Add((Common.Stash)item.RowObject);
             };
             _dragSource.DragEnd += delegate {
-                _draggingStashes.Clear();
                 List<int> orders = new List<int>();
                 foreach (OLVListItem item in olv.Items)
                 {
@@ -44,7 +40,8 @@ namespace GDMultiStash.Forms
             olv.FormatRow += delegate (object sender, FormatRowEventArgs e)
             {
                 Common.Stash stash = (Common.Stash)e.Model;
-                if (_draggingStashes.Contains(stash))
+                if (_dragSource.DraggingStashes.Contains(stash)
+                 && !_dragSource.IsDraggingMainStash)
                 {
                     e.Item.BackColor = Color.Teal;
                     e.Item.ForeColor = Color.White;
@@ -53,13 +50,14 @@ namespace GDMultiStash.Forms
             _dropSink = new StashesDropSink(this);
             olv.DragSource = _dragSource;
             olv.DropSink = _dropSink;
+            olv.DragLeave += delegate {
+
+                Console.WriteLine(_dragSource.OriginalIndex);
+                Console.WriteLine(_dragSource.DraggingStashes.Count);
+                olv.MoveObjects(_dragSource.OriginalIndex + 1, _dragSource.DraggingStashes);
+
+            };
         }
-
-        public ObjectListView ListView => _olv;
-
-        public StashesDragSource DragSource => _dragSource;
-
-
 
     }
 }
