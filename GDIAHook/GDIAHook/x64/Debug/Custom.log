@@ -1,0 +1,15 @@
+﻿  BaseMethodHook.cpp
+  GrimTypes.cpp
+  HookLog.cpp
+  SetHardcore.cpp
+  SetTransferOpen.cpp
+  DataQueue.cpp
+  dllmain.cpp
+  SaveTransferStash.cpp
+  stdafx.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+LINK : warning LNK4075: /INCREMENTAL wird aufgrund der Angabe von /LTCG ignoriert.
+  Code wird generiert.
+  Not all modules are compiled with -Gy (function comdat), build without incremental LTCG.
+  Codegenerierung ist abgeschlossen.
+  Custom.vcxproj -> C:\Users\Yvonne\Desktop\GDMultiStashProject\x64\Debug\GDIAHook.dll

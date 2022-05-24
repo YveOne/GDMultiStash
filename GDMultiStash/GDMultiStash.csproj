@@ -69,6 +69,10 @@
     <Compile Include="Common\Overlay\Animations\FadeAnimation.cs" />
     <Compile Include="Common\Overlay\Animations\MoveAnimation.cs" />
     <Compile Include="Common\Overlay\ButtonElement.cs" />
+    <Compile Include="Forms\MainForm\StashesDragHandler.cs" />
+    <Compile Include="Forms\MainForm\StashesDragSource.cs" />
+    <Compile Include="Forms\MainForm\StashesDropSink.cs" />
+    <Compile Include="Forms\MainForm\StashesSortComparer.cs" />
     <Compile Include="Overlay\Elements\InfoButton.cs" />
     <Compile Include="Overlay\Elements\InfoWindow.cs" />
     <Compile Include="Overlay\Elements\VerticalScrollBar.cs" />

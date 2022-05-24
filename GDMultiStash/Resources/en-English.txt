@@ -6,6 +6,7 @@ err_invalid_transfer_file = Invalid transfer file!
 err_no_stash_selected = No stash selected!
 err_cannot_delete_stash = Stash "{0}" can not be deleted: {1}
 err_stash_is_active = Stash is currently active
+err_gdms_already_running = GDMultiStash is already running!
 
 window_setup = Setup
 window_create_stash = Create Stash

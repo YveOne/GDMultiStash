@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using BrightIdeasSoftware;
@@ -27,6 +21,8 @@ namespace GDMultiStash.Forms
         private readonly OLVColumn columnUsage;
         private readonly OLVColumn columnActive;
         private readonly OLVColumn columnExpansion;
+
+        private Dictionary<int, string> expansionNames;
 
         public MainForm()
         {
@@ -265,11 +261,30 @@ namespace GDMultiStash.Forms
             stashesListView.PrimarySortOrder = SortOrder.Ascending;
 
             stashesListView.CustomSorter = delegate (OLVColumn column, SortOrder order) {
-                stashesListView.ListViewItemSorter = new CustomComparer();
+                stashesListView.ListViewItemSorter = new StashesSortComparer();
             };
 
             stashesListView.Columns.Clear();
             stashesListView.Columns.AddRange(new ColumnHeader[] { columnActive, columnOrderUp, columnOrderDown, columnID, columnName, columnUsage, columnLastChange, columnExpansion, columnSC, columnHC });
+
+
+
+
+            StashesDragHandler dragHandler = new StashesDragHandler(stashesListView);
+            dragHandler.DragSource.DragEnd += delegate {
+                UpdateObjects();
+                Core.Config.Save();
+
+                Core.Runtime.NotifyStashesChanged();
+                stashesListView.Sort();
+            };
+
+
+
+            
+
+
+
 
             expansionNames = new Dictionary<int, string>() {
                 { -1, "All" },
@@ -277,10 +292,6 @@ namespace GDMultiStash.Forms
                 { 1, GrimDawnLib.GrimDawn.GetExpansionName(1) },
                 { 2, GrimDawnLib.GrimDawn.GetExpansionName(2) },
             };
-
-
-
-
             showExpansionComboBox.DisplayMember = "Value";
             showExpansionComboBox.ValueMember = "Key";
             showExpansionComboBox.DataSource = new BindingSource(expansionNames, null);
@@ -318,31 +329,22 @@ namespace GDMultiStash.Forms
 
 
 
+
+
+
+
+
         }
 
-        private Dictionary<int, string> expansionNames;
 
-        class CustomComparer : IComparer
-        {
 
-            public CustomComparer()
-            {
-            }
 
-            public int Compare(object x, object y)
-            {
-                Common.Stash s1 = ((OLVListItem)x).RowObject as Common.Stash;
-                Common.Stash s2 = ((OLVListItem)y).RowObject as Common.Stash;
 
-                bool s1m = Core.Stashes.IsMainStash(s1);
-                bool s2m = Core.Stashes.IsMainStash(s2);
-                if (s1m && s2m) return s1.Expansion.CompareTo(s2.Expansion);
-                if (s1m) return -1;
-                if (s2m) return+1;
-                return s1.Order.CompareTo(s2.Order);
 
-            }
-        }
+
+
+
+
 
         private void MainForm_Load(object sender, EventArgs e)
         {

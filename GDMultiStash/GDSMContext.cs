@@ -25,6 +25,7 @@ namespace GDMultiStash
 
         private Overlay.OverlayManager _overlayManager;
 
+        private static Mutex mutex = null;
 
         public GDMSContext()
         {
@@ -52,7 +53,18 @@ namespace GDMultiStash
                     Core.Windows.ShowSetupDialog(true);
                 }
             }
-
+            
+            // allow only one instance of gdms
+            bool createdNew;
+            mutex = new Mutex(true, "GDMultiStash", out createdNew);
+            if (!createdNew)
+            {
+                //app is already running! Exiting the application
+                MessageBox.Show(L["err_gdms_already_running"]);
+                Program.Quit();
+                return;
+            }
+            
             if (!GrimDawn.ValidGamePath(Core.Config.GamePath))
             {
                 Program.ShowError(L["err_gamedir_not_found"]);

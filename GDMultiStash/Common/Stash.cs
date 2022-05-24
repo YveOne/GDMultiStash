@@ -22,9 +22,6 @@ namespace GDMultiStash.Common
             return success;
         }
 
-
-
-
         public int ID { get { return _configStash.ID; } }
 
         public string FilePath { get { return Core.Files.GetStashFilePath(ID); } }

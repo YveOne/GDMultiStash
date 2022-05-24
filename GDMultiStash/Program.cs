@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using System.Runtime.InteropServices;
-using Microsoft.Win32.SafeHandles;
 using System.Diagnostics;
 
 namespace GDMultiStash

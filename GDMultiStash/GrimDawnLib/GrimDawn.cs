@@ -69,6 +69,7 @@ namespace GrimDawnLib
             {
                 { GrimDawnGameMode.SC, "t" },
                 { GrimDawnGameMode.HC, "h" },
+                { GrimDawnGameMode.None, "" },
             };
 
         public static string[] GetExpansionNames()
@@ -82,7 +83,8 @@ namespace GrimDawnLib
 
         public static string GetTransferExtension(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
-            return "." + expansion2extension[exp] + mode2extension[mode];
+            string m = mode2extension.ContainsKey(mode) ? mode2extension[mode] : "";
+            return "." + expansion2extension[exp] + m;
         }
 
         public static string GetTransferFile(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
