@@ -61,9 +61,9 @@ namespace GDMultiStash.Forms
 
 
 
-        public override DialogResult ShowDialog()
+        public override DialogResult ShowDialog(IWin32Window owner)
         {
-            return base.ShowDialog();
+            return base.ShowDialog(owner);
         }
 
         private void OkButton_Click(object sender, EventArgs e)

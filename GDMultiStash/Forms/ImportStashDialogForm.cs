@@ -107,7 +107,7 @@ namespace GDMultiStash.Forms
 
         #region Dialog
 
-        public DialogResult ShowDialog(string srcFile)
+        public DialogResult ShowDialog(IWin32Window owner, string srcFile)
         {
             if (!File.Exists(srcFile)) return DialogResult.None;
 
@@ -137,7 +137,7 @@ namespace GDMultiStash.Forms
             overwriteComboBox.SelectedIndex = -1;
             overwriteComboBox.Enabled = false;
 
-            DialogResult result = base.ShowDialog();
+            DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;
 
             if (overwriteCheckBox.Checked)
@@ -160,24 +160,42 @@ namespace GDMultiStash.Forms
             return result;
         }
 
-        public override DialogResult ShowDialog()
+        public DialogResult ShowDialog(IWin32Window owner, IEnumerable<string> files)
         {
+            if (files.Count() != 0)
+            {
+                string[] okExt = GrimDawn.GetAllTransferExtensions();
+                foreach (string srcFile in files)
+                {
+                    if (!okExt.Contains(Path.GetExtension(srcFile).ToLower()))
+                    {
+                        //TODO: show warning?
+                        continue;
+                    }
+                    ShowDialog(owner, srcFile);
+                }
+                return DialogResult.OK;
+            }
+            return DialogResult.Cancel;
+        }
+
+        public override DialogResult ShowDialog(IWin32Window owner)
+        {
+            string filter = string.Join(";", GrimDawn.GetAllTransferExtensions().Select(ext => "*" + ext));
+
             using (var dialog = new OpenFileDialog()
             {
-                Filter = "Transfer File|*.bst;*.bsh;*.cst;*.csh;*.gst;*.gsh",
+                Filter = "Transfer File|" + filter,
                 Multiselect = true,
             })
             {
                 DialogResult result = dialog.ShowDialog();
-                if (result == DialogResult.OK && dialog.FileNames.Length != 0)
+                if (result == DialogResult.OK)
                 {
-                    foreach (string srcFile in dialog.FileNames)
-                    {
-                        ShowDialog(srcFile);
-                    }
+                    return ShowDialog(owner, dialog.FileNames);
                 }
             }
-            return DialogResult.OK;
+            return DialogResult.Cancel;
         }
 
         #endregion

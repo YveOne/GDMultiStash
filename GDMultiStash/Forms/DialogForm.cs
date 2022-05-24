@@ -39,10 +39,10 @@ namespace GDMultiStash.Forms
             base.Close();
         }
 
-        public virtual new DialogResult ShowDialog()
+        public virtual new DialogResult ShowDialog(IWin32Window owner)
         {
             _result = DialogResult.None;
-            base.ShowDialog();
+            base.ShowDialog(owner);
             return _result;
         }
 

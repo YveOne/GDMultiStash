@@ -170,7 +170,17 @@ namespace GrimDawnLib
 
 
 
-
+        public static string[] GetAllTransferExtensions()
+        {
+            return new string[] {
+                CreateTransferExtension(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.SC),
+                CreateTransferExtension(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.HC),
+                CreateTransferExtension(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.SC),
+                CreateTransferExtension(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.HC),
+                CreateTransferExtension(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.SC),
+                CreateTransferExtension(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.HC),
+            };
+        }
 
 
 

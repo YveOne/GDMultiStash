@@ -46,9 +46,9 @@
             // 
             this.stashFileTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.stashFileTextBox.Enabled = false;
             this.stashFileTextBox.Location = new System.Drawing.Point(12, 25);
             this.stashFileTextBox.Name = "stashFileTextBox";
-            this.stashFileTextBox.ReadOnly = true;
             this.stashFileTextBox.Size = new System.Drawing.Size(560, 20);
             this.stashFileTextBox.TabIndex = 4;
             this.stashFileTextBox.TabStop = false;
@@ -146,6 +146,7 @@
             // expansionLabel
             // 
             this.expansionLabel.AutoSize = true;
+            this.expansionLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.expansionLabel.Location = new System.Drawing.Point(12, 48);
             this.expansionLabel.Name = "expansionLabel";
             this.expansionLabel.Size = new System.Drawing.Size(59, 13);
@@ -156,10 +157,11 @@
             // 
             this.expansionTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.expansionTextBox.Enabled = false;
             this.expansionTextBox.Location = new System.Drawing.Point(12, 64);
             this.expansionTextBox.Name = "expansionTextBox";
             this.expansionTextBox.ReadOnly = true;
-            this.expansionTextBox.Size = new System.Drawing.Size(208, 20);
+            this.expansionTextBox.Size = new System.Drawing.Size(180, 20);
             this.expansionTextBox.TabIndex = 19;
             this.expansionTextBox.TabStop = false;
             // 

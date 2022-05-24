@@ -303,6 +303,21 @@ namespace GDMultiStash.Forms
                 UpdateObjects();
             };
 
+
+
+            AllowDrop = true;
+            DragEnter += delegate (object sender, DragEventArgs e)
+            {
+                if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+            };
+            DragDrop += delegate (object sender, DragEventArgs e)
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                Core.Windows.ShowImportDialog(files);
+            };
+
+
+
         }
 
         private Dictionary<int, string> expansionNames;

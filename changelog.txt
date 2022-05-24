@@ -1,4 +1,7 @@
 
+v1.8
+- New feature: To import transfer files drag and drop them directly onto the window
+
 v1.7
 - The usage of stashes is now getting updated correctly
 - Added autostart support for GrimCam

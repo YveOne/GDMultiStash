@@ -416,7 +416,7 @@ namespace GDMultiStash.Forms
             Core.Config.Save();
         }
 
-        public DialogResult ShowDialog(bool isFirstSetup = false)
+        public DialogResult ShowDialog(IWin32Window owner, bool isFirstSetup = false)
         {
             if (isFirstSetup)
             {
@@ -433,12 +433,12 @@ namespace GDMultiStash.Forms
                     behaviourTabPage,
                 });
             }
-            return base.ShowDialog();
+            return base.ShowDialog(owner);
         }
 
-        public override DialogResult ShowDialog()
+        public override DialogResult ShowDialog(IWin32Window owner)
         {
-            return ShowDialog(false);
+            return ShowDialog(owner, false);
         }
 
         #endregion

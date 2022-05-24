@@ -203,14 +203,6 @@ namespace GDMultiStash
                         Console.WriteLine("  reopening... skipped");
                         return;
                     }
-                    /*
-                    string extension = GrimDawn.GetTransferExtension(_currentExpansion, _currentMode);
-                    SleepFor(1000, () =>
-                    {
-                        if (!lastWriteTimes.ContainsKey(extension)) return false;
-                        return lastWriteTimes[extension] >= DateTime.Now.AddMilliseconds(-500);
-                    });
-                    */
                     StashStatusChanged?.Invoke(null, EventArgs.Empty);
                 }
             }
@@ -304,7 +296,7 @@ namespace GDMultiStash
             private static bool _stashReopening = false;
 
             private delegate bool WaitForConditionDelegate();
-            private static void WaitFor(int time, WaitForConditionDelegate condition = null, int delay = 10)
+            private static void WaitFor(int time, WaitForConditionDelegate condition = null, int delay = 1)
             {
                 long timeout = Environment.TickCount + time;
                 while(Environment.TickCount < timeout)
@@ -317,11 +309,11 @@ namespace GDMultiStash
             private static void WaitForStashWritten()
             {
                 string transferFile = GrimDawn.GetTransferFile(_currentExpansion, _currentMode);
-                DateTime timeout = DateTime.Now.AddMilliseconds(-500);
+                DateTime timeout = DateTime.Now.AddMilliseconds(-200);
                 WaitFor(1000, () =>
                 {
                     return File.GetLastWriteTime(transferFile) >= timeout;
-                }, 33);
+                }, 1);
             }
 
 
