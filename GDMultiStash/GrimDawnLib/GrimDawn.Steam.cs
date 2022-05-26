@@ -14,23 +14,24 @@ namespace GrimDawnLib
         public static partial class Steam
         {
 
-            public const string GameAppID = "219990";
-            public const string GameStartCommand = "steam://rungameid/" + GameAppID;
             private const string _regKey32 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Valve\Steam";
             private const string _regKey64 = @"HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Valve\Steam";
 
-            private static string FindInstallPath(string k)
-            {
-                return (string)Registry.GetValue(k, "InstallPath", null);
-            }
+            public static readonly int GameAppID = 219990;
 
-            public static string FindGamePath()
+            public static readonly string SteamClientPath32 = (string)Registry.GetValue(_regKey32, "InstallPath", null);
+            public static readonly string SteamClientPath64 = (string)Registry.GetValue(_regKey64, "InstallPath", null);
+
+            public static readonly string GameStartCommand = "steam://rungameid/" + GameAppID;
+
+            public static readonly string GamePath32 = FindGamePath(SteamClientPath32);
+            public static readonly string GamePath64 = FindGamePath(SteamClientPath64);
+
+            private static string FindGamePath(string steamInstallPath)
             {
-                string InstallPath = FindInstallPath(_regKey64);
-                if (InstallPath == null) InstallPath = FindInstallPath(_regKey32);
-                if (InstallPath != null)
+                if (steamInstallPath != null)
                 {
-                    string libIndexFile = Path.Combine(InstallPath, "steamapps", "libraryfolders.vdf");
+                    string libIndexFile = Path.Combine(steamInstallPath, "steamapps", "libraryfolders.vdf");
                     if (File.Exists(libIndexFile))
                     {
                         Regex pathRE = new Regex(@"^\s*""path""\s+""(?<path>.*)""\s*$", RegexOptions.IgnoreCase);

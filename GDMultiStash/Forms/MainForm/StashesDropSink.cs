@@ -46,9 +46,10 @@ namespace GDMultiStash.Forms
             else
             {
                 Common.Stash stash = (Common.Stash)args.DropTargetItem.RowObject;
-                if (stash == null || Core.Stashes.IsMainStash(stash))
+                if (stash == null || Core.Config.IsMainStashID(stash.ID))
                 {
                     args.Effect = DragDropEffects.None;
+                    _handler.ResetDragPositions();
                 }
                 else
                 {

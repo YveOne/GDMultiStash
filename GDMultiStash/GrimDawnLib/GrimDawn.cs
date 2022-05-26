@@ -118,8 +118,10 @@ namespace GrimDawnLib
 
         public static bool ValidGamePath(string gamePath)
         {
-            // todo!!
-            return File.Exists(Path.Combine(gamePath, "Grim Dawn.exe"));
+            if (!File.Exists(Path.Combine(gamePath, "Grim Dawn.exe"))) return false;
+            if (!Directory.Exists(Path.Combine(gamePath, "database"))) return false;
+            if (!Directory.Exists(Path.Combine(gamePath, "resources"))) return false;
+            return true;
         }
 
         public static bool ValidDocsPath()

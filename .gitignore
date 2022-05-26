@@ -3,7 +3,7 @@
 /_misc/tool to get itemsizes/bin/
 /_misc/tool to get itemsizes/obj/
 /D3DHook/obj/
-/GDIAHook/GDIAHook/x64/Release/
+/GDIAHook/GDIAHook/x64/*
 /GDIALib/bin/
 /GDIALib/obj/
 /GDMultiStash/Connected Services/

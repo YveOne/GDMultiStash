@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using System.IO.Compression;
 
 using GrimDawnLib;
 
@@ -30,54 +31,49 @@ namespace GDMultiStash.Forms
         private bool _isDraggingMainStash = false;
         public bool IsDraggingMainStash => _isDraggingMainStash;
 
-        private int _originalIndex = -1;
-        public int OriginalIndex => _originalIndex;
+        private readonly List<Common.Stash> _originalOrderedModels = new List<Common.Stash>();
+        public List<Common.Stash> OriginalOrderedModels => _originalOrderedModels;
 
-        private string _tempDir = Path.Combine(Application.StartupPath, "_dragging");
+
+
+        private string _tempDragFile = null;
+
+
 
         public override object StartDrag(ObjectListView olv, MouseButtons button, OLVListItem item)
         {
-
-            Common.Stash stash = (Common.Stash)item.RowObject;
-            _isDraggingMainStash = Core.Stashes.IsMainStash(stash);
-            _originalIndex = item.Index;
-
-            object obj = base.StartDrag(olv, button, item);
-            DragStart?.Invoke();
-
             _draggingStashes.Clear();
-            if (olv.SelectedItems.Count == 0)
+            foreach (OLVListItem i in olv.SelectedItems)
             {
+                Common.Stash stash = (Common.Stash)i.RowObject;
                 _draggingStashes.Add(stash);
             }
-            else
+            _originalOrderedModels.Clear();
+            foreach (OLVListItem i in olv.Items)
             {
-                foreach (OLVListItem i in olv.SelectedItems)
-                    _draggingStashes.Add((Common.Stash)i.RowObject);
+                Common.Stash stash = (Common.Stash)i.RowObject;
+                _originalOrderedModels.Add(stash);
             }
 
 
 
-            // so... dont let original transfer files be dragged to desktop/explorer
-            // create a temp dire and copy/rename dragging transfer files into
 
-            List<string> tempFiles = new List<string>();
-            if (Directory.Exists(_tempDir)) Directory.Delete(_tempDir, true);
-            Directory.CreateDirectory(_tempDir);
+            // dont let original transfer files be dragged to desktop/explorer
+            // create temp zip file
+
+            Dictionary<string, string> files2zip = new Dictionary<string, string>();
             foreach (Common.Stash s in _draggingStashes)
             {
                 string transferName = string.Format("{0} - {1}", s.ID, s.Name);
                 transferName = string.Join("_", transferName.Split(Path.GetInvalidFileNameChars()));
-                transferName = Path.Combine(_tempDir, transferName);
+
                 string transferExt;
                 string transferFile;
-                Console.WriteLine(transferName);
                 if (!s.SC && !s.HC)
                 {
                     transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.None);
                     transferFile = string.Format("{0} [no mode]{1}", transferName, transferExt);
-                    File.Copy(s.FilePath, transferFile);
-                    tempFiles.Add(transferFile);
+                    files2zip.Add(s.FilePath, transferFile);
                 }
                 else
                 {
@@ -85,22 +81,49 @@ namespace GDMultiStash.Forms
                     {
                         transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.SC);
                         transferFile = string.Format("{0} [softcore mode]{1}", transferName, transferExt);
-                        File.Copy(s.FilePath, transferFile);
-                        tempFiles.Add(transferFile);
+                        files2zip.Add(s.FilePath, transferFile);
                     }
                     if (s.HC)
                     {
                         transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.HC);
                         transferFile = string.Format("{0} [hardcore mode]{1}", transferName, transferExt);
-                        File.Copy(s.FilePath, transferFile);
-                        tempFiles.Add(transferFile);
+                        files2zip.Add(s.FilePath, transferFile);
                     }
                 }
             }
-            // feature still disabled
-            //DataObject dataObj = (DataObject)obj;
-            //dataObj.SetData(DataFormats.FileDrop, tempFiles.ToArray());
-            
+
+            string tempZipFile = Path.Combine(Path.GetTempPath(), "transfer." + Path.ChangeExtension(Guid.NewGuid().ToString(), ".zip"));
+            using (FileStream zipToOpen = new FileStream(tempZipFile, FileMode.Create))
+            {
+                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
+                {
+                    foreach(KeyValuePair<string,string> kvp in files2zip)
+                    {
+                        string tFile = kvp.Key;
+                        string tName = kvp.Value;
+
+                        ZipArchiveEntry readmeEntry = archive.CreateEntry(tName);
+                        using (StreamWriter writer = new StreamWriter(readmeEntry.Open()))
+                        {
+                            byte[] buffer = File.ReadAllBytes(tFile);
+                            writer.BaseStream.Write(buffer, 0, buffer.Length);
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+            object obj = base.StartDrag(olv, button, item);
+            DragStart?.Invoke();
+
+            DataObject dataObj = (DataObject)obj;
+            dataObj.SetData(DataFormats.FileDrop, new string[] { tempZipFile });
 
             return obj;
         }
@@ -109,7 +132,7 @@ namespace GDMultiStash.Forms
         {
             base.EndDrag(dragObject, effect);
             _draggingStashes.Clear();
-            if (Directory.Exists(_tempDir)) Directory.Delete(_tempDir, true);
+            _originalOrderedModels.Clear();
             DragEnd?.Invoke();
         }
 

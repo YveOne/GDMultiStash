@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace GDMultiStash
 {
@@ -28,7 +29,9 @@ namespace GDMultiStash
                 WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
                 FileName = Config.AutoStartGDCommand,
                 Arguments = Config.AutoStartGDArguments,
-                WorkingDirectory = Config.GamePath
+                WorkingDirectory = File.Exists(Config.AutoStartGDCommand)
+                    ? Path.GetDirectoryName(Config.AutoStartGDCommand)
+                    : Config.GamePath
             };
             process.StartInfo = startInfo;
             process.Start();

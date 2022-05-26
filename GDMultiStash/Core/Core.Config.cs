@@ -172,6 +172,28 @@ namespace GDMultiStash
 
 
 
+            public static bool IsMainStashID(int stashID)
+            {
+                return (stashID == Main0SCID
+                    || stashID == Main0HCID
+                    || stashID == Main1SCID
+                    || stashID == Main1HCID
+                    || stashID == Main2SCID
+                    || stashID == Main2HCID);
+            }
+
+            public static bool IsCurStashID(int stashID)
+            {
+                return (stashID == Cur0SCID
+                    || stashID == Cur0HCID
+                    || stashID == Cur1SCID
+                    || stashID == Cur1HCID
+                    || stashID == Cur2SCID
+                    || stashID == Cur2HCID);
+            }
+
+
+
 
 
             public static Common.Config.ConfigSettingList GetSettings()

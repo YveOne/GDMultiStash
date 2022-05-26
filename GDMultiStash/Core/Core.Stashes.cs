@@ -107,6 +107,13 @@ namespace GDMultiStash
                     Common.Stash stash = new Common.Stash(cfgStash);
                     _stashes.Add(cfgStash.ID, stash);
                     stash.LoadTransferFile();
+                    if (!stash.TransferFileExists())
+                    {
+
+                        System.Windows.Forms.MessageBox.Show("transfer file missing for stash #{0} {1}".Format(stash.ID.ToString(), stash.Name));
+
+
+                    }
                 }
             }
 
@@ -127,36 +134,6 @@ namespace GDMultiStash
                 return Array.FindAll(GetAllStashes(), delegate (Common.Stash stash) {
                     return (exp == stash.Expansion);
                 });
-            }
-
-            public static Common.Stash[] GetActiveStashes()
-            {
-                return Array.FindAll(GetAllStashes(), delegate (Common.Stash stash) {
-                    return (Runtime.CurrentMode == GrimDawnGameMode.SC && stash.SC)
-                    || (Runtime.CurrentMode == GrimDawnGameMode.HC && stash.HC);
-                });
-            }
-
-            public static bool IsMainStash(Common.Stash stash)
-            {
-                return (stash.ID == Config.Main0SCID
-                    || stash.ID == Config.Main0HCID
-                    || stash.ID == Config.Main1SCID
-                    || stash.ID == Config.Main1HCID
-                    || stash.ID == Config.Main2SCID
-                    || stash.ID == Config.Main2HCID);
-            }
-
-            public static Common.Stash[] GetMainStashes()
-            {
-                return new Common.Stash[] {
-                    GetStash(Config.Main0SCID),
-                    GetStash(Config.Main0HCID),
-                    GetStash(Config.Main1SCID),
-                    GetStash(Config.Main1HCID),
-                    GetStash(Config.Main2SCID),
-                    GetStash(Config.Main2HCID),
-                };
             }
 
             public static Common.Stash GetStash(int stashID)

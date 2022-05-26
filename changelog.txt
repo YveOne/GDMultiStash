@@ -2,8 +2,13 @@
 v1.8
 - New feature: To import transfer files drag and drop them directly onto the window
 - New feature: Reerange stashes (change order of stashes) by using drag & drop
+- New feature: Drag&Drop stashes from listview to desktop (will create a zip file)
+- Added support for GOG version
+- Removed "up" and "down" buttons in listview - use new drag&drop feature
 - Added mutex to allow only one running instance of GDMultiStash at a time
 - Added buttons to select/unselect all stashes in listview
+- Main stashes are no more disabled in listview. Now they can be renamed but reordering or mode checkboxes are still disabled
+- Stashes with missing transfer file in Data/Stashes folder (corrupted) will get red highlight in listview
 - Updated localization
     +button_select_all
     +button_unselect_all

@@ -37,26 +37,17 @@ namespace GDMultiStash.Forms
                     orders.RemoveAt(0);
                 }
             };
-            olv.FormatRow += delegate (object sender, FormatRowEventArgs e)
-            {
-                Common.Stash stash = (Common.Stash)e.Model;
-                if (_dragSource.DraggingStashes.Contains(stash)
-                 && !_dragSource.IsDraggingMainStash)
-                {
-                    e.Item.BackColor = Color.Teal;
-                    e.Item.ForeColor = Color.White;
-                }
-            };
             _dropSink = new StashesDropSink(this);
             olv.DragSource = _dragSource;
             olv.DropSink = _dropSink;
             olv.DragLeave += delegate {
-
-                Console.WriteLine(_dragSource.OriginalIndex);
-                Console.WriteLine(_dragSource.DraggingStashes.Count);
-                olv.MoveObjects(_dragSource.OriginalIndex + 1, _dragSource.DraggingStashes);
-
+                ResetDragPositions();
             };
+        }
+
+        public void ResetDragPositions()
+        {
+            ListView.MoveObjects(0, _dragSource.OriginalOrderedModels);
         }
 
     }

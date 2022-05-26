@@ -187,7 +187,7 @@
             // 
             // selectAllButton
             // 
-            this.selectAllButton.Location = new System.Drawing.Point(0, 426);
+            this.selectAllButton.Location = new System.Drawing.Point(1, 426);
             this.selectAllButton.Name = "selectAllButton";
             this.selectAllButton.Size = new System.Drawing.Size(125, 23);
             this.selectAllButton.TabIndex = 25;
@@ -197,7 +197,7 @@
             // 
             // unselectAllButton
             // 
-            this.unselectAllButton.Location = new System.Drawing.Point(124, 426);
+            this.unselectAllButton.Location = new System.Drawing.Point(125, 426);
             this.unselectAllButton.Name = "unselectAllButton";
             this.unselectAllButton.Size = new System.Drawing.Size(125, 23);
             this.unselectAllButton.TabIndex = 26;

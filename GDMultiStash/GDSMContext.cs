@@ -48,12 +48,8 @@ namespace GDMultiStash
             else
             {
                 Core.Localization.LoadLanguage(Core.Config.Language);
-                if (!GrimDawn.ValidGamePath(Core.Config.GamePath))
-                {
-                    Core.Windows.ShowSetupDialog(true);
-                }
             }
-            
+
             // allow only one instance of gdms
             bool createdNew;
             mutex = new Mutex(true, "GDMultiStash", out createdNew);
@@ -64,7 +60,15 @@ namespace GDMultiStash
                 Program.Quit();
                 return;
             }
-            
+
+            // game install path not found? let user choose path
+            if (!GrimDawn.ValidGamePath(Core.Config.GamePath))
+            {
+                Program.ShowError(L["err_gamedir_not_found"]);
+                Core.Windows.ShowSetupDialog(true);
+            }
+
+            // game install path still not found? poooor user...
             if (!GrimDawn.ValidGamePath(Core.Config.GamePath))
             {
                 Program.ShowError(L["err_gamedir_not_found"]);

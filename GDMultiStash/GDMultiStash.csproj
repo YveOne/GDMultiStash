@@ -47,6 +47,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -73,6 +74,7 @@
     <Compile Include="Forms\MainForm\StashesDragSource.cs" />
     <Compile Include="Forms\MainForm\StashesDropSink.cs" />
     <Compile Include="Forms\MainForm\StashesSortComparer.cs" />
+    <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
     <Compile Include="Overlay\Elements\InfoButton.cs" />
     <Compile Include="Overlay\Elements\InfoWindow.cs" />
     <Compile Include="Overlay\Elements\VerticalScrollBar.cs" />
@@ -110,12 +112,6 @@
     <Compile Include="Forms\AddStashDialogForm.Designer.cs">
       <DependentUpon>AddStashDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Controls\BiggerCheckBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Controls\ExTrackBar.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Forms\DialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +145,7 @@
     <Compile Include="Core\Core.Windows.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\GDWindowHookService.cs" />
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\FontLoader.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\Easing.cs" />

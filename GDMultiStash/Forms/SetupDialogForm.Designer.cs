@@ -30,6 +30,7 @@
         {
             this.setupTabControl = new System.Windows.Forms.TabControl();
             this.commonTabPage = new System.Windows.Forms.TabPage();
+            this.gameInstallPathsComboBox = new System.Windows.Forms.ComboBox();
             this.autoStartGDCheckBox = new System.Windows.Forms.CheckBox();
             this.autoStartGDGroupBox = new System.Windows.Forms.GroupBox();
             this.autoStartStartNowButton = new System.Windows.Forms.Button();
@@ -42,10 +43,10 @@
             this.languageListView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gamePathSearchButton = new System.Windows.Forms.Button();
-            this.gamePathTextBox = new System.Windows.Forms.TextBox();
             this.languageLabel = new System.Windows.Forms.Label();
             this.gamePathLabel = new System.Windows.Forms.Label();
             this.behaviourTabPage = new System.Windows.Forms.TabPage();
+            this.autoBackToMainCheckBox = new System.Windows.Forms.CheckBox();
             this.overlayScaleValueLabel = new System.Windows.Forms.Label();
             this.overlayScaleLabel = new System.Windows.Forms.Label();
             this.confirmStashDeleteCheckBox = new System.Windows.Forms.CheckBox();
@@ -63,7 +64,6 @@
             this.saveButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
             this.restartButton = new System.Windows.Forms.Button();
-            this.autoBackToMainCheckBox = new System.Windows.Forms.CheckBox();
             this.setupTabControl.SuspendLayout();
             this.commonTabPage.SuspendLayout();
             this.autoStartGDGroupBox.SuspendLayout();
@@ -89,11 +89,11 @@
             // 
             // commonTabPage
             // 
+            this.commonTabPage.Controls.Add(this.gameInstallPathsComboBox);
             this.commonTabPage.Controls.Add(this.autoStartGDCheckBox);
             this.commonTabPage.Controls.Add(this.autoStartGDGroupBox);
             this.commonTabPage.Controls.Add(this.panel2);
             this.commonTabPage.Controls.Add(this.gamePathSearchButton);
-            this.commonTabPage.Controls.Add(this.gamePathTextBox);
             this.commonTabPage.Controls.Add(this.languageLabel);
             this.commonTabPage.Controls.Add(this.gamePathLabel);
             this.commonTabPage.Location = new System.Drawing.Point(4, 22);
@@ -103,6 +103,15 @@
             this.commonTabPage.TabIndex = 0;
             this.commonTabPage.Text = "Common";
             this.commonTabPage.UseVisualStyleBackColor = true;
+            // 
+            // gameInstallPathsComboBox
+            // 
+            this.gameInstallPathsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.gameInstallPathsComboBox.FormattingEnabled = true;
+            this.gameInstallPathsComboBox.Location = new System.Drawing.Point(6, 119);
+            this.gameInstallPathsComboBox.Name = "gameInstallPathsComboBox";
+            this.gameInstallPathsComboBox.Size = new System.Drawing.Size(460, 21);
+            this.gameInstallPathsComboBox.TabIndex = 10;
             // 
             // autoStartGDCheckBox
             // 
@@ -222,16 +231,6 @@
             this.gamePathSearchButton.UseVisualStyleBackColor = true;
             this.gamePathSearchButton.Click += new System.EventHandler(this.GamePathSearchButton_Click);
             // 
-            // gamePathTextBox
-            // 
-            this.gamePathTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gamePathTextBox.Enabled = false;
-            this.gamePathTextBox.Location = new System.Drawing.Point(6, 120);
-            this.gamePathTextBox.Name = "gamePathTextBox";
-            this.gamePathTextBox.Size = new System.Drawing.Size(460, 20);
-            this.gamePathTextBox.TabIndex = 0;
-            // 
             // languageLabel
             // 
             this.languageLabel.AutoSize = true;
@@ -274,6 +273,17 @@
             this.behaviourTabPage.TabIndex = 1;
             this.behaviourTabPage.Text = "Behaviour";
             this.behaviourTabPage.UseVisualStyleBackColor = true;
+            // 
+            // autoBackToMainCheckBox
+            // 
+            this.autoBackToMainCheckBox.AutoSize = true;
+            this.autoBackToMainCheckBox.Location = new System.Drawing.Point(6, 200);
+            this.autoBackToMainCheckBox.Name = "autoBackToMainCheckBox";
+            this.autoBackToMainCheckBox.Size = new System.Drawing.Size(218, 17);
+            this.autoBackToMainCheckBox.TabIndex = 12;
+            this.autoBackToMainCheckBox.Text = "Switch to main Stash when Stash closed";
+            this.autoBackToMainCheckBox.UseVisualStyleBackColor = true;
+            this.autoBackToMainCheckBox.CheckedChanged += new System.EventHandler(this.AutoBackToMainCheckBox_CheckedChanged);
             // 
             // overlayScaleValueLabel
             // 
@@ -431,7 +441,7 @@
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(488, 300);
+            this.saveButton.Location = new System.Drawing.Point(487, 300);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 2;
@@ -442,7 +452,7 @@
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(407, 300);
+            this.applyButton.Location = new System.Drawing.Point(406, 300);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 3;
@@ -461,17 +471,6 @@
             this.restartButton.Text = "Restart";
             this.restartButton.UseVisualStyleBackColor = true;
             this.restartButton.Click += new System.EventHandler(this.RestartButton_Click);
-            // 
-            // autoBackToMainCheckBox
-            // 
-            this.autoBackToMainCheckBox.AutoSize = true;
-            this.autoBackToMainCheckBox.Location = new System.Drawing.Point(6, 200);
-            this.autoBackToMainCheckBox.Name = "autoBackToMainCheckBox";
-            this.autoBackToMainCheckBox.Size = new System.Drawing.Size(218, 17);
-            this.autoBackToMainCheckBox.TabIndex = 12;
-            this.autoBackToMainCheckBox.Text = "Switch to main Stash when Stash closed";
-            this.autoBackToMainCheckBox.UseVisualStyleBackColor = true;
-            this.autoBackToMainCheckBox.CheckedChanged += new System.EventHandler(this.autoBackToMainCheckBox_CheckedChanged);
             // 
             // SetupDialogForm
             // 
@@ -515,7 +514,6 @@
         private System.Windows.Forms.Button applyButton;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Label gamePathLabel;
-        private System.Windows.Forms.TextBox gamePathTextBox;
         private System.Windows.Forms.Button gamePathSearchButton;
         private System.Windows.Forms.Label languageLabel;
         private System.Windows.Forms.CheckBox confirmClosingCheckBox;
@@ -542,5 +540,6 @@
         private System.Windows.Forms.Label overlayScaleLabel;
         private System.Windows.Forms.TrackBar overlayScaleTrackBar;
         private System.Windows.Forms.CheckBox autoBackToMainCheckBox;
+        private System.Windows.Forms.ComboBox gameInstallPathsComboBox;
     }
 }
