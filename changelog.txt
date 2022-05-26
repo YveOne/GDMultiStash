@@ -1,6 +1,7 @@
 
 v1.9
 - Added Version check + Updater
+- Fixed dragging of stashes that got both sc and hc checked
 - Updated localization
     +label_check_for_new_version
     +label_auto_update_version

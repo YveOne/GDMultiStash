@@ -73,7 +73,7 @@ namespace GDMultiStash.Forms
                 {
                     transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.None);
                     transferFile = string.Format("{0} [no mode]{1}", transferName, transferExt);
-                    files2zip.Add(s.FilePath, transferFile);
+                    files2zip.Add(transferFile, s.FilePath);
                 }
                 else
                 {
@@ -81,13 +81,13 @@ namespace GDMultiStash.Forms
                     {
                         transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.SC);
                         transferFile = string.Format("{0} [softcore mode]{1}", transferName, transferExt);
-                        files2zip.Add(s.FilePath, transferFile);
+                        files2zip.Add(transferFile, s.FilePath);
                     }
                     if (s.HC)
                     {
                         transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.HC);
                         transferFile = string.Format("{0} [hardcore mode]{1}", transferName, transferExt);
-                        files2zip.Add(s.FilePath, transferFile);
+                        files2zip.Add(transferFile, s.FilePath);
                     }
                 }
             }
@@ -99,8 +99,8 @@ namespace GDMultiStash.Forms
                 {
                     foreach (KeyValuePair<string,string> kvp in files2zip)
                     {
-                        string tFile = kvp.Key;
-                        string tName = kvp.Value;
+                        string tFile = kvp.Value;
+                        string tName = kvp.Key;
 
                         ZipArchiveEntry readmeEntry = archive.CreateEntry(tName);
                         using (StreamWriter writer = new StreamWriter(readmeEntry.Open()))
