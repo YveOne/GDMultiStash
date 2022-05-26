@@ -66,17 +66,10 @@ namespace GDMultiStash.Forms
                 });
             }
 
-
-
-
-
             if (!GrimDawn.ValidGamePath(_settings.GamePath))
                 _settings.GamePath = GrimDawn.Steam.GamePath64 ?? "";
             if (!GrimDawn.ValidGamePath(_settings.GamePath))
                 _settings.GamePath = GrimDawn.GOG.GamePath64 ?? "";
-
-
-
 
             confirmClosingCheckBox.Checked = _settings.ConfirmClosing;
             closeWithGrimDawnCheckBox.Checked = _settings.CloseWithGrimDawn;
@@ -84,6 +77,10 @@ namespace GDMultiStash.Forms
             autoStartGDCheckBox.Checked = _settings.AutoStartGD;
             autoStartGDGroupBox.Enabled = _settings.AutoStartGD;
             autoBackToMainCheckBox.Checked = _settings.AutoBackToMain;
+            checkVersionCheckBox.Checked = _settings.CheckForNewVersion;
+            autoUpdateCheckBox.Checked = _settings.AutoUpdate;
+            autoUpdateCheckBox.Enabled = checkVersionCheckBox.Checked;
+
             maxBackupsTrackBar.Value = Math.Max(
                 maxBackupsTrackBar.Minimum,
                 Math.Min(
@@ -312,6 +309,8 @@ namespace GDMultiStash.Forms
             overlayScaleLabel.Text = L["label_overlay_scale"];
             overlayWidthLabel.Text = L["label_overlay_width"];
             autoBackToMainCheckBox.Text = L["label_auto_back_to_main"];
+            checkVersionCheckBox.Text = L["label_check_for_new_version"];
+            autoUpdateCheckBox.Text = L["label_auto_update_version"];
 
             _notice_shortcut_created = L["notice_shortcut_created"];
             _err_gd_already_running = L["err_gd_already_running"];
@@ -382,6 +381,19 @@ namespace GDMultiStash.Forms
             applyButton.Enabled = true;
         }
 
+        private void CheckVersionCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _settings.CheckForNewVersion = checkVersionCheckBox.Checked;
+            applyButton.Enabled = true;
+            autoUpdateCheckBox.Enabled = checkVersionCheckBox.Checked;
+        }
+
+        private void AutoUpdateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _settings.AutoUpdate = autoUpdateCheckBox.Checked;
+            applyButton.Enabled = true;
+        }
+
         private void CreateShortcutButton_Click(object sender, EventArgs e)
         {
 
@@ -421,30 +433,6 @@ namespace GDMultiStash.Forms
                 }
             }
 
-            /*
-            OpenFileDialog openFileDialog1 = new OpenFileDialog
-            {
-                InitialDirectory = _settings.GamePath,
-                Filter = "Grim Dawn.exe|Grim Dawn.exe",
-                FilterIndex = 0,
-                RestoreDirectory = true
-            };
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                string p = Path.GetDirectoryName(openFileDialog1.FileName);
-                if (GrimDawn.ValidGamePath(p))
-                {
-                    _settings.GamePath = p;
-                    UpdateGameInstallPathsList();
-                    UpdateAutoStartCommandList();
-                    applyButton.Enabled = true;
-                }
-                else
-                {
-                    // TODO: show warning?
-                }
-            }
-            */
         }
 
         private void GameInstallPathsComboBox_SelectionChangeCommitted(object sender, EventArgs e)

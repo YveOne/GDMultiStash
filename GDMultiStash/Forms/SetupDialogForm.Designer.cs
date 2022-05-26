@@ -46,6 +46,8 @@
             this.languageLabel = new System.Windows.Forms.Label();
             this.gamePathLabel = new System.Windows.Forms.Label();
             this.behaviourTabPage = new System.Windows.Forms.TabPage();
+            this.autoUpdateCheckBox = new System.Windows.Forms.CheckBox();
+            this.checkVersionCheckBox = new System.Windows.Forms.CheckBox();
             this.autoBackToMainCheckBox = new System.Windows.Forms.CheckBox();
             this.overlayScaleValueLabel = new System.Windows.Forms.Label();
             this.overlayScaleLabel = new System.Windows.Forms.Label();
@@ -84,7 +86,7 @@
             this.setupTabControl.Location = new System.Drawing.Point(0, 0);
             this.setupTabControl.Name = "setupTabControl";
             this.setupTabControl.SelectedIndex = 0;
-            this.setupTabControl.Size = new System.Drawing.Size(554, 288);
+            this.setupTabControl.Size = new System.Drawing.Size(554, 310);
             this.setupTabControl.TabIndex = 0;
             // 
             // commonTabPage
@@ -99,7 +101,7 @@
             this.commonTabPage.Location = new System.Drawing.Point(4, 22);
             this.commonTabPage.Name = "commonTabPage";
             this.commonTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.commonTabPage.Size = new System.Drawing.Size(546, 262);
+            this.commonTabPage.Size = new System.Drawing.Size(546, 284);
             this.commonTabPage.TabIndex = 0;
             this.commonTabPage.Text = "Common";
             this.commonTabPage.UseVisualStyleBackColor = true;
@@ -253,6 +255,8 @@
             // 
             // behaviourTabPage
             // 
+            this.behaviourTabPage.Controls.Add(this.autoUpdateCheckBox);
+            this.behaviourTabPage.Controls.Add(this.checkVersionCheckBox);
             this.behaviourTabPage.Controls.Add(this.autoBackToMainCheckBox);
             this.behaviourTabPage.Controls.Add(this.overlayScaleValueLabel);
             this.behaviourTabPage.Controls.Add(this.overlayScaleLabel);
@@ -269,15 +273,37 @@
             this.behaviourTabPage.Location = new System.Drawing.Point(4, 22);
             this.behaviourTabPage.Name = "behaviourTabPage";
             this.behaviourTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.behaviourTabPage.Size = new System.Drawing.Size(546, 262);
+            this.behaviourTabPage.Size = new System.Drawing.Size(546, 284);
             this.behaviourTabPage.TabIndex = 1;
             this.behaviourTabPage.Text = "Behaviour";
             this.behaviourTabPage.UseVisualStyleBackColor = true;
             // 
+            // autoUpdateCheckBox
+            // 
+            this.autoUpdateCheckBox.AutoSize = true;
+            this.autoUpdateCheckBox.Location = new System.Drawing.Point(23, 156);
+            this.autoUpdateCheckBox.Name = "autoUpdateCheckBox";
+            this.autoUpdateCheckBox.Size = new System.Drawing.Size(159, 17);
+            this.autoUpdateCheckBox.TabIndex = 14;
+            this.autoUpdateCheckBox.Text = "Auto update on new version";
+            this.autoUpdateCheckBox.UseVisualStyleBackColor = true;
+            this.autoUpdateCheckBox.CheckedChanged += new System.EventHandler(this.AutoUpdateCheckBox_CheckedChanged);
+            // 
+            // checkVersionCheckBox
+            // 
+            this.checkVersionCheckBox.AutoSize = true;
+            this.checkVersionCheckBox.Location = new System.Drawing.Point(6, 133);
+            this.checkVersionCheckBox.Name = "checkVersionCheckBox";
+            this.checkVersionCheckBox.Size = new System.Drawing.Size(132, 17);
+            this.checkVersionCheckBox.TabIndex = 13;
+            this.checkVersionCheckBox.Text = "Check for new version";
+            this.checkVersionCheckBox.UseVisualStyleBackColor = true;
+            this.checkVersionCheckBox.CheckedChanged += new System.EventHandler(this.CheckVersionCheckBox_CheckedChanged);
+            // 
             // autoBackToMainCheckBox
             // 
             this.autoBackToMainCheckBox.AutoSize = true;
-            this.autoBackToMainCheckBox.Location = new System.Drawing.Point(6, 200);
+            this.autoBackToMainCheckBox.Location = new System.Drawing.Point(6, 248);
             this.autoBackToMainCheckBox.Name = "autoBackToMainCheckBox";
             this.autoBackToMainCheckBox.Size = new System.Drawing.Size(218, 17);
             this.autoBackToMainCheckBox.TabIndex = 12;
@@ -308,7 +334,7 @@
             // confirmStashDeleteCheckBox
             // 
             this.confirmStashDeleteCheckBox.AutoSize = true;
-            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(6, 177);
+            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(6, 225);
             this.confirmStashDeleteCheckBox.Name = "confirmStashDeleteCheckBox";
             this.confirmStashDeleteCheckBox.Size = new System.Drawing.Size(140, 17);
             this.confirmStashDeleteCheckBox.TabIndex = 2;
@@ -319,8 +345,7 @@
             // closeWithGrimDawnCheckBox
             // 
             this.closeWithGrimDawnCheckBox.AutoSize = true;
-            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(6, 131);
-            this.closeWithGrimDawnCheckBox.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
+            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(6, 179);
             this.closeWithGrimDawnCheckBox.Name = "closeWithGrimDawnCheckBox";
             this.closeWithGrimDawnCheckBox.Size = new System.Drawing.Size(238, 17);
             this.closeWithGrimDawnCheckBox.TabIndex = 1;
@@ -352,7 +377,7 @@
             // confirmClosingCheckBox
             // 
             this.confirmClosingCheckBox.AutoSize = true;
-            this.confirmClosingCheckBox.Location = new System.Drawing.Point(6, 154);
+            this.confirmClosingCheckBox.Location = new System.Drawing.Point(6, 202);
             this.confirmClosingCheckBox.Name = "confirmClosingCheckBox";
             this.confirmClosingCheckBox.Size = new System.Drawing.Size(246, 17);
             this.confirmClosingCheckBox.TabIndex = 0;
@@ -418,7 +443,7 @@
             // 
             this.createShortcutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.createShortcutButton.AutoSize = true;
-            this.createShortcutButton.Location = new System.Drawing.Point(130, 300);
+            this.createShortcutButton.Location = new System.Drawing.Point(130, 322);
             this.createShortcutButton.Name = "createShortcutButton";
             this.createShortcutButton.Size = new System.Drawing.Size(256, 23);
             this.createShortcutButton.TabIndex = 3;
@@ -435,13 +460,13 @@
             this.panel1.Location = new System.Drawing.Point(9, 9);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(554, 288);
+            this.panel1.Size = new System.Drawing.Size(554, 310);
             this.panel1.TabIndex = 1;
             // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(487, 300);
+            this.saveButton.Location = new System.Drawing.Point(487, 322);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 2;
@@ -452,7 +477,7 @@
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(406, 300);
+            this.applyButton.Location = new System.Drawing.Point(406, 322);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 3;
@@ -464,7 +489,7 @@
             // 
             this.restartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.restartButton.AutoSize = true;
-            this.restartButton.Location = new System.Drawing.Point(9, 300);
+            this.restartButton.Location = new System.Drawing.Point(9, 322);
             this.restartButton.Name = "restartButton";
             this.restartButton.Size = new System.Drawing.Size(115, 23);
             this.restartButton.TabIndex = 10;
@@ -476,7 +501,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 330);
+            this.ClientSize = new System.Drawing.Size(572, 352);
             this.Controls.Add(this.createShortcutButton);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.applyButton);
@@ -541,5 +566,7 @@
         private System.Windows.Forms.TrackBar overlayScaleTrackBar;
         private System.Windows.Forms.CheckBox autoBackToMainCheckBox;
         private System.Windows.Forms.ComboBox gameInstallPathsComboBox;
+        private System.Windows.Forms.CheckBox autoUpdateCheckBox;
+        private System.Windows.Forms.CheckBox checkVersionCheckBox;
     }
 }

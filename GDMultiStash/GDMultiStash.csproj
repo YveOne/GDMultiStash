@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,6 +50,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -70,6 +73,7 @@
     <Compile Include="Common\Overlay\Animations\FadeAnimation.cs" />
     <Compile Include="Common\Overlay\Animations\MoveAnimation.cs" />
     <Compile Include="Common\Overlay\ButtonElement.cs" />
+    <Compile Include="Core\Core.Update.cs" />
     <Compile Include="Forms\MainForm\StashesDragHandler.cs" />
     <Compile Include="Forms\MainForm\StashesDragSource.cs" />
     <Compile Include="Forms\MainForm\StashesDropSink.cs" />
@@ -234,6 +238,10 @@
       <Name>GDIALib</Name>
       <EmbedInteropTypes>False</EmbedInteropTypes>
       <Aliases>global</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\GDMultiStashUpdater\GDMultiStashUpdater.csproj">
+      <Project>{68f7f106-747a-458a-9ca1-649e760bac31}</Project>
+      <Name>GDMultiStashUpdater</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

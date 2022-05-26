@@ -97,7 +97,7 @@ namespace GDMultiStash.Forms
             {
                 using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
                 {
-                    foreach(KeyValuePair<string,string> kvp in files2zip)
+                    foreach (KeyValuePair<string,string> kvp in files2zip)
                     {
                         string tFile = kvp.Key;
                         string tName = kvp.Value;

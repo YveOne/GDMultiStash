@@ -61,6 +61,22 @@ namespace GDMultiStash
                 return;
             }
 
+            // check for new version
+            if (Core.Update.NewVersionAvailable())
+            {
+                if (Core.Config.AutoUpdate)
+                {
+                    Core.Update.StartUpdater();
+                    return;
+                }
+                string msg = "New version available: {0}\nUpdate now?".Format(Core.Update.NewVersionName);
+                if (MessageBox.Show(msg, "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
+                {
+                    Core.Update.StartUpdater();
+                    return;
+                }
+            }
+
             // game install path not found? let user choose path
             if (!GrimDawn.ValidGamePath(Core.Config.GamePath))
             {

@@ -18,6 +18,11 @@ namespace GDMultiStash
             static Windows()
             {
 
+                // dont need this
+                //Runtime.CurrentExpansionChanged += delegate {
+                    //MainWindow.UpdateObjects();
+                //};
+
                 Runtime.CurrentModeChanged += delegate {
                     MainWindow.UpdateObjects();
                 };

@@ -33,6 +33,9 @@ namespace GDMultiStash.Common.Config
         [XmlElement("AutoStartGDCommand")] public string AutoStartGDCommand = "";
         [XmlElement("AutoStartGDArguments")] public string AutoStartGDArguments = "";
 
+        [XmlElement("CheckForNewVersion")] public bool CheckForNewVersion = true;
+        [XmlElement("AutoUpdate")] public bool AutoUpdate = false;
+
         [XmlAnyElement("Comment1")] public XmlComment Comment1 = new XmlDocument().CreateComment("Change the following only if you know what you are doing!");
 
         [XmlElement("LastID")] public int LastID = 0; // the first stash will get id 1
@@ -51,6 +54,8 @@ namespace GDMultiStash.Common.Config
         [XmlElement("Main2HCID")] public int Main2HCID = -1;
         [XmlElement("Cur2SCID")] public int Cur2SCID = -1;
         [XmlElement("Cur2HCID")] public int Cur2HCID = -1;
+
+        [XmlElement("LastVersionCheck")] public long LastVersionCheck = 0L;
 
         public ConfigSettingList Copy()
         {
@@ -96,6 +101,9 @@ namespace GDMultiStash.Common.Config
                 Cur2SCID = Cur2SCID,
                 Cur2HCID = Cur2HCID,
 
+                LastVersionCheck = LastVersionCheck,
+                CheckForNewVersion = CheckForNewVersion,
+                AutoUpdate = AutoUpdate,
             };
         }
 
@@ -141,6 +149,9 @@ namespace GDMultiStash.Common.Config
             Cur2SCID = s.Cur2SCID;
             Cur2HCID = s.Cur2HCID;
 
+            LastVersionCheck = s.LastVersionCheck;
+            CheckForNewVersion = s.CheckForNewVersion;
+            AutoUpdate = s.AutoUpdate;
         }
 
     }

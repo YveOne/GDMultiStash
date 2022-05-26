@@ -6,7 +6,10 @@
 /GDIAHook/GDIAHook/x64/*
 /GDIALib/bin/
 /GDIALib/obj/
+/GDMultiStashUpdater/bin/
+/GDMultiStashUpdater/obj/
 /GDMultiStash/Connected Services/
 /GDMultiStash/obj/
 /packages/
 /GDMultiStash.exe
+/x64

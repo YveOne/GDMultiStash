@@ -382,7 +382,23 @@ namespace GDMultiStash
             {
                 get { return _config.Settings.OverlayScale / 100f; }
             }
-            
+
+            public static long LastVersionCheck
+            {
+                get => _config.Settings.LastVersionCheck;
+                set => _config.Settings.LastVersionCheck = value;
+            }
+
+            public static bool CheckForNewVersion
+            {
+                get => _config.Settings.CheckForNewVersion;
+            }
+
+            public static bool AutoUpdate
+            {
+                get => _config.Settings.AutoUpdate;
+            }
+
             #endregion
 
         }
