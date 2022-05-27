@@ -150,6 +150,7 @@ namespace GDMultiStash.Common.Overlay
             MouseClick = null;
             foreach (Element child in _children)
                 child.Destroy();
+            _children.Clear();
         }
 
         public virtual void Begin()

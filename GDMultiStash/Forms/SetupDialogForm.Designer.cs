@@ -86,7 +86,7 @@
             this.setupTabControl.Location = new System.Drawing.Point(0, 0);
             this.setupTabControl.Name = "setupTabControl";
             this.setupTabControl.SelectedIndex = 0;
-            this.setupTabControl.Size = new System.Drawing.Size(554, 310);
+            this.setupTabControl.Size = new System.Drawing.Size(554, 343);
             this.setupTabControl.TabIndex = 0;
             // 
             // commonTabPage
@@ -101,7 +101,7 @@
             this.commonTabPage.Location = new System.Drawing.Point(4, 22);
             this.commonTabPage.Name = "commonTabPage";
             this.commonTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.commonTabPage.Size = new System.Drawing.Size(546, 284);
+            this.commonTabPage.Size = new System.Drawing.Size(546, 317);
             this.commonTabPage.TabIndex = 0;
             this.commonTabPage.Text = "Common";
             this.commonTabPage.UseVisualStyleBackColor = true;
@@ -273,7 +273,7 @@
             this.behaviourTabPage.Location = new System.Drawing.Point(4, 22);
             this.behaviourTabPage.Name = "behaviourTabPage";
             this.behaviourTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.behaviourTabPage.Size = new System.Drawing.Size(546, 284);
+            this.behaviourTabPage.Size = new System.Drawing.Size(546, 317);
             this.behaviourTabPage.TabIndex = 1;
             this.behaviourTabPage.Text = "Behaviour";
             this.behaviourTabPage.UseVisualStyleBackColor = true;
@@ -443,7 +443,7 @@
             // 
             this.createShortcutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.createShortcutButton.AutoSize = true;
-            this.createShortcutButton.Location = new System.Drawing.Point(130, 322);
+            this.createShortcutButton.Location = new System.Drawing.Point(130, 355);
             this.createShortcutButton.Name = "createShortcutButton";
             this.createShortcutButton.Size = new System.Drawing.Size(256, 23);
             this.createShortcutButton.TabIndex = 3;
@@ -460,13 +460,13 @@
             this.panel1.Location = new System.Drawing.Point(9, 9);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(554, 310);
+            this.panel1.Size = new System.Drawing.Size(554, 343);
             this.panel1.TabIndex = 1;
             // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(487, 322);
+            this.saveButton.Location = new System.Drawing.Point(487, 355);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 2;
@@ -477,7 +477,7 @@
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(406, 322);
+            this.applyButton.Location = new System.Drawing.Point(406, 355);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 3;
@@ -489,7 +489,7 @@
             // 
             this.restartButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.restartButton.AutoSize = true;
-            this.restartButton.Location = new System.Drawing.Point(9, 322);
+            this.restartButton.Location = new System.Drawing.Point(9, 355);
             this.restartButton.Name = "restartButton";
             this.restartButton.Size = new System.Drawing.Size(115, 23);
             this.restartButton.TabIndex = 10;
@@ -501,7 +501,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 352);
+            this.ClientSize = new System.Drawing.Size(572, 385);
             this.Controls.Add(this.createShortcutButton);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.applyButton);

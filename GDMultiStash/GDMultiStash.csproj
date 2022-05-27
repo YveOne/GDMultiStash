@@ -110,11 +110,11 @@
     <Compile Include="Forms\AboutDialogForm.Designer.cs">
       <DependentUpon>AboutDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\AddStashDialogForm.cs">
+    <Compile Include="Forms\CreateStashDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\AddStashDialogForm.Designer.cs">
-      <DependentUpon>AddStashDialogForm.cs</DependentUpon>
+    <Compile Include="Forms\CreateStashDialogForm.Designer.cs">
+      <DependentUpon>CreateStashDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\DialogForm.cs">
       <SubType>Form</SubType>
@@ -168,8 +168,8 @@
     <EmbeddedResource Include="Forms\AboutDialogForm.resx">
       <DependentUpon>AboutDialogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\AddStashDialogForm.resx">
-      <DependentUpon>AddStashDialogForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CreateStashDialogForm.resx">
+      <DependentUpon>CreateStashDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DialogForm.resx">
       <DependentUpon>DialogForm.cs</DependentUpon>
@@ -250,6 +250,7 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy  /Y "$(TargetDir)$(ProjectName).exe" "$(SolutionDir)$(ProjectName).exe"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

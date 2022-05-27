@@ -131,9 +131,9 @@ namespace GDMultiStash.Forms
         public override void EndDrag(object dragObject, DragDropEffects effect)
         {
             base.EndDrag(dragObject, effect);
+            DragEnd?.Invoke();
             _draggingStashes.Clear();
             _originalOrderedModels.Clear();
-            DragEnd?.Invoke();
         }
 
     }

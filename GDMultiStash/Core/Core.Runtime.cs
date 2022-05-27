@@ -44,7 +44,20 @@ namespace GDMultiStash
 
             #region ActiveStashID
 
-            public delegate void ActiveStashChangedEventHandler(object sender, EventArgs e);
+            public class ActiveStashChangedEventArgs : EventArgs
+            {
+                private int _oldId;
+                private int _newId;
+                public int OldID => _oldId;
+                public int NewID => _newId;
+                public ActiveStashChangedEventArgs(int oldId, int newID)
+                {
+                    _oldId = oldId;
+                    _newId = newID;
+                }
+            }
+
+            public delegate void ActiveStashChangedEventHandler(object sender, ActiveStashChangedEventArgs e);
             public static event ActiveStashChangedEventHandler ActiveStashChanged;
 
             private static int _activeStashID = -1;
@@ -57,6 +70,7 @@ namespace GDMultiStash
                 set
                 {
                     if (value == _activeStashID) return;
+                    int _previousID = _activeStashID;
                     _activeStashID = value;
                     switch (CurrentExpansion)
                     {
@@ -74,7 +88,7 @@ namespace GDMultiStash
                             break;
                     }
                     Console.WriteLine("Runtime: Active stash changed: " + _activeStashID);
-                    ActiveStashChanged?.Invoke(null, EventArgs.Empty);
+                    ActiveStashChanged?.Invoke(null, new ActiveStashChangedEventArgs(_previousID, _activeStashID));
                 }
             }
 
@@ -104,6 +118,71 @@ namespace GDMultiStash
 
             #region Event: StashesChanged
 
+            public class StashesChangedEventArgs : EventArgs
+            {
+                private IEnumerable<Common.Stash> _stashes;
+                public Common.Stash[] Stashes => _stashes.ToArray();
+                public StashesChangedEventArgs(IEnumerable<Common.Stash> stashes)
+                {
+                    _stashes = stashes;
+                }
+                public StashesChangedEventArgs(Common.Stash stash)
+                {
+                    _stashes = new Common.Stash[] { stash };
+                }
+                public StashesChangedEventArgs()
+                {
+                    _stashes = new Common.Stash[] { };
+                }
+            }
+
+            public delegate void StashesChangedEventHandler(object sender, StashesChangedEventArgs e);
+            public static event StashesChangedEventHandler StashesRearranged;
+            public static event StashesChangedEventHandler StashAdded;
+            public static event StashesChangedEventHandler StashRemoved;
+            public static event StashesChangedEventHandler StashRestored;
+            public static event StashesChangedEventHandler StashModeChanged;
+            public static event StashesChangedEventHandler StashRenamed;
+
+            public static void NotifyStashesRearranged()
+            {
+                StashesRearranged?.Invoke(null, new StashesChangedEventArgs());
+            }
+
+            public static void NotifyStashesAdded(IEnumerable<Common.Stash> stashes)
+            {
+                StashAdded?.Invoke(null, new StashesChangedEventArgs(stashes));
+            }
+
+            public static void NotifyStashesRemoved(IEnumerable<Common.Stash> stashes)
+            {
+                StashRemoved?.Invoke(null, new StashesChangedEventArgs(stashes));
+            }
+
+            public static void NotifyStashesRestored(IEnumerable<Common.Stash> stashes)
+            {
+                StashRestored?.Invoke(null, new StashesChangedEventArgs(stashes));
+            }
+
+            public static void NotifyStashesModeChanged(IEnumerable<Common.Stash> stashes)
+            {
+                StashModeChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
+            }
+
+            public static void NotifyStashesRenamed(IEnumerable<Common.Stash> stashes)
+            {
+                StashRenamed?.Invoke(null, new StashesChangedEventArgs(stashes));
+            }
+
+
+
+
+
+
+
+
+
+            /*
             public delegate void StashesChangedEventHandler(object sender, EventArgs e);
             public static event StashesChangedEventHandler StashesChanged;
 
@@ -111,10 +190,19 @@ namespace GDMultiStash
             {
                 StashesChanged?.Invoke(null, EventArgs.Empty);
             }
+            */
+
+
+
+
+
+
 
             #endregion
 
             #region Event: Window
+
+            // todo: rename to "GameWindow"
 
             public delegate void WindowFocusChangedEventHandler(object sender, EventArgs e);
             public static event WindowFocusChangedEventHandler WindowFocusChanged;
@@ -180,6 +268,18 @@ namespace GDMultiStash
                     WindowSize = new System.Drawing.Size(v.Width, v.Height);
                     _windowLocSizeSet = true;
                 }
+            }
+
+            #endregion
+
+            #region Event: TramsferStashSaved
+
+            public delegate void TransferStashSavedEventHandler(object sender, EventArgs e);
+            public static event TransferStashSavedEventHandler TransferStashSaved;
+
+            public static void NotifyTransferStashSaved()
+            {
+                TransferStashSaved?.Invoke(null, EventArgs.Empty);
             }
 
             #endregion
@@ -258,9 +358,9 @@ namespace GDMultiStash
                 {
                     if (WindowFocused)
                     {
-                        if (_needLoadStash)
+                        if (_reloadOpenedStash)
                         {
-                            _needLoadStash = false;
+                            _reloadOpenedStash = false;
                             new System.Threading.Thread(new System.Threading.ThreadStart(() => {
                                 System.Threading.Thread.Sleep(500);
                                 LoadCurrentStash();
@@ -269,7 +369,8 @@ namespace GDMultiStash
                     }
                 };
 
-                StashStatusChanged += delegate {
+                TransferStashSaved += delegate
+                {
                     if (!_stashOpened && !_stashReopening && Config.AutoBackToMain)
                     {
                         // debug: when stash closed GD could still be writing to transfer file
@@ -281,16 +382,16 @@ namespace GDMultiStash
 
             }
 
-            private static bool _needLoadStash = false;
+            private static bool _reloadOpenedStash = false;
 
             public static bool IsStashOpened(int stashID)
             {
                 return (StashOpened && stashID == ActiveStashID);
             }
 
-            public static void RequestLoadingStash()
+            public static void ReloadOpenedStash()
             {
-                _needLoadStash = true;
+                _reloadOpenedStash = true;
             }
 
             private static bool _stashReopening = false;
@@ -306,11 +407,12 @@ namespace GDMultiStash
                     Application.DoEvents();
                 }
             }
+
             private static void WaitForStashWritten()
             {
                 string transferFile = GrimDawn.GetTransferFile(_currentExpansion, _currentMode);
                 DateTime timeout = DateTime.Now.AddMilliseconds(-200);
-                WaitFor(1000, () =>
+                WaitFor(500, () =>
                 {
                     return File.GetLastWriteTime(transferFile) >= timeout;
                 }, 1);

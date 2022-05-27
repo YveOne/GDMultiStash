@@ -169,6 +169,7 @@ namespace GDMultiStash
             _gdGameHookService.StashStatusChanged += GDGameHook_StashStatusChanged;
             _gdGameHookService.ModeStatusChanged += GDGameHook_ModeStatusChanged;
             _gdGameHookService.ExpansionChanged += GDGameHook_ExpansionStatusChanged;
+            _gdGameHookService.TransferStashSaved += GDGameHook_TransferStashSaved;
 
             _gdOverlayService.FrameDrawing += D3DHook_FrameDrawing;
 
@@ -277,6 +278,11 @@ namespace GDMultiStash
         private void GDGameHook_ExpansionStatusChanged(object sender, GDGameHookService.ExpansionChangedEventArgs e)
         {
             Core.Runtime.CurrentExpansion = (GrimDawnGameExpansion)e.ExpansionID;
+        }
+
+        private void GDGameHook_TransferStashSaved(object sender, EventArgs e)
+        {
+            Core.Runtime.NotifyTransferStashSaved();
         }
 
         #endregion

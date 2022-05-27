@@ -87,20 +87,23 @@ namespace GDMultiStash.Overlay.Elements
             };
 
 
-            
 
 
 
 
 
-            Core.Runtime.ActiveStashChanged += delegate {
-                _stashList.UpdateList();
-            };
-            Core.Runtime.StashesChanged += delegate {
-                _stashList.RebuildList();
-                _stashList.Scrollindex = 0;
-                _scrollBar.ScrollUnitsY = 0;
-            };
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             Alpha = fadeMin;

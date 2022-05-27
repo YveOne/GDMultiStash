@@ -295,7 +295,7 @@ namespace GDMultiStash.Forms
                 UpdateObjects();
                 Core.Config.Save();
 
-                Core.Runtime.NotifyStashesChanged();
+                Core.Runtime.NotifyStashesRearranged();
                 stashesListView.Sort();
             };
 
@@ -502,10 +502,10 @@ namespace GDMultiStash.Forms
                     return new ToolStripMenuItem(itemText, null, delegate (object s, EventArgs e) {
                         if (Core.Runtime.IsStashOpened(stash.ID))
                         {
-                            Core.Runtime.RequestLoadingStash();
+                            Core.Runtime.ReloadOpenedStash();
                         }
                         Core.Stashes.RestoreTransferFile(stash.ID, file);
-                        Core.Runtime.NotifyStashesChanged();
+                        Core.Runtime.NotifyStashesRestored(new Common.Stash[] { stash });
                     });
                 }));
                 if (restoreButtn.DropDownItems.Count == 0)
@@ -547,26 +547,26 @@ namespace GDMultiStash.Forms
                 menu.Items.Add(L["delete_stash"], null, delegate (object s, EventArgs e) {
                     if (Core.Config.ConfirmStashDelete && !ShowStashDeleteWarning()) return;
 
+                    List<Common.Stash> deletedStashes = new List<Common.Stash>();
                     foreach (Common.Stash stash2delete in selectedStashes)
                     {
-                        int stashId = stash2delete.ID;
-
-                        if (Core.Config.IsMainStashID(stashId))
+                        if (Core.Config.IsMainStashID(stash2delete.ID))
                         {
                             // TODO: show warning?
                             continue;
                         }
 
-                        if (Core.Config.IsCurStashID(stashId))
+                        if (Core.Config.IsCurStashID(stash2delete.ID))
                         {
                             MessageBox.Show(string.Format(_err_cannot_delete_stash, stash2delete.Name, _err_stash_is_active), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             continue;
                         }
 
-                        Core.Stashes.DeleteStash(stashId);
-                        Core.Runtime.NotifyStashesChanged();
+                        Core.Stashes.DeleteStash(stash2delete.ID);
+                        deletedStashes.Add(stash2delete);
                     }
                     Core.Config.Save();
+                    Core.Runtime.NotifyStashesRemoved(deletedStashes);
                     UpdateObjects();
                 });
             }
@@ -592,14 +592,14 @@ namespace GDMultiStash.Forms
                     break;
             }
             Core.Config.Save();
-            Core.Runtime.NotifyStashesChanged();
+            Core.Runtime.NotifyStashesModeChanged(new Common.Stash[] { stash });
         }
 
         private void StashesListView_CellEditFinished(object sender, CellEditEventArgs args)
         {
-            //Common.Stash stash = (Common.Stash)args.RowObject;
+            Common.Stash stash = (Common.Stash)args.RowObject;
             Core.Config.Save();
-            Core.Runtime.NotifyStashesChanged();
+            Core.Runtime.NotifyStashesRenamed(new Common.Stash[] { stash });
         }
 
         #endregion
@@ -632,20 +632,12 @@ namespace GDMultiStash.Forms
 
         private void ImportStashesButton_Click(object sender, EventArgs e)
         {
-            if (Core.Windows.ShowImportDialog() == DialogResult.OK)
-            {
-                Core.Config.Save();
-                Core.Runtime.NotifyStashesChanged();
-            }
+            Core.Windows.ShowImportDialog();
         }
 
         private void CreateStashButton_Click(object sender, EventArgs e)
         {
-            if (Core.Windows.ShowAddStashDialog() == DialogResult.OK)
-            {
-                Core.Config.Save();
-                Core.Runtime.NotifyStashesChanged();
-            }
+            Core.Windows.ShowCreateStashDialog();
         }
 
 

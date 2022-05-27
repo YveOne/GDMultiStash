@@ -1,6 +1,6 @@
 ﻿namespace GDMultiStash.Forms
 {
-    partial class AddStashDialogForm
+    partial class CreateStashDialogForm
     {
         /// <summary>
         /// Required designer variable.

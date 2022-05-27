@@ -107,6 +107,8 @@ namespace GDMultiStash.Forms
 
         #region Dialog
 
+        private readonly List<Common.Stash> _importedStashes = new List<Common.Stash>();
+
         public DialogResult ShowDialog(IWin32Window owner, string srcFile)
         {
             if (!File.Exists(srcFile)) return DialogResult.None;
@@ -140,6 +142,7 @@ namespace GDMultiStash.Forms
             DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;
 
+            Common.Stash stash = null;
             if (overwriteCheckBox.Checked)
             {
                 if (overwriteComboBox.SelectedIndex == -1)
@@ -147,21 +150,50 @@ namespace GDMultiStash.Forms
                     MessageBox.Show(_err_no_stash_selected, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return DialogResult.None;
                 }
-                Core.Stashes.ImportOverwriteStash(srcFile, (int)overwriteComboBox.SelectedValue);
+                stash = Core.Stashes.ImportOverwriteStash(srcFile, (int)overwriteComboBox.SelectedValue);
             }
             else
             {
                 GrimDawnGameMode mode = GrimDawnGameMode.None;
                 if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
                 if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
-                Core.Stashes.ImportStash(srcFile, nameTextBox.Text, env.Expansion, mode);
+                stash = Core.Stashes.ImportStash(srcFile, nameTextBox.Text, env.Expansion, mode);
+            }
+            if (stash != null)
+            {
+                _importedStashes.Add(stash);
             }
 
             return result;
         }
 
-        public DialogResult ShowDialog(IWin32Window owner, IEnumerable<string> files)
+
+
+
+
+        public DialogResult ShowDialog(IWin32Window owner, out Common.Stash[] importedStashes)
         {
+            importedStashes = null;
+            string filter = string.Join(";", GrimDawn.GetAllTransferExtensions().Select(ext => "*" + ext));
+
+            using (var dialog = new OpenFileDialog()
+            {
+                Filter = "Transfer File|" + filter,
+                Multiselect = true,
+            })
+            {
+                DialogResult result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    return ShowDialog(owner, dialog.FileNames, out importedStashes);
+                }
+            }
+            return DialogResult.Cancel;
+        }
+
+        public DialogResult ShowDialog(IWin32Window owner, IEnumerable<string> files, out Common.Stash[] importedStashes)
+        {
+            importedStashes = null;
             if (files.Count() != 0)
             {
                 string[] okExt = GrimDawn.GetAllTransferExtensions();
@@ -174,26 +206,11 @@ namespace GDMultiStash.Forms
                     }
                     ShowDialog(owner, srcFile);
                 }
+
+                importedStashes = _importedStashes.ToArray();
+                _importedStashes.Clear();
+
                 return DialogResult.OK;
-            }
-            return DialogResult.Cancel;
-        }
-
-        public override DialogResult ShowDialog(IWin32Window owner)
-        {
-            string filter = string.Join(";", GrimDawn.GetAllTransferExtensions().Select(ext => "*" + ext));
-
-            using (var dialog = new OpenFileDialog()
-            {
-                Filter = "Transfer File|" + filter,
-                Multiselect = true,
-            })
-            {
-                DialogResult result = dialog.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    return ShowDialog(owner, dialog.FileNames);
-                }
             }
             return DialogResult.Cancel;
         }

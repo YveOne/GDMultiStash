@@ -11,7 +11,7 @@ namespace GDMultiStash
 
             private static readonly Forms.SetupDialogForm SetupWindow = new Forms.SetupDialogForm();
             private static readonly Forms.AboutDialogForm AboutWindow = new Forms.AboutDialogForm();
-            private static readonly Forms.AddStashDialogForm AddStashWindow = new Forms.AddStashDialogForm();
+            private static readonly Forms.CreateStashDialogForm CreateStashWindow = new Forms.CreateStashDialogForm();
             private static readonly Forms.ImportDialogForm ImportWindow = new Forms.ImportDialogForm();
             private static readonly Forms.MainForm MainWindow = new Forms.MainForm();
 
@@ -27,7 +27,11 @@ namespace GDMultiStash
                     MainWindow.UpdateObjects();
                 };
 
-                Runtime.StashesChanged += delegate {
+                Runtime.StashAdded += delegate {
+                    MainWindow.UpdateObjects();
+                };
+
+                Runtime.StashRemoved += delegate {
                     MainWindow.UpdateObjects();
                 };
 
@@ -55,7 +59,7 @@ namespace GDMultiStash
                 SetupWindow.Localize();
                 MainWindow.Localize();
                 AboutWindow.Localize();
-                AddStashWindow.Localize();
+                CreateStashWindow.Localize();
             }
             
             public static void ShowMainWindow()
@@ -65,44 +69,56 @@ namespace GDMultiStash
                 MainWindow.Show();
             }
 
-            public static DialogResult ShowSetupDialog(bool isFirstSetup = false)
+            public static void ShowSetupDialog(bool isFirstSetup = false)
             {
-                if (SetupWindow.Visible) return DialogResult.None;
+                if (SetupWindow.Visible) return;
                 SetupWindow.StartPosition = MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
                 IWin32Window owner = MainWindow.Visible ? MainWindow : null;
-                return SetupWindow.ShowDialog(owner, isFirstSetup);
+                SetupWindow.ShowDialog(owner, isFirstSetup);
             }
 
-            public static DialogResult ShowAboutDialog()
+            public static void ShowAboutDialog()
             {
-                if (AboutWindow.Visible) return DialogResult.None;
+                if (AboutWindow.Visible) return;
                 AboutWindow.StartPosition = MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
                 IWin32Window owner = MainWindow.Visible ? MainWindow : null;
-                return AboutWindow.ShowDialog(owner);
+                AboutWindow.ShowDialog(owner);
             }
 
-            public static DialogResult ShowAddStashDialog()
+            public static void ShowCreateStashDialog()
             {
-                if (AddStashWindow.Visible) return DialogResult.None;
-                AddStashWindow.StartPosition = MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
+                if (CreateStashWindow.Visible) return;
+                CreateStashWindow.StartPosition = MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
                 IWin32Window owner = MainWindow.Visible ? MainWindow : null;
-                return AddStashWindow.ShowDialog(owner);
+                if (CreateStashWindow.ShowDialog(owner, out Common.Stash[] stashes) == DialogResult.OK)
+                {
+                    Config.Save();
+                    Runtime.NotifyStashesAdded(stashes);
+                }
             }
 
-            public static DialogResult ShowImportDialog()
+            public static void ShowImportDialog()
             {
-                if (ImportWindow.Visible) return DialogResult.None;
+                if (ImportWindow.Visible) return;
                 ImportWindow.StartPosition = MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
                 IWin32Window owner = MainWindow.Visible ? MainWindow : null;
-                return ImportWindow.ShowDialog(owner);
+                if (ImportWindow.ShowDialog(owner, out Common.Stash[] stashes) == DialogResult.OK)
+                {
+                    Config.Save();
+                    Runtime.NotifyStashesAdded(stashes);
+                }
             }
 
-            public static DialogResult ShowImportDialog(IEnumerable<string> files)
+            public static void ShowImportDialog(IEnumerable<string> files)
             {
-                if (ImportWindow.Visible) return DialogResult.None;
+                if (ImportWindow.Visible) return;
                 ImportWindow.StartPosition = MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
                 IWin32Window owner = MainWindow.Visible ? MainWindow : null;
-                return ImportWindow.ShowDialog(owner, files);
+                if (ImportWindow.ShowDialog(owner, files, out Common.Stash[] stashes) == DialogResult.OK)
+                {
+                    Config.Save();
+                    Runtime.NotifyStashesAdded(stashes);
+                }
             }
 
 

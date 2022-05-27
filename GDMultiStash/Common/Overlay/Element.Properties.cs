@@ -175,9 +175,11 @@ namespace GDMultiStash.Common.Overlay
                 _x = value;
 
                 float _xTotalLast = _xTotal;
-                _xTotal = _x * _scaleTotal;
+                _xTotal = _x;
                 if (_parent != null)
                 {
+                    _xTotal *= _parent._scaleTotal;
+
                     float addAnchorPointX = 0;
                     float addParentPointX = 0;
                     switch (_anchorPointX)
@@ -227,9 +229,11 @@ namespace GDMultiStash.Common.Overlay
                 _y = value;
 
                 float _yTotalLast = _yTotal;
-                _yTotal = _y * _scaleTotal;
+                _yTotal = _y;
                 if (_parent != null)
                 {
+                    _yTotal *= _parent._scaleTotal;
+
                     float addAnchorPointY = 0;
                     float addParentPointY = 0;
                     switch (_anchorPointY)

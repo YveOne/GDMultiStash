@@ -21,45 +21,75 @@ namespace GDMultiStash.Common.Overlay
 
         public TextElement()
         {
+            _imageElement = new ImageElement();
+            AddChild(_imageElement);
         }
+
+        private static readonly int recreateMaxPerFrame = 100; 
+        private static int _recreatedThisFrame = 0;
+        private static readonly Dictionary<string, D3DHook.Hook.Common.IImageResource> _resourceCache = new Dictionary<string, D3DHook.Hook.Common.IImageResource>();
 
         public override void Draw(float ms)
         {
             base.Draw(ms);
             if (_needRecreate)
             {
-
+                if (_recreatedThisFrame >= recreateMaxPerFrame) return;
                 if (TotalWidth <= 0 || TotalHeight <= 0) return;
                 _needRecreate = false;
+                _recreatedThisFrame += 1;
 
                 int useWidth = (int)(TotalWidth / TotalScale);
                 int useHeight = (int)(TotalHeight / TotalScale);
 
-                using (Bitmap bmp = new Bitmap(useWidth, useHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+                string resKey = string.Format("{0};{1};{2};{3};{4};{5};{6};{7}",
+                    _font.Name,
+                    _font.Bold ? 1 : 0,
+                    _font.Italic ? 1 : 0,
+                    _text,
+                    useWidth,
+                    useHeight,
+                    _color.ToString(),
+                    _alignment.ToString()
+                    );
+
+                if (_resourceCache.ContainsKey(resKey))
                 {
-                    Graphics g = Graphics.FromImage(bmp);
-                    var brush = new SolidBrush(_color);
-                    using (StringFormat sf = new StringFormat()
+                    _imageElement.Resource = _resourceCache[resKey];
+                }
+                else
+                {
+                    using (Bitmap bmp = new Bitmap(useWidth, useHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
                     {
-                        Alignment = _alignment,
-                        LineAlignment = StringAlignment.Center,
-                        Trimming = StringTrimming.None,
-                        FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.NoClip,
-                    })
-                    {
-                        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
-                        g.DrawString(_text, _font, brush, new Rectangle(0, 0, bmp.Width, bmp.Height), sf);
+                        Graphics g = Graphics.FromImage(bmp);
+                        var brush = new SolidBrush(_color);
+                        using (StringFormat sf = new StringFormat()
+                        {
+                            Alignment = _alignment,
+                            LineAlignment = StringAlignment.Center,
+                            Trimming = StringTrimming.None,
+                            FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.NoClip,
+                        })
+                        {
+                            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                            g.DrawString(_text, _font, brush, new Rectangle(0, 0, bmp.Width, bmp.Height), sf);
+                        }
+
+                        //bmp.Save(System.Windows.Forms.Application.StartupPath+"\\..\\"+ID+".png");
+
+                        _imageElement.Resource = GetViewport().Resources.CreateImageResource(bmp);
+                        _resourceCache.Add(resKey, _imageElement.Resource);
+
+                        /*
+                        ClearChildren();
+                        _imageElement = new ImageElement()
+                        {
+                            Resource = GetViewport().Resources.CreateImageResource(bmp),
+                            ZIndex = _zIndex,
+                        };
+                        AddChild(_imageElement);
+                        */
                     }
-
-                    //bmp.Save(System.Windows.Forms.Application.StartupPath+"\\..\\"+ID+".png");
-
-                    ClearChildren();
-                    _imageElement = new ImageElement()
-                    {
-                        Resource = GetViewport().Resources.CreateImageResource(bmp),
-                        ZIndex = _zIndex,
-                    };
-                    AddChild(_imageElement);
                 }
             }
         }
@@ -71,18 +101,6 @@ namespace GDMultiStash.Common.Overlay
 
 
 
-        public int ZIndex
-        {
-            get { return _zIndex; }
-            set
-            {
-                _zIndex = value;
-                if (_imageElement != null)
-                    _imageElement.ZIndex = _zIndex;
-                Redraw();
-            }
-        }
-
 
 
 
@@ -93,6 +111,7 @@ namespace GDMultiStash.Common.Overlay
         {
             base.End();
             if (ResetHeight || ResetScale || ResetWidth) _needRecreate = true;
+            _recreatedThisFrame = 0;
         }
 
 
@@ -109,6 +128,7 @@ namespace GDMultiStash.Common.Overlay
             get { return _font; }
             set
             {
+                if (_font == value) return;
                 _font = value;
                 _needRecreate = true;
             }
@@ -119,6 +139,7 @@ namespace GDMultiStash.Common.Overlay
             get { return _color; }
             set
             {
+                if (_color == value) return;
                 _color = value;
                 _needRecreate = true;
             }
@@ -129,6 +150,7 @@ namespace GDMultiStash.Common.Overlay
             get { return _alignment; }
             set
             {
+                if (_alignment == value) return;
                 _alignment = value;
                 _needRecreate = true;
             }
@@ -139,14 +161,28 @@ namespace GDMultiStash.Common.Overlay
             get { return _text; }
             set
             {
+                if (_text == value) return;
                 _text = value;
                 _needRecreate = true;
             }
         }
 
-        
-        
-        
+        public int ZIndex
+        {
+            get { return _zIndex; }
+            set
+            {
+                if (_zIndex == value) return;
+                _zIndex = value;
+                if (_imageElement != null)
+                    _imageElement.ZIndex = _zIndex;
+                Redraw();
+            }
+        }
+
+
+
+
 
 
 

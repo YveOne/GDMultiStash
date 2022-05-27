@@ -27,7 +27,7 @@ namespace GDMultiStash.Common.Overlay
 
         private readonly List<T> _scrollChildren;
 
-        private int _maxChildCount = 0;
+        private int _maxVisibleCount = 0;
         private int _scrollIndex = 0;
         private readonly List<T> _cache;
 
@@ -43,7 +43,7 @@ namespace GDMultiStash.Common.Overlay
         {
             get => _scrollIndex;
             set {
-                int min = _maxChildCount - _scrollChildren.Count;
+                int min = _maxVisibleCount - _scrollChildren.Count;
                 if (value < min) value = min;
                 if (value > 0) value = 0;
                 _scrollIndex = value;
@@ -51,12 +51,11 @@ namespace GDMultiStash.Common.Overlay
             }
         }
 
-        public int MaxChildCount
+        public int MaxVisibleCount
         {
-            get { return _maxChildCount; }
+            get { return _maxVisibleCount; }
             set {
-                _maxChildCount = value;
-                Height = (ItemHeight + ItemMargin) * value + ItemMargin;
+                _maxVisibleCount = value;
                 Redraw();
             }
         }
@@ -94,39 +93,40 @@ namespace GDMultiStash.Common.Overlay
             _scrollChildren.Clear();
         }
 
-        private bool _reorderChildren = false;
+        private bool _updateList = false;
 
         public virtual void UpdateList()
         {
-            _reorderChildren = true;
+            _updateList = true;
         }
 
         public override void Draw(float ms)
         {
             base.Draw(ms);
-            if (_reorderChildren)
+            if (_updateList)
             {
-                _reorderChildren = false;
+                _updateList = false;
 
-                if (_scrollChildren.Count <= _maxChildCount)
+                if (_scrollChildren.Count <= _maxVisibleCount)
                     _scrollIndex = 0;
                 
                 int startIndex = -_scrollIndex;
-                int endIndex = startIndex + _maxChildCount - 1;
+                int endIndex = startIndex + _maxVisibleCount - 1;
+                float baseY = _scrollIndex * (ItemHeight + ItemMargin) + ItemMargin;
+
+                _scrollChildren.Sort((a, b) => a.Order.CompareTo(b.Order));
 
 
-                float y = _scrollIndex * (ItemHeight + ItemMargin) + ItemMargin;
 
-                _scrollChildren.Sort((a, b) => { 
-                    return a.Order - b.Order;
-                });
+
+
 
                 int i = 0;
                 foreach (T t in _scrollChildren)
                 {
                     if (!t.Visible) continue;
                     t.X = 0;
-                    t.Y = y + i * (ItemHeight + ItemMargin);
+                    t.Y = baseY + i * (ItemHeight + ItemMargin);
                     t.Visible = i >= startIndex && i <= endIndex;
                     i += 1;
                 }

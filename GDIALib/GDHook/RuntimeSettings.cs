@@ -18,10 +18,18 @@ namespace GDIALib.GDHook
         public delegate void FatalErrorEventHandler(object sender, string message);
         public static event FatalErrorEventHandler FatalError;
 
+        public delegate void TransferStashSavedEventHandler(object sender);
+        public static event TransferStashSavedEventHandler TransferStashSaved;
+
         private static volatile StashAvailability _stashStatus = StashAvailability.UNKNOWN;
         private static volatile bool _isHC = false;
         private static volatile bool _isHCKnown = false;
         private static volatile int _expID = -1;
+
+        public static void NoticeTransferStashSaved()
+        {
+            TransferStashSaved?.Invoke(null);
+        }
 
         public static StashAvailability StashStatus
         {

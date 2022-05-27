@@ -33,6 +33,9 @@ namespace GDMultiStash.Services
         public delegate void ExpansionChangedEventHandler(object sender, ExpansionChangedEventArgs e);
         public event ExpansionChangedEventHandler ExpansionChanged;
 
+        public delegate void TransferStashSavedEventHandler(object sender, EventArgs e);
+        public event TransferStashSavedEventHandler TransferStashSaved;
+
         private readonly InjectionTargetForm _targetForm;
 
         public GDGameHookService()
@@ -58,6 +61,10 @@ namespace GDMultiStash.Services
                 {
                     ExpansionID = expID,
                 });
+            };
+            RuntimeSettings.TransferStashSaved += delegate (object sender)
+            {
+                TransferStashSaved?.Invoke(sender, EventArgs.Empty);
             };
         }
 

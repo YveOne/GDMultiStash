@@ -12,13 +12,13 @@ using GrimDawnLib;
 
 namespace GDMultiStash.Forms
 {
-    internal partial class AddStashDialogForm : DialogForm
+    internal partial class CreateStashDialogForm : DialogForm
     {
 
         private string _newStashName;
         private int _lastSelectedExpansionIndex = -1;
 
-        public AddStashDialogForm()
+        public CreateStashDialogForm()
         {
             InitializeComponent();
             expansionComboBox.SelectionChangeCommitted += expansionComboBox_SelectionChangeCommitted;
@@ -58,19 +58,30 @@ namespace GDMultiStash.Forms
 
 
         
+        private readonly List<Common.Stash> _createdStashes = new List<Common.Stash>();
 
 
-
-        public override DialogResult ShowDialog(IWin32Window owner)
+        public DialogResult ShowDialog(IWin32Window owner, out Common.Stash[] createdStashes)
         {
-            return base.ShowDialog(owner);
+            createdStashes = null;
+            bool loop = true;
+            while (loop)
+                if (base.ShowDialog(owner) != DialogResult.OK)
+                    loop = false;
+            if (_createdStashes.Count != 0)
+            {
+                createdStashes = _createdStashes.ToArray();
+                _createdStashes.Clear();
+                return DialogResult.OK;
+            }
+            return DialogResult.Cancel;
         }
 
         private void OkButton_Click(object sender, EventArgs e)
         {
             GrimDawnGameExpansion exp = (GrimDawnGameExpansion)_lastSelectedExpansionIndex;
-            Core.Stashes.CreateStash(nameTextBox.Text, exp, GrimDawnGameMode.None);
-            Core.Config.Save();
+            Common.Stash stash = Core.Stashes.CreateStash(nameTextBox.Text, exp, GrimDawnGameMode.None);
+            _createdStashes.Add(stash);
             Close(DialogResult.OK);
         }
 

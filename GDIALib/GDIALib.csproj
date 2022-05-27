@@ -54,6 +54,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GDHook\ModeStatusHandler.cs" />
+    <Compile Include="GDHook\SaveTransferStashHandler.cs" />
     <Compile Include="GDHook\StashStatusHandler.cs" />
     <Compile Include="GDHook\MessageType.cs" />
     <Compile Include="Parser\Stash\Block.cs" />

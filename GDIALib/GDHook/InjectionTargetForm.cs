@@ -23,6 +23,7 @@ namespace GDIALib.GDHook
 
         public InjectionTargetForm() : base()
         {
+            _messageProcessors.Add(new SaveTransferStashHandler());
             _messageProcessors.Add(new StashStatusHandler());
             _messageProcessors.Add(new ModeStatusHandler());
             _messageProcessors.Add(new ExpansionStatusHandler());
