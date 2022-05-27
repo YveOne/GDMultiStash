@@ -18,7 +18,7 @@ namespace GDMultiStash.Forms
     internal partial class SetupDialogForm : DialogForm
     {
 
-        private Common.Config.ConfigSettingList _settings;
+        private Common.Config.ConfigSettingList _settings = null;
 
         private readonly Dictionary<string, string> _autoStartCommandsList = new Dictionary<string, string>();
         private readonly Dictionary<string, string> _autoStartArgumentsList = new Dictionary<string, string>();
@@ -123,17 +123,13 @@ namespace GDMultiStash.Forms
             { 3, "Both" },
         };
 
-
-
-
         private void UpdateDefaultStashModeList()
         {
             if (_settings == null) return; // not loaded yet
-            defaultStashModeCheckBox.DataSource = null;
-            defaultStashModeCheckBox.DataSource = new BindingSource(_defaultStashModeList, null);
-            defaultStashModeCheckBox.SelectedIndex = _settings.DefaultStashMode;
             defaultStashModeCheckBox.DisplayMember = "Value";
             defaultStashModeCheckBox.ValueMember = "Key";
+            defaultStashModeCheckBox.DataSource = new BindingSource(_defaultStashModeList, null);
+            defaultStashModeCheckBox.SelectedValue = _settings.DefaultStashMode;
         }
         private void UpdateGameInstallPathsList()
         {

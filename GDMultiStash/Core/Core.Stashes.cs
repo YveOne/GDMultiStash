@@ -39,7 +39,7 @@ namespace GDMultiStash
                 return stash.ID;
             }
 
-            public static void LoadStashes()
+            public static void CreateMainStashes()
             {
                 int stashID;
                 if (Config.IsNew)
@@ -99,8 +99,10 @@ namespace GDMultiStash
                         Config.Save();
                     }
                 }
+            }
 
-                Console.WriteLine("Loading Stashes:");
+            public static void LoadStashes()
+            {
                 foreach (Common.Config.ConfigStash cfgStash in Config.GetStashes())
                 {
                     Console.WriteLine(string.Format(@"#{0} {1}", cfgStash.ID, cfgStash.Name));
@@ -109,10 +111,7 @@ namespace GDMultiStash
                     stash.LoadTransferFile();
                     if (!stash.TransferFileExists())
                     {
-
                         System.Windows.Forms.MessageBox.Show("transfer file missing for stash #{0} {1}".Format(stash.ID.ToString(), stash.Name));
-
-
                     }
                 }
             }
