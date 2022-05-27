@@ -54,6 +54,7 @@ label_overlay_scale = Overlay Größe:
 label_auto_back_to_main = Wechsel zum Haupt-Stash wenn Stash geschlossen wurde
 label_check_for_new_version = Überprüfe auf neue Version beim Start
 label_auto_update_version = Automatisches Updaten wenn neue Version verfügbar
+label_default_stash_mode = Standard Mode für neue Stashes
 
 confirm_closing = Grim Dawn läuft noch!\nDennoch schließen?
 confirm_delete_stash = Ausgewählte Stashes löschen?\nDies kann nicht rückgängig gemacht werden!
@@ -72,13 +73,17 @@ column_id = ID
 column_name = Name
 column_usage = Voll
 column_last_change = Letzte Änderung
+column_color = Farbe
 
 create_stash = Stash erstellen
 import_stashes = Importieren
 restore_backup = Backup wiederherstellen
-export_stash = Exportieren
 delete_stash = Löschen
 no_backups = (Keine Backups)
 
-load = Laden
-save = Speichern
+context_export = Exportieren
+
+mode_none = Keins
+mode_sc = SC
+mode_hc = HC
+mode_both = Beide

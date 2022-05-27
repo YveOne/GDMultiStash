@@ -38,6 +38,7 @@ namespace GDMultiStash.Forms
             languageListView.ItemCheck += LanguageListView_ItemCheck;
             autoStartGDCommandComboBox.SelectionChangeCommitted += AutoStartGDCommandComboBox_SelectionChangeCommitted;
             gameInstallPathsComboBox.SelectionChangeCommitted += GameInstallPathsComboBox_SelectionChangeCommitted;
+            defaultStashModeCheckBox.SelectionChangeCommitted += DefaultStashModeCheckBox_SelectionChangeCommitted;
 
             setupTabControl.GotFocus += delegate {
                 setupTabControl.Enabled = false;
@@ -81,6 +82,8 @@ namespace GDMultiStash.Forms
             autoUpdateCheckBox.Checked = _settings.AutoUpdate;
             autoUpdateCheckBox.Enabled = checkVersionCheckBox.Checked;
 
+            applyButton.Enabled = false;
+
             maxBackupsTrackBar.Value = Math.Max(
                 maxBackupsTrackBar.Minimum,
                 Math.Min(
@@ -102,20 +105,36 @@ namespace GDMultiStash.Forms
 
             UpdateGameInstallPathsList();
             UpdateAutoStartCommandList();
+            UpdateDefaultStashModeList();
 
             UpdateMaxBackupsValueLabel();
             UpdateOverlayWidthValueLabel();
             UpdateOverlayScaleValueLabel();
 
-            applyButton.Enabled = false;
+
+
+
         }
 
+        private Dictionary<int, string> _defaultStashModeList = new Dictionary<int, string> {
+            { 0, "None" },
+            { 1, "SC" },
+            { 2, "HC" },
+            { 3, "Both" },
+        };
 
 
 
 
-
-
+        private void UpdateDefaultStashModeList()
+        {
+            if (_settings == null) return; // not loaded yet
+            defaultStashModeCheckBox.DataSource = null;
+            defaultStashModeCheckBox.DataSource = new BindingSource(_defaultStashModeList, null);
+            defaultStashModeCheckBox.SelectedIndex = _settings.DefaultStashMode;
+            defaultStashModeCheckBox.DisplayMember = "Value";
+            defaultStashModeCheckBox.ValueMember = "Key";
+        }
         private void UpdateGameInstallPathsList()
         {
             gameInstallPathsComboBox.DataSource = null;
@@ -311,6 +330,13 @@ namespace GDMultiStash.Forms
             autoBackToMainCheckBox.Text = L["label_auto_back_to_main"];
             checkVersionCheckBox.Text = L["label_check_for_new_version"];
             autoUpdateCheckBox.Text = L["label_auto_update_version"];
+            defaultStashModeLabel.Text = L["label_default_stash_mode"];
+
+            _defaultStashModeList[0] = L["mode_none"];
+            _defaultStashModeList[1] = L["mode_sc"];
+            _defaultStashModeList[2] = L["mode_hc"];
+            _defaultStashModeList[3] = L["mode_both"];
+            UpdateDefaultStashModeList();
 
             _notice_shortcut_created = L["notice_shortcut_created"];
             _err_gd_already_running = L["err_gd_already_running"];
@@ -459,6 +485,13 @@ namespace GDMultiStash.Forms
             autoStartGDArgumentsTextBox.Text = _autoStartArgumentsList[command];
             applyButton.Enabled = true;
         }
+
+        private void DefaultStashModeCheckBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            _settings.DefaultStashMode = defaultStashModeCheckBox.SelectedIndex;
+            applyButton.Enabled = true;
+        }
+
 
         private void AutoStartGDArgumentsTextBox_TextChanged(object sender, EventArgs e)
         {

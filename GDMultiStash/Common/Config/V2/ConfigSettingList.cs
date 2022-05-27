@@ -36,6 +36,8 @@ namespace GDMultiStash.Common.Config
         [XmlElement("CheckForNewVersion")] public bool CheckForNewVersion = true;
         [XmlElement("AutoUpdate")] public bool AutoUpdate = false;
 
+        [XmlElement("DefaultStashMode")] public int DefaultStashMode = 0;
+
         [XmlAnyElement("Comment1")] public XmlComment Comment1 = new XmlDocument().CreateComment("Change the following only if you know what you are doing!");
 
         [XmlElement("LastID")] public int LastID = 0; // the first stash will get id 1
@@ -81,6 +83,8 @@ namespace GDMultiStash.Common.Config
                 AutoStartGD = AutoStartGD,
                 AutoStartGDCommand = AutoStartGDCommand,
                 AutoStartGDArguments = AutoStartGDArguments,
+
+                DefaultStashMode = DefaultStashMode,
 
                 Comment1 = Comment1,
 
@@ -129,6 +133,8 @@ namespace GDMultiStash.Common.Config
             AutoStartGD = s.AutoStartGD;
             AutoStartGDCommand = s.AutoStartGDCommand;
             AutoStartGDArguments = s.AutoStartGDArguments;
+
+            DefaultStashMode = s.DefaultStashMode;
 
             Comment1 = s.Comment1;
 

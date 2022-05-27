@@ -2,6 +2,21 @@
 v1.10
 - Now Stash will be switched to main only when whole ingame stash window closed
 - Updated whole overlay list system
+- Fixed Drag&Drop of files into listview
+- Fixed Drag&Drop of transfer files without extension
+- Added option for default mode of new stashes
+- The export feature in context menu is now using the zip system as well
+- Fixed lagging mouse... Mouse hook is getting unset while game window is not focused
+- Stash names can now be colored
+- Localization:
+    +label_default_stash_mode
+    +mode_none
+    +mode_sc
+    +mode_hc
+    +mode_both
+    -export_stash
+    +context_export
+    +column_color
 
 v1.9
 - Added Version check + Updater

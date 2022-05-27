@@ -19,8 +19,10 @@ namespace GDMultiStash.Forms
         private readonly OLVColumn columnUsage;
         private readonly OLVColumn columnActive;
         private readonly OLVColumn columnExpansion;
+        private readonly OLVColumn columnColor;
 
         private readonly Dictionary<int, string> expansionNames;
+        private readonly StashesDragHandler _dragHandler;
 
         public MainForm()
         {
@@ -202,6 +204,22 @@ namespace GDMultiStash.Forms
                 TextAlign = HorizontalAlignment.Right,
             };
 
+            columnColor = new OLVColumn()
+            {
+                DisplayIndex = 9,
+                Name = "colorColumn",
+                AspectName = "Color",
+                MaximumWidth = 60,
+                MinimumWidth = 60,
+                Width = 60,
+                Searchable = false,
+                Groupable = false,
+                Sortable = false,
+
+                IsEditable = true,
+                CellEditUseWholeCell = true,
+            };
+
             // register columns
             stashesListView.AllColumns.AddRange(new List<OLVColumn>() {
                 columnOrder,
@@ -214,6 +232,7 @@ namespace GDMultiStash.Forms
                 columnLastChange,
                 columnActive,
                 columnExpansion,
+                columnColor,
             });
 
             stashesListView.MultiSelect = true;
@@ -227,7 +246,7 @@ namespace GDMultiStash.Forms
             };
 
             stashesListView.Columns.Clear();
-            stashesListView.Columns.AddRange(new ColumnHeader[] { columnActive, columnID, columnName, columnUsage, columnLastChange, columnExpansion, columnSC, columnHC });
+            stashesListView.Columns.AddRange(new ColumnHeader[] { columnActive, columnID, columnName, columnColor, columnUsage, columnLastChange, columnExpansion, columnSC, columnHC });
 
             expansionNames = new Dictionary<int, string>() {
                 { -1, "All" },
@@ -257,18 +276,6 @@ namespace GDMultiStash.Forms
                 UpdateObjects();
             };
 
-            AllowDrop = true;
-            DragEnter += delegate (object sender, DragEventArgs e)
-            {
-                if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
-            };
-            DragDrop += delegate (object sender, DragEventArgs e)
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                Core.Windows.ShowImportDialog(files);
-            };
-
-
 
 
 
@@ -290,8 +297,8 @@ namespace GDMultiStash.Forms
                 Offset = new Size(-1, 0),
             };
 
-            StashesDragHandler dragHandler = new StashesDragHandler(stashesListView);
-            dragHandler.DragSource.DragEnd += delegate {
+            _dragHandler = new StashesDragHandler(stashesListView);
+            _dragHandler.DragSource.DragEnd += delegate {
                 UpdateObjects();
                 Core.Config.Save();
 
@@ -299,10 +306,23 @@ namespace GDMultiStash.Forms
                 stashesListView.Sort();
             };
 
+            stashesListView.UseCellFormatEvents = true;
+
+            stashesListView.FormatCell += delegate (object sender, FormatCellEventArgs e)
+            {
+                if (e.Column == columnColor)
+                {
+                    Common.Stash stash = (Common.Stash)e.Model;
+                    e.SubItem.BackColor = Color.Black;
+                    e.SubItem.ForeColor = stash.GetColor();
+                    e.SubItem.Font = new Font("Consolas", 9, FontStyle.Bold);
+                }
+            };
+
             stashesListView.FormatRow += delegate (object sender, FormatRowEventArgs e) {
                 Common.Stash stash = (Common.Stash)e.Model;
                 bool isMain = Core.Config.IsMainStashID(stash.ID);
-                bool isDragging = dragHandler.DragSource.DraggingStashes.Contains(stash);
+                bool isDragging = _dragHandler.DragSource.DraggingStashes.Contains(stash);
                 bool isSelected = e.Item.Selected;
                 if (isDragging)
                 {
@@ -324,8 +344,8 @@ namespace GDMultiStash.Forms
                     }
                     if (isMain)
                     {
-                        e.Item.GetSubItem(6).Decoration = mainCheckBoxDeco;
                         e.Item.GetSubItem(7).Decoration = mainCheckBoxDeco;
+                        e.Item.GetSubItem(8).Decoration = mainCheckBoxDeco;
                     }
                 }
             };
@@ -344,9 +364,27 @@ namespace GDMultiStash.Forms
 
 
 
+
+            AllowDrop = true;
+            DragEnter += TransferFile_DragEnter;
+            DragDrop += TransferFile_DragDrop;
+            //stashesListView.AllowDrop = true;
+            //stashesListView.DragEnter += TransferFile_DragEnter;
+            stashesListView.DragDrop += TransferFile_DragDrop;
+
         }
 
+        private void TransferFile_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
 
+        private void TransferFile_DragDrop(object sender, DragEventArgs e)
+        {
+            if (_dragHandler.IsDragging) return;
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            Core.Windows.ShowImportDialog(files);
+        }
 
 
 
@@ -377,6 +415,7 @@ namespace GDMultiStash.Forms
             columnName.Text = L["column_name"];
             columnUsage.Text = L["column_usage"];
             columnLastChange.Text = L["column_last_change"];
+            columnColor.Text = L["column_color"];
 
             createStashButton.Text = L["create_stash"];
             importStashesButton.Text = L["import_stashes"];
@@ -505,6 +544,8 @@ namespace GDMultiStash.Forms
                             Core.Runtime.ReloadOpenedStash();
                         }
                         Core.Stashes.RestoreTransferFile(stash.ID, file);
+                        stash.LoadTransferFile();
+                        UpdateObjects(); // because the cell is not updated correctly
                         Core.Runtime.NotifyStashesRestored(new Common.Stash[] { stash });
                     });
                 }));
@@ -514,32 +555,53 @@ namespace GDMultiStash.Forms
                         ForeColor = Color.Gray
                     });
                 }
-                menu.Items.Add(L["export_stash"], null, delegate (object s, EventArgs e) {
-
-                    List<string> filters = new List<string>();
-                    if (stash.SC == stash.HC || stash.SC) filters.Add("Softcore ({0})|*{1}");
-                    if (stash.SC == stash.HC || stash.HC) filters.Add("Hardcore ({0})|*{2}");
-
-                    string filter = string.Format(string.Join("|", filters),
-                        GrimDawnLib.GrimDawn.GetExpansionName(stash.Expansion),
-                        GrimDawnLib.GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnLib.GrimDawnGameMode.SC),
-                        GrimDawnLib.GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnLib.GrimDawnGameMode.HC)
-                        );
-
-                    using (var dialog = new SaveFileDialog()
-                    {
-                        Filter = string.Format(filter),
-                        FileName = stash.Name,
-                    })
-                    {
-                        DialogResult result = dialog.ShowDialog();
-                        if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                        {
-                            Core.Files.ExportTransferFile(stash.ID, dialog.FileName);
-                        }
-                    }
-                });
             }
+
+            menu.Items.Add(L["context_export"], null, delegate (object s, EventArgs e) {
+
+
+                Common.ExportZipFile zipFile = new Common.ExportZipFile();
+                foreach (Common.Stash selStash in selectedStashes) zipFile.AddStash(selStash);
+
+                using (var dialog = new SaveFileDialog()
+                {
+                    Filter = "Zip Archive ({0})|*.zip",
+                    FileName = "TransferFiles.zip",
+                })
+                {
+                    DialogResult result = dialog.ShowDialog();
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
+                    {
+                        zipFile.SaveTo(dialog.FileName);
+                    }
+                }
+
+
+                /*
+                List<string> filters = new List<string>();
+                if (stash.SC == stash.HC || stash.SC) filters.Add("Softcore ({0})|*{1}");
+                if (stash.SC == stash.HC || stash.HC) filters.Add("Hardcore ({0})|*{2}");
+
+                string filter = string.Format(string.Join("|", filters),
+                    GrimDawnLib.GrimDawn.GetExpansionName(stash.Expansion),
+                    GrimDawnLib.GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnLib.GrimDawnGameMode.SC),
+                    GrimDawnLib.GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnLib.GrimDawnGameMode.HC)
+                    );
+
+                using (var dialog = new SaveFileDialog()
+                {
+                    Filter = string.Format(filter),
+                    FileName = stash.Name,
+                })
+                {
+                    DialogResult result = dialog.ShowDialog();
+                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
+                    {
+                        Core.Files.ExportTransferFile(stash.ID, dialog.FileName);
+                    }
+                }
+                */
+            });
 
             if (!isMainClicked)
             {
@@ -599,7 +661,10 @@ namespace GDMultiStash.Forms
         {
             Common.Stash stash = (Common.Stash)args.RowObject;
             Core.Config.Save();
-            Core.Runtime.NotifyStashesRenamed(new Common.Stash[] { stash });
+            if (args.Column == columnName)
+                Core.Runtime.NotifyStashesNameCHanged(new Common.Stash[] { stash });
+            if (args.Column == columnColor)
+                Core.Runtime.NotifyStashesColorChanged(new Common.Stash[] { stash });
         }
 
         #endregion

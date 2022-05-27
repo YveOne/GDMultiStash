@@ -16,13 +16,18 @@ namespace GDMultiStash.Forms
         public ObjectListView ListView => _olv;
         public StashesDragSource DragSource => _dragSource;
 
+        private bool _isDragging;
+        public bool IsDragging => _isDragging;
+
         public StashesDragHandler(ObjectListView olv)
         {
             _olv = olv;
             _dragSource = new StashesDragSource(this);
             _dragSource.DragStart += delegate {
+                _isDragging = true;
             };
             _dragSource.DragEnd += delegate {
+                _isDragging = false;
                 List<int> orders = new List<int>();
                 foreach (OLVListItem item in olv.Items)
                 {

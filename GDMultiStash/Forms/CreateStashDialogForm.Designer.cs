@@ -33,6 +33,8 @@
             this.okButton = new System.Windows.Forms.Button();
             this.expansionComboBox = new System.Windows.Forms.ComboBox();
             this.expansionLabel = new System.Windows.Forms.Label();
+            this.hcCheckBox = new System.Windows.Forms.CheckBox();
+            this.scCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label3
@@ -80,18 +82,40 @@
             this.expansionLabel.TabIndex = 20;
             this.expansionLabel.Text = "Expansion:";
             // 
-            // AddStashDialogForm
+            // hcCheckBox
+            // 
+            this.hcCheckBox.AutoSize = true;
+            this.hcCheckBox.Location = new System.Drawing.Point(58, 91);
+            this.hcCheckBox.Name = "hcCheckBox";
+            this.hcCheckBox.Size = new System.Drawing.Size(41, 17);
+            this.hcCheckBox.TabIndex = 23;
+            this.hcCheckBox.Text = "HC";
+            this.hcCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // scCheckBox
+            // 
+            this.scCheckBox.AutoSize = true;
+            this.scCheckBox.Location = new System.Drawing.Point(12, 91);
+            this.scCheckBox.Name = "scCheckBox";
+            this.scCheckBox.Size = new System.Drawing.Size(40, 17);
+            this.scCheckBox.TabIndex = 22;
+            this.scCheckBox.Text = "SC";
+            this.scCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // CreateStashDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(333, 98);
+            this.ClientSize = new System.Drawing.Size(333, 117);
+            this.Controls.Add(this.hcCheckBox);
+            this.Controls.Add(this.scCheckBox);
             this.Controls.Add(this.expansionComboBox);
             this.Controls.Add(this.expansionLabel);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.label3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Name = "AddStashDialogForm";
+            this.Name = "CreateStashDialogForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "GDStashOverlay :: Create Stash";
             this.TopMost = true;
@@ -108,5 +132,7 @@
         private System.Windows.Forms.Button okButton;
         private System.Windows.Forms.ComboBox expansionComboBox;
         private System.Windows.Forms.Label expansionLabel;
+        private System.Windows.Forms.CheckBox hcCheckBox;
+        private System.Windows.Forms.CheckBox scCheckBox;
     }
 }

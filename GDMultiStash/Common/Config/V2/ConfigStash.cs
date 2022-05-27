@@ -17,6 +17,7 @@ namespace GDMultiStash.Common.Config
 		[XmlAttribute] public bool HC { get; set; }
 		[XmlAttribute] public int Expansion { get; set; }
 		[XmlAttribute] public string Name { get; set; }
+		[XmlAttribute] public string Color { get; set; }
 
 		public ConfigStash()
 		{
@@ -25,6 +26,7 @@ namespace GDMultiStash.Common.Config
 			SC = false;
 			HC = false;
 			Name = null;
+			Color = "#ebdec3";
 		}
 
 	}

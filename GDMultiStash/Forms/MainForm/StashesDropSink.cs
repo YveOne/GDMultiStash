@@ -31,6 +31,12 @@ namespace GDMultiStash.Forms
 
         public int TargetIndex => lastTargetIndex;
 
+        protected override void OnCanDrop(OlvDropEventArgs e)
+        {
+            if (e.DragEventArgs.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
+        }
+
+
         protected override void OnModelCanDrop(ModelDropEventArgs args)
         {
             base.OnModelCanDrop(args);

@@ -248,11 +248,15 @@ namespace GDMultiStash
         private void GDWindowHook_GotFocus(object sender, EventArgs e)
         {
             Core.Runtime.WindowFocused = true;
+            if (Core.Runtime.StashOpened)
+                _mouseHook.SetHook();
         }
 
         private void GDWindowHook_LostFocus(object sender, EventArgs e)
         {
             Core.Runtime.WindowFocused = false;
+            if (Core.Runtime.StashOpened)
+                _mouseHook.UnHook();
         }
 
         private void GDWindowHook_WindowDestroyed(object sender, EventArgs e)

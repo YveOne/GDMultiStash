@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using System.IO.Compression;
 
 using GrimDawnLib;
 
@@ -34,12 +33,6 @@ namespace GDMultiStash.Forms
         private readonly List<Common.Stash> _originalOrderedModels = new List<Common.Stash>();
         public List<Common.Stash> OriginalOrderedModels => _originalOrderedModels;
 
-
-
-        private string _tempDragFile = null;
-
-
-
         public override object StartDrag(ObjectListView olv, MouseButtons button, OLVListItem item)
         {
             _draggingStashes.Clear();
@@ -61,69 +54,16 @@ namespace GDMultiStash.Forms
             // dont let original transfer files be dragged to desktop/explorer
             // create temp zip file
 
-            Dictionary<string, string> files2zip = new Dictionary<string, string>();
-            foreach (Common.Stash s in _draggingStashes)
-            {
-                string transferName = string.Format("{0} - {1}", s.ID, s.Name);
-                transferName = string.Join("_", transferName.Split(Path.GetInvalidFileNameChars()));
-
-                string transferExt;
-                string transferFile;
-                if (!s.SC && !s.HC)
-                {
-                    transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.None);
-                    transferFile = string.Format("{0} [no mode]{1}", transferName, transferExt);
-                    files2zip.Add(transferFile, s.FilePath);
-                }
-                else
-                {
-                    if (s.SC)
-                    {
-                        transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.SC);
-                        transferFile = string.Format("{0} [softcore mode]{1}", transferName, transferExt);
-                        files2zip.Add(transferFile, s.FilePath);
-                    }
-                    if (s.HC)
-                    {
-                        transferExt = GrimDawn.GetTransferExtension(s.Expansion, GrimDawnGameMode.HC);
-                        transferFile = string.Format("{0} [hardcore mode]{1}", transferName, transferExt);
-                        files2zip.Add(transferFile, s.FilePath);
-                    }
-                }
-            }
-
-            string tempZipFile = Path.Combine(Path.GetTempPath(), "transfer." + Path.ChangeExtension(Guid.NewGuid().ToString(), ".zip"));
-            using (FileStream zipToOpen = new FileStream(tempZipFile, FileMode.Create))
-            {
-                using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
-                {
-                    foreach (KeyValuePair<string,string> kvp in files2zip)
-                    {
-                        string tFile = kvp.Value;
-                        string tName = kvp.Key;
-
-                        ZipArchiveEntry readmeEntry = archive.CreateEntry(tName);
-                        using (StreamWriter writer = new StreamWriter(readmeEntry.Open()))
-                        {
-                            byte[] buffer = File.ReadAllBytes(tFile);
-                            writer.BaseStream.Write(buffer, 0, buffer.Length);
-                        }
-                    }
-                }
-            }
-
-
-
-
-
-
+            Common.ExportZipFile zipFile = new Common.ExportZipFile();
+            foreach (Common.Stash s in _draggingStashes) zipFile.AddStash(s);
+            zipFile.SaveTo(Path.Combine(Path.GetTempPath(), "transfer." + Path.ChangeExtension(Guid.NewGuid().ToString(), ".zip")));
 
 
             object obj = base.StartDrag(olv, button, item);
             DragStart?.Invoke();
 
             DataObject dataObj = (DataObject)obj;
-            dataObj.SetData(DataFormats.FileDrop, new string[] { tempZipFile });
+            dataObj.SetData(DataFormats.FileDrop, new string[] { zipFile.DstFile });
 
             return obj;
         }

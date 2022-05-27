@@ -56,22 +56,27 @@ namespace GDMultiStash.Overlay.Elements
             Core.Runtime.StashesRearranged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e) {
                 UpdateList();
             };
-            Core.Runtime.StashAdded += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            Core.Runtime.StashesAdded += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
             {
                 foreach (Common.Stash stash in e.Stashes)
                     AddStashItem(stash);
             };
-            Core.Runtime.StashRemoved += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            Core.Runtime.StashesRemoved += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
             {
                 foreach (Common.Stash stash in e.Stashes)
                     RemoveStashItem(stash);
             };
-            Core.Runtime.StashModeChanged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            Core.Runtime.StashesModeChanged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
             {
                 foreach (Common.Stash stash in e.Stashes)
                     UpdateStashItem(stash);
             };
-            Core.Runtime.StashRenamed += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            Core.Runtime.StashesNameChanged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            {
+                foreach (Common.Stash stash in e.Stashes)
+                    UpdateStashItem(stash);
+            };
+            Core.Runtime.StashesColorChanged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
             {
                 foreach (Common.Stash stash in e.Stashes)
                     UpdateStashItem(stash);
@@ -180,6 +185,9 @@ namespace GDMultiStash.Overlay.Elements
             si.Alpha = _alphaInactive;
             si.Text = stash.Name;
             si.Order = stash.Order;
+            si.Color = stash.GetColor();
+
+
 
             _listItems.Add(stash.ID, new StashListDataHolder
             {
@@ -193,6 +201,7 @@ namespace GDMultiStash.Overlay.Elements
 
         public void RemoveStashItem(Common.Stash stash)
         {
+            if (!_listItems.ContainsKey(stash.ID)) return; // not initialized
             StashListDataHolder data = _listItems[stash.ID];
             RemoveChild(data.ListItem.ID);
             _displayID2stashID.Remove(data.ListItem.ID);
@@ -202,8 +211,10 @@ namespace GDMultiStash.Overlay.Elements
 
         public void UpdateStashItem(Common.Stash stash)
         {
+            if (!_listItems.ContainsKey(stash.ID)) return; // not initialized
             StashListDataHolder data = _listItems[stash.ID];
-            data.ListItem.Text = data.Stash.Name;
+            data.ListItem.Text = stash.Name;
+            data.ListItem.Color = stash.GetColor();
             _reqUpdateList = true;
         }
 

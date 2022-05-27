@@ -113,14 +113,8 @@ namespace GDMultiStash.Forms
         {
             if (!File.Exists(srcFile)) return DialogResult.None;
 
-            GrimDawnGameEnvironment env = GrimDawn.GetEnvironmentByFilename(srcFile);
-            if (env == null)
-            {
-                MessageBox.Show(_err_invalid_transfer_file, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return DialogResult.None;
-            }
-
-            if (!Common.TransferFile.ValidateFile(srcFile))
+            GrimDawnGameExpansion exp = Common.TransferFile.GetExpansionByFile(srcFile);
+            if (exp == GrimDawnGameExpansion.Unknown)
             {
                 MessageBox.Show(_err_invalid_transfer_file, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return DialogResult.None;
@@ -129,15 +123,17 @@ namespace GDMultiStash.Forms
             overwriteCheckBox.Checked = false;
             stashFileTextBox.Text = srcFile;
             nameTextBox.Text = Path.GetFileNameWithoutExtension(srcFile);
-            scCheckBox.Checked = env.Mode.HasFlag(GrimDawnGameMode.SC);
-            hcCheckBox.Checked = env.Mode.HasFlag(GrimDawnGameMode.HC);
-            expansionTextBox.Text = GrimDawn.GetExpansionName(env.Expansion);
+            expansionTextBox.Text = GrimDawn.GetExpansionName(exp);
 
             overwriteComboBox.DisplayMember = "Name";
             overwriteComboBox.ValueMember = "ID";
-            overwriteComboBox.DataSource = Core.Stashes.GetStashesForExpansion(env.Expansion);
+            overwriteComboBox.DataSource = Core.Stashes.GetStashesForExpansion(exp);
             overwriteComboBox.SelectedIndex = -1;
             overwriteComboBox.Enabled = false;
+
+            GrimDawnGameMode mode = (GrimDawnGameMode)Core.Config.DefaultStashMode;
+            scCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.SC);
+            hcCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.HC);
 
             DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;
@@ -154,10 +150,10 @@ namespace GDMultiStash.Forms
             }
             else
             {
-                GrimDawnGameMode mode = GrimDawnGameMode.None;
+                mode = GrimDawnGameMode.None;
                 if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
                 if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
-                stash = Core.Stashes.ImportStash(srcFile, nameTextBox.Text, env.Expansion, mode);
+                stash = Core.Stashes.ImportStash(srcFile, nameTextBox.Text, exp, mode);
             }
             if (stash != null)
             {
@@ -196,17 +192,9 @@ namespace GDMultiStash.Forms
             importedStashes = null;
             if (files.Count() != 0)
             {
-                string[] okExt = GrimDawn.GetAllTransferExtensions();
                 foreach (string srcFile in files)
-                {
-                    if (!okExt.Contains(Path.GetExtension(srcFile).ToLower()))
-                    {
-                        //TODO: show warning?
-                        continue;
-                    }
                     ShowDialog(owner, srcFile);
-                }
-
+                
                 importedStashes = _importedStashes.ToArray();
                 _importedStashes.Clear();
 

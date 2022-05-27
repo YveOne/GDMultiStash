@@ -31,7 +31,7 @@ namespace GDMultiStash.Overlay.Elements
             {
                 Font = _listFont,
                 Align = StringAlignment.Near,
-                Color = Color.FromArgb(255, 235, 222, 195),
+                //Color = Color.FromArgb(255, 235, 222, 195),
                 AnchorPoint = Anchor.Left,
                 X = _textMarginLeft,
                 WidthToParent = true,
@@ -49,9 +49,16 @@ namespace GDMultiStash.Overlay.Elements
             AddChild(_radioButton);
         }
 
-        public string Text {
+        public string Text
+        {
             get => _textElement.Text;
             set => _textElement.Text = value;
+        }
+
+        public Color Color
+        {
+            get => _textElement.Color;
+            set => _textElement.Color = value;
         }
 
         public bool Active

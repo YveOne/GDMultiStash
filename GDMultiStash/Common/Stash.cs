@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Drawing;
 
 namespace GDMultiStash.Common
 {
@@ -38,6 +39,28 @@ namespace GDMultiStash.Common
         public float Usage { get { return _transferFile.Usage; } }
 
         public string UsageText { get { return _transferFile.UsageText; } }
+
+        public string Color
+        {
+            get { return _configStash.Color.ToLower(); }
+            set {
+                string c = value.Trim();
+                if (!c.StartsWith("#")) return;
+                _configStash.Color = value;
+            }
+        }
+
+        public Color GetColor()
+        {
+            try
+            {
+                return ColorTranslator.FromHtml(_configStash.Color);
+            }
+            catch (Exception)
+            {
+                return System.Drawing.Color.FromArgb(255, 235, 222, 195);
+            }
+        }
 
         public string Name
         {

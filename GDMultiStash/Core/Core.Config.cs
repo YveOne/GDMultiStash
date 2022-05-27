@@ -399,6 +399,11 @@ namespace GDMultiStash
                 get => _config.Settings.AutoUpdate;
             }
 
+            public static int DefaultStashMode
+            {
+                get => _config.Settings.DefaultStashMode;
+            }
+
             #endregion
 
         }

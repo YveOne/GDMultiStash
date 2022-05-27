@@ -46,6 +46,8 @@
             this.languageLabel = new System.Windows.Forms.Label();
             this.gamePathLabel = new System.Windows.Forms.Label();
             this.behaviourTabPage = new System.Windows.Forms.TabPage();
+            this.defaultStashModeLabel = new System.Windows.Forms.Label();
+            this.defaultStashModeCheckBox = new System.Windows.Forms.ComboBox();
             this.autoUpdateCheckBox = new System.Windows.Forms.CheckBox();
             this.checkVersionCheckBox = new System.Windows.Forms.CheckBox();
             this.autoBackToMainCheckBox = new System.Windows.Forms.CheckBox();
@@ -86,7 +88,7 @@
             this.setupTabControl.Location = new System.Drawing.Point(0, 0);
             this.setupTabControl.Name = "setupTabControl";
             this.setupTabControl.SelectedIndex = 0;
-            this.setupTabControl.Size = new System.Drawing.Size(554, 343);
+            this.setupTabControl.Size = new System.Drawing.Size(649, 343);
             this.setupTabControl.TabIndex = 0;
             // 
             // commonTabPage
@@ -101,7 +103,7 @@
             this.commonTabPage.Location = new System.Drawing.Point(4, 22);
             this.commonTabPage.Name = "commonTabPage";
             this.commonTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.commonTabPage.Size = new System.Drawing.Size(546, 317);
+            this.commonTabPage.Size = new System.Drawing.Size(641, 317);
             this.commonTabPage.TabIndex = 0;
             this.commonTabPage.Text = "Common";
             this.commonTabPage.UseVisualStyleBackColor = true;
@@ -112,13 +114,13 @@
             this.gameInstallPathsComboBox.FormattingEnabled = true;
             this.gameInstallPathsComboBox.Location = new System.Drawing.Point(6, 119);
             this.gameInstallPathsComboBox.Name = "gameInstallPathsComboBox";
-            this.gameInstallPathsComboBox.Size = new System.Drawing.Size(460, 21);
+            this.gameInstallPathsComboBox.Size = new System.Drawing.Size(398, 21);
             this.gameInstallPathsComboBox.TabIndex = 10;
             // 
             // autoStartGDCheckBox
             // 
             this.autoStartGDCheckBox.AutoSize = true;
-            this.autoStartGDCheckBox.Location = new System.Drawing.Point(6, 153);
+            this.autoStartGDCheckBox.Location = new System.Drawing.Point(13, 159);
             this.autoStartGDCheckBox.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.autoStartGDCheckBox.Name = "autoStartGDCheckBox";
             this.autoStartGDCheckBox.Size = new System.Drawing.Size(126, 17);
@@ -134,17 +136,17 @@
             this.autoStartGDGroupBox.Controls.Add(this.autoStartGDArgumentsTextBox);
             this.autoStartGDGroupBox.Controls.Add(this.autoStartGDCommandComboBox);
             this.autoStartGDGroupBox.Controls.Add(this.autoStartGDArgumentsLabel);
-            this.autoStartGDGroupBox.Location = new System.Drawing.Point(6, 165);
+            this.autoStartGDGroupBox.Location = new System.Drawing.Point(6, 161);
             this.autoStartGDGroupBox.Name = "autoStartGDGroupBox";
-            this.autoStartGDGroupBox.Size = new System.Drawing.Size(534, 66);
+            this.autoStartGDGroupBox.Size = new System.Drawing.Size(398, 112);
             this.autoStartGDGroupBox.TabIndex = 9;
             this.autoStartGDGroupBox.TabStop = false;
             // 
             // autoStartStartNowButton
             // 
-            this.autoStartStartNowButton.Location = new System.Drawing.Point(466, 16);
+            this.autoStartStartNowButton.Location = new System.Drawing.Point(317, 32);
             this.autoStartStartNowButton.Name = "autoStartStartNowButton";
-            this.autoStartStartNowButton.Size = new System.Drawing.Size(62, 37);
+            this.autoStartStartNowButton.Size = new System.Drawing.Size(75, 60);
             this.autoStartStartNowButton.TabIndex = 9;
             this.autoStartStartNowButton.Text = "Start\r\nNow";
             this.autoStartStartNowButton.UseVisualStyleBackColor = true;
@@ -161,9 +163,9 @@
             // 
             // autoStartGDArgumentsTextBox
             // 
-            this.autoStartGDArgumentsTextBox.Location = new System.Drawing.Point(261, 32);
+            this.autoStartGDArgumentsTextBox.Location = new System.Drawing.Point(7, 72);
             this.autoStartGDArgumentsTextBox.Name = "autoStartGDArgumentsTextBox";
-            this.autoStartGDArgumentsTextBox.Size = new System.Drawing.Size(199, 20);
+            this.autoStartGDArgumentsTextBox.Size = new System.Drawing.Size(304, 20);
             this.autoStartGDArgumentsTextBox.TabIndex = 8;
             this.autoStartGDArgumentsTextBox.TextChanged += new System.EventHandler(this.AutoStartGDArgumentsTextBox_TextChanged);
             // 
@@ -173,13 +175,13 @@
             this.autoStartGDCommandComboBox.FormattingEnabled = true;
             this.autoStartGDCommandComboBox.Location = new System.Drawing.Point(6, 32);
             this.autoStartGDCommandComboBox.Name = "autoStartGDCommandComboBox";
-            this.autoStartGDCommandComboBox.Size = new System.Drawing.Size(249, 21);
+            this.autoStartGDCommandComboBox.Size = new System.Drawing.Size(305, 21);
             this.autoStartGDCommandComboBox.TabIndex = 5;
             // 
             // autoStartGDArgumentsLabel
             // 
             this.autoStartGDArgumentsLabel.AutoSize = true;
-            this.autoStartGDArgumentsLabel.Location = new System.Drawing.Point(260, 16);
+            this.autoStartGDArgumentsLabel.Location = new System.Drawing.Point(6, 56);
             this.autoStartGDArgumentsLabel.Name = "autoStartGDArgumentsLabel";
             this.autoStartGDArgumentsLabel.Size = new System.Drawing.Size(60, 13);
             this.autoStartGDArgumentsLabel.TabIndex = 7;
@@ -192,7 +194,7 @@
             this.panel2.Location = new System.Drawing.Point(7, 30);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(1);
-            this.panel2.Size = new System.Drawing.Size(533, 61);
+            this.panel2.Size = new System.Drawing.Size(465, 61);
             this.panel2.TabIndex = 5;
             // 
             // panel3
@@ -203,7 +205,7 @@
             this.panel3.Location = new System.Drawing.Point(1, 1);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(5);
-            this.panel3.Size = new System.Drawing.Size(531, 59);
+            this.panel3.Size = new System.Drawing.Size(463, 59);
             this.panel3.TabIndex = 10;
             // 
             // languageListView
@@ -218,14 +220,14 @@
             this.languageListView.Location = new System.Drawing.Point(5, 5);
             this.languageListView.MultiSelect = false;
             this.languageListView.Name = "languageListView";
-            this.languageListView.Size = new System.Drawing.Size(521, 49);
+            this.languageListView.Size = new System.Drawing.Size(453, 49);
             this.languageListView.TabIndex = 0;
             this.languageListView.UseCompatibleStateImageBehavior = false;
             this.languageListView.View = System.Windows.Forms.View.List;
             // 
             // gamePathSearchButton
             // 
-            this.gamePathSearchButton.Location = new System.Drawing.Point(472, 118);
+            this.gamePathSearchButton.Location = new System.Drawing.Point(410, 117);
             this.gamePathSearchButton.Name = "gamePathSearchButton";
             this.gamePathSearchButton.Size = new System.Drawing.Size(62, 23);
             this.gamePathSearchButton.TabIndex = 4;
@@ -255,6 +257,8 @@
             // 
             // behaviourTabPage
             // 
+            this.behaviourTabPage.Controls.Add(this.defaultStashModeLabel);
+            this.behaviourTabPage.Controls.Add(this.defaultStashModeCheckBox);
             this.behaviourTabPage.Controls.Add(this.autoUpdateCheckBox);
             this.behaviourTabPage.Controls.Add(this.checkVersionCheckBox);
             this.behaviourTabPage.Controls.Add(this.autoBackToMainCheckBox);
@@ -273,10 +277,31 @@
             this.behaviourTabPage.Location = new System.Drawing.Point(4, 22);
             this.behaviourTabPage.Name = "behaviourTabPage";
             this.behaviourTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.behaviourTabPage.Size = new System.Drawing.Size(546, 317);
+            this.behaviourTabPage.Size = new System.Drawing.Size(641, 317);
             this.behaviourTabPage.TabIndex = 1;
             this.behaviourTabPage.Text = "Behaviour";
             this.behaviourTabPage.UseVisualStyleBackColor = true;
+            // 
+            // defaultStashModeLabel
+            // 
+            this.defaultStashModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.defaultStashModeLabel.Location = new System.Drawing.Point(325, 134);
+            this.defaultStashModeLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
+            this.defaultStashModeLabel.Name = "defaultStashModeLabel";
+            this.defaultStashModeLabel.Size = new System.Drawing.Size(183, 13);
+            this.defaultStashModeLabel.TabIndex = 16;
+            this.defaultStashModeLabel.Text = "Default mode for new stashes:";
+            this.defaultStashModeLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // defaultStashModeCheckBox
+            // 
+            this.defaultStashModeCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.defaultStashModeCheckBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.defaultStashModeCheckBox.FormattingEnabled = true;
+            this.defaultStashModeCheckBox.Location = new System.Drawing.Point(514, 131);
+            this.defaultStashModeCheckBox.Name = "defaultStashModeCheckBox";
+            this.defaultStashModeCheckBox.Size = new System.Drawing.Size(121, 21);
+            this.defaultStashModeCheckBox.TabIndex = 15;
             // 
             // autoUpdateCheckBox
             // 
@@ -460,13 +485,13 @@
             this.panel1.Location = new System.Drawing.Point(9, 9);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(554, 343);
+            this.panel1.Size = new System.Drawing.Size(649, 343);
             this.panel1.TabIndex = 1;
             // 
             // saveButton
             // 
             this.saveButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.saveButton.Location = new System.Drawing.Point(487, 355);
+            this.saveButton.Location = new System.Drawing.Point(582, 355);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(75, 23);
             this.saveButton.TabIndex = 2;
@@ -477,7 +502,7 @@
             // applyButton
             // 
             this.applyButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.applyButton.Location = new System.Drawing.Point(406, 355);
+            this.applyButton.Location = new System.Drawing.Point(501, 355);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(75, 23);
             this.applyButton.TabIndex = 3;
@@ -501,7 +526,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(572, 385);
+            this.ClientSize = new System.Drawing.Size(667, 385);
             this.Controls.Add(this.createShortcutButton);
             this.Controls.Add(this.restartButton);
             this.Controls.Add(this.applyButton);
@@ -568,5 +593,7 @@
         private System.Windows.Forms.ComboBox gameInstallPathsComboBox;
         private System.Windows.Forms.CheckBox autoUpdateCheckBox;
         private System.Windows.Forms.CheckBox checkVersionCheckBox;
+        private System.Windows.Forms.Label defaultStashModeLabel;
+        private System.Windows.Forms.ComboBox defaultStashModeCheckBox;
     }
 }

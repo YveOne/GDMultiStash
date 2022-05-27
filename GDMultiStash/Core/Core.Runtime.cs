@@ -138,11 +138,12 @@ namespace GDMultiStash
 
             public delegate void StashesChangedEventHandler(object sender, StashesChangedEventArgs e);
             public static event StashesChangedEventHandler StashesRearranged;
-            public static event StashesChangedEventHandler StashAdded;
-            public static event StashesChangedEventHandler StashRemoved;
-            public static event StashesChangedEventHandler StashRestored;
-            public static event StashesChangedEventHandler StashModeChanged;
-            public static event StashesChangedEventHandler StashRenamed;
+            public static event StashesChangedEventHandler StashesAdded;
+            public static event StashesChangedEventHandler StashesRemoved;
+            public static event StashesChangedEventHandler StashesRestored;
+            public static event StashesChangedEventHandler StashesModeChanged;
+            public static event StashesChangedEventHandler StashesNameChanged;
+            public static event StashesChangedEventHandler StashesColorChanged;
 
             public static void NotifyStashesRearranged()
             {
@@ -151,30 +152,35 @@ namespace GDMultiStash
 
             public static void NotifyStashesAdded(IEnumerable<Common.Stash> stashes)
             {
-                StashAdded?.Invoke(null, new StashesChangedEventArgs(stashes));
+                StashesAdded?.Invoke(null, new StashesChangedEventArgs(stashes));
             }
 
             public static void NotifyStashesRemoved(IEnumerable<Common.Stash> stashes)
             {
-                StashRemoved?.Invoke(null, new StashesChangedEventArgs(stashes));
+                StashesRemoved?.Invoke(null, new StashesChangedEventArgs(stashes));
             }
 
             public static void NotifyStashesRestored(IEnumerable<Common.Stash> stashes)
             {
-                StashRestored?.Invoke(null, new StashesChangedEventArgs(stashes));
+                StashesRestored?.Invoke(null, new StashesChangedEventArgs(stashes));
             }
 
             public static void NotifyStashesModeChanged(IEnumerable<Common.Stash> stashes)
             {
-                StashModeChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
+                StashesModeChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
             }
 
-            public static void NotifyStashesRenamed(IEnumerable<Common.Stash> stashes)
+            public static void NotifyStashesNameCHanged(IEnumerable<Common.Stash> stashes)
             {
-                StashRenamed?.Invoke(null, new StashesChangedEventArgs(stashes));
+                StashesNameChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
             }
 
+            public static void NotifyStashesColorChanged(IEnumerable<Common.Stash> stashes)
+            {
+                StashesColorChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
+            }
 
+            
 
 
 

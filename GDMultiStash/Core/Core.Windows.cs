@@ -27,11 +27,11 @@ namespace GDMultiStash
                     MainWindow.UpdateObjects();
                 };
 
-                Runtime.StashAdded += delegate {
+                Runtime.StashesAdded += delegate {
                     MainWindow.UpdateObjects();
                 };
 
-                Runtime.StashRemoved += delegate {
+                Runtime.StashesRemoved += delegate {
                     MainWindow.UpdateObjects();
                 };
 
@@ -90,11 +90,22 @@ namespace GDMultiStash
                 if (CreateStashWindow.Visible) return;
                 CreateStashWindow.StartPosition = MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
                 IWin32Window owner = MainWindow.Visible ? MainWindow : null;
-                if (CreateStashWindow.ShowDialog(owner, out Common.Stash[] stashes) == DialogResult.OK)
+
+                bool loop = true;
+                while (loop)
                 {
-                    Config.Save();
-                    Runtime.NotifyStashesAdded(stashes);
+
+                    if (CreateStashWindow.ShowDialog(owner, out Common.Stash[] stashes) == DialogResult.OK)
+                    {
+                        Config.Save();
+                        Runtime.NotifyStashesAdded(stashes);
+                    }
+                    else
+                    {
+                        loop = false;
+                    }
                 }
+
             }
 
             public static void ShowImportDialog()
