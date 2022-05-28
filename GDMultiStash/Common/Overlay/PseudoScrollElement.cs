@@ -116,11 +116,6 @@ namespace GDMultiStash.Common.Overlay
 
                 _scrollChildren.Sort((a, b) => a.Order.CompareTo(b.Order));
 
-
-
-
-
-
                 int i = 0;
                 foreach (T t in _scrollChildren)
                 {

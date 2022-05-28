@@ -138,10 +138,10 @@ namespace GDMultiStash.Forms
             AddGameInstallPath(_settings.GamePath);
             AddGameInstallPath(GrimDawn.Steam.GamePath64);
             AddGameInstallPath(GrimDawn.GOG.GamePath64);
-            gameInstallPathsComboBox.DataSource = new BindingSource(_gameInstallPathsList, null);
-            gameInstallPathsComboBox.SelectedIndex = 0; // we dont need to set selected index because current selected one will always be index 0
             gameInstallPathsComboBox.DisplayMember = "Value";
             gameInstallPathsComboBox.ValueMember = "Key";
+            gameInstallPathsComboBox.DataSource = new BindingSource(_gameInstallPathsList, null);
+            gameInstallPathsComboBox.SelectedIndex = 0; // we dont need to set selected index because current selected one will always be index 0
         }
 
         private void AddGameInstallPath(string path)
@@ -175,10 +175,11 @@ namespace GDMultiStash.Forms
             AddAutoStartCommand(Path.Combine(_settings.GamePath, "x64", "Grim Dawn.exe"));
             AddAutoStartCommand(Path.Combine(_settings.GamePath, "GrimInternals64.exe"));
             AddAutoStartCommand(Path.Combine(_settings.GamePath, "GrimCam.exe"));
-            autoStartGDCommandComboBox.DataSource = new BindingSource(_autoStartCommandsList, null);
-            autoStartGDCommandComboBox.SelectedIndex = 0; // we dont need to set selected index because current selected one will always be index 0
             autoStartGDCommandComboBox.DisplayMember = "Value";
             autoStartGDCommandComboBox.ValueMember = "Key";
+            autoStartGDCommandComboBox.DataSource = new BindingSource(_autoStartCommandsList, null);
+            autoStartGDCommandComboBox.SelectedIndex = _autoStartCommandsList.Count >= 1 && _autoStartCommandsList.Keys.ElementAt(0) == _settings.AutoStartGDCommand ? 0 :-1;
+            autoStartGDArgumentsTextBox.Text = _settings.AutoStartGDArguments;
         }
 
         private void AddAutoStartCommand(string command)
@@ -218,7 +219,7 @@ namespace GDMultiStash.Forms
                 return;
             }
 
-            if (command.EndsWith(GrimDawn.GOG.GalaxyExe))
+            if (command.EndsWith("GalaxyClient.exe"))
             {
                 if (GrimDawn.GOG.GalaxyClientPath == null) return; // not installed
                 if (_settings.GamePath != GrimDawn.GOG.GamePath64) return;
@@ -462,6 +463,7 @@ namespace GDMultiStash.Forms
             string p = gameInstallPathsComboBox.SelectedValue.ToString();
             _settings.GamePath = p;
             _settings.AutoStartGDCommand = "";
+            _settings.AutoStartGDArguments = "";
             UpdateAutoStartCommandList();
             applyButton.Enabled = true;
         }

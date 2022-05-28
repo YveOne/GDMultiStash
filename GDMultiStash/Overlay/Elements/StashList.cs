@@ -15,7 +15,7 @@ namespace GDMultiStash.Overlay.Elements
         public static Font _ItemFont = null;
 
         protected override float ItemHeight => 23f;
-        protected override float ItemMargin => 5f;
+        protected override float ItemMargin => 6f;
 
         private readonly Dictionary<int, StashListDataHolder> _listItems; // stashID -> StashListDataHolder
         private readonly Dictionary<int, int> _displayID2stashID;
@@ -39,7 +39,7 @@ namespace GDMultiStash.Overlay.Elements
 
         public StashList()
         {
-            MaxVisibleCount = 20;
+            MaxVisibleCount = 19;
             MouseCheckNeedBaseHit = true;
             _listItems = new Dictionary<int, StashListDataHolder>();
             _displayID2stashID = new Dictionary<int, int>();

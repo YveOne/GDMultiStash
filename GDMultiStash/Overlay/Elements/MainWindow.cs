@@ -55,10 +55,10 @@ namespace GDMultiStash.Overlay.Elements
             _stashList = new StashList()
             {
                 X = 10,
-                Y = 16,
+                Y = 20,
                 WidthToParent = true,
                 Width =  -10 - 32,
-                Height = 565,
+                Height = 561,
             };
             AddChild(_stashList);
 

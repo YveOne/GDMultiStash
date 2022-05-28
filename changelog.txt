@@ -1,4 +1,7 @@
 
+v1.10.1
+- Fixed ArgumentNullException in settings window
+
 v1.10
 - Now Stash will be switched to main only when whole ingame stash window closed
 - Updated whole overlay list system
