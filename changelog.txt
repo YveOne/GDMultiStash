@@ -1,4 +1,7 @@
 
+v1.10.2
+- Fixed Game Crash when opening/closing devotion window before opening transfer stash
+
 v1.10.1
 - Fixed ArgumentNullException in settings window
 

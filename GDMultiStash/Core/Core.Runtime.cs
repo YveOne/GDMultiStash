@@ -296,6 +296,7 @@ namespace GDMultiStash
             public static event StashStatusChangedEventHandler StashStatusChanged;
 
             private static bool _stashOpened = false;
+            private static bool _stashOpenedOnce = false;
             public static bool StashOpened
             {
                 get { return _stashOpened; }
@@ -303,6 +304,7 @@ namespace GDMultiStash
                 {
                     if (_stashOpened == value) return;
                     _stashOpened = value;
+                    _stashOpenedOnce = _stashOpenedOnce || value;
                     Console.WriteLine("Runtime: StashStatusChanged: " + value);
                     if (_stashReopening)
                     {
@@ -377,6 +379,7 @@ namespace GDMultiStash
 
                 TransferStashSaved += delegate
                 {
+                    if (!_stashOpenedOnce) return;
                     if (!_stashOpened && !_stashReopening && Config.AutoBackToMain)
                     {
                         // debug: when stash closed GD could still be writing to transfer file
