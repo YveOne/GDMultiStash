@@ -539,10 +539,7 @@ namespace GDMultiStash.Forms
                     string usageText = Common.TransferFile.FromFile(file).UsageText;
                     string itemText = string.Format("{0} - {1} - {2}", fileName, fileDate, usageText);
                     return new ToolStripMenuItem(itemText, null, delegate (object s, EventArgs e) {
-                        if (Core.Runtime.IsStashOpened(stash.ID))
-                        {
-                            Core.Runtime.ReloadOpenedStash();
-                        }
+                        Core.Runtime.ReloadOpenedStash(stash.ID);
                         Core.Stashes.RestoreTransferFile(stash.ID, file);
                         stash.LoadTransferFile();
                         UpdateObjects(); // because the cell is not updated correctly

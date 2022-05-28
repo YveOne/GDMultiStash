@@ -155,6 +155,7 @@ namespace GDMultiStash
                 if (stash == null) return null;
 
                 Files.ImportTransferFile(stash.ID, src, true);
+                Runtime.ReloadOpenedStash(stash.ID);
 
                 stash.LoadTransferFile();
                 return stash;
@@ -163,11 +164,12 @@ namespace GDMultiStash
             public static Common.Stash ImportStash(string src, string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode = GrimDawnGameMode.None)
             {
                 Common.Stash stash = new Common.Stash(Config.CreateStash(name, expansion, mode));
+                _stashes.Add(stash.ID, stash);
 
                 Files.ImportTransferFile(stash.ID, src, true);
+                Runtime.ReloadOpenedStash(stash.ID);
 
                 stash.LoadTransferFile();
-                _stashes.Add(stash.ID, stash);
                 return stash;
             }
 

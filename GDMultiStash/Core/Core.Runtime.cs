@@ -398,9 +398,10 @@ namespace GDMultiStash
                 return (StashOpened && stashID == ActiveStashID);
             }
 
-            public static void ReloadOpenedStash()
+            public static void ReloadOpenedStash(int stashID)
             {
-                _reloadOpenedStash = true;
+                if (IsStashOpened(stashID))
+                    _reloadOpenedStash = true;
             }
 
             private static bool _stashReopening = false;
