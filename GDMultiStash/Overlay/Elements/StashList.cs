@@ -187,8 +187,6 @@ namespace GDMultiStash.Overlay.Elements
             si.Order = stash.Order;
             si.Color = stash.GetColor();
 
-
-
             _listItems.Add(stash.ID, new StashListDataHolder
             {
                 Stash = stash,
@@ -203,7 +201,7 @@ namespace GDMultiStash.Overlay.Elements
         {
             if (!_listItems.ContainsKey(stash.ID)) return; // not initialized
             StashListDataHolder data = _listItems[stash.ID];
-            RemoveChild(data.ListItem.ID);
+            RemoveScrollItem(data.ListItem);
             _displayID2stashID.Remove(data.ListItem.ID);
             _listItems.Remove(stash.ID);
             _reqUpdateList = true;
@@ -264,6 +262,7 @@ namespace GDMultiStash.Overlay.Elements
             {
                 if (!_displayID2stashID.ContainsKey(displayItem.ID)) return;
                 int stashID = _displayID2stashID[displayItem.ID];
+
 
                 _listDisabled = true;
                 Alpha = 0.33f;

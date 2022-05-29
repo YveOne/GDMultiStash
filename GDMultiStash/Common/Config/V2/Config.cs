@@ -15,12 +15,12 @@ namespace GDMultiStash.Common.Config
     public partial class Config : ConfigBase
     {
 
+        [XmlElement("Settings")]
+        public ConfigSettingList Settings;
+
         [XmlArray("Stashes")]
         [XmlArrayItem("Stash")]
         public ConfigStashList Stashes;
-
-        [XmlElement("Settings")]
-        public ConfigSettingList Settings;
 
         public Config(bool IsNew) : base(IsNew)
         {

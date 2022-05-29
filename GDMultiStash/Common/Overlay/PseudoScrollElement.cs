@@ -80,6 +80,14 @@ namespace GDMultiStash.Common.Overlay
             _scrollChildren.Add(child);
             AddChild(child);
             child.Height = ItemHeight;
+            _updateList = true;
+        }
+
+        public virtual void RemoveScrollItem(T child)
+        {
+            _scrollChildren.Remove(child);
+            RemoveChild(child.ID);
+            _updateList = true;
         }
 
         public virtual void ClearScrollItems()
@@ -91,6 +99,7 @@ namespace GDMultiStash.Common.Overlay
                 _cache.Add(t);
             }
             _scrollChildren.Clear();
+            _updateList = true;
         }
 
         private bool _updateList = false;

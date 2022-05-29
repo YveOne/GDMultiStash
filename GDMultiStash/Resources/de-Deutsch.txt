@@ -87,3 +87,10 @@ mode_none = Keins
 mode_sc = SC
 mode_hc = HC
 mode_both = Beide
+
+color_default = Standard
+color_green = Grün
+color_blue = Blau
+color_purple = Lila
+color_gold = Gold
+color_gray = Grau

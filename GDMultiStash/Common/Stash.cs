@@ -44,9 +44,9 @@ namespace GDMultiStash.Common
         {
             get { return _configStash.Color.ToLower(); }
             set {
-                string c = value.Trim();
-                if (!c.StartsWith("#")) return;
-                _configStash.Color = value;
+                string col = value.Trim();
+                if (!col.StartsWith("#")) col = "#" + col;
+                _configStash.Color = col;
             }
         }
 

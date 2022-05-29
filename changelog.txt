@@ -1,4 +1,16 @@
 
+v1.11
+- Added drop down for colors in listview cell edit mode
+- Added support for multi mode stashes (SC+HC)
+- Listview item background now getting correctly reset after dragging
+- Localization:
+    +color_default
+    +color_green
+    +color_blue
+    +color_purple
+    +color_gold
+    +color_gray
+
 v1.10.2
 - Fixed Game Crash when opening/closing devotion window before opening transfer stash
 

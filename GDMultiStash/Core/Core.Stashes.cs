@@ -254,7 +254,6 @@ namespace GDMultiStash
 
             public static void SwitchToStash(int toStashID)
             {
-                if (toStashID == Runtime.ActiveStashID) return;
                 if (Runtime.CurrentMode == GrimDawnGameMode.None) return; // not loaded?
                 if (Runtime.CurrentExpansion == GrimDawnGameExpansion.Unknown) return; // not loaded?
 

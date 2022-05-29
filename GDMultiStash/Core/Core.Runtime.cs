@@ -17,27 +17,24 @@ namespace GDMultiStash
 
             #region MainStashID
 
-            public static int MainStashID
+            public static int GetMainStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
             {
-                get
+                switch (exp)
                 {
-                    switch (CurrentExpansion)
-                    {
-                        case GrimDawnGameExpansion.BaseGame:
-                            if (CurrentMode == GrimDawnGameMode.SC) return Config.Main0SCID;
-                            if (CurrentMode == GrimDawnGameMode.HC) return Config.Main0HCID;
-                            break;
-                        case GrimDawnGameExpansion.AshesOfMalmouth:
-                            if (CurrentMode == GrimDawnGameMode.SC) return Config.Main1SCID;
-                            if (CurrentMode == GrimDawnGameMode.HC) return Config.Main1HCID;
-                            break;
-                        case GrimDawnGameExpansion.ForgottenGods:
-                            if (CurrentMode == GrimDawnGameMode.SC) return Config.Main2SCID;
-                            if (CurrentMode == GrimDawnGameMode.HC) return Config.Main2HCID;
-                            break;
-                    }
-                    return -1;
+                    case GrimDawnGameExpansion.BaseGame:
+                        if (mode == GrimDawnGameMode.SC) return Config.Main0SCID;
+                        if (mode == GrimDawnGameMode.HC) return Config.Main0HCID;
+                        break;
+                    case GrimDawnGameExpansion.AshesOfMalmouth:
+                        if (mode == GrimDawnGameMode.SC) return Config.Main1SCID;
+                        if (mode == GrimDawnGameMode.HC) return Config.Main1HCID;
+                        break;
+                    case GrimDawnGameExpansion.ForgottenGods:
+                        if (mode == GrimDawnGameMode.SC) return Config.Main2SCID;
+                        if (mode == GrimDawnGameMode.HC) return Config.Main2HCID;
+                        break;
                 }
+                return -1;
             }
 
             #endregion
@@ -280,23 +277,11 @@ namespace GDMultiStash
 
             #region Event: TramsferStashSaved
 
-            public delegate void TransferStashSavedEventHandler(object sender, EventArgs e);
-            public static event TransferStashSavedEventHandler TransferStashSaved;
-
-            public static void NotifyTransferStashSaved()
-            {
-                TransferStashSaved?.Invoke(null, EventArgs.Empty);
-            }
-
-            #endregion
-
-            #region Event: StashStatusChanged
-
             public delegate void StashStatusChangedEventHandler(object sender, EventArgs e);
             public static event StashStatusChangedEventHandler StashStatusChanged;
 
             private static bool _stashOpened = false;
-            private static bool _stashOpenedOnce = false;
+            private static bool _stashWasOpened = false;
             public static bool StashOpened
             {
                 get { return _stashOpened; }
@@ -304,7 +289,7 @@ namespace GDMultiStash
                 {
                     if (_stashOpened == value) return;
                     _stashOpened = value;
-                    _stashOpenedOnce = _stashOpenedOnce || value;
+                    _stashWasOpened = _stashWasOpened || value;
                     Console.WriteLine("Runtime: StashStatusChanged: " + value);
                     if (_stashReopening)
                     {
@@ -313,6 +298,16 @@ namespace GDMultiStash
                     }
                     StashStatusChanged?.Invoke(null, EventArgs.Empty);
                 }
+            }
+
+            public delegate void TransferStashSavedEventHandler(object sender, EventArgs e);
+            public static event TransferStashSavedEventHandler TransferStashSaved;
+
+            public static void NotifyTransferStashSaved()
+            {
+                if (!_stashWasOpened) return;
+                _stashWasOpened = false;
+                TransferStashSaved?.Invoke(null, EventArgs.Empty);
             }
 
             #endregion
@@ -379,16 +374,50 @@ namespace GDMultiStash
 
                 TransferStashSaved += delegate
                 {
-                    if (!_stashOpenedOnce) return;
-                    if (!_stashOpened && !_stashReopening && Config.AutoBackToMain)
+                    if (!_stashReopening)
                     {
+                        int closedID = _activeStashID;
                         // debug: when stash closed GD could still be writing to transfer file
-                        WaitForStashWritten();
-                        // we dont need to use reopen because stash is closed
-                        Stashes.SwitchToStash(MainStashID);
+                        WaitForTransferFileWritten();
+                        if (Config.AutoBackToMain)
+                        {
+                            // we dont need to use reopen because stash is closed
+                            int mainStashID = GetMainStashID(CurrentExpansion, CurrentMode);
+                            Stashes.SwitchToStash(mainStashID);
+                        }
+                        else
+                        {
+                            // import the just saved transfer file
+                            Stashes.ImportStash(closedID);
+                        }
+                        ExportSharedModeStash(closedID);
                     }
                 };
 
+                ActiveStashChanged += delegate (object sender, ActiveStashChangedEventArgs e)
+                {
+                    if (e.OldID == -1) return;
+                    ExportSharedModeStash(e.OldID);
+                };
+
+            }
+
+            private static void ExportSharedModeStash(int stashID)
+            {
+                Common.Stash stash = Stashes.GetStash(stashID);
+                if (!stash.SC || !stash.HC) return; // stash is not shared mode
+                GrimDawnGameMode oppositeMode = CurrentMode == GrimDawnGameMode.SC
+                    ? GrimDawnGameMode.HC
+                    : GrimDawnGameMode.SC;
+                // opposite mode got different stash selected
+                if (stashID != GetMainStashID(CurrentExpansion, oppositeMode)) return;
+
+                string externalFile = GrimDawn.GetTransferFile(CurrentExpansion, oppositeMode);
+                Console.WriteLine("Exporting shared mode transfer file:");
+                Console.WriteLine(" stash id: " + stashID);
+                Console.WriteLine(" mode: {0} -> {1}".Format(CurrentMode.ToString(), oppositeMode.ToString()));
+                Console.WriteLine(" file: " + externalFile);
+                Files.ExportTransferFile(stashID, externalFile);
             }
 
             private static bool _reloadOpenedStash = false;
@@ -404,8 +433,6 @@ namespace GDMultiStash
                     _reloadOpenedStash = true;
             }
 
-            private static bool _stashReopening = false;
-
             private delegate bool WaitForConditionDelegate();
             private static void WaitFor(int time, WaitForConditionDelegate condition = null, int delay = 1)
             {
@@ -418,7 +445,7 @@ namespace GDMultiStash
                 }
             }
 
-            private static void WaitForStashWritten()
+            private static void WaitForTransferFileWritten()
             {
                 string transferFile = GrimDawn.GetTransferFile(_currentExpansion, _currentMode);
                 DateTime timeout = DateTime.Now.AddMilliseconds(-200);
@@ -428,9 +455,6 @@ namespace GDMultiStash
                 }, 1);
             }
 
-
-
-
             private static void _ReopenStashAction(Action action)
             {
                 Console.WriteLine("Reopen stash...");
@@ -438,8 +462,6 @@ namespace GDMultiStash
                 ushort keyEscape = (ushort)Native.Keyboard.KeyToScanCode(Keys.Escape);
                 ushort keyInteract = GrimDawn.Keybindings.GetKeyBinding(GrimDawnKey.Interact).Primary;
                 int triesLeft;
-
-                //WaitFor(100);
 
                 triesLeft = 3;
                 while (triesLeft > 0 && _stashOpened)
@@ -458,9 +480,8 @@ namespace GDMultiStash
                     return;
                 }
 
-                WaitForStashWritten();
+                WaitForTransferFileWritten();
                 action();
-                //WaitFor(100);
 
                 triesLeft = 3;
                 while (triesLeft > 0 && !_stashOpened)
@@ -478,9 +499,9 @@ namespace GDMultiStash
                     Console.WriteLine("ReopenStash() failed! stash not reopened!");
                     return;
                 }
-
-                //WaitFor(100); // wait for StashStatusChanged event to fire when stash closed
             }
+
+            private static bool _stashReopening = false;
 
             private static void ReopenStashAction(Action action)
             {

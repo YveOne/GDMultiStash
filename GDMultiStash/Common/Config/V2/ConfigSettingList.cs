@@ -41,23 +41,29 @@ namespace GDMultiStash.Common.Config
         [XmlAnyElement("Comment1")] public XmlComment Comment1 = new XmlDocument().CreateComment("Change the following only if you know what you are doing!");
 
         [XmlElement("LastID")] public int LastID = 0; // the first stash will get id 1
+        [XmlElement("LastVersionCheck")] public long LastVersionCheck = 0L;
+
+        [XmlAnyElement("Comment2")] public XmlComment Comment2 = new XmlDocument().CreateComment("Grim Dawn Base Game");
 
         [XmlElement("Main0SCID")] public int Main0SCID = -1;
         [XmlElement("Main0HCID")] public int Main0HCID = -1;
         [XmlElement("Cur0SCID")] public int Cur0SCID = -1;
         [XmlElement("Cur0HCID")] public int Cur0HCID = -1;
 
+        [XmlAnyElement("Comment3")] public XmlComment Comment3 = new XmlDocument().CreateComment("Grim Dawn: AoM");
+
         [XmlElement("Main1SCID")] public int Main1SCID = -1;
         [XmlElement("Main1HCID")] public int Main1HCID = -1;
         [XmlElement("Cur1SCID")] public int Cur1SCID = -1;
         [XmlElement("Cur1HCID")] public int Cur1HCID = -1;
+
+        [XmlAnyElement("Comment4")] public XmlComment Comment4 = new XmlDocument().CreateComment("Grim Dawn: FG");
 
         [XmlElement("Main2SCID")] public int Main2SCID = -1;
         [XmlElement("Main2HCID")] public int Main2HCID = -1;
         [XmlElement("Cur2SCID")] public int Cur2SCID = -1;
         [XmlElement("Cur2HCID")] public int Cur2HCID = -1;
 
-        [XmlElement("LastVersionCheck")] public long LastVersionCheck = 0L;
 
         public ConfigSettingList Copy()
         {
