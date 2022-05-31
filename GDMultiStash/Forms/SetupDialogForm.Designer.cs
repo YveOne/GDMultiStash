@@ -112,7 +112,7 @@
             // 
             this.gameInstallPathsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.gameInstallPathsComboBox.FormattingEnabled = true;
-            this.gameInstallPathsComboBox.Location = new System.Drawing.Point(6, 119);
+            this.gameInstallPathsComboBox.Location = new System.Drawing.Point(6, 134);
             this.gameInstallPathsComboBox.Name = "gameInstallPathsComboBox";
             this.gameInstallPathsComboBox.Size = new System.Drawing.Size(398, 21);
             this.gameInstallPathsComboBox.TabIndex = 10;
@@ -120,7 +120,7 @@
             // autoStartGDCheckBox
             // 
             this.autoStartGDCheckBox.AutoSize = true;
-            this.autoStartGDCheckBox.Location = new System.Drawing.Point(13, 159);
+            this.autoStartGDCheckBox.Location = new System.Drawing.Point(13, 174);
             this.autoStartGDCheckBox.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.autoStartGDCheckBox.Name = "autoStartGDCheckBox";
             this.autoStartGDCheckBox.Size = new System.Drawing.Size(126, 17);
@@ -136,7 +136,7 @@
             this.autoStartGDGroupBox.Controls.Add(this.autoStartGDArgumentsTextBox);
             this.autoStartGDGroupBox.Controls.Add(this.autoStartGDCommandComboBox);
             this.autoStartGDGroupBox.Controls.Add(this.autoStartGDArgumentsLabel);
-            this.autoStartGDGroupBox.Location = new System.Drawing.Point(6, 161);
+            this.autoStartGDGroupBox.Location = new System.Drawing.Point(6, 176);
             this.autoStartGDGroupBox.Name = "autoStartGDGroupBox";
             this.autoStartGDGroupBox.Size = new System.Drawing.Size(398, 112);
             this.autoStartGDGroupBox.TabIndex = 9;
@@ -194,7 +194,7 @@
             this.panel2.Location = new System.Drawing.Point(7, 30);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(1);
-            this.panel2.Size = new System.Drawing.Size(465, 61);
+            this.panel2.Size = new System.Drawing.Size(397, 76);
             this.panel2.TabIndex = 5;
             // 
             // panel3
@@ -205,7 +205,7 @@
             this.panel3.Location = new System.Drawing.Point(1, 1);
             this.panel3.Name = "panel3";
             this.panel3.Padding = new System.Windows.Forms.Padding(5);
-            this.panel3.Size = new System.Drawing.Size(463, 59);
+            this.panel3.Size = new System.Drawing.Size(395, 74);
             this.panel3.TabIndex = 10;
             // 
             // languageListView
@@ -220,14 +220,18 @@
             this.languageListView.Location = new System.Drawing.Point(5, 5);
             this.languageListView.MultiSelect = false;
             this.languageListView.Name = "languageListView";
-            this.languageListView.Size = new System.Drawing.Size(453, 49);
+            this.languageListView.Size = new System.Drawing.Size(385, 64);
             this.languageListView.TabIndex = 0;
             this.languageListView.UseCompatibleStateImageBehavior = false;
             this.languageListView.View = System.Windows.Forms.View.List;
             // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Width = 100;
+            // 
             // gamePathSearchButton
             // 
-            this.gamePathSearchButton.Location = new System.Drawing.Point(410, 117);
+            this.gamePathSearchButton.Location = new System.Drawing.Point(410, 132);
             this.gamePathSearchButton.Name = "gamePathSearchButton";
             this.gamePathSearchButton.Size = new System.Drawing.Size(62, 23);
             this.gamePathSearchButton.TabIndex = 4;
@@ -248,7 +252,7 @@
             // gamePathLabel
             // 
             this.gamePathLabel.AutoSize = true;
-            this.gamePathLabel.Location = new System.Drawing.Point(6, 104);
+            this.gamePathLabel.Location = new System.Drawing.Point(6, 119);
             this.gamePathLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.gamePathLabel.Name = "gamePathLabel";
             this.gamePathLabel.Size = new System.Drawing.Size(63, 13);

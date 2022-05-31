@@ -74,6 +74,9 @@ column_name = Name
 column_usage = Voll
 column_last_change = Letzte Änderung
 column_color = Farbe
+column_expansion = Exp.
+column_softcore = SC
+column_hardcore = HC
 
 create_stash = Stash erstellen
 import_stashes = Importieren

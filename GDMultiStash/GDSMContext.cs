@@ -32,8 +32,6 @@ namespace GDMultiStash
             L = new Core.Localization.StringsProxy();
 
             Core.Files.EnsureDirectoriesExist();
-            Core.Localization.SaveDefaultFile("en-English.txt", Properties.Resources.en_English);
-            Core.Localization.SaveDefaultFile("de-Deutsch.txt", Properties.Resources.de_Deutsch);
             Core.Localization.LoadLanguages();
             Core.Config.Load();
             Core.Config.LanguageChanged += delegate {
@@ -42,7 +40,7 @@ namespace GDMultiStash
 
             if (Core.Config.IsNew)
             {
-                Core.Localization.LoadLanguage("en");
+                Core.Localization.LoadLanguage("enUS");
                 Core.Windows.ShowSetupDialog(true);
             }
             else

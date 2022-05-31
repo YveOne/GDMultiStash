@@ -66,6 +66,7 @@ namespace GDMultiStash.Forms
                     Checked = _settings.Language == lang.Code
                 });
             }
+            languageListView.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
             if (!GrimDawn.ValidGamePath(_settings.GamePath))
                 _settings.GamePath = GrimDawn.Steam.GamePath64 ?? "";

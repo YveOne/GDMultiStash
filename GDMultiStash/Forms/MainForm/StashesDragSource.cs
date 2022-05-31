@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
-using GrimDawnLib;
-
 using BrightIdeasSoftware;
 
 namespace GDMultiStash.Forms
@@ -47,9 +45,6 @@ namespace GDMultiStash.Forms
                 Common.Stash stash = (Common.Stash)i.RowObject;
                 _originalOrderedModels.Add(stash);
             }
-
-
-
 
             // dont let original transfer files be dragged to desktop/explorer
             // create temp zip file

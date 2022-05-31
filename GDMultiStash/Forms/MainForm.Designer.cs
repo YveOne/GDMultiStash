@@ -57,7 +57,7 @@
             this.helpButton});
             this.topMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.topMenuStrip.Name = "topMenuStrip";
-            this.topMenuStrip.Size = new System.Drawing.Size(619, 24);
+            this.topMenuStrip.Size = new System.Drawing.Size(634, 24);
             this.topMenuStrip.TabIndex = 0;
             this.topMenuStrip.Text = "topMenuStrip";
             // 
@@ -98,11 +98,11 @@
             this.bottomMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.importStashesButton,
             this.createStashButton});
-            this.bottomMenuStrip.Location = new System.Drawing.Point(0, 426);
+            this.bottomMenuStrip.Location = new System.Drawing.Point(0, 437);
             this.bottomMenuStrip.Name = "bottomMenuStrip";
             this.bottomMenuStrip.Padding = new System.Windows.Forms.Padding(6, 0, 0, 2);
             this.bottomMenuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.bottomMenuStrip.Size = new System.Drawing.Size(619, 24);
+            this.bottomMenuStrip.Size = new System.Drawing.Size(634, 24);
             this.bottomMenuStrip.TabIndex = 1;
             this.bottomMenuStrip.Text = "bottomMenuStrip";
             // 
@@ -130,7 +130,7 @@
             this.backgroundPanel.Location = new System.Drawing.Point(0, 24);
             this.backgroundPanel.Name = "backgroundPanel";
             this.backgroundPanel.Padding = new System.Windows.Forms.Padding(5);
-            this.backgroundPanel.Size = new System.Drawing.Size(619, 402);
+            this.backgroundPanel.Size = new System.Drawing.Size(634, 413);
             this.backgroundPanel.TabIndex = 2;
             // 
             // stashesListView
@@ -150,7 +150,7 @@
             this.stashesListView.SelectColumnsOnRightClick = false;
             this.stashesListView.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.stashesListView.ShowSortIndicators = false;
-            this.stashesListView.Size = new System.Drawing.Size(609, 392);
+            this.stashesListView.Size = new System.Drawing.Size(624, 403);
             this.stashesListView.SortGroupItemsByPrimaryColumn = false;
             this.stashesListView.TabIndex = 0;
             this.stashesListView.UseCompatibleStateImageBehavior = false;
@@ -162,15 +162,16 @@
             this.showExpansionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.showExpansionComboBox.DropDownWidth = 200;
             this.showExpansionComboBox.FormattingEnabled = true;
-            this.showExpansionComboBox.Location = new System.Drawing.Point(381, 2);
+            this.showExpansionComboBox.Location = new System.Drawing.Point(396, 2);
             this.showExpansionComboBox.Name = "showExpansionComboBox";
             this.showExpansionComboBox.Size = new System.Drawing.Size(173, 21);
             this.showExpansionComboBox.TabIndex = 22;
             // 
             // showSoftCoreComboBox
             // 
+            this.showSoftCoreComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.showSoftCoreComboBox.AutoSize = true;
-            this.showSoftCoreComboBox.Location = new System.Drawing.Point(562, 5);
+            this.showSoftCoreComboBox.Location = new System.Drawing.Point(577, 5);
             this.showSoftCoreComboBox.Name = "showSoftCoreComboBox";
             this.showSoftCoreComboBox.Size = new System.Drawing.Size(15, 14);
             this.showSoftCoreComboBox.TabIndex = 23;
@@ -178,8 +179,9 @@
             // 
             // showHardCoreComboBox
             // 
+            this.showHardCoreComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.showHardCoreComboBox.AutoSize = true;
-            this.showHardCoreComboBox.Location = new System.Drawing.Point(592, 5);
+            this.showHardCoreComboBox.Location = new System.Drawing.Point(607, 5);
             this.showHardCoreComboBox.Name = "showHardCoreComboBox";
             this.showHardCoreComboBox.Size = new System.Drawing.Size(15, 14);
             this.showHardCoreComboBox.TabIndex = 24;
@@ -187,7 +189,8 @@
             // 
             // selectAllButton
             // 
-            this.selectAllButton.Location = new System.Drawing.Point(1, 426);
+            this.selectAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.selectAllButton.Location = new System.Drawing.Point(1, 437);
             this.selectAllButton.Name = "selectAllButton";
             this.selectAllButton.Size = new System.Drawing.Size(125, 23);
             this.selectAllButton.TabIndex = 25;
@@ -197,7 +200,8 @@
             // 
             // unselectAllButton
             // 
-            this.unselectAllButton.Location = new System.Drawing.Point(125, 426);
+            this.unselectAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.unselectAllButton.Location = new System.Drawing.Point(125, 437);
             this.unselectAllButton.Name = "unselectAllButton";
             this.unselectAllButton.Size = new System.Drawing.Size(125, 23);
             this.unselectAllButton.TabIndex = 26;
@@ -210,7 +214,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(619, 450);
+            this.ClientSize = new System.Drawing.Size(634, 461);
             this.Controls.Add(this.unselectAllButton);
             this.Controls.Add(this.selectAllButton);
             this.Controls.Add(this.showHardCoreComboBox);
@@ -219,9 +223,9 @@
             this.Controls.Add(this.backgroundPanel);
             this.Controls.Add(this.topMenuStrip);
             this.Controls.Add(this.bottomMenuStrip);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.topMenuStrip;
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(650, 500);
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.Load += new System.EventHandler(this.MainForm_Load);

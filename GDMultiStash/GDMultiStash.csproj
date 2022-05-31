@@ -64,10 +64,10 @@
   <ItemGroup>
     <Compile Include="Common\Config\V1\Config.cs" />
     <Compile Include="Common\Config\V1\ConfigSettingList.cs" />
-    <Compile Include="Common\Config\V2\Config.cs" />
-    <Compile Include="Common\Config\V2\ConfigSettingList.cs" />
-    <Compile Include="Common\Config\V2\ConfigStash.cs" />
-    <Compile Include="Common\Config\V2\ConfigStashList.cs" />
+    <Compile Include="Common\Config\V3\Config.cs" />
+    <Compile Include="Common\Config\V3\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\V3\ConfigStash.cs" />
+    <Compile Include="Common\Config\V3\ConfigStashList.cs" />
     <Compile Include="Common\Config\ConfigBase.cs" />
     <Compile Include="Common\Overlay\Animations\Animation.cs" />
     <Compile Include="Common\Overlay\Animations\FadeAnimation.cs" />
@@ -211,12 +211,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\de-Deutsch.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\en-English.txt" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Resources\zhCN-简体中文.txt" />
     <None Include="Resources\radio0.png" />
     <None Include="Resources\radio1.png" />
     <None Include="Resources\ScrollBarInner.png" />
@@ -227,6 +222,9 @@
     <Content Include="Resources\ButtonSmallDown.png" />
     <Content Include="Resources\ButtonSmallOver.png" />
     <Content Include="Resources\ButtonSmallUp.png" />
+    <None Include="Resources\deDE-Deutsch.txt" />
+    <None Include="Resources\enGB-English %28GB%29.txt" />
+    <None Include="Resources\enUS-English %28US%29.txt" />
     <Content Include="Resources\itemsizes.txt" />
   </ItemGroup>
   <ItemGroup>

@@ -74,6 +74,9 @@ column_name = Name
 column_usage = Usage
 column_last_change = Last change
 column_color = Color
+column_expansion = Exp.
+column_softcore = SC
+column_hardcore = HC
 
 create_stash = Create Stash
 import_stashes = Import Stashes
@@ -93,4 +96,4 @@ color_green = Green
 color_blue = Blue
 color_purple = Purple
 color_gold = Gold
-color_gray = Gray
+color_gray = Grey

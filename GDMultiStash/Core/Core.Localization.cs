@@ -23,7 +23,9 @@ namespace GDMultiStash
             }
 
             private static readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
-            private static readonly IDictionary<string, string> _strings = new Dictionary<string, string>();
+            private static readonly Dictionary<string, string> _strings = new Dictionary<string, string>();
+
+
 
             public static Language[] GetLanguages()
             {
@@ -74,6 +76,12 @@ namespace GDMultiStash
 
             public static void LoadLanguages()
             {
+
+                SaveDefaultFile("enGB-English (GB).txt", Properties.Resources.enGB_English__GB_);
+                SaveDefaultFile("enUS-English (US).txt", Properties.Resources.enUS_English__US_);
+                SaveDefaultFile("deDE-Deutsch.txt", Properties.Resources.deDE_Deutsch);
+                SaveDefaultFile("zhCN-简体中文.txt", Properties.Resources.zhCN_简体中文);
+
                 Console.WriteLine("Loading languages...");
                 string fileName;
                 List<string> fileNameParts;
@@ -109,9 +117,10 @@ namespace GDMultiStash
                 }
                 else
                 {
-                    Console.WriteLine("- Not found");
                     // requested 4code lang (enUS/enGB)
                     // but not existing in list
+                    Console.WriteLine("- Not found");
+                    /*
                     if (langCode.Length == 4)
                     {
                         // fallback to 2code
@@ -126,6 +135,7 @@ namespace GDMultiStash
                             Console.WriteLine("- Not found");
                         }
                     }
+                    */
                 }
                 if (lines != null)
                 {

@@ -12,7 +12,7 @@ namespace GDMultiStash
         internal static partial class Update
         {
 
-            private static readonly long checkDelay = 3600 * 24; // 1 day
+            private static readonly long checkDelay = 3600 * 1; // 1 day
 
             public static string NewVersionName => UpdaterAPI.NewVersionName;
 

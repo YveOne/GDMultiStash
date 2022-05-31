@@ -124,9 +124,9 @@ namespace GDMultiStash.Properties {
         ///window_setup = Einstellungen
         ///window_create_stash = Stash er [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string de_Deutsch {
+        internal static string deDE_Deutsch {
             get {
-                return ResourceManager.GetString("de_Deutsch", resourceCulture);
+                return ResourceManager.GetString("deDE_Deutsch", resourceCulture);
             }
         }
         
@@ -145,9 +145,30 @@ namespace GDMultiStash.Properties {
         ///window_create_stash = Create Stash
         ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string en_English {
+        internal static string enGB_English__GB_ {
             get {
-                return ResourceManager.GetString("en_English", resourceCulture);
+                return ResourceManager.GetString("enGB_English__GB_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///err_gamedir_not_found = Game directory not found!
+        ///err_docsdir_not_found = Documents directory not found!
+        ///err_gd_already_running = Grim Dawn is already running!
+        ///err_invalid_transfer_file = Invalid transfer file!
+        ///err_no_stash_selected = No stash selected!
+        ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
+        ///err_stash_is_active = Stash is currently active
+        ///err_gdms_already_running = GDMultiStash is already running!
+        ///
+        ///window_setup = Setup
+        ///window_create_stash = Create Stash
+        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string enUS_English__US_ {
+            get {
+                return ResourceManager.GetString("enUS_English__US_", resourceCulture);
             }
         }
         
@@ -216,6 +237,37 @@ namespace GDMultiStash.Properties {
             get {
                 object obj = ResourceManager.GetObject("ScrollBarInner", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///err_gamedir_not_found = 游戏目录未找到！
+        ///err_docsdir_not_found = 文档目录未找到！
+        ///err_gd_already_running = 恐怖黎明已经在运行！
+        ///err_invalid_transfer_file = 传输文件无效！
+        ///err_no_stash_selected = 没有选择存储！
+        ///err_cannot_delete_stash = 存储“{0}”无法删除：{1}
+        ///err_stash_is_active = 存储当前处于活动状态
+        ///err_gdms_already_running = GDMultiStash 已经在运行！
+        ///
+        ///window_setup = 设置
+        ///window_create_stash = 创建存储
+        ///window_import_stash = 导入存储
+        ///
+        ///setup_tab_common = 通用
+        ///setup_tab_behaviour = 行为
+        ///
+        ///all = 全部
+        ///
+        ///button_file = 文件
+        ///button_settings = 设置
+        ///button_about = 关于
+        ///button_he [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string zhCN_简体中文 {
+            get {
+                return ResourceManager.GetString("zhCN_简体中文", resourceCulture);
             }
         }
     }

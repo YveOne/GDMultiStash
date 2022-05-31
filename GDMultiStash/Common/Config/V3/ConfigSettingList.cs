@@ -12,6 +12,9 @@ namespace GDMultiStash.Common.Config
     public class ConfigSettingList
     {
 
+        [XmlElement("WindowWidth")] public int WindowWidth = 650;
+        [XmlElement("WindowHeight")] public int WindowHeight = 500;
+
         [XmlElement("Language")] public string Language = "en";
         [XmlElement("GamePath")] public string GamePath = "";
 
@@ -69,6 +72,9 @@ namespace GDMultiStash.Common.Config
         {
             return new ConfigSettingList
             {
+                WindowWidth = WindowWidth,
+                WindowHeight = WindowHeight,
+
                 Language = Language,
                 GamePath = GamePath,
 
@@ -91,8 +97,6 @@ namespace GDMultiStash.Common.Config
                 AutoStartGDArguments = AutoStartGDArguments,
 
                 DefaultStashMode = DefaultStashMode,
-
-                Comment1 = Comment1,
 
                 LastID = LastID,
 
@@ -119,6 +123,9 @@ namespace GDMultiStash.Common.Config
 
         public void Set(ConfigSettingList s)
         {
+            WindowWidth = s.WindowWidth;
+            WindowHeight = s.WindowHeight;
+
             Language = s.Language;
             GamePath = s.GamePath;
 
@@ -141,8 +148,6 @@ namespace GDMultiStash.Common.Config
             AutoStartGDArguments = s.AutoStartGDArguments;
 
             DefaultStashMode = s.DefaultStashMode;
-
-            Comment1 = s.Comment1;
 
             LastID = s.LastID;
 

@@ -145,9 +145,9 @@ namespace GDMultiStash.Forms
             {
                 DisplayIndex = 6,
                 Name = "lastChangeColumn",
-                MaximumWidth = 120,
-                MinimumWidth = 120,
-                Width = 120,
+                MaximumWidth = 130,
+                MinimumWidth = 130,
+                Width = 130,
                 Searchable = false,
                 Groupable = false,
                 Sortable = false,
@@ -353,19 +353,13 @@ namespace GDMultiStash.Forms
             };
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            Width = Core.Config.WindowWidth;
+            Height = Core.Config.WindowHeight;
+            ResizeEnd += delegate {
+                Core.Config.WindowWidth = Width;
+                Core.Config.WindowHeight = Height;
+                Core.Config.Save();
+            };
 
             AllowDrop = true;
             DragEnter += TransferFile_DragEnter;
@@ -424,6 +418,9 @@ namespace GDMultiStash.Forms
             columnUsage.Text = L["column_usage"];
             columnLastChange.Text = L["column_last_change"];
             columnColor.Text = L["column_color"];
+            columnExpansion.Text = L["column_expansion"];
+            columnSC.Text = L["column_softcore"];
+            columnHC.Text = L["column_hardcore"];
 
             createStashButton.Text = L["create_stash"];
             importStashesButton.Text = L["import_stashes"];

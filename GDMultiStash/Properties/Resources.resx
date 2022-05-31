@@ -133,11 +133,14 @@
   <data name="ButtonSmallUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ButtonSmallUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="de_Deutsch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\de-Deutsch.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="deDE_Deutsch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\deDE-Deutsch.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="en_English" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\en-English.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="enGB_English__GB_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\enGB-English (GB).txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="enUS_English__US_" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\enUS-English (US).txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="icon32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon32.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -156,5 +159,8 @@
   </data>
   <data name="ScrollBarInner" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ScrollBarInner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="zhCN_简体中文" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\zhCN-简体中文.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

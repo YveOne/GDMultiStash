@@ -28,13 +28,12 @@ namespace GDMultiStash
                 _previousVersion = _configBase.Version;
                 while (_configBase.Version < Common.Config.ConfigBase.LatestVersion)
                 {
+                    _configBase.Version += 1;
+                    Console.WriteLine("Updating Config to v{0}...".Format(_configBase.Version.ToString()));
                     switch (_configBase.Version)
                     {
 
-                        case 1:
-                            Console.WriteLine("Updating Config to V2...");
-                            _configBase.Version += 1;
-
+                        case 2:
                             Common.Config.V1.Config configOld = XmlIO.ReadXmlText<Common.Config.V1.Config>(File.ReadAllText(filePath));
                             Common.Config.Config configNew = new Common.Config.Config();
 
@@ -57,11 +56,33 @@ namespace GDMultiStash
                             configNew.Settings.Cur2SCID = configOld.Settings.CurSCID;
                             configNew.Settings.Cur2HCID = configOld.Settings.CurHCID;
 
-                            Console.WriteLine("... Done");
                             WriteToFile(configNew, filePath);
                             break;
 
+                        case 3:
+                            string f;
+                            f = Path.Combine(Files.DataLocalesDirPath, "de-Deutsch.txt");
+                            if (File.Exists(f)) File.Delete(f);
+                            f = Path.Combine(Files.DataLocalesDirPath, "en-English.txt");
+                            if (File.Exists(f)) File.Delete(f);
+                            f = Path.Combine(Files.DataLocalesDirPath, "zh-Chinese.txt");
+                            if (File.Exists(f)) File.Delete(f);
+
+                            Common.Config.Config cfg = XmlIO.ReadXmlText<Common.Config.Config>(File.ReadAllText(filePath));
+                            cfg.Version = _configBase.Version;
+                            switch (cfg.Settings.Language)
+                            {
+                                case "de": cfg.Settings.Language = "deDE"; break;
+                                case "en": cfg.Settings.Language = "enUS"; break;
+                                case "zh": cfg.Settings.Language = "zhCN"; break;
+                                default: cfg.Settings.Language = "enUS"; break;
+                            }
+
+                            WriteToFile(cfg, filePath);
+                            break;
+
                     }
+                    Console.WriteLine("... Done");
                 }
                 //V1.ConfigV1 _configV1 = (V1.ConfigV1)new XmlSerializer(typeof(V1.ConfigV1)).Deserialize(xmlReader);
                 Console.WriteLine("Config is up to date");
@@ -111,6 +132,11 @@ namespace GDMultiStash
             {
                 Console.WriteLine("Loading config");
                 _config = LoadOrCreate(Files.DataConfigFilePath);
+
+
+
+
+
             }
 
             public static void Save()
@@ -231,6 +257,18 @@ namespace GDMultiStash
             public static bool IsNew
             {
                 get { return _config.IsNew; }
+            }
+
+            public static int WindowWidth
+            {
+                get { return _config.Settings.WindowWidth; }
+                set { _config.Settings.WindowWidth = value; }
+            }
+
+            public static int WindowHeight
+            {
+                get { return _config.Settings.WindowHeight; }
+                set { _config.Settings.WindowHeight = value; }
             }
 
             public static string Language
