@@ -216,10 +216,14 @@
             this.languageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.languageListView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.languageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.languageListView.HideSelection = false;
+            this.languageListView.LabelWrap = false;
             this.languageListView.Location = new System.Drawing.Point(5, 5);
             this.languageListView.MultiSelect = false;
             this.languageListView.Name = "languageListView";
+            this.languageListView.Scrollable = false;
+            this.languageListView.ShowGroups = false;
             this.languageListView.Size = new System.Drawing.Size(385, 64);
             this.languageListView.TabIndex = 0;
             this.languageListView.UseCompatibleStateImageBehavior = false;

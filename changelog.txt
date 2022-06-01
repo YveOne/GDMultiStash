@@ -2,9 +2,9 @@
 v1.12
 - Update check is now once per hour and no more once per day
 - Added Chinese translation (by tt300)
-- The GDMultiStash window can now be resized
-- Updates localization system: Now only 4 letter codes are allowed (enUS/enGB/deDE/zhCN/...)
 - Added translation file for enGB
+- The GDMultiStash window can now be resized
+- Updated localization system: Now only 4 letter (country/language) codes are allowed (enUS/enGB/deDE/zhCN/...)
 - Localization:
     +column_expansion
     +column_softcore
