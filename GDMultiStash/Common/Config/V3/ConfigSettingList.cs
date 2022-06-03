@@ -15,7 +15,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("WindowWidth")] public int WindowWidth = 650;
         [XmlElement("WindowHeight")] public int WindowHeight = 500;
 
-        [XmlElement("Language")] public string Language = "en";
+        [XmlElement("Language")] public string Language = "enUS";
         [XmlElement("GamePath")] public string GamePath = "";
 
         [XmlElement("ShowExpansion")] public int ShowExpansion = -1;

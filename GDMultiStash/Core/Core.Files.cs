@@ -66,12 +66,14 @@ namespace GDMultiStash
                 if (!File.Exists(srcFile)) return false; // what happened???
 
                 string destFile = GetStashFilePath(stashID);
-                string srcHash = Utils.FileUtils.GetFileHash(srcFile);
-                string destHash = Utils.FileUtils.GetFileHash(destFile);
-                if (srcHash == null || destHash == null) return false; // file locked
-
-                if (srcHash != destHash || forceBackup) CreateBackup(stashID);
-                if (File.Exists(destFile)) File.Delete(destFile);
+                if (File.Exists(destFile))
+                {
+                    string srcHash = Utils.FileUtils.GetFileHash(srcFile);
+                    string destHash = Utils.FileUtils.GetFileHash(destFile);
+                    if (srcHash == null || destHash == null) return false; // file locked
+                    if (srcHash != destHash || forceBackup) CreateBackup(stashID);
+                    File.Delete(destFile);
+                }
                 File.Copy(srcFile, destFile);
                 return true;
             }
