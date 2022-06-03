@@ -1,4 +1,7 @@
 
+v1.13
+- Fixed game crash when user presses keybind (U) while ingame stash opened
+
 v1.12
 - Update check is now once per hour and no more once per day
 - Added Chinese translation (by tt300)

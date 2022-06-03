@@ -68,6 +68,7 @@ namespace GDMultiStash
                 string destFile = GetStashFilePath(stashID);
                 string srcHash = Utils.FileUtils.GetFileHash(srcFile);
                 string destHash = Utils.FileUtils.GetFileHash(destFile);
+                if (srcHash == null || destHash == null) return false; // file locked
 
                 if (srcHash != destHash || forceBackup) CreateBackup(stashID);
                 if (File.Exists(destFile)) File.Delete(destFile);

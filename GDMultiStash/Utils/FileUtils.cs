@@ -14,14 +14,21 @@ namespace Utils
 
         public static string GetFileHash(string filepath)
         {
-            if (!File.Exists(filepath)) return null;
-            byte[] hash;
-            using (var inputStream = File.Open(filepath, FileMode.Open))
+            try
             {
-                var md5 = System.Security.Cryptography.MD5.Create();
-                hash = md5.ComputeHash(inputStream);
+                if (!File.Exists(filepath)) return null;
+                byte[] hash;
+                using (var inputStream = File.Open(filepath, FileMode.Open))
+                {
+                    var md5 = System.Security.Cryptography.MD5.Create();
+                    hash = md5.ComputeHash(inputStream);
+                }
+                return string.Concat(hash.Select(x => x.ToString("X2")));
             }
-            return string.Concat(hash.Select(x => x.ToString("X2")));
+            catch(Exception)
+            {
+                return null;
+            }
         }
 
         public static long GetLastWriteTicks(string filePath)

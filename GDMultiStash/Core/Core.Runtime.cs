@@ -374,11 +374,23 @@ namespace GDMultiStash
 
                 TransferStashSaved += delegate
                 {
-                    if (!_stashReopening)
+                    if (!_stashReopening && !_stashOpened)
                     {
                         int closedID = _activeStashID;
                         // debug: when stash closed GD could still be writing to transfer file
                         WaitForTransferFileWritten();
+
+                        string externalFile = GrimDawn.GetTransferFilePath(_currentExpansion, _currentMode);
+                        try
+                        {
+                            File.Open(externalFile, FileMode.Open).Close();
+                        }
+                        catch(Exception)
+                        {
+                            // stash reopened by using keybinding
+                            return;
+                        }
+
                         if (Config.AutoBackToMain)
                         {
                             // we dont need to use reopen because stash is closed
