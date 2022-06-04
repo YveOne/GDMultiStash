@@ -79,14 +79,20 @@
     <Compile Include="Forms\MainForm\StashesDragSource.cs" />
     <Compile Include="Forms\MainForm\StashesDropSink.cs" />
     <Compile Include="Forms\MainForm\StashesSortComparer.cs" />
+    <Compile Include="Forms\UpdateAvailableDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\UpdateAvailableDialogForm.Designer.cs">
+      <DependentUpon>UpdateAvailableDialogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
-    <Compile Include="Overlay\Elements\InfoButton.cs" />
-    <Compile Include="Overlay\Elements\InfoWindow.cs" />
-    <Compile Include="Overlay\Elements\VerticalScrollBar.cs" />
-    <Compile Include="Overlay\Elements\StashList.cs" />
+    <Compile Include="Overlay\InfoButton.cs" />
+    <Compile Include="Overlay\InfoWindow.cs" />
+    <Compile Include="Overlay\VerticalScrollBar.cs" />
+    <Compile Include="Overlay\StashList.cs" />
     <Compile Include="Common\Overlay\Element.Anchors.cs" />
-    <Compile Include="Overlay\Elements\MainWindow.cs" />
-    <Compile Include="Overlay\Elements\StashListChild.cs" />
+    <Compile Include="Overlay\MainWindow.cs" />
+    <Compile Include="Overlay\StashListChild.cs" />
     <Compile Include="Common\Overlay\Element.Mouse.cs" />
     <Compile Include="Common\Overlay\PseudoScrollElement.cs" />
     <Compile Include="Common\Overlay\ScrollBarElement.cs" />
@@ -143,8 +149,7 @@
     </Compile>
     <Compile Include="GrimDawnLib\GrimDawn.Keybindings.cs" />
     <Compile Include="Native\Native.Keyboard.cs" />
-    <Compile Include="Overlay\Elements\Viewport.cs" />
-    <Compile Include="Overlay\OverlayManager.cs" />
+    <Compile Include="Overlay\Viewport.cs" />
     <Compile Include="Services\GDOverlayService.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.Steam.cs" />
     <Compile Include="Core\Core.Windows.cs" />
@@ -183,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SetupDialogForm.resx">
       <DependentUpon>SetupDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\UpdateAvailableDialogForm.resx">
+      <DependentUpon>UpdateAvailableDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

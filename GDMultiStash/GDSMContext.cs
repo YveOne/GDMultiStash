@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Threading;
-using System.Drawing;
 
 using GrimDawnLib;
 using GDMultiStash.Services;
@@ -23,7 +22,7 @@ namespace GDMultiStash
         private readonly GDOverlayService _gdOverlayService;
         private readonly Native.Mouse.Hook _mouseHook;
 
-        private Overlay.OverlayManager _overlayManager;
+        private Overlay.Elements.Viewport _overlayViewport;
 
         private static Mutex mutex = null;
 
@@ -106,8 +105,8 @@ namespace GDMultiStash
             Console.WriteLine("Loading Stashes:");
             Core.Stashes.LoadStashes();
 
-            _overlayManager = new Overlay.OverlayManager();
-            _gdOverlayService = new GDOverlayService(_overlayManager.Viewport);
+            _overlayViewport = new Overlay.Elements.Viewport();
+            _gdOverlayService = new GDOverlayService(_overlayViewport);
 
             _gdWindowHookService = new GDWindowHookService();
             _gdGameHookService = new GDGameHookService();
@@ -149,7 +148,7 @@ namespace GDMultiStash
                 _gdGameHookService.Stop();
                 _gdOverlayService.Stop();
 
-                _overlayManager.Destroy();
+                _overlayViewport.Destroy();
                 _gdOverlayService.FrameDrawing -= D3DHook_FrameDrawing;
 
                 _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
@@ -175,12 +174,12 @@ namespace GDMultiStash
         {
             if (Core.Runtime.StashOpened)
             {
-                _overlayManager.ShowMainWindow();
+                _overlayViewport.ShowMainWindow();
                 _mouseHook.SetHook();
             }
             else
             {
-                _overlayManager.HideMainWindow();
+                _overlayViewport.HideMainWindow();
                 _mouseHook.UnHook();
             }
         }
@@ -189,7 +188,7 @@ namespace GDMultiStash
 
         private void D3DHook_FrameDrawing(float ms)
         {
-            _overlayManager.Viewport.DrawRoutine(ms);
+            _overlayViewport.DrawRoutine(ms);
         }
 
         #endregion
@@ -252,7 +251,7 @@ namespace GDMultiStash
         private void MouseHook_MouseMove(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             if (!Core.Runtime.WindowFocused || !Core.Runtime.StashOpened) return;
-            bool hit = _overlayManager.Viewport.CheckMouseMove(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y);
+            bool hit = _overlayViewport.CheckMouseMove(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y);
             if (hit)
             {
             }
@@ -261,7 +260,7 @@ namespace GDMultiStash
         private void MouseHook_MouseDown(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             if (!Core.Runtime.WindowFocused || !Core.Runtime.StashOpened) return;
-            bool hit = _overlayManager.Viewport.CheckMouseDown(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y);
+            bool hit = _overlayViewport.CheckMouseDown(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y);
             if (hit)
             {
                 // this is handled inside overlay mainwindow
@@ -272,7 +271,7 @@ namespace GDMultiStash
         {
             Core.Runtime.EnableMovement();
             if (!Core.Runtime.WindowFocused || !Core.Runtime.StashOpened) return;
-            bool hit = _overlayManager.Viewport.CheckMouseUp(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y);
+            bool hit = _overlayViewport.CheckMouseUp(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y);
             if (hit)
             {
             }

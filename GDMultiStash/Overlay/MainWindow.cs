@@ -24,7 +24,7 @@ namespace GDMultiStash.Overlay.Elements
         private const float fadeDurationSlowDelay = 2000;
 
         private readonly MoveAnimation _moveAnimation;
-        private const float moveDuration = 300;
+        private const float _moveDuration = 300;
 
         private bool _mouseOver = false;
         private bool _mouseDown = false;
@@ -33,6 +33,32 @@ namespace GDMultiStash.Overlay.Elements
         private readonly InfoWindow _infoWindow;
         private readonly StashList _stashList;
         private readonly VerticalScrollBar _scrollBar;
+
+        //private bool showing = false;
+        //private bool shown = false;
+
+        public enum States
+        {
+            Hidden = 0,
+            Showing = 1,
+            Shown = 2,
+            Hiding = 3,
+        }
+
+        public delegate void StateChangedEventHandler(States state);
+        public event StateChangedEventHandler StateChanged;
+
+        private States _state = States.Hidden;
+        public States State
+        {
+            get => _state;
+            private set
+            {
+                if (_state == value) return;
+                _state = value;
+                StateChanged?.Invoke(_state);
+            }
+        }
 
         public MainWindow() : base()
         {
@@ -113,8 +139,7 @@ namespace GDMultiStash.Overlay.Elements
             MouseEnter += (object sender, EventArgs e) => {
                 FadeInFast();
                 _mouseOver = true;
-                showing = false;
-                shown = true;
+                State = States.Shown;
             };
             MouseLeave += (object sender, EventArgs e) => {
                 if (!_mouseDown) FadeOutFast();
@@ -125,7 +150,7 @@ namespace GDMultiStash.Overlay.Elements
             };
 
 
-            _moveAnimation = new MoveAnimation(this, Utils.Easing.BackOut(1.1f), moveDuration);
+            _moveAnimation = new MoveAnimation(this, Utils.Easing.BackOut(1.1f), _moveDuration);
 
             _updateAppearance = true;
             Core.Config.AppearanceChanged += delegate { _updateAppearance = true; };
@@ -164,9 +189,6 @@ namespace GDMultiStash.Overlay.Elements
             return base.CheckMouseUp(x, y);
         }
 
-        private bool showing = false;
-        private bool shown = false;
-
         public override void Draw(float ms)
         {
             base.Draw(ms);
@@ -187,16 +209,20 @@ namespace GDMultiStash.Overlay.Elements
             }
             else
             {
-                if (showing)
+                switch(_state)
                 {
-                    showing = false;
-                    shown = true;
-                    _fadeAnimation.Duration = fadeDurationSlow;
-                    _fadeAnimation.Delay = fadeDurationSlowDelay;
-                    _fadeAnimation.Value = 0f;
+                    case States.Showing:
+                        State = States.Shown;
+                        _fadeAnimation.Duration = fadeDurationSlow;
+                        _fadeAnimation.Delay = fadeDurationSlowDelay;
+                        _fadeAnimation.Value = 0f;
+                        break;
+                    case States.Hiding:
+                        State = States.Hidden;
+                        break;
                 }
             }
-            if (shown)
+            if (_state == States.Shown)
             {
                 // only enable fading when sliding finished
                 if (_fadeAnimation.Animate(ms))
@@ -215,14 +241,13 @@ namespace GDMultiStash.Overlay.Elements
                 _fadeAnimation.Reset(1f);
             }
             _moveAnimation.Value = 1f;
-            showing = true;
+            State = States.Showing;
         }
 
         public void Hide()
         {
             _moveAnimation.Value = 0f;
-            shown = false;
-            showing = false;
+            State = States.Hiding;
         }
 
     }

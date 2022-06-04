@@ -17,7 +17,7 @@ namespace D3DHook.Hook.Common
         public virtual List<IOverlayElement> Elements
         {
             get { return _elements; }
-            set { _elements = value; }
+            set { _elements = value ?? new List<IOverlayElement>(); }
         }
 
         public virtual bool Hidden

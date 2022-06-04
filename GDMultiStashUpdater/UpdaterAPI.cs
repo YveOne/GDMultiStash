@@ -39,6 +39,7 @@ namespace GDMultiStashUpdater
 
         internal static void RunUpdate()
         {
+
             Console.WriteLine("Welcome to GDMultiStash Updater <3");
             Console.WriteLine("Getting data...");
             LatestReleaseData data = GetUpdateData();
@@ -46,7 +47,7 @@ namespace GDMultiStashUpdater
             {
                 Console.WriteLine("FAILED GETTING DATA FROM GITHUB!");
                 Console.WriteLine("Updater will exit in 5 Seconds...");
-                System.Threading.Thread.Sleep(5000);
+                Thread.Sleep(5000);
                 return;
             }
             string releaseName = data.name;
@@ -73,22 +74,53 @@ namespace GDMultiStashUpdater
                 }
 
             }
+
+
+
+
+
+
             Console.WriteLine("Extracting...");
             using (FileStream zipToOpen = new FileStream(releaseFilename, FileMode.Open))
             {
                 using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Read))
                 {
+                    Directory.CreateDirectory("Update");
                     foreach (ZipArchiveEntry entry in archive.Entries)
                     {
                         if (entry.Name == "") continue; // folder
-                        if (entry.Name == "GDMultiStashUpdater.exe") continue; // because its currently running
-                        Console.WriteLine("   " + entry.Name);
-                        if (File.Exists(entry.Name)) File.Delete(entry.Name);
-                        entry.ExtractToFile(entry.Name);
+                        //if (entry.Name == "GDMultiStashUpdater.exe") continue; // because its currently running
+                        //Console.WriteLine("   " + entry.Name);
+                        try
+                        {
+                            string f = Path.Combine("Update", entry.Name);
+                            //if (File.Exists(f)) File.Delete(f);
+                            entry.ExtractToFile(f);
+                        }
+                        catch(Exception)
+                        {
+                            // file locked
+                        }
                     }
                 }
             }
             File.Delete(releaseFilename);
+
+            Console.WriteLine("Running Update.bat");
+            File.WriteAllText("Update.bat", Properties.Resources.Update);
+
+            Process process = new Process();
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                FileName = "cmd.exe",
+                Arguments = "/C start \"\" Update.bat",
+                UseShellExecute = false,
+            };
+            process.StartInfo = startInfo;
+            process.Start();
+
+            /*
             Console.WriteLine("Starting GDMultiStash.exe");
             new Thread(new ThreadStart(() => {
                 var p = new Process();
@@ -98,7 +130,7 @@ namespace GDMultiStashUpdater
                 };
                 p.Start();
             })).Start();
-            
+            */
         }
 
         public static LatestReleaseData GetUpdateData()
@@ -140,30 +172,45 @@ namespace GDMultiStashUpdater
             }
         }
 
+        public static int CompareCurrentVersion(string v)
+        {
+
+            Assembly asm = Assembly.LoadFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GDMultiStash.exe"));
+            string currentVersion = ((AssemblyFileVersionAttribute)asm.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
+
+            // cleanup latest version
+            string[] verDig = new string[] { "0", "0", "0", "0" };
+            v.Split('.').CopyTo(verDig, 0);
+            v = string.Join(".", verDig);
+
+            return new Version(currentVersion).CompareTo(new Version(v));
+        }
+
         public static bool NewVersionAvailable()
         {
+
+
+
+
+
+
+
+
+
+
             LatestReleaseData data = GetUpdateData();
             if (data == null) return false;
 
-            Match vMath = Regex.Match(data.tag_name, @"^v([\d\.]+)(.*?)$");
-            if (!vMath.Success)
+            Match vMatch = Regex.Match(data.tag_name, @"^v([\d\.]+)(.*?)$");
+            if (!vMatch.Success)
             {
                 // TODO: show warning?
                 return false;
             }
 
-            string latestVersion = vMath.Groups[1].Value.Trim();
-            string latestVersionSpecial = vMath.Groups[2].Value.Trim();
-
-            Assembly asm = Assembly.LoadFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "GDMultiStash.exe")); //Assembly.GetExecutingAssembly();
-            string currentVersion = ((AssemblyFileVersionAttribute)asm.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
-
-            // cleanup latest version
-            string[] verDig = new string[] { "0", "0", "0", "0" };
-            latestVersion.Split('.').CopyTo(verDig, 0);
-            latestVersion = string.Join(".", verDig);
-
-            var result = new Version(currentVersion).CompareTo(new Version(latestVersion));
+            string latestVersion = vMatch.Groups[1].Value.Trim();
+            string latestVersionSpecial = vMatch.Groups[2].Value.Trim();
+            int result = CompareCurrentVersion(latestVersion);
 
             // this was just for testing
             //Console.WriteLine(currentVersion);

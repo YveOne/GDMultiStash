@@ -16,6 +16,8 @@ namespace GDMultiStash
 
             public static string NewVersionName => UpdaterAPI.NewVersionName;
 
+            //public static UpdaterAPI.LatestReleaseData LatestData => UpdaterAPI.LatestData;
+
             public static bool NewVersionAvailable()
             {
 
@@ -39,7 +41,6 @@ namespace GDMultiStash
                 })).Start();
                 Program.Quit();
             }
-
 
         }
     }

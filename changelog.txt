@@ -1,4 +1,8 @@
 
+v1.14
+- Performance fixes
+- Updater patch
+
 v1.13
 - Fixed game crash when user presses keybind (U) while ingame stash opened
 
