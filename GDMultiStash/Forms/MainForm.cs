@@ -316,7 +316,7 @@ namespace GDMultiStash.Forms
                 {
                     Common.Stash stash = (Common.Stash)e.Model;
                     e.SubItem.BackColor = Color.Black;
-                    e.SubItem.ForeColor = stash.GetColor();
+                    e.SubItem.ForeColor = stash.GetDisplayColor();
                     e.SubItem.Font = new Font("Consolas", 9, FontStyle.Bold);
                 }
             };
@@ -645,10 +645,12 @@ namespace GDMultiStash.Forms
                 Common.Stash stash = (Common.Stash)e.RowObject;
 
                 Dictionary<string, string> colorList = new Dictionary<string, string>();
-                colorList.Add("#ebdec3", _color_default);
-                colorList.Add("#34eb58", _color_green);
-                colorList.Add("#5ecfff", _color_blue);
-                colorList.Add("#af69ff", _color_purple);
+                colorList.Add("#ebdec3", _color_default); // f2a04c
+
+
+                colorList.Add("#34eb58", _color_green); // 0fe35a
+                colorList.Add("#5ecfff", _color_blue); // 39aace
+                colorList.Add("#af69ff", _color_purple); // a036f7
                 colorList.Add("#ffcc00", _color_gold);
                 colorList.Add("#aaaaaa", _color_gray);
 

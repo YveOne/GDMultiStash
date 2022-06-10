@@ -10,39 +10,57 @@ namespace GDMultiStash.Overlay.Elements
 {
     public class VerticalScrollBar : ScrollBarElement
     {
-
-        protected override bool ScrollHorizontal => false;
-        protected override bool ScrollVertical => true;
-        protected override float ScrollAreaWidth => 15f - 6f;
-        protected override float ScrollAreaHeight => 565f - 6f;
+        protected override float ScrollAreaWidth => 9f;
+        protected override float ScrollAreaHeight => 567f;
+        protected override float ScrollBarMinWidth => 9f;
+        protected override float ScrollBarMinHeight => 30f;
         protected override int ScrollAreaWidthUnits => 0;
         protected override int ScrollAreaHeightUnits => 20;
 
         public static D3DHook.Hook.Common.IImageResource _ScrollBarResource;
+        public static D3DHook.Hook.Common.IImageResource _ScrollBarTopResource;
+        public static D3DHook.Hook.Common.IImageResource _ScrollBarBottomResource;
 
         public VerticalScrollBar() : base()
         {
+            AnchorPoint = Anchor.TopRight;
+            X = -4;
+            Y = 15;
             Width = ScrollAreaWidth;
             Height = ScrollAreaHeight;
 
-            AnchorPoint = Anchor.TopLeft;
             ScrollBar.AddChild(new ImageElement()
             {
                 AutoSize = false,
                 Resource = _ScrollBarResource,
                 WidthToParent = true,
                 HeightToParent = true,
-                AnchorPoint = Anchor.TopLeft, // its faster than center
-                ParentPoint = Anchor.TopLeft, // its faster than center
+                AnchorPoint = Anchor.TopLeft,
+
+                Height = -20,
+                Y = 10,
             });
-            ScrollBar.Alpha = 0.5f;
-            ScrollBar.MouseEnter += delegate { ScrollBar.Alpha = 1f; };
-            ScrollBar.MouseLeave += delegate { if (!IsScrolling) ScrollBar.Alpha = 0.5f; };
-            ScrollingEnd += delegate { if (!ScrollBar.MouseOver) ScrollBar.Alpha = 0.5f; };
+
+            ScrollBar.AddChild(new ImageElement()
+            {
+                AutoSize = false,
+                Resource = _ScrollBarTopResource,
+                WidthToParent = true,
+                HeightToParent = false,
+                Height = 10,
+                AnchorPoint = Anchor.TopLeft,
+            });
+
+            ScrollBar.AddChild(new ImageElement()
+            {
+                AutoSize = false,
+                Resource = _ScrollBarBottomResource,
+                WidthToParent = true,
+                HeightToParent = false,
+                Height = 10,
+                AnchorPoint = Anchor.BottomLeft,
+            });
         }
-
-
-
 
     }
 }

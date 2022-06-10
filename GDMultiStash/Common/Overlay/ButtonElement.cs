@@ -35,6 +35,9 @@ namespace GDMultiStash.Common.Overlay
                 HeightToParent = true,
                 AnchorPoint = Anchor.Center,
                 Align = StringAlignment.Center,
+
+                Height = -2,
+                Y = 1,
             };
             AddChild(_text);
 

@@ -75,25 +75,13 @@ namespace GDMultiStash.Overlay.Elements
             {
                 Resource = _BackgroundLeftResource,
                 AnchorPoint = Anchor.TopLeft,
-                X = -5,
+                X = -23,
             });
 
-            _stashList = new StashList()
-            {
-                X = 10,
-                Y = 20,
-                WidthToParent = true,
-                Width =  -10 - 32,
-                Height = 561,
-            };
+            _stashList = new StashList();
             AddChild(_stashList);
 
-            _scrollBar = new VerticalScrollBar()
-            {
-                AnchorPoint= Anchor.TopRight,
-                X = -8 - 3,
-                Y = 16 + 3,
-            };
+            _scrollBar = new VerticalScrollBar();
             AddChild(_scrollBar);
 
             _infoWindow = new InfoWindow();
@@ -109,7 +97,7 @@ namespace GDMultiStash.Overlay.Elements
                 _stashList.Scrollindex = e.Y;
             };
             _stashList.VisibleCountChanged += delegate (int visibleCount) {
-                _scrollBar.ScrollHeightUnits = visibleCount;
+                _scrollBar.UnitsY = visibleCount;
             };
 
 
@@ -239,6 +227,8 @@ namespace GDMultiStash.Overlay.Elements
                 // box is max left (not visible on screen)
                 // reset alpha to 1
                 _fadeAnimation.Reset(1f);
+                _scrollBar.ScrollUnitsY = 0;
+                _stashList.Scrollindex = 0;
             }
             _moveAnimation.Value = 1f;
             State = States.Showing;

@@ -150,6 +150,11 @@
     <Compile Include="GrimDawnLib\GrimDawn.Keybindings.cs" />
     <Compile Include="Native\Native.Keyboard.cs" />
     <Compile Include="Overlay\Viewport.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Services\GDOverlayService.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.Steam.cs" />
     <Compile Include="Core\Core.Windows.cs" />
@@ -194,14 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Core\Core.Localization.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -213,16 +213,20 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Resources\LinBiolinum_RB.ttf" />
+    <None Include="Resources\font_LinBiolinum_R.ttf" />
+    <None Include="Resources\font_LinBiolinum_RB.ttf" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\zhCN-简体中文.txt" />
+    <None Include="Resources\scrollbar_bottom.png" />
+    <None Include="Resources\scrollbar_top.png" />
+    <None Include="Resources\scrollbar.png" />
+    <None Include="Resources\font_LinBiolinum_RI.ttf" />
+    <None Include="Resources\local_zhCN.txt" />
     <None Include="Resources\radio0.png" />
     <None Include="Resources\radio1.png" />
-    <None Include="Resources\ScrollBarInner.png" />
     <None Include="Resources\icon32.ico" />
     <Content Include="icon64.ico" />
     <Content Include="Resources\background.png" />
@@ -230,9 +234,9 @@
     <Content Include="Resources\ButtonSmallDown.png" />
     <Content Include="Resources\ButtonSmallOver.png" />
     <Content Include="Resources\ButtonSmallUp.png" />
-    <None Include="Resources\deDE-Deutsch.txt" />
-    <None Include="Resources\enGB-English %28GB%29.txt" />
-    <None Include="Resources\enUS-English %28US%29.txt" />
+    <None Include="Resources\local_deDE.txt" />
+    <None Include="Resources\local_enGB.txt" />
+    <None Include="Resources\local_enUS.txt" />
     <Content Include="Resources\itemsizes.txt" />
   </ItemGroup>
   <ItemGroup>

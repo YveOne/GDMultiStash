@@ -24,7 +24,7 @@ namespace GDMultiStash.Overlay.Elements
 
         public InfoWindow()
         {
-            X = 6;
+            X = 2;
             Y = 605;
             Width = 265;
             Height = 127;
@@ -48,7 +48,6 @@ namespace GDMultiStash.Overlay.Elements
                 Height = 20,
                 Font = _TextFont,
                 Align = StringAlignment.Near,
-                //Color = Color.FromArgb(255, 140, 131, 109),
                 Color = Color.FromArgb(255, 235, 222, 195),
                 AnchorPoint = Anchor.TopLeft,
                 X = 10,

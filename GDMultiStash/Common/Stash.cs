@@ -50,7 +50,7 @@ namespace GDMultiStash.Common
             }
         }
 
-        public Color GetColor()
+        public Color GetDisplayColor()
         {
             try
             {
@@ -60,6 +60,11 @@ namespace GDMultiStash.Common
             {
                 return System.Drawing.Color.FromArgb(255, 235, 222, 195);
             }
+        }
+
+        public Font GetDisplayFont()
+        {
+            return Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular);
         }
 
         public string Name

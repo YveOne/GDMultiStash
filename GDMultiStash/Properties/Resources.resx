@@ -133,14 +133,14 @@
   <data name="ButtonSmallUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ButtonSmallUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="deDE_Deutsch" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\deDE-Deutsch.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="local_deDE" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\local_deDE.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="enGB_English__GB_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\enGB-English (GB).txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="local_enGB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\local_enGB.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="enUS_English__US_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\enUS-English (US).txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="local_enUS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\local_enUS.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="icon32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icon32.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,8 +148,8 @@
   <data name="itemsizes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\itemsizes.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="LinBiolinum_RB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LinBiolinum_RB.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="font_LinBiolinum_RB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\font_LinBiolinum_RB.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="radio0" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\radio0.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -157,10 +157,22 @@
   <data name="radio1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\radio1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ScrollBarInner" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ScrollBarInner.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="local_zhCN" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\local_zhCN.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="zhCN_简体中文" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\zhCN-简体中文.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="font_LinBiolinum_R" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\font_LinBiolinum_R.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="font_LinBiolinum_RI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\font_LinBiolinum_RI.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="scrollbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scrollbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scrollbar_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scrollbar_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="scrollbar_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\scrollbar_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

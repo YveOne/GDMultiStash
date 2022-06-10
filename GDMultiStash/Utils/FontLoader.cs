@@ -25,7 +25,7 @@ namespace Utils
         {
             foreach(FontFamily ff in fontCollection.Families)
             {
-                if(ff.Name == familyName)
+                if (ff.Name == familyName)
                     return new Font(ff, fontSize, fontStyle, GraphicsUnit.Pixel);
             }
             return null;

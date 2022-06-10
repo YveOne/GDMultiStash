@@ -10,7 +10,7 @@ namespace GDMultiStash.Common.Overlay
     public class TextElement : Element
     {
 
-        private Font _font;
+        private Font _font = null;
         private string _text = "";
         private Color _color = Color.Black;
         private bool _needRecreate = true;
@@ -25,7 +25,7 @@ namespace GDMultiStash.Common.Overlay
             AddChild(_imageElement);
         }
 
-        private static readonly int recreateMaxPerFrame = 100; 
+        private static readonly int recreateMaxPerFrame = 50; 
         private static int _recreatedThisFrame = 0;
         private static readonly Dictionary<string, D3DHook.Hook.Common.IImageResource> _resourceCache = new Dictionary<string, D3DHook.Hook.Common.IImageResource>();
 
@@ -34,6 +34,7 @@ namespace GDMultiStash.Common.Overlay
             base.Draw(ms);
             if (_needRecreate)
             {
+                if (_font == null) return;
                 if (_recreatedThisFrame >= recreateMaxPerFrame) return;
                 if (TotalWidth <= 0 || TotalHeight <= 0) return;
                 _needRecreate = false;
@@ -71,7 +72,7 @@ namespace GDMultiStash.Common.Overlay
                             FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.NoClip,
                         })
                         {
-                            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAliasGridFit;
+                            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                             g.DrawString(_text, _font, brush, new Rectangle(0, 0, bmp.Width, bmp.Height), sf);
                         }
 
@@ -79,33 +80,10 @@ namespace GDMultiStash.Common.Overlay
 
                         _imageElement.Resource = GetViewport().Resources.CreateImageResource(bmp);
                         _resourceCache.Add(resKey, _imageElement.Resource);
-
-                        /*
-                        ClearChildren();
-                        _imageElement = new ImageElement()
-                        {
-                            Resource = GetViewport().Resources.CreateImageResource(bmp),
-                            ZIndex = _zIndex,
-                        };
-                        AddChild(_imageElement);
-                        */
                     }
                 }
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         public override void End()
         {
@@ -113,15 +91,6 @@ namespace GDMultiStash.Common.Overlay
             if (ResetHeight || ResetScale || ResetWidth) _needRecreate = true;
             _recreatedThisFrame = 0;
         }
-
-
-
-
-
-
-
-
-
 
         public Font Font
         {
@@ -179,16 +148,6 @@ namespace GDMultiStash.Common.Overlay
                 Redraw();
             }
         }
-
-
-
-
-
-
-
-
-
-
 
     }
 }

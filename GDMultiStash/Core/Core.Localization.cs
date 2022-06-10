@@ -77,10 +77,10 @@ namespace GDMultiStash
             public static void LoadLanguages()
             {
 
-                SaveDefaultFile("enGB-English (GB).txt", Properties.Resources.enGB_English__GB_);
-                SaveDefaultFile("enUS-English (US).txt", Properties.Resources.enUS_English__US_);
-                SaveDefaultFile("deDE-Deutsch.txt", Properties.Resources.deDE_Deutsch);
-                SaveDefaultFile("zhCN-简体中文.txt", Properties.Resources.zhCN_简体中文);
+                SaveDefaultFile("enGB-English (GB).txt", Properties.Resources.local_enGB);
+                SaveDefaultFile("enUS-English (US).txt", Properties.Resources.local_enUS);
+                SaveDefaultFile("deDE-Deutsch.txt", Properties.Resources.local_deDE);
+                SaveDefaultFile("zhCN-简体中文.txt", Properties.Resources.local_zhCN);
 
                 Console.WriteLine("Loading languages...");
                 string fileName;

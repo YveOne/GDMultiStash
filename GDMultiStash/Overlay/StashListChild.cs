@@ -20,18 +20,12 @@ namespace GDMultiStash.Overlay.Elements
 
         private bool _active = false;
 
-        public override float Height {
-            get { return base.Height; }
-            set { base.Height = value; _textElement.Height = value; }
-        }
-
-        public StashListChild(Font _listFont)
+        public StashListChild()
         {
+
             _textElement = new TextElement()
             {
-                Font = _listFont,
                 Align = StringAlignment.Near,
-                //Color = Color.FromArgb(255, 235, 222, 195),
                 AnchorPoint = Anchor.Left,
                 X = _textMarginLeft,
                 WidthToParent = true,
@@ -53,6 +47,24 @@ namespace GDMultiStash.Overlay.Elements
         {
             get => _textElement.Text;
             set => _textElement.Text = value;
+        }
+
+        public override float Alpha
+        {
+            get { return base.Alpha; }
+            set { base.Alpha = value; _radioButton.Alpha = value; }
+        }
+
+        public override float Height
+        {
+            get { return base.Height; }
+            set { base.Height = value; _textElement.Height = value; }
+        }
+
+        public Font Font
+        {
+            get => _textElement.Font;
+            set => _textElement.Font = value;
         }
 
         public Color Color

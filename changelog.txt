@@ -1,4 +1,11 @@
 
+v1.15
+- Fixed list not scrolling when mouse is not over the overlay window
+- Updated overlay window design
+- Changed overlay font style from bold to regular and increased margin, better readable
+- Changed text alpha of inactive stashes in overlay window from 50% to 66%
+- Updated overlay scrollbar: Min height is now 30, gets hidden if no scrolling available
+
 v1.14
 - Performance fixes
 - Updater patch

@@ -42,7 +42,7 @@ namespace GDMultiStash.Common.Overlay
             get => _needBaseHit;
             set => _needBaseHit = value;
         }
-        private bool _needBaseHit = true;
+        private bool _needBaseHit = false;
 
 
 
@@ -115,10 +115,10 @@ namespace GDMultiStash.Common.Overlay
 
         protected bool CheckHitRect(int x, int y)
         {
-            float thisL = _xTotal - 1;
-            float thisT = _yTotal - 1;
-            float thisR = thisL + _widthTotal + 1;
-            float thisB = thisT + _heightTotal + 1;
+            float thisL = _xTotal;
+            float thisT = _yTotal;
+            float thisR = thisL + _widthTotal;
+            float thisB = thisT + _heightTotal;
             if (x < thisL) return false;
             if (x > thisR) return false;
             if (y < thisT) return false;

@@ -12,16 +12,16 @@ namespace GDMultiStash.Overlay.Elements
     internal class StashList : PseudoScrollElement<StashListChild>
     {
 
-        public static Font _ItemFont = null;
+        //public static Font _ItemFont = null;
 
-        protected override float ItemHeight => 23f;
-        protected override float ItemMargin => 6f;
+        protected override float ItemHeight => 26;
+        protected override float ItemMargin => 2f;
 
         private readonly Dictionary<int, StashListDataHolder> _listItems; // stashID -> StashListDataHolder
         private readonly Dictionary<int, int> _displayID2stashID;
 
         private readonly float _alphaActive = 1f;
-        private readonly float _alphaInactive = 0.5f;
+        private readonly float _alphaInactive = 0.66f;
 
         public delegate void VisibleCountChangedEventHandler(int visibleCount);
         public event VisibleCountChangedEventHandler VisibleCountChanged;
@@ -39,8 +39,15 @@ namespace GDMultiStash.Overlay.Elements
 
         public StashList()
         {
-            MaxVisibleCount = 19;
+            X = 6;
+            Y = 19;
+            WidthToParent = true;
+            Width = -32;
+            Height = 574;
+
+            MaxVisibleCount = 20;
             MouseCheckNeedBaseHit = true;
+
             _listItems = new Dictionary<int, StashListDataHolder>();
             _displayID2stashID = new Dictionary<int, int>();
 
@@ -173,7 +180,7 @@ namespace GDMultiStash.Overlay.Elements
             StashListChild si = GetCachedScrollItem();
             if (si == null)
             {
-                si = new StashListChild(_ItemFont)
+                si = new StashListChild()
                 {
                     MouseCheckChildren = false,
                 };
@@ -185,7 +192,8 @@ namespace GDMultiStash.Overlay.Elements
             si.Alpha = _alphaInactive;
             si.Text = stash.Name;
             si.Order = stash.Order;
-            si.Color = stash.GetColor();
+            si.Color = stash.GetDisplayColor();
+            si.Font = stash.GetDisplayFont(); //_ItemFont;
 
             _listItems.Add(stash.ID, new StashListDataHolder
             {
@@ -212,7 +220,7 @@ namespace GDMultiStash.Overlay.Elements
             if (!_listItems.ContainsKey(stash.ID)) return; // not initialized
             StashListDataHolder data = _listItems[stash.ID];
             data.ListItem.Text = stash.Name;
-            data.ListItem.Color = stash.GetColor();
+            data.ListItem.Color = stash.GetDisplayColor();
             _reqUpdateList = true;
         }
 
@@ -250,7 +258,7 @@ namespace GDMultiStash.Overlay.Elements
         private void Item_MouseLeave(object sender, EventArgs e)
         {
             StashListChild si = ((StashListChild)sender);
-            if (!si.Active) si.Alpha = 0.5f;
+            if (!si.Active) si.Alpha = _alphaInactive;
         }
 
         private bool _listDisabled = false;

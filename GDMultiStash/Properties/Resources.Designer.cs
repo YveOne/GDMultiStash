@@ -111,64 +111,32 @@ namespace GDMultiStash.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///err_gamedir_not_found = Spielverzeichnis nicht gefunden!
-        ///err_docsdir_not_found = Dokumentenverzeichnis nicht gefunden!
-        ///err_gd_already_running = Grim Dawn läuft bereits!
-        ///err_invalid_transfer_file = Ungültige Transfer-Datei!
-        ///err_no_stash_selected = Kein Stash ausgewählt!
-        ///err_cannot_delete_stash = Stash &quot;{0}&quot; kann nicht gelöscht werden: {1}
-        ///err_stash_is_active = Stash ist gerade aktiv
-        ///err_gdms_already_running = GDMultiStash läuft bereits!
-        ///
-        ///window_setup = Einstellungen
-        ///window_create_stash = Stash er [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
-        internal static string deDE_Deutsch {
+        internal static byte[] font_LinBiolinum_R {
             get {
-                return ResourceManager.GetString("deDE_Deutsch", resourceCulture);
+                object obj = ResourceManager.GetObject("font_LinBiolinum_R", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///err_gamedir_not_found = Game directory not found!
-        ///err_docsdir_not_found = Documents directory not found!
-        ///err_gd_already_running = Grim Dawn is already running!
-        ///err_invalid_transfer_file = Invalid transfer file!
-        ///err_no_stash_selected = No stash selected!
-        ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
-        ///err_stash_is_active = Stash is currently active
-        ///err_gdms_already_running = GDMultiStash is already running!
-        ///
-        ///window_setup = Setup
-        ///window_create_stash = Create Stash
-        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
-        internal static string enGB_English__GB_ {
+        internal static byte[] font_LinBiolinum_RB {
             get {
-                return ResourceManager.GetString("enGB_English__GB_", resourceCulture);
+                object obj = ResourceManager.GetObject("font_LinBiolinum_RB", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///err_gamedir_not_found = Game directory not found!
-        ///err_docsdir_not_found = Documents directory not found!
-        ///err_gd_already_running = Grim Dawn is already running!
-        ///err_invalid_transfer_file = Invalid transfer file!
-        ///err_no_stash_selected = No stash selected!
-        ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
-        ///err_stash_is_active = Stash is currently active
-        ///err_gdms_already_running = GDMultiStash is already running!
-        ///
-        ///window_setup = Setup
-        ///window_create_stash = Create Stash
-        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
-        internal static string enUS_English__US_ {
+        internal static byte[] font_LinBiolinum_RI {
             get {
-                return ResourceManager.GetString("enUS_English__US_", resourceCulture);
+                object obj = ResourceManager.GetObject("font_LinBiolinum_RI", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -201,42 +169,64 @@ namespace GDMultiStash.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///err_gamedir_not_found = Spielverzeichnis nicht gefunden!
+        ///err_docsdir_not_found = Dokumentenverzeichnis nicht gefunden!
+        ///err_gd_already_running = Grim Dawn läuft bereits!
+        ///err_invalid_transfer_file = Ungültige Transfer-Datei!
+        ///err_no_stash_selected = Kein Stash ausgewählt!
+        ///err_cannot_delete_stash = Stash &quot;{0}&quot; kann nicht gelöscht werden: {1}
+        ///err_stash_is_active = Stash ist gerade aktiv
+        ///err_gdms_already_running = GDMultiStash läuft bereits!
+        ///
+        ///window_setup = Einstellungen
+        ///window_create_stash = Stash er [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static byte[] LinBiolinum_RB {
+        internal static string local_deDE {
             get {
-                object obj = ResourceManager.GetObject("LinBiolinum_RB", resourceCulture);
-                return ((byte[])(obj));
+                return ResourceManager.GetString("local_deDE", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///err_gamedir_not_found = Game directory not found!
+        ///err_docsdir_not_found = Documents directory not found!
+        ///err_gd_already_running = Grim Dawn is already running!
+        ///err_invalid_transfer_file = Invalid transfer file!
+        ///err_no_stash_selected = No stash selected!
+        ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
+        ///err_stash_is_active = Stash is currently active
+        ///err_gdms_already_running = GDMultiStash is already running!
+        ///
+        ///window_setup = Setup
+        ///window_create_stash = Create Stash
+        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static System.Drawing.Bitmap radio0 {
+        internal static string local_enGB {
             get {
-                object obj = ResourceManager.GetObject("radio0", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("local_enGB", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 
+        ///err_gamedir_not_found = Game directory not found!
+        ///err_docsdir_not_found = Documents directory not found!
+        ///err_gd_already_running = Grim Dawn is already running!
+        ///err_invalid_transfer_file = Invalid transfer file!
+        ///err_no_stash_selected = No stash selected!
+        ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
+        ///err_stash_is_active = Stash is currently active
+        ///err_gdms_already_running = GDMultiStash is already running!
+        ///
+        ///window_setup = Setup
+        ///window_create_stash = Create Stash
+        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static System.Drawing.Bitmap radio1 {
+        internal static string local_enUS {
             get {
-                object obj = ResourceManager.GetObject("radio1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap ScrollBarInner {
-            get {
-                object obj = ResourceManager.GetObject("ScrollBarInner", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("local_enUS", resourceCulture);
             }
         }
         
@@ -265,9 +255,59 @@ namespace GDMultiStash.Properties {
         ///button_about = 关于
         ///button_he [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string zhCN_简体中文 {
+        internal static string local_zhCN {
             get {
-                return ResourceManager.GetString("zhCN_简体中文", resourceCulture);
+                return ResourceManager.GetString("local_zhCN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap radio0 {
+            get {
+                object obj = ResourceManager.GetObject("radio0", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap radio1 {
+            get {
+                object obj = ResourceManager.GetObject("radio1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scrollbar {
+            get {
+                object obj = ResourceManager.GetObject("scrollbar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scrollbar_bottom {
+            get {
+                object obj = ResourceManager.GetObject("scrollbar_bottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scrollbar_top {
+            get {
+                object obj = ResourceManager.GetObject("scrollbar_top", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

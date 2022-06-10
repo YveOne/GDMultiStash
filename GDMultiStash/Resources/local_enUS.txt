@@ -1,0 +1,99 @@
+﻿
+err_gamedir_not_found = Game directory not found!
+err_docsdir_not_found = Documents directory not found!
+err_gd_already_running = Grim Dawn is already running!
+err_invalid_transfer_file = Invalid transfer file!
+err_no_stash_selected = No stash selected!
+err_cannot_delete_stash = Stash "{0}" can not be deleted: {1}
+err_stash_is_active = Stash is currently active
+err_gdms_already_running = GDMultiStash is already running!
+
+window_setup = Setup
+window_create_stash = Create Stash
+window_import_stash = Import Stash
+
+setup_tab_common = Common
+setup_tab_behaviour = Behaviour
+
+all = All
+
+button_file = File
+button_settings = Settings
+button_about = About
+button_help = Help
+button_next = Next
+button_save = Save
+button_load = Load
+button_apply = Apply
+button_abort = Abort
+button_search = Search
+button_import = Import
+button_create_shortcut = Create shortcut on desktop
+button_start_now = Start\nNow
+button_restart = Restart
+button_select_all = Select all
+button_unselect_all = Unselect all
+
+label_confirm_closing = Confirm closing when Grim Dawn is still running
+label_close_with_gd = Close GDMultiStash when Grim Dawn closed
+label_confirm_delete_stash = Confirm deleting stashes
+label_autostart_gd = Start Grim Dawn together with GDMultiStash
+label_autostart_gd_command = Command:
+label_autostart_gd_arguments = Arguments:
+label_language = Language:
+label_expansion = Expansion:
+label_gamepath = Game Path:
+label_transfer_file = Transfer file:
+label_stash_name = Stash name:
+label_overwrite = Overwrite:
+label_max_backups = Max backups:
+label_max_backups_off = 0 (No Backups)
+label_max_backups_unlimited = -1 (Unlimited)
+label_overlay_width = Overlay Width:
+label_overlay_scale = Overlay Scale:
+label_auto_back_to_main = Switch to main Stash when Stash closed
+label_check_for_new_version = Check for new version on startup
+label_auto_update_version = Auto update when new version available
+label_default_stash_mode = Default mode for new stashes
+
+confirm_closing = Grim Dawn is still running\nClose anyway?
+confirm_delete_stash = Delete selected stashes?\nThis cannot be undone!
+confirm_save_changed = Save changes?
+notice_shortcut_created = Shortcut has been created
+
+new_stash = New Stash
+main_stash_0sc = Main (SC, Base)
+main_stash_0hc = Main (HC, Base)
+main_stash_1sc = Main (SC, AoM)
+main_stash_1hc = Main (HC, AoM)
+main_stash_2sc = Main (SC, FG)
+main_stash_2hc = Main (HC, FG)
+
+column_id = ID
+column_name = Name
+column_usage = Usage
+column_last_change = Last change
+column_color = Color
+column_expansion = Exp.
+column_softcore = SC
+column_hardcore = HC
+
+create_stash = Create Stash
+import_stashes = Import Stashes
+restore_backup = Restore Backup
+delete_stash = Delete
+no_backups = (No Backups)
+
+context_export = Export
+
+mode_none = None
+mode_sc = SC
+mode_hc = HC
+mode_both = Both
+
+color_default = Default
+color_green = Green
+color_blue = Blue
+color_purple = Purple
+color_gold = Gold
+color_gray = Gray

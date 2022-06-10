@@ -9,26 +9,26 @@ namespace GDMultiStash.Common.Overlay
     public class ScrollBarElement : Element
     {
 
-        protected virtual bool ScrollHorizontal => false;
-        protected virtual bool ScrollVertical => false;
         protected virtual float ScrollAreaWidth => 0f;
         protected virtual float ScrollAreaHeight => 0f;
+        protected virtual float ScrollBarMinWidth => 0f;
+        protected virtual float ScrollBarMinHeight => 0f;
         protected virtual int ScrollAreaWidthUnits => 0;
         protected virtual int ScrollAreaHeightUnits => 0;
 
         private int _scrollUnitsX = 0;
         private int _scrollUnitsY = 0;
 
-        private int _scrollWidthUnits = 0;
-        private int _scrollHeightUnits = 0;
+        private int _unitsX = 0;
+        private int _unitsY = 0;
 
         private float _scrollUnitsAspectX = 0;
         private float _scrollUnitsAspectY = 0;
 
         private readonly Element _scrollBar;
 
-        private float _calcWidthPerUnitX = 0;
-        private float _calcHeightPerUnitY = 0;
+        private float _pixelPerUnitX = 0;
+        private float _pixelPerUnitY = 0;
 
         private bool _rearrange = true;
 
@@ -49,7 +49,7 @@ namespace GDMultiStash.Common.Overlay
             get => _scrollUnitsX;
             set
             {
-                int max = _scrollWidthUnits - ScrollAreaWidthUnits;
+                int max = _unitsX - ScrollAreaWidthUnits;
                 if (value > max) value = max;
                 if (value < 0) value = 0;
                 _scrollUnitsX = value;
@@ -62,7 +62,7 @@ namespace GDMultiStash.Common.Overlay
             get => _scrollUnitsY;
             set
             {
-                int max = _scrollHeightUnits - ScrollAreaHeightUnits;
+                int max = _unitsY - ScrollAreaHeightUnits;
                 if (value > max) value = max;
                 if (value < 0) value = 0;
                 _scrollUnitsY = value;
@@ -70,62 +70,57 @@ namespace GDMultiStash.Common.Overlay
             }
         }
 
-        public int ScrollWidthUnits
+        public int UnitsX
         {
-            get => _scrollWidthUnits;
+            get => _unitsX;
             set
             {
-                _scrollWidthUnits = value;
-
-                _calcWidthPerUnitX = ScrollAreaWidthUnits != 0 ? ScrollAreaWidth / value : 0;
-                _scrollUnitsAspectX = value != 0 ? (float)ScrollAreaWidthUnits / (float)value : 0;
-                if (_scrollUnitsAspectX > 1) _scrollUnitsAspectX = 1;
-
+                _unitsX = value;
                 _rearrange = true;
             }
         }
 
-        public int ScrollHeightUnits
+        public int UnitsY
         {
-            get => _scrollHeightUnits;
+            get => _unitsY;
             set
             {
-                _scrollHeightUnits = value;
-
-                _calcHeightPerUnitY = value != 0 ? ScrollAreaHeight / value : 0;
-                _scrollUnitsAspectY = value != 0 ? (float)ScrollAreaHeightUnits / (float)value : 0;
-                if (_scrollUnitsAspectY > 1) _scrollUnitsAspectY = 1;
-
+                _unitsY = value;
                 _rearrange = true;
             }
         }
-
-
-
-
 
         public void Rearrange()
         {
-            if (ScrollHorizontal)
+            bool hide = true;
+            if (ScrollAreaWidthUnits > 0 && _unitsX > ScrollAreaWidthUnits)
             {
-                _scrollBar.Width = ScrollAreaWidth * _scrollUnitsAspectX;
-                _scrollBar.X = _calcWidthPerUnitX * _scrollUnitsX;
+                _scrollUnitsAspectX = (float)ScrollAreaWidthUnits / _unitsX;
+                _scrollBar.Width = Math.Max(ScrollBarMinWidth, ScrollAreaWidth * _scrollUnitsAspectX);
+                _pixelPerUnitX = (ScrollAreaWidth - _scrollBar.Width) / (_unitsX - ScrollAreaWidthUnits);
+                _scrollBar.X = _pixelPerUnitX * _scrollUnitsX;
+                hide = false;
             }
             else
             {
                 _scrollBar.Width = ScrollAreaWidth;
                 _scrollBar.X = 0;
             }
-            if (ScrollVertical)
+            if (ScrollAreaHeightUnits > 0 && _unitsY > ScrollAreaHeightUnits)
             {
-                _scrollBar.Height = ScrollAreaHeight * _scrollUnitsAspectY;
-                _scrollBar.Y = _calcHeightPerUnitY * _scrollUnitsY;
+
+                _scrollUnitsAspectY = (float)ScrollAreaHeightUnits / _unitsY;
+                _scrollBar.Height = Math.Max(ScrollBarMinHeight, ScrollAreaHeight * _scrollUnitsAspectY);
+                _pixelPerUnitY = (ScrollAreaHeight - _scrollBar.Height) / (_unitsY - ScrollAreaHeightUnits);
+                _scrollBar.Y = _pixelPerUnitY * _scrollUnitsY;
+                hide = false;
             }
             else
             {
                 _scrollBar.Height = ScrollAreaHeight;
                 _scrollBar.Y = 0;
             }
+            _scrollBar.Visible = !hide;
         }
 
         public override void Draw(float elapsed)
@@ -202,11 +197,11 @@ namespace GDMultiStash.Common.Overlay
                 float diffX = x - _tempMouseStartX;
                 float diffY = y - _tempMouseStartY;
 
-                int movedUnitsX = (int)(diffX / _calcWidthPerUnitX);
-                int movedUnitsY = (int)(diffY / _calcHeightPerUnitY);
+                int movedUnitsX = (int)(diffX / _pixelPerUnitX);
+                int movedUnitsY = (int)(diffY / _pixelPerUnitY);
 
-                bool movedX = ScrollHorizontal && movedUnitsX != _tempUnitsX;
-                bool movedY = ScrollVertical && movedUnitsY != _tempUnitsY;
+                bool movedX = ScrollAreaWidthUnits > 0 && movedUnitsX != _tempUnitsX;
+                bool movedY = ScrollAreaHeightUnits > 0 && movedUnitsY != _tempUnitsY;
 
                 _tempUnitsX = movedUnitsX;
                 _tempUnitsY = movedUnitsY;

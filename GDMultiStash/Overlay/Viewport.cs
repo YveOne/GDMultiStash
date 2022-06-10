@@ -15,7 +15,9 @@ namespace GDMultiStash.Overlay.Elements
         public Viewport()
         {
 
-            Utils.FontLoader.LoadFromResource(Properties.Resources.LinBiolinum_RB);
+            Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_R);
+            Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_RB);
+            Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_RI);
 
             MainWindow._BackgroundResource = Resources.CreateImageResource(
                     Properties.Resources.background,
@@ -28,7 +30,17 @@ namespace GDMultiStash.Overlay.Elements
                     );
 
             VerticalScrollBar._ScrollBarResource = Resources.CreateImageResource(
-                    Properties.Resources.ScrollBarInner,
+                    Properties.Resources.scrollbar,
+                    System.Drawing.Imaging.ImageFormat.Png
+                    );
+
+            VerticalScrollBar._ScrollBarTopResource = Resources.CreateImageResource(
+                    Properties.Resources.scrollbar_top,
+                    System.Drawing.Imaging.ImageFormat.Png
+                    );
+
+            VerticalScrollBar._ScrollBarBottomResource = Resources.CreateImageResource(
+                    Properties.Resources.scrollbar_bottom,
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
@@ -57,10 +69,10 @@ namespace GDMultiStash.Overlay.Elements
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
-            StashList._ItemFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Bold);
-            InfoWindow._TitleFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Bold);
-            InfoWindow._TextFont = Utils.FontLoader.GetFont("Linux Biolinum", 19, FontStyle.Bold);
-            InfoButton._Font = Utils.FontLoader.GetFont("Linux Biolinum", 15, FontStyle.Bold);
+            //StashList._ItemFont = Utils.FontLoader.GetFont("Linux Biolinum", 23, FontStyle.Regular);
+            InfoWindow._TitleFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Regular);
+            InfoWindow._TextFont = Utils.FontLoader.GetFont("Linux Biolinum", 19, FontStyle.Regular);
+            InfoButton._Font = Utils.FontLoader.GetFont("Linux Biolinum", 15, FontStyle.Regular);
 
 
 
