@@ -28,6 +28,7 @@ namespace GDMultiStash.Common.Overlay
         private readonly List<T> _scrollChildren;
 
         private int _maxVisibleCount = 0;
+        private int _curVisibleCount = 0;
         private int _scrollIndex = 0;
         private readonly List<T> _cache;
 
@@ -43,7 +44,7 @@ namespace GDMultiStash.Common.Overlay
         {
             get => _scrollIndex;
             set {
-                int min = _maxVisibleCount - _scrollChildren.Count;
+                int min = _maxVisibleCount - _curVisibleCount;
                 if (value < min) value = min;
                 if (value > 0) value = 0;
                 _scrollIndex = value;
@@ -54,9 +55,19 @@ namespace GDMultiStash.Common.Overlay
         public int MaxVisibleCount
         {
             get { return _maxVisibleCount; }
-            set {
+            set
+            {
                 _maxVisibleCount = value;
                 Redraw();
+            }
+        }
+
+        public int CurrentVisibleCount
+        {
+            get { return _curVisibleCount; }
+            protected set
+            {
+                _curVisibleCount = value;
             }
         }
 

@@ -1,4 +1,8 @@
 
+v1.16
+- Improved text readability
+- Stash list in overlay window can now be scrolled by wheel (beta, camera will still zoom)
+
 v1.15
 - Fixed list not scrolling when mouse is not over the overlay window
 - Updated overlay window design

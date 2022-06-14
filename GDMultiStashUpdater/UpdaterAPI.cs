@@ -111,28 +111,19 @@ namespace GDMultiStashUpdater
             Console.WriteLine("Running Update.bat");
             File.WriteAllText("Update.bat", Properties.Resources.Update);
 
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo
+            using (Process process = new Process
             {
-                WindowStyle = ProcessWindowStyle.Hidden,
-                FileName = "cmd.exe",
-                Arguments = "/C start \"\" Update.bat",
-                UseShellExecute = false,
-            };
-            process.StartInfo = startInfo;
-            process.Start();
-
-            /*
-            Console.WriteLine("Starting GDMultiStash.exe");
-            new Thread(new ThreadStart(() => {
-                var p = new Process();
-                p.StartInfo = new ProcessStartInfo("GDMultiStash.exe")
+                StartInfo = new ProcessStartInfo
                 {
-                    UseShellExecute = true
-                };
-                p.Start();
-            })).Start();
-            */
+                    WindowStyle = ProcessWindowStyle.Normal,
+                    FileName = "Update.bat",
+                    UseShellExecute = false,
+                }
+            })
+            {
+                process.Start();
+            }
+
         }
 
         public static LatestReleaseData GetUpdateData()
@@ -190,15 +181,6 @@ namespace GDMultiStashUpdater
 
         public static bool NewVersionAvailable()
         {
-
-
-
-
-
-
-
-
-
 
             LatestReleaseData data = GetUpdateData();
             if (data == null) return false;

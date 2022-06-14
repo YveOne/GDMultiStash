@@ -1,7 +1,7 @@
 @echo off
 for %%F in ("Update\*") do call:copy "%%~F"
 rmdir /S /Q "Update"
-if exist "GDMultiStash_DontStartMe.exe" del "GDMultiStash.exe" & move "GDMultiStash_DontStartMe.exe" "GDMultiStash.exe">nul
+if exist "GDMultiStashUpdated.exe" move /Y "GDMultiStashUpdated.exe" "GDMultiStash.exe">nul
 start cmd /c start "" "GDMultiStash.exe"
 goto:exit
 :copy

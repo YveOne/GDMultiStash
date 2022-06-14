@@ -104,6 +104,12 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
+            _stashList.MouseWheel += delegate (object sender, int delta)
+            {
+                _stashList.Scrollindex += delta;
+                _scrollBar.ScrollUnitsY -= delta;
+            };
+
 
 
 

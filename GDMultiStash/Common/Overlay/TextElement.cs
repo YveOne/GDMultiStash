@@ -72,7 +72,7 @@ namespace GDMultiStash.Common.Overlay
                             FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.NoClip,
                         })
                         {
-                            g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                            //g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias; // text is better readable without this...
                             g.DrawString(_text, _font, brush, new Rectangle(0, 0, bmp.Width, bmp.Height), sf);
                         }
 

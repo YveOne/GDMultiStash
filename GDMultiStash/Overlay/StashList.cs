@@ -157,6 +157,7 @@ namespace GDMultiStash.Overlay.Elements
             {
                 _lastVisibleCount = visibleCount;
                 VisibleCountChanged?.Invoke(visibleCount);
+                CurrentVisibleCount = visibleCount;
             }
             base.UpdateList();
         }

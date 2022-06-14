@@ -50,8 +50,7 @@ namespace GDMultiStash
             Core.Stashes.CreateMainStashes();
 
             // allow only one instance of gdms
-            bool createdNew;
-            mutex = new Mutex(true, "GDMultiStash", out createdNew);
+            mutex = new Mutex(true, "GDMultiStash", out bool createdNew);
             if (!createdNew)
             {
                 //app is already running! Exiting the application
@@ -120,6 +119,7 @@ namespace GDMultiStash
             _mouseHook.MouseMove += MouseHook_MouseMove;
             _mouseHook.MouseDown += MouseHook_MouseDown;
             _mouseHook.MouseUp += MouseHook_MouseUp;
+            _mouseHook.MouseWheel += MouseHook_MouseWheel;
 
             _gdGameHookService.StashStatusChanged += GDGameHook_StashStatusChanged;
             _gdGameHookService.ModeStatusChanged += GDGameHook_ModeStatusChanged;
@@ -140,7 +140,6 @@ namespace GDMultiStash
             _gdOverlayService.Start();
 
             ThreadExit += delegate {
-                //_titleFont.Dispose();
 
                 Core.Runtime.StashStatusChanged -= Core_StashStatusChanged;
 
@@ -162,6 +161,7 @@ namespace GDMultiStash
                 _mouseHook.MouseMove -= MouseHook_MouseMove;
                 _mouseHook.MouseDown -= MouseHook_MouseDown;
                 _mouseHook.MouseUp -= MouseHook_MouseUp;
+                _mouseHook.MouseWheel -= MouseHook_MouseWheel;
                 _mouseHook.UnHook();
 
             };
@@ -266,7 +266,6 @@ namespace GDMultiStash
                 // this is handled inside overlay mainwindow
             }
         }
-
         private void MouseHook_MouseUp(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             Core.Runtime.EnableMovement();
@@ -274,6 +273,43 @@ namespace GDMultiStash
             bool hit = _overlayViewport.CheckMouseUp(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y);
             if (hit)
             {
+            }
+        }
+
+        private bool isBySys = false;
+
+        private void MouseHook_MouseWheel(object sender, Native.Mouse.Hook.MouseEventArgs e)
+        {
+            if (isBySys)
+            {
+                isBySys = false;
+                return;
+            }
+            if (!Core.Runtime.WindowFocused || !Core.Runtime.StashOpened) return;
+            bool hit = _overlayViewport.OnMouseWheel(e.X - (int)Core.Runtime.WindowLocation.X, e.Y - (int)Core.Runtime.WindowLocation.Y, e.Delta);
+            if (hit)
+            {
+
+                /*
+                isBySys = true;
+                Native.Input inp = new Native.Input
+                {
+                    type = Native.InputType.Mouse,
+                    u = new Native.InputUnion
+                    {
+                        mi = new Native.MouseInput
+                        {
+                            dx = e.X,
+                            dy = e.Y,
+                            mouseData = -e.Delta,
+                            dwFlags = 0x0800,
+                        }
+                    }
+                };
+                Native.SendInput(1, new Native.Input[] { inp }, System.Runtime.InteropServices.Marshal.SizeOf(typeof(Native.Input)));
+                */
+
+
             }
         }
 

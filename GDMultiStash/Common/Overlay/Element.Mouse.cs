@@ -25,6 +25,9 @@ namespace GDMultiStash.Common.Overlay
         public delegate void MouseClickEventHandler(object sender, EventArgs e);
         public event MouseClickEventHandler MouseClick;
 
+        public delegate void MouseWheelEventHandler(object sender, int delta);
+        public event MouseWheelEventHandler MouseWheel;
+
 
 
         public bool MouseOver => _mouseOver;
@@ -107,6 +110,20 @@ namespace GDMultiStash.Common.Overlay
             if (_checkChildren && (hit || !_needBaseHit))
                 foreach (Element child in _children)
                     hit |= child.CheckMouseUp(x, y);
+            return hit;
+        }
+
+        public virtual bool OnMouseWheel(int x, int y, int delta)
+        {
+            if (!_visible) return false;
+            bool hit = CheckHitRect(x, y);
+            if (hit)
+            {
+                MouseWheel?.Invoke(this, delta);
+            }
+            if (_checkChildren && (hit || !_needBaseHit))
+                foreach (Element child in _children)
+                    hit |= child.OnMouseWheel(x, y, delta);
             return hit;
         }
 
