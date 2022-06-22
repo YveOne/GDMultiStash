@@ -38,13 +38,18 @@ namespace GDMultiStash.Common.Config
 
         [XmlElement("CheckForNewVersion")] public bool CheckForNewVersion = true;
         [XmlElement("AutoUpdate")] public bool AutoUpdate = false;
+        [XmlElement("LastVersionCheck")] public long LastVersionCheck = 0L;
 
         [XmlElement("DefaultStashMode")] public int DefaultStashMode = 0;
+
+        [XmlElement("ShowColorColumn")] public bool ShowColorColumn = true;
+        [XmlElement("ShowExpansionColumn")] public bool ShowExpansionColumn = true;
+        [XmlElement("ShowIDColumn")] public bool ShowIDColumn = true;
+        [XmlElement("ShowLastChangeColumn")] public bool ShowLastChangeColumn = true;
 
         [XmlAnyElement("Comment1")] public XmlComment Comment1 = new XmlDocument().CreateComment("Change the following only if you know what you are doing!");
 
         [XmlElement("LastID")] public int LastID = 0; // the first stash will get id 1
-        [XmlElement("LastVersionCheck")] public long LastVersionCheck = 0L;
 
         [XmlAnyElement("Comment2")] public XmlComment Comment2 = new XmlDocument().CreateComment("Grim Dawn Base Game");
 
@@ -96,7 +101,16 @@ namespace GDMultiStash.Common.Config
                 AutoStartGDCommand = AutoStartGDCommand,
                 AutoStartGDArguments = AutoStartGDArguments,
 
+                CheckForNewVersion = CheckForNewVersion,
+                AutoUpdate = AutoUpdate,
+                LastVersionCheck = LastVersionCheck,
+
                 DefaultStashMode = DefaultStashMode,
+
+                ShowColorColumn = ShowColorColumn,
+                ShowExpansionColumn = ShowExpansionColumn,
+                ShowIDColumn = ShowIDColumn,
+                ShowLastChangeColumn = ShowLastChangeColumn,
 
                 LastID = LastID,
 
@@ -115,9 +129,6 @@ namespace GDMultiStash.Common.Config
                 Cur2SCID = Cur2SCID,
                 Cur2HCID = Cur2HCID,
 
-                LastVersionCheck = LastVersionCheck,
-                CheckForNewVersion = CheckForNewVersion,
-                AutoUpdate = AutoUpdate,
             };
         }
 
@@ -147,7 +158,16 @@ namespace GDMultiStash.Common.Config
             AutoStartGDCommand = s.AutoStartGDCommand;
             AutoStartGDArguments = s.AutoStartGDArguments;
 
+            CheckForNewVersion = s.CheckForNewVersion;
+            AutoUpdate = s.AutoUpdate;
+            LastVersionCheck = s.LastVersionCheck;
+
             DefaultStashMode = s.DefaultStashMode;
+
+            ShowColorColumn = s.ShowColorColumn;
+            ShowExpansionColumn = s.ShowExpansionColumn;
+            ShowIDColumn = s.ShowIDColumn;
+            ShowLastChangeColumn = s.ShowLastChangeColumn;
 
             LastID = s.LastID;
 
@@ -166,9 +186,6 @@ namespace GDMultiStash.Common.Config
             Cur2SCID = s.Cur2SCID;
             Cur2HCID = s.Cur2HCID;
 
-            LastVersionCheck = s.LastVersionCheck;
-            CheckForNewVersion = s.CheckForNewVersion;
-            AutoUpdate = s.AutoUpdate;
         }
 
     }

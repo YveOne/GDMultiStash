@@ -9,7 +9,6 @@ namespace D3DHook.Interface
     {
         Unknown,
         AutoDetect,
-        Direct3D9,
         Direct3D11,
         Direct3D11_1,
     }

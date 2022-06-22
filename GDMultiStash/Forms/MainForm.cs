@@ -32,19 +32,21 @@ namespace GDMultiStash.Forms
             Text = "GD MultiStash";
 
             stashesListView.CellRightClick += StashesListView_CellRightClick;
+            stashesListView.ColumnRightClick += StashesListView_ColumnRightClick;
             stashesListView.SubItemChecking += StashesListView_SubItemChecking;
             stashesListView.CellEditFinished += StashesListView_CellEditFinished;
             stashesListView.CellEditStarting += StashesListView_CellEditStarting;
             stashesListView.CellEditFinishing += StashesListView_CellEditFinishing;
+
 
             columnID = new OLVColumn()
             {
                 DisplayIndex = 1,
                 Name = "idColumn",
                 AspectName = "ID",
-                MaximumWidth = 30,
-                MinimumWidth = 30,
-                Width = 30,
+                MaximumWidth = 50,
+                MinimumWidth = 50,
+                Width = 50,
                 Searchable = false,
                 Groupable = false,
                 Sortable = false,
@@ -223,20 +225,8 @@ namespace GDMultiStash.Forms
                 CellEditUseWholeCell = true,
             };
 
-            // register columns
-            stashesListView.AllColumns.AddRange(new List<OLVColumn>() {
-                columnOrder,
-                columnID,
-                columnName,
-                columnExpansion,
-                columnSC,
-                columnHC,
-                columnUsage,
-                columnLastChange,
-                columnActive,
-                columnExpansion,
-                columnColor,
-            });
+            //stashesListView.SelectColumnsOnRightClick = true;
+            //stashesListView.SelectColumnsOnRightClickBehaviour = ObjectListView.ColumnSelectBehaviour.None;
 
             stashesListView.MultiSelect = true;
             stashesListView.ShowGroups = false;
@@ -248,8 +238,7 @@ namespace GDMultiStash.Forms
                 stashesListView.ListViewItemSorter = new StashesSortComparer();
             };
 
-            stashesListView.Columns.Clear();
-            stashesListView.Columns.AddRange(new ColumnHeader[] { columnActive, columnID, columnName, columnColor, columnUsage, columnLastChange, columnExpansion, columnSC, columnHC });
+            UpdateColumns();
 
             expansionNames = new Dictionary<int, string>() {
                 { -1, "All" },
@@ -286,8 +275,6 @@ namespace GDMultiStash.Forms
 
 
 
-
-
             Bitmap mainCheckBoxOverlay = new Bitmap(13, 13, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             using (Graphics gfx = Graphics.FromImage(mainCheckBoxOverlay))
             using (SolidBrush brush = new SolidBrush(Color.FromArgb(255, 255, 255)))
@@ -299,6 +286,23 @@ namespace GDMultiStash.Forms
                 Transparency = 180,
                 Offset = new Size(-1, 0),
             };
+
+
+
+
+            Core.Runtime.ActiveStashChanged += delegate (object sender, Core.Runtime.ActiveStashChangedEventArgs e)
+            {
+                //UpdateObjects(); //we dont need to use it
+                foreach (OLVListItem item in stashesListView.Items)
+                {
+                    Common.Stash stash = (Common.Stash)item.RowObject;
+                    if (stash.ID == e.OldID || stash.ID == e.NewID)
+                    {
+                        stashesListView.RefreshItem(item);
+                    }
+                }
+            };
+
 
             _dragHandler = new StashesDragHandler(stashesListView);
             _dragHandler.DragSource.DragEnd += delegate {
@@ -312,20 +316,38 @@ namespace GDMultiStash.Forms
 
             stashesListView.FormatCell += delegate (object sender, FormatCellEventArgs e)
             {
+                if (e.Column != columnColor
+                    && e.Column != columnName
+                    && e.Column != columnID)
+                    return;
+
+                Common.Stash stash = (Common.Stash)e.Model;
+                bool isMain = Core.Config.IsMainStashID(stash.ID);
+                bool isActive = Core.Runtime.ActiveStashID == stash.ID;
+
                 if (e.Column == columnColor)
                 {
-                    Common.Stash stash = (Common.Stash)e.Model;
                     e.SubItem.BackColor = Color.Black;
                     e.SubItem.ForeColor = stash.GetDisplayColor();
                     e.SubItem.Font = new Font("Consolas", 9, FontStyle.Bold);
                 }
+                if (e.Column == columnName || e.Column == columnID)
+                {
+                    FontStyle fs = FontStyle.Regular;
+                    if (isMain) fs |= FontStyle.Italic;
+                    if (isActive) fs |= FontStyle.Bold;
+                    e.SubItem.Font = new Font(e.Item.Font, fs);
+                }
             };
+
+
 
             stashesListView.FormatRow += delegate (object sender, FormatRowEventArgs e) {
                 Common.Stash stash = (Common.Stash)e.Model;
                 bool isMain = Core.Config.IsMainStashID(stash.ID);
-                bool isDragging = _dragHandler.IsDragging && _dragHandler.DragSource.DraggingStashes.Contains(stash);
+                bool isDragging = _dragHandler.IsDragging(stash);
                 bool isSelected = e.Item.Selected;
+
                 if (isDragging)
                 {
                     e.Item.BackColor = Color.Teal;
@@ -337,7 +359,7 @@ namespace GDMultiStash.Forms
                     {
                         if (isMain)
                         {
-                            e.Item.ForeColor = Color.Gray;
+                            //e.Item.ForeColor = Color.Gray;
                         }
                     }
                     else
@@ -346,12 +368,12 @@ namespace GDMultiStash.Forms
                     }
                     if (isMain)
                     {
-                        e.Item.GetSubItem(7).Decoration = mainCheckBoxDeco;
-                        e.Item.GetSubItem(8).Decoration = mainCheckBoxDeco;
+                        e.Item.GetSubItem(columnSC.Index).Decoration = mainCheckBoxDeco;
+                        e.Item.GetSubItem(columnHC.Index).Decoration = mainCheckBoxDeco;
                     }
                 }
-            };
 
+            };
 
             Width = Core.Config.WindowWidth;
             Height = Core.Config.WindowHeight;
@@ -377,7 +399,7 @@ namespace GDMultiStash.Forms
 
         private void TransferFile_DragDrop(object sender, DragEventArgs e)
         {
-            if (_dragHandler.IsDragging) return;
+            if (_dragHandler.IsDragging()) return;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             Core.Windows.ShowImportDialog(files);
         }
@@ -385,6 +407,23 @@ namespace GDMultiStash.Forms
 
 
 
+
+        private void UpdateColumns()
+        {
+            stashesListView.Columns.Clear();
+            List<ColumnHeader> h = new List<ColumnHeader>();
+            h.Add(columnActive);
+            if (Core.Config.ShowIDColumn) h.Add(columnID);
+            h.Add(columnName);
+            if (Core.Config.ShowColorColumn) h.Add(columnColor);
+            h.Add(columnUsage);
+            if (Core.Config.ShowLastChangeColumn) h.Add(columnLastChange);
+            if (Core.Config.ShowExpansionColumn) h.Add(columnExpansion);
+            h.Add(columnSC);
+            h.Add(columnHC);
+            stashesListView.Columns.AddRange(h.ToArray());
+            UpdateObjects();
+        }
 
 
 
@@ -453,11 +492,30 @@ namespace GDMultiStash.Forms
                 Core.Config.ShowSoftcore,
                 Core.Config.ShowHardcore
                 ));
-            //stashesListView.DisableObjects(Core.Stashes.GetMainStashes());
             stashesListView.Sort();
             stashesListView.TopItemIndex = scrollY;
+
+            int wndStyle = Native.GetWindowLong(stashesListView.Handle, Native.GWL_STYLE);
+            bool vsVisible = (wndStyle & Native.WS_VSCROLL) != 0;
+            if (vsVisible)
+            {
+                if (!displayMenuPanelShiftLeft)
+                {
+                    displayMenuPanelShiftLeft = true;
+                    displayMenuPanel.Left -= 17;
+                }
+            }
+            else
+            {
+                if (displayMenuPanelShiftLeft)
+                {
+                    displayMenuPanelShiftLeft = false;
+                    displayMenuPanel.Left += 17;
+                }
+            }
         }
 
+        private bool displayMenuPanelShiftLeft = false;
 
 
 
@@ -503,23 +561,58 @@ namespace GDMultiStash.Forms
 
         #region StashListView Events
 
+        private void StashesListView_ColumnRightClick(object sender, ColumnClickEventArgs e)
+        {
+            if (!Native.GetCursorPos(out Native.Point p)) return;
+            ContextMenuStrip menu = new ContextMenuStrip() {
+                Width = 200,
+            };
+            ToolStripCheckedListBox checkedList = new ToolStripCheckedListBox() { 
+            };
+            checkedList.AddItem(columnID.Text, Core.Config.ShowIDColumn);
+            checkedList.AddItem(columnColor.Text, Core.Config.ShowColorColumn);
+            checkedList.AddItem(columnLastChange.Text, Core.Config.ShowLastChangeColumn);
+            checkedList.AddItem(columnExpansion.Text, Core.Config.ShowExpansionColumn);
+            checkedList.ItemCheck += delegate (object s, ItemCheckEventArgs f) {
+                bool chckd = f.NewValue == CheckState.Checked;
+                switch (f.Index)
+                {
+                    case 0: Core.Config.ShowIDColumn = chckd; break;
+                    case 1: Core.Config.ShowColorColumn = chckd; break;
+                    case 2: Core.Config.ShowLastChangeColumn = chckd; break;
+                    case 3: Core.Config.ShowExpansionColumn = chckd; break;
+                }
+                UpdateColumns();
+                Core.Config.Save();
+            };
+
+            menu.Items.Insert(menu.Items.Count, checkedList);
+
+
+
+            
+
+            menu.Show(p.x, p.y);
+        }
+
         private void StashesListView_CellRightClick(object sender, CellRightClickEventArgs args)
         {
-            if (args.Model == null) return;
+            if (args.Model == null) return; // clicked in empty content
 
             Core.Localization.StringsProxy L = new Core.Localization.StringsProxy();
 
             Common.Stash stash = (Common.Stash)args.Model;
             ContextMenuStrip menu = new ContextMenuStrip();
-            bool isMainClicked = false;
 
             Common.Stash[] selectedStashes = GetSelectedObjects();
+
+            /*
             if (selectedStashes.Length == 0)
             {
-                // right click on disabled (main) stash
+                // right clicked listviewitem is disabled
                 selectedStashes = new Common.Stash[] { stash };
-                isMainClicked = true;
             }
+            */
 
             if (selectedStashes.Length == 1)
             {
@@ -672,19 +765,6 @@ namespace GDMultiStash.Forms
                 }).Start();
                 cb.SelectionChangeCommitted += delegate {
                     stashesListView.FinishCellEdit();
-                    /*
-                    new System.Threading.Thread(() => {
-                        System.Threading.Thread.Sleep(1);
-                        cb.Invoke((MethodInvoker)delegate {
-                            int i = cb.SelectedIndex;
-                            string c = colorList.Keys.ElementAt(i);
-                            cb.Text = c;
-                            cb.SelectionStart = c.Length;
-                            cb.SelectionLength = 0;
-
-                        });
-                    }).Start();
-                    */
                 };
             }
         }

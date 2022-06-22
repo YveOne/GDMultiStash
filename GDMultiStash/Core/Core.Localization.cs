@@ -25,8 +25,6 @@ namespace GDMultiStash
             private static readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
             private static readonly Dictionary<string, string> _strings = new Dictionary<string, string>();
 
-
-
             public static Language[] GetLanguages()
             {
                 return _languages.Values.ToArray();
@@ -117,25 +115,7 @@ namespace GDMultiStash
                 }
                 else
                 {
-                    // requested 4code lang (enUS/enGB)
-                    // but not existing in list
                     Console.WriteLine("- Not found");
-                    /*
-                    if (langCode.Length == 4)
-                    {
-                        // fallback to 2code
-                        langCode = langCode.Substring(0, 2);
-                        Console.WriteLine("- Fallback to: " + langCode);
-                        if (_languages.ContainsKey(langCode))
-                        {
-                            lines = File.ReadAllText(_languages[langCode].File, Encoding.UTF8);
-                        }
-                        else
-                        {
-                            Console.WriteLine("- Not found");
-                        }
-                    }
-                    */
                 }
                 if (lines != null)
                 {

@@ -23,6 +23,7 @@ namespace GDMultiStash
         private readonly Native.Mouse.Hook _mouseHook;
 
         private Overlay.Elements.Viewport _overlayViewport;
+        private bool servicesInstalled = false;
 
         private static Mutex mutex = null;
 
@@ -108,66 +109,80 @@ namespace GDMultiStash
             _gdOverlayService = new GDOverlayService(_overlayViewport);
 
             _gdWindowHookService = new GDWindowHookService();
-            _gdGameHookService = new GDGameHookService();
-            _mouseHook = new Native.Mouse.Hook();
-
             _gdWindowHookService.MoveSize += GDWindowHook_MoveSize;
             _gdWindowHookService.GotFocus += GDWindowHook_GotFocus;
             _gdWindowHookService.LostFocus += GDWindowHook_LostFocus;
             _gdWindowHookService.WindowDestroyed += GDWindowHook_WindowDestroyed;
+            _gdWindowHookService.Start();
+
+            _gdGameHookService = new GDGameHookService();
+            _mouseHook = new Native.Mouse.Hook();
+
+            StartServices();
+
+            ThreadExit += delegate {
+
+                _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
+                _gdWindowHookService.GotFocus -= GDWindowHook_GotFocus;
+                _gdWindowHookService.LostFocus -= GDWindowHook_LostFocus;
+                _gdWindowHookService.WindowDestroyed -= GDWindowHook_WindowDestroyed;
+                _gdWindowHookService.Stop();
+                _gdWindowHookService.Destroy();
+
+                StopServices();
+
+                _gdGameHookService.Destroy();
+                _gdOverlayService.Destroy();
+            };
+
+            Core.Windows.ShowMainWindow();
+            Core.AutoStartGame();
+        }
+
+        private void StartServices()
+        {
+            if (servicesInstalled) return;
+            servicesInstalled = true;
 
             _mouseHook.MouseMove += MouseHook_MouseMove;
             _mouseHook.MouseDown += MouseHook_MouseDown;
             _mouseHook.MouseUp += MouseHook_MouseUp;
             _mouseHook.MouseWheel += MouseHook_MouseWheel;
 
+            Console.WriteLine("Starting GD Game Hook Service ...");
+            _gdGameHookService.Start();
             _gdGameHookService.StashStatusChanged += GDGameHook_StashStatusChanged;
             _gdGameHookService.ModeStatusChanged += GDGameHook_ModeStatusChanged;
             _gdGameHookService.ExpansionChanged += GDGameHook_ExpansionStatusChanged;
             _gdGameHookService.TransferStashSaved += GDGameHook_TransferStashSaved;
 
+            Console.WriteLine("Starting Overlay Service ...");
+            _gdOverlayService.Start();
             _gdOverlayService.FrameDrawing += D3DHook_FrameDrawing;
 
             Core.Runtime.StashStatusChanged += Core_StashStatusChanged;
 
-            Console.WriteLine("Starting GD Window Hook Service ...");
-            _gdWindowHookService.Start();
+        }
 
-            Console.WriteLine("Starting GD Game Hook Service ...");
-            _gdGameHookService.Start();
+        private void StopServices()
+        {
 
-            Console.WriteLine("Starting Overlay Service ...");
-            _gdOverlayService.Start();
+            Core.Runtime.StashStatusChanged -= Core_StashStatusChanged;
 
-            ThreadExit += delegate {
+            _gdOverlayService.FrameDrawing -= D3DHook_FrameDrawing;
+            _gdOverlayService.Stop();
 
-                Core.Runtime.StashStatusChanged -= Core_StashStatusChanged;
+            _gdGameHookService.StashStatusChanged -= GDGameHook_StashStatusChanged;
+            _gdGameHookService.ModeStatusChanged -= GDGameHook_ModeStatusChanged;
+            _gdGameHookService.Stop();
 
-                _gdWindowHookService.Stop();
-                _gdGameHookService.Stop();
-                _gdOverlayService.Stop();
+            _mouseHook.MouseMove -= MouseHook_MouseMove;
+            _mouseHook.MouseDown -= MouseHook_MouseDown;
+            _mouseHook.MouseUp -= MouseHook_MouseUp;
+            _mouseHook.MouseWheel -= MouseHook_MouseWheel;
+            _mouseHook.UnHook();
 
-                _overlayViewport.Destroy();
-                _gdOverlayService.FrameDrawing -= D3DHook_FrameDrawing;
-
-                _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
-                _gdWindowHookService.GotFocus -= GDWindowHook_GotFocus;
-                _gdWindowHookService.LostFocus -= GDWindowHook_LostFocus;
-                _gdWindowHookService.WindowDestroyed -= GDWindowHook_WindowDestroyed;
-
-                _gdGameHookService.StashStatusChanged -= GDGameHook_StashStatusChanged;
-                _gdGameHookService.ModeStatusChanged -= GDGameHook_ModeStatusChanged;
-
-                _mouseHook.MouseMove -= MouseHook_MouseMove;
-                _mouseHook.MouseDown -= MouseHook_MouseDown;
-                _mouseHook.MouseUp -= MouseHook_MouseUp;
-                _mouseHook.MouseWheel -= MouseHook_MouseWheel;
-                _mouseHook.UnHook();
-
-            };
-
-            Core.Windows.ShowMainWindow();
-            Core.AutoStartGame();
+            servicesInstalled = false;
         }
 
         private void Core_StashStatusChanged(object sender, EventArgs e)
@@ -202,6 +217,8 @@ namespace GDMultiStash
 
         private void GDWindowHook_GotFocus(object sender, EventArgs e)
         {
+            Console.WriteLine("Grim Dawn window got focus");
+            Core.Runtime.SetWindowLocSize(_gdWindowHookService.GetLocationSize());
             Core.Runtime.WindowFocused = true;
             if (Core.Runtime.StashOpened)
                 _mouseHook.SetHook();
@@ -209,6 +226,7 @@ namespace GDMultiStash
 
         private void GDWindowHook_LostFocus(object sender, EventArgs e)
         {
+            Console.WriteLine("Grim Dawn window lost focus");
             Core.Runtime.WindowFocused = false;
             if (Core.Runtime.StashOpened)
                 _mouseHook.UnHook();
@@ -216,8 +234,19 @@ namespace GDMultiStash
 
         private void GDWindowHook_WindowDestroyed(object sender, EventArgs e)
         {
+            Console.WriteLine("Grim Dawn window closed");
             Core.Runtime.WindowFocused = false;
-            if (Core.Config.CloseWithGrimDawn) Program.Quit();
+            if (Core.Config.CloseWithGrimDawn)
+            {
+                Console.WriteLine("   Quitting...");
+                Program.Quit();
+            }
+            else
+            {
+                Console.WriteLine("   Restarting services...");
+                StopServices();
+                StartServices();
+            }
         }
 
         #endregion

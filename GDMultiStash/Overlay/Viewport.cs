@@ -121,7 +121,6 @@ namespace GDMultiStash.Overlay.Elements
 
         public override List<D3DHook.Hook.Common.IOverlayElement> GetImagesRecursive()
         {
-            Console.WriteLine(_mainWindow.State);
             if (_mainWindow.State == MainWindow.States.Hidden)
             {
                 Redraw();

@@ -43,10 +43,12 @@
             this.showHardCoreComboBox = new System.Windows.Forms.CheckBox();
             this.selectAllButton = new System.Windows.Forms.Button();
             this.unselectAllButton = new System.Windows.Forms.Button();
+            this.displayMenuPanel = new System.Windows.Forms.Panel();
             this.topMenuStrip.SuspendLayout();
             this.bottomMenuStrip.SuspendLayout();
             this.backgroundPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.stashesListView)).BeginInit();
+            this.displayMenuPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // topMenuStrip
@@ -162,7 +164,7 @@
             this.showExpansionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.showExpansionComboBox.DropDownWidth = 200;
             this.showExpansionComboBox.FormattingEnabled = true;
-            this.showExpansionComboBox.Location = new System.Drawing.Point(396, 2);
+            this.showExpansionComboBox.Location = new System.Drawing.Point(42, 3);
             this.showExpansionComboBox.Name = "showExpansionComboBox";
             this.showExpansionComboBox.Size = new System.Drawing.Size(173, 21);
             this.showExpansionComboBox.TabIndex = 22;
@@ -171,7 +173,7 @@
             // 
             this.showSoftCoreComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.showSoftCoreComboBox.AutoSize = true;
-            this.showSoftCoreComboBox.Location = new System.Drawing.Point(577, 5);
+            this.showSoftCoreComboBox.Location = new System.Drawing.Point(223, 6);
             this.showSoftCoreComboBox.Name = "showSoftCoreComboBox";
             this.showSoftCoreComboBox.Size = new System.Drawing.Size(15, 14);
             this.showSoftCoreComboBox.TabIndex = 23;
@@ -181,7 +183,7 @@
             // 
             this.showHardCoreComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.showHardCoreComboBox.AutoSize = true;
-            this.showHardCoreComboBox.Location = new System.Drawing.Point(607, 5);
+            this.showHardCoreComboBox.Location = new System.Drawing.Point(253, 6);
             this.showHardCoreComboBox.Name = "showHardCoreComboBox";
             this.showHardCoreComboBox.Size = new System.Drawing.Size(15, 14);
             this.showHardCoreComboBox.TabIndex = 24;
@@ -209,17 +211,25 @@
             this.unselectAllButton.UseVisualStyleBackColor = true;
             this.unselectAllButton.Click += new System.EventHandler(this.UnselectAllButton_Click);
             // 
+            // displayMenuPanel
+            // 
+            this.displayMenuPanel.Controls.Add(this.showExpansionComboBox);
+            this.displayMenuPanel.Controls.Add(this.showSoftCoreComboBox);
+            this.displayMenuPanel.Controls.Add(this.showHardCoreComboBox);
+            this.displayMenuPanel.Location = new System.Drawing.Point(354, -1);
+            this.displayMenuPanel.Name = "displayMenuPanel";
+            this.displayMenuPanel.Size = new System.Drawing.Size(275, 25);
+            this.displayMenuPanel.TabIndex = 27;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(634, 461);
+            this.Controls.Add(this.displayMenuPanel);
             this.Controls.Add(this.unselectAllButton);
             this.Controls.Add(this.selectAllButton);
-            this.Controls.Add(this.showHardCoreComboBox);
-            this.Controls.Add(this.showSoftCoreComboBox);
-            this.Controls.Add(this.showExpansionComboBox);
             this.Controls.Add(this.backgroundPanel);
             this.Controls.Add(this.topMenuStrip);
             this.Controls.Add(this.bottomMenuStrip);
@@ -235,6 +245,8 @@
             this.bottomMenuStrip.PerformLayout();
             this.backgroundPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.stashesListView)).EndInit();
+            this.displayMenuPanel.ResumeLayout(false);
+            this.displayMenuPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -257,5 +269,6 @@
         private System.Windows.Forms.CheckBox showHardCoreComboBox;
         private System.Windows.Forms.Button selectAllButton;
         private System.Windows.Forms.Button unselectAllButton;
+        private System.Windows.Forms.Panel displayMenuPanel;
     }
 }

@@ -30,6 +30,10 @@ namespace GDMultiStash.Services
 			return true;
 		}
 
+		public virtual void Destroy()
+		{
+		}
+
 		#region IDisposable
 
 		private bool disposed = false;

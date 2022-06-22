@@ -158,6 +158,8 @@ public static partial class Native
 
 
 
+    [DllImport("user32.dll")]
+    public static extern bool GetCursorPos(out Point lpPoint);
 
 
 
@@ -568,6 +570,27 @@ public static partial class Native
         public int Right;       // x position of lower-right corner
         public int Bottom;      // y position of lower-right corner
     }
+
+
+
+
+
+
+    // offset of window style value
+    public const int GWL_STYLE = -16;
+
+    // window style constants for scrollbars
+    public const int WS_VSCROLL = 0x00200000;
+    public const int WS_HSCROLL = 0x00100000;
+
+    [DllImport("user32.dll", SetLastError = true)]
+    public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+
+
+
+
+
 
 
 

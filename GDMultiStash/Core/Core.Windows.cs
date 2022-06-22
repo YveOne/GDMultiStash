@@ -18,11 +18,6 @@ namespace GDMultiStash
             static Windows()
             {
 
-                // dont need this
-                //Runtime.CurrentExpansionChanged += delegate {
-                    //MainWindow.UpdateObjects();
-                //};
-
                 Runtime.CurrentModeChanged += delegate {
                     MainWindow.UpdateObjects();
                 };
@@ -49,11 +44,6 @@ namespace GDMultiStash
                 };
             }
 
-
-
-
-
-            
             public static void LocalizeWindows()
             {
                 SetupWindow.Localize();
@@ -105,7 +95,6 @@ namespace GDMultiStash
                         loop = false;
                     }
                 }
-
             }
 
             public static void ShowImportDialog()
@@ -131,10 +120,6 @@ namespace GDMultiStash
                     Runtime.NotifyStashesAdded(stashes);
                 }
             }
-
-
-
-
 
         }
     }

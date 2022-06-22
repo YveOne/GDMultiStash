@@ -141,7 +141,11 @@ namespace GDMultiStash.Services
             StopTimer();
             return base.Stop();
         }
-        
+
+        public override void Destroy()
+        {
+        }
+
         private bool isMoving = false;
 
         private void CatchWinEvent(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)

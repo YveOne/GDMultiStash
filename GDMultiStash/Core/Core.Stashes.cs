@@ -211,12 +211,15 @@ namespace GDMultiStash
                 if (Files.ImportTransferFile(stashID, srcFile + ".tmp", true))
                 {
                     File.Delete(srcFile + ".tmp");
+                    ExportSharedModeStash(stashID);
+                    /*
                     if (Config.Cur0SCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.SC));
                     if (Config.Cur0HCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.HC));
                     if (Config.Cur1SCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.SC));
                     if (Config.Cur1HCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.HC));
                     if (Config.Cur2SCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.SC));
                     if (Config.Cur2HCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.HC));
+                    */
                     return true;
                 }
                 else
@@ -229,27 +232,49 @@ namespace GDMultiStash
             public static void ImportStash(int stashID)
             {
                 string externalFile = GrimDawn.GetTransferFilePath(Runtime.CurrentExpansion, Runtime.CurrentMode);
+                Console.WriteLine("Importing Stash #" + stashID);
+                Console.WriteLine("  mode: " + Runtime.CurrentMode.ToString());
+                Console.WriteLine("  file: " + externalFile);
                 if (Files.ImportTransferFile(Runtime.ActiveStashID, externalFile))
                 {
                     _stashes[Runtime.ActiveStashID].LoadTransferFile();
                 }
                 else
                 {
-                    Console.WriteLine("IMPORT FAILED: ");
-                    Console.WriteLine("  mode: " + Runtime.CurrentMode.ToString());
-                    Console.WriteLine("  file: " + externalFile);
+                    Console.WriteLine("IMPORT FAILED");
                 }
             }
 
             public static void ExportStash(int stashID)
             {
                 string externalFile = GrimDawn.GetTransferFilePath(Runtime.CurrentExpansion, Runtime.CurrentMode);
+                Console.WriteLine("Exporting Stash #" + stashID);
+                Console.WriteLine("  mode: " + Runtime.CurrentMode.ToString());
+                Console.WriteLine("  file: " + externalFile);
                 if (!Files.ExportTransferFile(Runtime.ActiveStashID, externalFile))
                 {
-                    Console.WriteLine("EXPORT FAILED: ");
-                    Console.WriteLine("  mode: " + Runtime.CurrentMode.ToString());
-                    Console.WriteLine("  file: " + externalFile);
+                    Console.WriteLine("EXPORT FAILED");
                 }
+            }
+
+            public static void ExportSharedModeStash(int stashID)
+            {
+                Common.Stash stash = GetStash(stashID);
+                if (!stash.SC || !stash.HC) return; // stash is not shared mode
+
+                GrimDawnGameMode oppositeMode = Runtime.CurrentMode == GrimDawnGameMode.SC
+                    ? GrimDawnGameMode.HC
+                    : GrimDawnGameMode.SC;
+
+                // opposite mode got different stash selected
+                if (stashID != Runtime.GetMainStashID(Runtime.CurrentExpansion, oppositeMode)) return;
+
+                string externalFile = GrimDawn.GetTransferFile(Runtime.CurrentExpansion, oppositeMode);
+                Console.WriteLine("Exporting shared mode transfer file:");
+                Console.WriteLine("  stash id: " + stashID);
+                Console.WriteLine("  mode: {0} -> {1}".Format(Runtime.CurrentMode.ToString(), oppositeMode.ToString()));
+                Console.WriteLine("  file: " + externalFile);
+                Files.ExportTransferFile(stashID, externalFile);
             }
 
             public static void SwitchToStash(int toStashID)
@@ -257,6 +282,7 @@ namespace GDMultiStash
                 if (Runtime.CurrentMode == GrimDawnGameMode.None) return; // not loaded?
                 if (Runtime.CurrentExpansion == GrimDawnGameExpansion.Unknown) return; // not loaded?
 
+                Console.WriteLine("Switching to stash #" + toStashID);
                 ImportStash(Runtime.ActiveStashID);
                 Runtime.ActiveStashID = toStashID;
                 ExportStash(Runtime.ActiveStashID);

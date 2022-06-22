@@ -31,8 +31,6 @@ namespace GDMultiStash.Common
         public ExportZipFile()
         {
             _entries = new List<Entry>();
-
-
         }
 
         public void AddFile(string srcFile, string extryName)

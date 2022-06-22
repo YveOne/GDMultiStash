@@ -402,34 +402,18 @@ namespace GDMultiStash
                             // import the just saved transfer file
                             Stashes.ImportStash(closedID);
                         }
-                        ExportSharedModeStash(closedID);
+                        Stashes.ExportSharedModeStash(closedID);
                     }
                 };
 
+                /*
+                // this should be unneccessary
                 ActiveStashChanged += delegate (object sender, ActiveStashChangedEventArgs e)
                 {
                     if (e.OldID == -1) return;
                     ExportSharedModeStash(e.OldID);
                 };
-
-            }
-
-            private static void ExportSharedModeStash(int stashID)
-            {
-                Common.Stash stash = Stashes.GetStash(stashID);
-                if (!stash.SC || !stash.HC) return; // stash is not shared mode
-                GrimDawnGameMode oppositeMode = CurrentMode == GrimDawnGameMode.SC
-                    ? GrimDawnGameMode.HC
-                    : GrimDawnGameMode.SC;
-                // opposite mode got different stash selected
-                if (stashID != GetMainStashID(CurrentExpansion, oppositeMode)) return;
-
-                string externalFile = GrimDawn.GetTransferFile(CurrentExpansion, oppositeMode);
-                Console.WriteLine("Exporting shared mode transfer file:");
-                Console.WriteLine(" stash id: " + stashID);
-                Console.WriteLine(" mode: {0} -> {1}".Format(CurrentMode.ToString(), oppositeMode.ToString()));
-                Console.WriteLine(" file: " + externalFile);
-                Files.ExportTransferFile(stashID, externalFile);
+                */
             }
 
             private static bool _reloadOpenedStash = false;
@@ -530,19 +514,16 @@ namespace GDMultiStash
             public static void SwitchToStash(int stashID)
             {
                 if (stashID == _activeStashID) return;
-                Console.WriteLine("Switching to stash #" + stashID);
                 ReopenStashAction(() => Stashes.SwitchToStash(stashID));
             }
 
             public static void SaveCurrentStash()
             {
-                Console.WriteLine("Saving Stash");
                 ReopenStashAction(() => Stashes.ImportStash(ActiveStashID));
             }
 
             public static void LoadCurrentStash()
             {
-                Console.WriteLine("Loading Stash");
                 ReopenStashAction(() => Stashes.ExportStash(ActiveStashID));
             }
 

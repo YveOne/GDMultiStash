@@ -61,9 +61,6 @@ void* __fastcall SetTransferOpen::HookedMethod(void* This, bool isOpen) {
 		SetEvent(_m_hEvent);
 
 
-		
-
-
 		std::wstring modName;
 		int modIndex = fnGetGameInfoMode(gameInfo);
 		fnGetModNameArg(gameInfo, &modName);

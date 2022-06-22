@@ -78,9 +78,15 @@ namespace GDMultiStash.Services
         public override bool Stop()
         {
             if (!Running) return false;
-            _targetForm.Destroy();
             return base.Stop();
         }
+
+        public override void Destroy()
+        {
+            _targetForm.Destroy();
+        }
+
+
 
     }
 }

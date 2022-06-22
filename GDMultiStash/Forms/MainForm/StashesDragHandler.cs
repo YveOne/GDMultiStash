@@ -17,7 +17,6 @@ namespace GDMultiStash.Forms
         public StashesDragSource DragSource => _dragSource;
 
         private bool _isDragging;
-        public bool IsDragging => _isDragging;
 
         public StashesDragHandler(ObjectListView olv)
         {
@@ -29,13 +28,21 @@ namespace GDMultiStash.Forms
             _dragSource.DragEnd += delegate {
                 _isDragging = false;
                 List<int> orders = new List<int>();
+
+                List<OLVListItem> items = new List<OLVListItem>();
                 foreach (OLVListItem item in olv.Items)
+                {
+                    Common.Stash stash = (Common.Stash)item.RowObject;
+                    if (Core.Config.IsMainStashID(stash.ID)) continue;
+                    items.Add(item);
+                }
+                foreach (OLVListItem item in items)
                 {
                     Common.Stash stash = (Common.Stash)item.RowObject;
                     orders.Add(stash.Order);
                 }
                 orders.Sort();
-                foreach (OLVListItem item in olv.Items)
+                foreach (OLVListItem item in items)
                 {
                     Common.Stash stash = (Common.Stash)item.RowObject;
                     stash.Order = orders[0];
@@ -48,6 +55,17 @@ namespace GDMultiStash.Forms
             olv.DragLeave += delegate {
                 ResetDragPositions();
             };
+        }
+
+        public bool IsDragging()
+        {
+            return _isDragging;
+        }
+
+        public bool IsDragging(Common.Stash stash)
+        {
+            if (!IsDragging()) return false;
+            return DragSource.DraggingStashes.Contains(stash);
         }
 
         public void ResetDragPositions()

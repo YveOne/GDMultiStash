@@ -17,8 +17,10 @@ namespace GDMultiStash
 
             private static Common.Config.Config _config;
 
-            private static int _previousVersion = 0;
             public static int PreviousVersion => _previousVersion;
+            private static int _previousVersion = 0;
+
+            #region Load/Save
 
             private static Common.Config.Config LoadFromFile(string filePath)
             {
@@ -84,7 +86,7 @@ namespace GDMultiStash
                     }
                     Console.WriteLine("... Done");
                 }
-                //V1.ConfigV1 _configV1 = (V1.ConfigV1)new XmlSerializer(typeof(V1.ConfigV1)).Deserialize(xmlReader);
+
                 Console.WriteLine("Config is up to date");
                 return XmlIO.ReadXmlText<Common.Config.Config>(File.ReadAllText(filePath));
             }
@@ -115,28 +117,10 @@ namespace GDMultiStash
                 XmlIO.WriteXmlFile(cfg, filePath);
             }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             public static void Load()
             {
                 Console.WriteLine("Loading config");
                 _config = LoadOrCreate(Files.DataConfigFilePath);
-
-
-
-
-
             }
 
             public static void Save()
@@ -145,33 +129,41 @@ namespace GDMultiStash
                 WriteToFile(_config, Files.DataConfigFilePath);
             }
 
+            #endregion
 
+            #region Common methods
 
-
-
-
-
-
-
-
-
-
-
-
-            public static Common.Config.ConfigStash GetStashByID(int id)
+            public static Common.Config.ConfigStash GetStashByID(int stashID)
             {
-                return _config.GetStashByID(id);
+                return _config.Stashes.Find(s => { return s.ID == stashID; });
             }
 
-            public static Common.Config.ConfigStash[] GetStashes()
+            public static IEnumerable<Common.Config.ConfigStash> GetStashes()
             {
-                return _config.GetStashes();
+                return _config.Stashes;
+            }
+
+            public static int GetStashIndex(int stashID)
+            {
+                return _config.Stashes.FindIndex((stash) => { return stash.ID == stashID; });
             }
 
             public static Common.Config.ConfigStash CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode = GrimDawnGameMode.None)
             {
                 Console.WriteLine(string.Format(@"Adding Config Stash: {0} (expansion: {1}, mode: {2})", name, expansion.ToString(), mode.ToString()));
-                Common.Config.ConfigStash stash = _config.CreateStash(name, expansion, mode);
+
+                _config.Settings.LastID += 1;
+                Common.Config.ConfigStash stash = new Common.Config.ConfigStash
+                {
+                    Name = name,
+                    ID = _config.Settings.LastID,
+                    Order = _config.Settings.LastID,
+                    Expansion = (int)expansion,
+                    SC = mode.HasFlag(GrimDawnGameMode.SC),
+                    HC = mode.HasFlag(GrimDawnGameMode.HC),
+                };
+                _config.Stashes.Add(stash);
+
                 Console.WriteLine("- id: " + stash.ID);
                 Files.CreateStashDir(stash.ID);
                 return stash;
@@ -181,11 +173,11 @@ namespace GDMultiStash
             {
                 Console.WriteLine(string.Format(@"Deleting Config Stash with id {0}", stashID));
                 Files.DeleteStashDir(stashID);
-                int index = _config.GetStashIndex(stashID);
+                int index = GetStashIndex(stashID);
                 if (index != -1)
                 {
                     Console.WriteLine(string.Format(@"- index: {0}", index));
-                    _config.DeleteStashAt(index);
+                    _config.Stashes.RemoveAt(index);
                     return true;
                 }
                 else
@@ -194,9 +186,6 @@ namespace GDMultiStash
                     return false;
                 }
             }
-
-
-
 
             public static bool IsMainStashID(int stashID)
             {
@@ -218,19 +207,15 @@ namespace GDMultiStash
                     || stashID == Cur2HCID);
             }
 
-
-
-
-
             public static Common.Config.ConfigSettingList GetSettings()
             {
-                return _config.GetSettings();
+                return _config.Settings.Copy();
             }
 
             public static void SetSettings(Common.Config.ConfigSettingList settings)
             {
                 Common.Config.ConfigSettingList previous = GetSettings();
-                _config.SetSettings(settings);
+                _config.Settings.Set(settings);
 
                 if (previous.Language != Language)
                 {
@@ -238,10 +223,12 @@ namespace GDMultiStash
                     LanguageChanged?.Invoke(null, EventArgs.Empty);
                 }
                 if (previous.GamePath != GamePath) GamePathChanged?.Invoke(null, EventArgs.Empty);
-                if (previous.OverlayScale != OverlayScale
-                    || previous.OverlayWidth != OverlayWidth) AppearanceChanged?.Invoke(null, EventArgs.Empty);
+                if (previous.OverlayScale != OverlayScale || previous.OverlayWidth != OverlayWidth)
+                    AppearanceChanged?.Invoke(null, EventArgs.Empty);
 
             }
+
+            #endregion
 
             #region Events
 
@@ -440,6 +427,30 @@ namespace GDMultiStash
             public static int DefaultStashMode
             {
                 get => _config.Settings.DefaultStashMode;
+            }
+
+            public static bool ShowColorColumn
+            {
+                get => _config.Settings.ShowColorColumn;
+                set => _config.Settings.ShowColorColumn = value;
+            }
+
+            public static bool ShowExpansionColumn
+            {
+                get => _config.Settings.ShowExpansionColumn;
+                set => _config.Settings.ShowExpansionColumn = value;
+            }
+
+            public static bool ShowIDColumn
+            {
+                get => _config.Settings.ShowIDColumn;
+                set => _config.Settings.ShowIDColumn = value;
+            }
+
+            public static bool ShowLastChangeColumn
+            {
+                get => _config.Settings.ShowLastChangeColumn;
+                set => _config.Settings.ShowLastChangeColumn = value;
             }
 
             #endregion

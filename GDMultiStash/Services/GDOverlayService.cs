@@ -61,21 +61,17 @@ namespace GDMultiStash.Services
         public override bool Start()
         {
             if (Running) return false;
-
-            _dummyFrameDrawn = false;
             if (_drawThread == null)
             {
                 _drawThread = new Thread(DrawThreadSub);
                 _drawThread.Start();
             }
-
             return base.Start();
         }
 
         public override bool Stop()
         {
             if (!Running) return false;
-
             if (_drawThread != null)
             {
                 //_drawThread.Abort();
@@ -83,14 +79,21 @@ namespace GDMultiStash.Services
                 _drawThread = null;
             }
             DetachProcess();
-
             return base.Stop();
         }
+
+        public override void Destroy()
+        {
+            _viewport.Destroy();
+        }
+
+
 
         private void DrawThreadSub()
         {
             try
             {
+
                 while (_drawThread != null && !IsAttached)
                 {
                     AttachProcess();
@@ -98,7 +101,14 @@ namespace GDMultiStash.Services
                 }
                 if (_drawThread == null) return;
                 Console.WriteLine("[D3DHook] Process attached");
+
+                _viewport.Resources.LoadQueuedResourcesFromCache();
+                _viewport.Update();
+                _viewport.Redraw();
+
                 Thread.Sleep(1000);
+
+                _dummyFrameDrawn = false;
                 while (_drawThread != null && IsAttached && !_dummyFrameDrawn)
                 {
                     DrawOverlay(_dummyOverlay);
@@ -106,6 +116,7 @@ namespace GDMultiStash.Services
                 }
                 if (_drawThread == null) return;
                 Console.WriteLine("[D3DHook] Overlay is ready");
+
             }
             catch (Exception)
             {
@@ -172,7 +183,6 @@ namespace GDMultiStash.Services
                     Direct3DVersion = Direct3DVersion.AutoDetect,
                     ShowOverlay = true,
                 };
-
                 CaptureInterface _captureInterface = new CaptureInterface();
                 _captureInterface.FrameDrawing += new FrameDrawingEvent((float ms) => {
                     if (!_dummyFrameDrawn)

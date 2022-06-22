@@ -96,18 +96,5 @@ namespace GDMultiStash.Common
             set { _configStash.Order = value; }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

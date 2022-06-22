@@ -50,5 +50,11 @@ namespace GDMultiStash.Common.Overlay
             return list.Count != 0;
         }
 
+        public void LoadQueuedResourcesFromCache()
+        {
+            _resourcesQueue.Clear();
+            _resourcesQueue.AddRange(_resourcesCache.Values);
+        }
+
     }
 }

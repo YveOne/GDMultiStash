@@ -21,6 +21,8 @@ namespace GDIALib.GDHook
         private ProgressChangedEventHandler _injectorCallbackDelegate;
         private readonly List<IMessageProcessor> _messageProcessors = new List<IMessageProcessor>();
 
+        private bool injected = false;
+
         public InjectionTargetForm() : base()
         {
             _messageProcessors.Add(new SaveTransferStashHandler());
@@ -31,6 +33,10 @@ namespace GDIALib.GDHook
 
         public void StartInjector()
         {
+            // its reinjecting itself already
+            if (injected) return;
+            injected = true;
+
             // Start looking for GD processes!
             _registerWindowDelegate = CustomWndProc;
             _window = new RegisterWindow("GDMSWindowClass", _registerWindowDelegate);
