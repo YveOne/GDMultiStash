@@ -114,6 +114,10 @@ namespace GDMultiStash.Services
             Console.WriteLine(" target: " + m_target.ToString());
             Console.WriteLine(" thread: " + m_threadId.ToString());
             Console.WriteLine(" process: " + m_processId.ToString());
+            if (Native.GetForegroundWindow() == m_target)
+            {
+                GotFocus?.Invoke(null, EventArgs.Empty);
+            }
         }
 
         private void Unhook()

@@ -8253,6 +8253,8 @@ records/sandbox/kamil/randomsetitems/crafting_randomsetd120:6
 records/sandbox/paul/b000_blunt:3
 records/sandbox/test_axe:2
 records/sandbox/test_ring2:1
+records/sandbox/test_shield_01:4
+records/sandbox/test_shield_02:4
 records/skills/base_template skills/skill_attackpathcharge:1
 records/skills/base_template skills/skill_attackprojectilechain:1
 records/skills/base_template skills/skill_attackradiusdisengage:1
@@ -9955,6 +9957,7 @@ records/skills/playerclass02/pets/mortartrap_firemortar_lightning1:1
 records/skills/playerclass02/pets/mortartrap_firemortar1:1
 records/skills/playerclass02/pets/thermitemine_skill_flare1_buff:1
 records/skills/playerclass02/pets/thermitemine_skill_flare2:1
+records/skills/playerclass02/pets/thermiteminecold_skill_flare1_buff:1
 records/skills/playerclass02/pets/thermiteminevitality_skill_flare1_buff:1
 records/skills/playerclass02/stunjacks1:1
 records/skills/playerclass02/stunjacks1b:1

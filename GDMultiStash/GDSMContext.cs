@@ -113,7 +113,6 @@ namespace GDMultiStash
             _gdWindowHookService.GotFocus += GDWindowHook_GotFocus;
             _gdWindowHookService.LostFocus += GDWindowHook_LostFocus;
             _gdWindowHookService.WindowDestroyed += GDWindowHook_WindowDestroyed;
-            _gdWindowHookService.Start();
 
             _gdGameHookService = new GDGameHookService();
             _mouseHook = new Native.Mouse.Hook();
@@ -126,11 +125,10 @@ namespace GDMultiStash
                 _gdWindowHookService.GotFocus -= GDWindowHook_GotFocus;
                 _gdWindowHookService.LostFocus -= GDWindowHook_LostFocus;
                 _gdWindowHookService.WindowDestroyed -= GDWindowHook_WindowDestroyed;
-                _gdWindowHookService.Stop();
-                _gdWindowHookService.Destroy();
 
                 StopServices();
 
+                _gdWindowHookService.Destroy();
                 _gdGameHookService.Destroy();
                 _gdOverlayService.Destroy();
             };
@@ -161,12 +159,14 @@ namespace GDMultiStash
             _gdOverlayService.FrameDrawing += D3DHook_FrameDrawing;
 
             Core.Runtime.StashStatusChanged += Core_StashStatusChanged;
+            _gdWindowHookService.Start();
 
         }
 
         private void StopServices()
         {
 
+            _gdWindowHookService.Stop();
             Core.Runtime.StashStatusChanged -= Core_StashStatusChanged;
 
             _gdOverlayService.FrameDrawing -= D3DHook_FrameDrawing;

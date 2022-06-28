@@ -1,4 +1,7 @@
 
+v1.18
+- Fixed mouse hook not working after Grim Dawn startup
+
 v1.17
 - All hooks are now getting reinstalled when Grim Dawn has been restarted
 - Added option to show/hide columns (right click listview header to show the menu)

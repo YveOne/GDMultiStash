@@ -406,14 +406,6 @@ namespace GDMultiStash
                     }
                 };
 
-                /*
-                // this should be unneccessary
-                ActiveStashChanged += delegate (object sender, ActiveStashChangedEventArgs e)
-                {
-                    if (e.OldID == -1) return;
-                    ExportSharedModeStash(e.OldID);
-                };
-                */
             }
 
             private static bool _reloadOpenedStash = false;
