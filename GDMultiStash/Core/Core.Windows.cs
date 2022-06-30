@@ -52,9 +52,17 @@ namespace GDMultiStash
                 CreateStashWindow.Localize();
             }
             
-            public static void ShowMainWindow()
+            public static void ShowMainWindow(Action onShow)
             {
                 if (MainWindow.Visible) return;
+
+                EventHandler shownHandler = null;
+                shownHandler = delegate {
+                    MainWindow.Shown -= shownHandler;
+                    onShow();
+                };
+
+                MainWindow.Shown += shownHandler;
                 MainWindow.TopMost = false;
                 MainWindow.Show();
             }

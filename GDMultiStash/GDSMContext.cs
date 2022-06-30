@@ -133,8 +133,9 @@ namespace GDMultiStash
                 _gdOverlayService.Destroy();
             };
 
-            Core.Windows.ShowMainWindow();
-            Core.AutoStartGame();
+            Core.Windows.ShowMainWindow(() => {
+                Core.AutoStartGame();
+            });
         }
 
         private void StartServices()

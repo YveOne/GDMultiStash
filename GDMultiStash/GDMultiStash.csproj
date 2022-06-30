@@ -74,6 +74,7 @@
     <Compile Include="Common\Overlay\Animations\MoveAnimation.cs" />
     <Compile Include="Common\Overlay\ButtonElement.cs" />
     <Compile Include="Common\ExportZipFile.cs" />
+    <Compile Include="Console.cs" />
     <Compile Include="Core\Core.Update.cs" />
     <Compile Include="Forms\MainForm\StashesDragHandler.cs" />
     <Compile Include="Forms\MainForm\StashesDragSource.cs" />

@@ -170,21 +170,6 @@ public static partial class Native
 
 
 
-    [DllImport("kernel32", SetLastError = true, CharSet = CharSet.Ansi)]
-    public static extern IntPtr LoadLibrary([MarshalAs(UnmanagedType.LPStr)] string lpFileName);
-
-    [DllImport("kernel32.dll", SetLastError = true)]
-    [return: MarshalAs(UnmanagedType.Bool)]
-    public static extern bool FreeLibrary(IntPtr hModule);
-
-
-
-
-
-
-
-
-
     [DllImport("kernel32.dll",
         EntryPoint = "AllocConsole",
         SetLastError = true,
@@ -214,6 +199,17 @@ public static partial class Native
     [DllImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+    [DllImport("User32.dll")]
+    public  static extern bool IsIconic(IntPtr handle);
+
+    public const int SW_RESTORE = 9;
+
+    [DllImport("User32.Dll")]
+    public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+
+
+
 
 
 

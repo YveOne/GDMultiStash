@@ -118,6 +118,15 @@ namespace GDMultiStash.Services
             {
                 GotFocus?.Invoke(null, EventArgs.Empty);
             }
+            else
+            {
+                Console.WriteLine("[GDWindowHook] setting to foreground");
+                if (Native.IsIconic(m_target))
+                {
+                    Native.ShowWindowAsync(m_target, Native.SW_RESTORE);
+                }
+                Native.SetForegroundWindow(m_target);
+            }
         }
 
         private void Unhook()
@@ -151,6 +160,7 @@ namespace GDMultiStash.Services
         }
 
         private bool isMoving = false;
+        private bool hasFocus = false;
 
         private void CatchWinEvent(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
@@ -159,6 +169,7 @@ namespace GDMultiStash.Services
                 case Native.WinEvents.EVENT_OBJECT_DESTROY:
                     if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero) return;
                     WindowDestroyed?.Invoke(null, new EventArgs());
+                    hasFocus = false;
                     Unhook();
                     StartTimer();
                     break;
@@ -175,10 +186,14 @@ namespace GDMultiStash.Services
                 case Native.WinEvents.EVENT_SYSTEM_FOREGROUND:
                     if (hwnd == m_target)
                     {
+                        if (hasFocus) return;
+                        hasFocus = true;
                         GotFocus?.Invoke(null, new EventArgs());
                     }
                     else
                     {
+                        if (!hasFocus) return;
+                        hasFocus = false;
                         LostFocus?.Invoke(null, new EventArgs());
                     }
                     break;

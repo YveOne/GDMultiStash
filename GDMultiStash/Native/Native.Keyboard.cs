@@ -80,12 +80,14 @@ public static partial class Native
         {
             SendKeyboardInput((ushort)vsc, KeyEventF.Scancode | KeyEventF.KeyDown);
             System.Threading.Thread.Sleep(10);
+            Application.DoEvents();
         }
 
         public static void SendKeyUp(uint vsc)
         {
             SendKeyboardInput((ushort)vsc, KeyEventF.Scancode | KeyEventF.KeyUp);
             System.Threading.Thread.Sleep(10);
+            Application.DoEvents();
         }
 
     }

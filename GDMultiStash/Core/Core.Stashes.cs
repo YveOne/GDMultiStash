@@ -206,7 +206,7 @@ namespace GDMultiStash
 
             public static bool RestoreTransferFile(int stashID, string srcFile)
             {
-                Console.WriteLine("Restoring stash: {0} -> {1}", stashID, srcFile);
+                Console.WriteLine("Restoring stash: {0} -> {1}", stashID.ToString(), srcFile);
                 File.Move(srcFile, srcFile + ".tmp");
                 if (Files.ImportTransferFile(stashID, srcFile + ".tmp", true))
                 {

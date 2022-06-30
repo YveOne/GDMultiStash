@@ -1,4 +1,9 @@
 
+v1.19
+- Switching stashes is now a little bit slower to prevent stash corruption
+- Stash corruption while switching stashes seems(!) to be fixed
+- Grim Dawn window is now getting set to foreground on GDSM start
+
 v1.18
 - Fixed mouse hook not working after Grim Dawn startup
 
