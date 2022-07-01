@@ -116,7 +116,10 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-
+            MouseDown += delegate
+            {
+                Core.Runtime.DisableMovement();
+            };
 
 
 
@@ -164,15 +167,7 @@ namespace GDMultiStash.Overlay.Elements
             _fadeAnimation.Delay = 0f;
             _fadeAnimation.Value = 0f;
         }
-
-        public override bool CheckMouseDown(int x, int y)
-        {
-            bool hit = base.CheckMouseDown(x, y);
-            if (hit) Core.Runtime.DisableMovement();
-            return hit;
-            // enabling movement is handled in gdsm context
-        }
-
+        
         public override bool CheckMouseUp(int x, int y)
         {
             if (_mouseDown && !_mouseOver)
@@ -182,7 +177,7 @@ namespace GDMultiStash.Overlay.Elements
             _mouseDown = false;
             return base.CheckMouseUp(x, y);
         }
-
+        
         public override void Draw(float ms)
         {
             base.Draw(ms);

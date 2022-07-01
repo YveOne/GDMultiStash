@@ -1,4 +1,8 @@
 
+v1.20
+- Still hunting the bug thats corrupting stashes while switching
+- Changed count of tries of sending interact key to 4 times with timeout of 500m (4x500ms=2sec)
+
 v1.19
 - Switching stashes is now a little bit slower to prevent stash corruption
 - Stash corruption while switching stashes seems(!) to be fixed
