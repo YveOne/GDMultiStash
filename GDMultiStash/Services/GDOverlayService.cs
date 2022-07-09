@@ -93,11 +93,11 @@ namespace GDMultiStash.Services
         {
             try
             {
-
+                Console.WriteLine("[D3DHook] Init started");
                 while (_drawThread != null && !IsAttached)
                 {
                     AttachProcess();
-                    Thread.Sleep(1000);
+                    Thread.Sleep(3000);
                 }
                 if (_drawThread == null) return;
                 Console.WriteLine("[D3DHook] Process attached");
@@ -118,8 +118,10 @@ namespace GDMultiStash.Services
                 Console.WriteLine("[D3DHook] Overlay is ready");
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine("[D3DHook] EXCEPTION:");
+                Console.WriteLine(e.Message);
             }
             _drawThread = null;
         }
@@ -167,16 +169,28 @@ namespace GDMultiStash.Services
         private void AttachProcess()
         {
             if (_captureProcess != null) return;
+            Console.WriteLine("[D3DHook] AttachProcess() - Looking for Grim Dawn process");
             Process[] processes = Process.GetProcessesByName("Grim Dawn");
+            Console.WriteLine("[D3DHook] AttachProcess() - {0} processes found".Format(processes.Length.ToString()));
+            int i = -1;
             foreach (Process process in processes)
             {
+                i += 1;
                 // Simply attach to the first one found.
 
                 // If the process doesn't have a mainwindowhandle yet, skip it (we need to be able to get the hwnd to set foreground etc)
-                if (process.MainWindowHandle == IntPtr.Zero) continue;
+                if (process.MainWindowHandle == IntPtr.Zero)
+                {
+                    Console.WriteLine("[D3DHook] AttachProcess() - Process {0} is IntPtr.Zero".Format(i.ToString()));
+                    continue;
+                }
 
                 // Skip if the process is already hooked (and we want to hook multiple applications)
-                if (HookManager.IsHooked(process.Id)) continue;
+                if (HookManager.IsHooked(process.Id))
+                {
+                    Console.WriteLine("[D3DHook] AttachProcess() - Process {0} already hooked".Format(i.ToString()));
+                    continue;
+                }
 
                 CaptureConfig cc = new CaptureConfig()
                 {
