@@ -63,7 +63,7 @@ namespace GDMultiStash.Services
             if (Running) return false;
             if (_drawThread == null)
             {
-                _drawThread = new Thread(DrawThreadSub);
+                _drawThread = new Thread(InitializeOverlay);
                 _drawThread.Start();
             }
             return base.Start();
@@ -89,7 +89,7 @@ namespace GDMultiStash.Services
 
 
 
-        private void DrawThreadSub()
+        private void InitializeOverlay()
         {
             try
             {
@@ -118,10 +118,11 @@ namespace GDMultiStash.Services
                 Console.WriteLine("[D3DHook] Overlay is ready");
 
             }
-            catch (Exception e)
+            catch (Exception e2)
             {
-                Console.WriteLine("[D3DHook] EXCEPTION:");
-                Console.WriteLine(e.Message);
+                Console.WriteLine("[D3DHook] Exception in InitializeOverlay()");
+                Console.WriteLine(e2.Message);
+                Console.WriteLine(e2.InnerException.Message);
             }
             _drawThread = null;
         }

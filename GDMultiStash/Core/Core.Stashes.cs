@@ -155,7 +155,6 @@ namespace GDMultiStash
                 if (stash == null) return null;
 
                 Files.ImportTransferFile(stash.ID, src, true);
-                Runtime.ReloadOpenedStash(stash.ID);
 
                 stash.LoadTransferFile();
                 return stash;
@@ -167,7 +166,6 @@ namespace GDMultiStash
                 _stashes.Add(stash.ID, stash);
 
                 Files.ImportTransferFile(stash.ID, src, true);
-                Runtime.ReloadOpenedStash(stash.ID);
 
                 stash.LoadTransferFile();
                 return stash;
@@ -212,14 +210,6 @@ namespace GDMultiStash
                 {
                     File.Delete(srcFile + ".tmp");
                     ExportSharedModeStash(stashID);
-                    /*
-                    if (Config.Cur0SCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.SC));
-                    if (Config.Cur0HCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.HC));
-                    if (Config.Cur1SCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.SC));
-                    if (Config.Cur1HCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.HC));
-                    if (Config.Cur2SCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.SC));
-                    if (Config.Cur2HCID == stashID) Files.ExportTransferFile(stashID, GrimDawn.GetTransferFilePath(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.HC));
-                    */
                     return true;
                 }
                 else
@@ -267,7 +257,7 @@ namespace GDMultiStash
                     : GrimDawnGameMode.SC;
 
                 // opposite mode got different stash selected
-                if (stashID != Runtime.GetMainStashID(Runtime.CurrentExpansion, oppositeMode)) return;
+                if (stashID != Config.GetMainStashID(Runtime.CurrentExpansion, oppositeMode)) return;
 
                 string externalFile = GrimDawn.GetTransferFile(Runtime.CurrentExpansion, oppositeMode);
                 Console.WriteLine("Exporting shared mode transfer file:");

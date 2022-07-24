@@ -309,7 +309,7 @@ namespace GDMultiStash.Forms
                 UpdateObjects();
                 Core.Config.Save();
 
-                Core.Runtime.NotifyStashesRearranged();
+                Core.Runtime.NotifyStashesOrderChanged();
             };
 
             stashesListView.UseCellFormatEvents = true;
@@ -648,7 +648,7 @@ namespace GDMultiStash.Forms
                         Core.Stashes.RestoreTransferFile(stash.ID, file);
                         stash.LoadTransferFile();
                         UpdateObjects(); // because the cell is not updated correctly
-                        Core.Runtime.NotifyStashesRestored(new Common.Stash[] { stash });
+                        Core.Runtime.NotifyStashesRestored(stash);
                     });
                 }));
                 if (restoreButtn.DropDownItems.Count == 0)
@@ -728,7 +728,7 @@ namespace GDMultiStash.Forms
                     break;
             }
             Core.Config.Save();
-            Core.Runtime.NotifyStashesModeChanged(new Common.Stash[] { stash });
+            Core.Runtime.NotifyStashesUpdated(stash);
         }
 
         private void StashesListView_CellEditStarting(object sender, CellEditEventArgs e)
@@ -783,11 +783,11 @@ namespace GDMultiStash.Forms
         {
             Common.Stash stash = (Common.Stash)args.RowObject;
             if (args.Column == columnName)
-                Core.Runtime.NotifyStashesNameCHanged(new Common.Stash[] { stash });
+                Core.Runtime.NotifyStashesUpdated(stash);
             else if (args.Column == columnColor)
             {
 
-                Core.Runtime.NotifyStashesColorChanged(new Common.Stash[] { stash });
+                Core.Runtime.NotifyStashesUpdated(stash);
             }
             else
                 return;

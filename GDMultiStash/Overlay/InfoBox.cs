@@ -10,7 +10,7 @@ using GrimDawnLib;
 
 namespace GDMultiStash.Overlay.Elements
 {
-    public class InfoWindow : Element
+    public class InfoBox : Element
     {
 
         public static Font _TitleFont = null;
@@ -19,10 +19,10 @@ namespace GDMultiStash.Overlay.Elements
         private readonly TextElement _titleElement;
         private readonly TextElement _lastChangeIntern;
 
-        private readonly InfoButton _saveButton;
-        private readonly InfoButton _loadButton;
+        private readonly InfoBoxButton _saveButton;
+        private readonly InfoBoxButton _loadButton;
 
-        public InfoWindow()
+        public InfoBox()
         {
             X = 2;
             Y = 605;
@@ -55,7 +55,7 @@ namespace GDMultiStash.Overlay.Elements
             };
             AddChild(_lastChangeIntern);
 
-            _saveButton = new InfoButton()
+            _saveButton = new InfoBoxButton()
             {
                 X = 6,
                 Y = -5,
@@ -63,7 +63,7 @@ namespace GDMultiStash.Overlay.Elements
             };
             AddChild(_saveButton);
 
-            _loadButton = new InfoButton()
+            _loadButton = new InfoBoxButton()
             {
                 X = 6 + 6 + 120,
                 Y = -5,
@@ -72,32 +72,34 @@ namespace GDMultiStash.Overlay.Elements
             AddChild(_loadButton);
 
             Core.Runtime.ActiveStashChanged += delegate {
-                UpdateInfo();
+                UpdateInfoText();
             };
 
             _saveButton.MouseClick += CheatSaveButton_Click;
             _loadButton.MouseClick += CheatLoadButton_Click;
 
-            SetButtonText();
+            UpdateButtonText();
             Core.Config.LanguageChanged += delegate {
-                SetButtonText();
+                UpdateButtonText();
             };
+
+            Core.Runtime.StashReopenStart += delegate {
+                Alpha = 0.33f;
+            };
+
+            Core.Runtime.StashReopenEnd += delegate {
+                Alpha = 1.0f;
+            };
+
         }
 
-        private void SetButtonText()
+        private void UpdateButtonText()
         {
             _saveButton.Text = Core.Localization.GetString("button_save");
             _loadButton.Text = Core.Localization.GetString("button_load");
         }
 
-
-
-
-
-
-        private bool _buttonsDisabled = false;
-
-        private void UpdateInfo()
+        private void UpdateInfoText()
         {
             Common.Stash stash = Core.Stashes.GetStash(Core.Runtime.ActiveStashID);
             if (stash == null) return; // something happend
@@ -107,26 +109,14 @@ namespace GDMultiStash.Overlay.Elements
 
         private void CheatSaveButton_Click(object sender, EventArgs e)
         {
-            if (_buttonsDisabled) return;
-
-            _buttonsDisabled = true;
-            Alpha = 0.33f;
+            if (Core.Runtime.StashIsReopening) return;
             Core.Runtime.SaveCurrentStash();
-            _buttonsDisabled = false;
-            Alpha = 1f;
-
         }
 
         private void CheatLoadButton_Click(object sender, EventArgs e)
         {
-            if (_buttonsDisabled) return;
-
-            _buttonsDisabled = true;
-            Alpha = 0.33f;
+            if (Core.Runtime.StashIsReopening) return;
             Core.Runtime.LoadCurrentStash();
-            _buttonsDisabled = false;
-            Alpha = 1f;
-
         }
 
     }

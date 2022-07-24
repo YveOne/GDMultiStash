@@ -75,6 +75,7 @@
     <Compile Include="Common\Overlay\ButtonElement.cs" />
     <Compile Include="Common\ExportZipFile.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="Core\Core.Runtime.StashList.cs" />
     <Compile Include="Core\Core.Update.cs" />
     <Compile Include="Forms\MainForm\StashesDragHandler.cs" />
     <Compile Include="Forms\MainForm\StashesDragSource.cs" />
@@ -87,12 +88,12 @@
       <DependentUpon>UpdateAvailableDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
-    <Compile Include="Overlay\InfoButton.cs" />
-    <Compile Include="Overlay\InfoWindow.cs" />
+    <Compile Include="Overlay\InfoBoxButton.cs" />
+    <Compile Include="Overlay\InfoBox.cs" />
     <Compile Include="Overlay\VerticalScrollBar.cs" />
     <Compile Include="Overlay\StashList.cs" />
     <Compile Include="Common\Overlay\Element.Anchors.cs" />
-    <Compile Include="Overlay\MainWindow.cs" />
+    <Compile Include="Overlay\OverlayWindow.cs" />
     <Compile Include="Overlay\StashListChild.cs" />
     <Compile Include="Common\Overlay\Element.Mouse.cs" />
     <Compile Include="Common\Overlay\PseudoScrollElement.cs" />
@@ -204,6 +205,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <Compile Include="Core\Core.Localization.cs" />
+    <Compile Include="Core\Core.Runtime.ActiveStuff.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

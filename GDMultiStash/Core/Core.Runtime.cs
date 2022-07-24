@@ -15,169 +15,6 @@ namespace GDMultiStash
         internal static partial class Runtime
         {
 
-            #region MainStashID
-
-            public static int GetMainStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
-            {
-                switch (exp)
-                {
-                    case GrimDawnGameExpansion.BaseGame:
-                        if (mode == GrimDawnGameMode.SC) return Config.Main0SCID;
-                        if (mode == GrimDawnGameMode.HC) return Config.Main0HCID;
-                        break;
-                    case GrimDawnGameExpansion.AshesOfMalmouth:
-                        if (mode == GrimDawnGameMode.SC) return Config.Main1SCID;
-                        if (mode == GrimDawnGameMode.HC) return Config.Main1HCID;
-                        break;
-                    case GrimDawnGameExpansion.ForgottenGods:
-                        if (mode == GrimDawnGameMode.SC) return Config.Main2SCID;
-                        if (mode == GrimDawnGameMode.HC) return Config.Main2HCID;
-                        break;
-                }
-                return -1;
-            }
-
-            #endregion
-
-            #region ActiveStashID
-
-            public class ActiveStashChangedEventArgs : EventArgs
-            {
-                private int _oldId;
-                private int _newId;
-                public int OldID => _oldId;
-                public int NewID => _newId;
-                public ActiveStashChangedEventArgs(int oldId, int newID)
-                {
-                    _oldId = oldId;
-                    _newId = newID;
-                }
-            }
-
-            public delegate void ActiveStashChangedEventHandler(object sender, ActiveStashChangedEventArgs e);
-            public static event ActiveStashChangedEventHandler ActiveStashChanged;
-
-            private static int _activeStashID = -1;
-            public static int ActiveStashID
-            {
-                get
-                {
-                    return _activeStashID;
-                }
-                set
-                {
-                    if (value == _activeStashID) return;
-                    int _previousID = _activeStashID;
-                    _activeStashID = value;
-                    switch (CurrentExpansion)
-                    {
-                        case GrimDawnGameExpansion.BaseGame:
-                            if (CurrentMode == GrimDawnGameMode.SC) Config.Cur0SCID = value;
-                            if (CurrentMode == GrimDawnGameMode.HC) Config.Cur0HCID = value;
-                            break;
-                        case GrimDawnGameExpansion.AshesOfMalmouth:
-                            if (CurrentMode == GrimDawnGameMode.SC) Config.Cur1SCID = value;
-                            if (CurrentMode == GrimDawnGameMode.HC) Config.Cur1HCID = value;
-                            break;
-                        case GrimDawnGameExpansion.ForgottenGods:
-                            if (CurrentMode == GrimDawnGameMode.SC) Config.Cur2SCID = value;
-                            if (CurrentMode == GrimDawnGameMode.HC) Config.Cur2HCID = value;
-                            break;
-                    }
-                    Console.WriteLine("Runtime: Active stash changed to #" + _activeStashID);
-                    ActiveStashChanged?.Invoke(null, new ActiveStashChangedEventArgs(_previousID, _activeStashID));
-                }
-            }
-
-            public static void LoadActiveStashID()
-            {
-                switch (CurrentExpansion)
-                {
-                    case GrimDawnGameExpansion.BaseGame:
-                        if (CurrentMode == GrimDawnGameMode.SC) ActiveStashID = Config.Cur0SCID;
-                        if (CurrentMode == GrimDawnGameMode.HC) ActiveStashID = Config.Cur0HCID;
-                        break;
-                    case GrimDawnGameExpansion.AshesOfMalmouth:
-                        if (CurrentMode == GrimDawnGameMode.SC) ActiveStashID = Config.Cur1SCID;
-                        if (CurrentMode == GrimDawnGameMode.HC) ActiveStashID = Config.Cur1HCID;
-                        break;
-                    case GrimDawnGameExpansion.ForgottenGods:
-                        if (CurrentMode == GrimDawnGameMode.SC) ActiveStashID = Config.Cur2SCID;
-                        if (CurrentMode == GrimDawnGameMode.HC) ActiveStashID = Config.Cur2HCID;
-                        break;
-                    default:
-                        ActiveStashID = -1;
-                        break;
-                }
-            }
-
-            #endregion
-
-            #region Event: StashesChanged
-
-            public class StashesChangedEventArgs : EventArgs
-            {
-                private IEnumerable<Common.Stash> _stashes;
-                public Common.Stash[] Stashes => _stashes.ToArray();
-                public StashesChangedEventArgs(IEnumerable<Common.Stash> stashes)
-                {
-                    _stashes = stashes;
-                }
-                public StashesChangedEventArgs(Common.Stash stash)
-                {
-                    _stashes = new Common.Stash[] { stash };
-                }
-                public StashesChangedEventArgs()
-                {
-                    _stashes = new Common.Stash[] { };
-                }
-            }
-
-            public delegate void StashesChangedEventHandler(object sender, StashesChangedEventArgs e);
-            public static event StashesChangedEventHandler StashesRearranged;
-            public static event StashesChangedEventHandler StashesAdded;
-            public static event StashesChangedEventHandler StashesRemoved;
-            public static event StashesChangedEventHandler StashesRestored;
-            public static event StashesChangedEventHandler StashesModeChanged;
-            public static event StashesChangedEventHandler StashesNameChanged;
-            public static event StashesChangedEventHandler StashesColorChanged;
-
-            public static void NotifyStashesRearranged()
-            {
-                StashesRearranged?.Invoke(null, new StashesChangedEventArgs());
-            }
-
-            public static void NotifyStashesAdded(IEnumerable<Common.Stash> stashes)
-            {
-                StashesAdded?.Invoke(null, new StashesChangedEventArgs(stashes));
-            }
-
-            public static void NotifyStashesRemoved(IEnumerable<Common.Stash> stashes)
-            {
-                StashesRemoved?.Invoke(null, new StashesChangedEventArgs(stashes));
-            }
-
-            public static void NotifyStashesRestored(IEnumerable<Common.Stash> stashes)
-            {
-                StashesRestored?.Invoke(null, new StashesChangedEventArgs(stashes));
-            }
-
-            public static void NotifyStashesModeChanged(IEnumerable<Common.Stash> stashes)
-            {
-                StashesModeChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
-            }
-
-            public static void NotifyStashesNameCHanged(IEnumerable<Common.Stash> stashes)
-            {
-                StashesNameChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
-            }
-
-            public static void NotifyStashesColorChanged(IEnumerable<Common.Stash> stashes)
-            {
-                StashesColorChanged?.Invoke(null, new StashesChangedEventArgs(stashes));
-            }
-
-            
 
 
 
@@ -185,25 +22,12 @@ namespace GDMultiStash
 
 
 
-            /*
-            public delegate void StashesChangedEventHandler(object sender, EventArgs e);
-            public static event StashesChangedEventHandler StashesChanged;
-
-            public static void NotifyStashesChanged()
-            {
-                StashesChanged?.Invoke(null, EventArgs.Empty);
-            }
-            */
-
-
-
-
-
-
-
-            #endregion
 
             #region Event: Window
+
+
+
+
 
             // todo: rename to "GameWindow"
 
@@ -253,7 +77,6 @@ namespace GDMultiStash
                     _windowSize = value;
                     if (!_windowLocSizeSet || last.Width != value.Width || last.Height != value.Height)
                         WindowSizeChanged?.Invoke(null, EventArgs.Empty);
-                    
                 }
             }
 
@@ -314,51 +137,11 @@ namespace GDMultiStash
 
             #endregion
 
-            #region Event: CurrentModeChanged
-
-            public delegate void CurrentModeChangedEventHandler(object sender, EventArgs e);
-            public static event CurrentModeChangedEventHandler CurrentModeChanged;
-
-            private static GrimDawnGameMode _currentMode = GrimDawnGameMode.None;
-            public static GrimDawnGameMode CurrentMode
-            {
-                get { return _currentMode; }
-                set
-                {
-                    if (_currentMode == value) return;
-                    _currentMode = value;
-                    Console.WriteLine("Runtime: CurrentModeChanged: " + value);
-                    CurrentModeChanged?.Invoke(null, EventArgs.Empty);
-                    LoadActiveStashID();
-                }
-            }
-
-            #endregion
-
-            #region Event: CurrentExpansionChanged
-
-            public delegate void CurrentExpansionChangedEventHandler(object sender, EventArgs e);
-            public static event CurrentExpansionChangedEventHandler CurrentExpansionChanged;
-
-            private static GrimDawnGameExpansion _currentExpansion = GrimDawnGameExpansion.Unknown;
-            public static GrimDawnGameExpansion CurrentExpansion
-            {
-                get { return _currentExpansion; }
-                set
-                {
-                    if (_currentExpansion == value) return;
-                    _currentExpansion = value;
-                    Console.WriteLine("Runtime: CurrentExpansionChanged: " + value);
-                    CurrentExpansionChanged?.Invoke(null, EventArgs.Empty);
-                    LoadActiveStashID();
-                }
-            }
-
-            #endregion
-
             static Runtime()
             {
 
+                ActiveModeChanged += delegate { LoadActiveStashID(); };
+                ActiveExpansionChanged += delegate { LoadActiveStashID(); };
 
                 WindowFocusChanged += delegate
                 {
@@ -384,7 +167,7 @@ namespace GDMultiStash
                     {
                         int closedID = _activeStashID;
                         Console.WriteLine("Runtime: TransferStashSaved - check file locked");
-                        string externalFile = GrimDawn.GetTransferFilePath(_currentExpansion, _currentMode);
+                        string externalFile = GrimDawn.GetTransferFilePath(_currentExpansion, _activeMode);
                         try
                         {
                             File.Open(externalFile, FileMode.Open).Close();
@@ -402,7 +185,7 @@ namespace GDMultiStash
                             Console.WriteLine("Runtime: TransferStashSaved - Config.AutoBackToMain");
                             // we dont need to use reopen because stash is closed
 
-                            int mainStashID = GetMainStashID(CurrentExpansion, CurrentMode);
+                            int mainStashID = Config.GetMainStashID(CurrentExpansion, CurrentMode);
                             Stashes.SwitchToStash(mainStashID);
                         }
                         else
@@ -449,6 +232,19 @@ namespace GDMultiStash
                 return false;
             }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
             private static void _ReopenStashAction(Action action)
             {
                 Console.WriteLine("_ReopenStashAction() START!");
@@ -457,15 +253,10 @@ namespace GDMultiStash
                 ushort keyInteract = GrimDawn.Keybindings.GetKeyBinding(GrimDawnKey.Interact).Primary;
                 int triesLeft;
 
-
-
-                
                 bool transferSaved = false;
                 TransferStashSavedEventHandler transferSavedHandler = delegate { transferSaved = true; };
                 TransferStashSaved += transferSavedHandler;
                 
-
-
                 triesLeft = 4;
                 while (triesLeft > 0 && _stashOpened)
                 {
@@ -484,9 +275,6 @@ namespace GDMultiStash
                     return;
                 }
 
-
-
-                
                 Console.WriteLine("_ReopenStashAction() - waiting for TransferStashSaved event...");
                 if (WaitFor(500, () =>
                 {
@@ -503,11 +291,6 @@ namespace GDMultiStash
                     return;
                 }
                 
-
-
-
-
-
                 Console.WriteLine("_ReopenStashAction() - action() START!");
                 action();
                 Console.WriteLine("_ReopenStashAction() - action() DONE!");
@@ -533,12 +316,29 @@ namespace GDMultiStash
                 Console.WriteLine("_ReopenStashAction() DONE!");
             }
 
+
+
+
+
+
+
+
+            public delegate void StashReopenStartEventHandler(object sender, EventArgs e);
+            public delegate void StashReopenEndEventHandler(object sender, EventArgs e);
+            public static event StashReopenStartEventHandler StashReopenStart;
+            public static event StashReopenEndEventHandler StashReopenEnd;
+
+            public static bool StashIsReopening => _stashReopening;
             private static bool _stashReopening = false;
+
+
+
 
             private static void ReopenStashAction(Action action)
             {
                 if (_stashReopening) return;
                 _stashReopening = true;
+                StashReopenStart?.Invoke(null, EventArgs.Empty);
                 _ReopenStashAction(action);
                 _stashReopening = false;
                 if (!StashOpened)
@@ -547,6 +347,7 @@ namespace GDMultiStash
                     Console.WriteLine("ReopenStashAction() FAILED");
                     StashStatusChanged?.Invoke(null, EventArgs.Empty);
                 }
+                StashReopenEnd?.Invoke(null, EventArgs.Empty);
             }
 
             public static void SwitchToStash(int stashID)

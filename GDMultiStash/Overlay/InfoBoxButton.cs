@@ -10,7 +10,7 @@ using GrimDawnLib;
 
 namespace GDMultiStash.Overlay.Elements
 {
-    public class InfoButton : ButtonElement
+    public class InfoBoxButton : ButtonElement
     {
 
         public static Font _Font;
@@ -22,7 +22,7 @@ namespace GDMultiStash.Overlay.Elements
         protected override D3DHook.Hook.Common.IImageResource DownResource => _DownResource;
         protected override D3DHook.Hook.Common.IImageResource OverResource => _OverResource;
 
-        public InfoButton()
+        public InfoBoxButton()
         {
             Font = _Font;
             Width = 120;

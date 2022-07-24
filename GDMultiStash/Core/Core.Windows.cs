@@ -18,7 +18,7 @@ namespace GDMultiStash
             static Windows()
             {
 
-                Runtime.CurrentModeChanged += delegate {
+                Runtime.ActiveModeChanged += delegate {
                     MainWindow.UpdateObjects();
                 };
 
@@ -93,10 +93,10 @@ namespace GDMultiStash
                 while (loop)
                 {
 
-                    if (CreateStashWindow.ShowDialog(owner, out Common.Stash[] stashes) == DialogResult.OK)
+                    if (CreateStashWindow.ShowDialog(owner, out Common.Stash stash) == DialogResult.OK)
                     {
                         Config.Save();
-                        Runtime.NotifyStashesAdded(stashes);
+                        Runtime.NotifyStashesAdded(stash);
                     }
                     else
                     {

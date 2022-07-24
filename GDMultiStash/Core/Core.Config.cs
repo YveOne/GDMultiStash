@@ -133,6 +133,77 @@ namespace GDMultiStash
 
             #region Common methods
 
+            public static int GetMainStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+            {
+                switch (exp)
+                {
+                    case GrimDawnGameExpansion.BaseGame:
+                        if (mode == GrimDawnGameMode.SC) return Main0SCID;
+                        if (mode == GrimDawnGameMode.HC) return Main0HCID;
+                        break;
+                    case GrimDawnGameExpansion.AshesOfMalmouth:
+                        if (mode == GrimDawnGameMode.SC) return Main1SCID;
+                        if (mode == GrimDawnGameMode.HC) return Main1HCID;
+                        break;
+                    case GrimDawnGameExpansion.ForgottenGods:
+                        if (mode == GrimDawnGameMode.SC) return Main2SCID;
+                        if (mode == GrimDawnGameMode.HC) return Main2HCID;
+                        break;
+                }
+                return -1;
+            }
+
+            public static int GetCurrentStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+            {
+                switch (exp)
+                {
+                    case GrimDawnGameExpansion.BaseGame:
+                        if (mode == GrimDawnGameMode.SC) return Cur0SCID;
+                        if (mode == GrimDawnGameMode.HC) return Cur0HCID;
+                        break;
+                    case GrimDawnGameExpansion.AshesOfMalmouth:
+                        if (mode == GrimDawnGameMode.SC) return Cur1SCID;
+                        if (mode == GrimDawnGameMode.HC) return Cur1HCID;
+                        break;
+                    case GrimDawnGameExpansion.ForgottenGods:
+                        if (mode == GrimDawnGameMode.SC) return Cur2SCID;
+                        if (mode == GrimDawnGameMode.HC) return Cur2HCID;
+                        break;
+                }
+                return -1;
+            }
+
+            public static void SetCurrentStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode, int stashID)
+            {
+                switch (exp)
+                {
+                    case GrimDawnGameExpansion.BaseGame:
+                        if (mode == GrimDawnGameMode.SC) Cur0SCID = stashID;
+                        if (mode == GrimDawnGameMode.HC) Cur0HCID = stashID;
+                        break;
+                    case GrimDawnGameExpansion.AshesOfMalmouth:
+                        if (mode == GrimDawnGameMode.SC) Cur1SCID = stashID;
+                        if (mode == GrimDawnGameMode.HC) Cur1HCID = stashID;
+                        break;
+                    case GrimDawnGameExpansion.ForgottenGods:
+                        if (mode == GrimDawnGameMode.SC) Cur2SCID = stashID;
+                        if (mode == GrimDawnGameMode.HC) Cur2HCID = stashID;
+                        break;
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
             public static Common.Config.ConfigStash GetStashByID(int stashID)
             {
                 return _config.Stashes.Find(s => { return s.ID == stashID; });

@@ -10,7 +10,7 @@ namespace GDMultiStash.Overlay.Elements
     public class Viewport : Common.Overlay.Viewport
     {
 
-        private readonly MainWindow _mainWindow;
+        private readonly OverlayWindow _mainWindow;
 
         public Viewport()
         {
@@ -19,12 +19,12 @@ namespace GDMultiStash.Overlay.Elements
             Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_RB);
             Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_RI);
 
-            MainWindow._BackgroundResource = Resources.CreateImageResource(
+            OverlayWindow._BackgroundResource = Resources.CreateImageResource(
                     Properties.Resources.background,
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
-            MainWindow._BackgroundLeftResource = Resources.CreateImageResource(
+            OverlayWindow._BackgroundLeftResource = Resources.CreateImageResource(
                     Properties.Resources.background_left,
                     System.Drawing.Imaging.ImageFormat.Png
                     );
@@ -54,25 +54,25 @@ namespace GDMultiStash.Overlay.Elements
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
-            InfoButton._UpResource = Resources.CreateImageResource(
+            InfoBoxButton._UpResource = Resources.CreateImageResource(
                     Properties.Resources.ButtonSmallUp,
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
-            InfoButton._DownResource = Resources.CreateImageResource(
+            InfoBoxButton._DownResource = Resources.CreateImageResource(
                     Properties.Resources.ButtonSmallDown,
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
-            InfoButton._OverResource = Resources.CreateImageResource(
+            InfoBoxButton._OverResource = Resources.CreateImageResource(
                     Properties.Resources.ButtonSmallOver,
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
             //StashList._ItemFont = Utils.FontLoader.GetFont("Linux Biolinum", 23, FontStyle.Regular);
-            InfoWindow._TitleFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Regular);
-            InfoWindow._TextFont = Utils.FontLoader.GetFont("Linux Biolinum", 19, FontStyle.Regular);
-            InfoButton._Font = Utils.FontLoader.GetFont("Linux Biolinum", 15, FontStyle.Regular);
+            InfoBox._TitleFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Regular);
+            InfoBox._TextFont = Utils.FontLoader.GetFont("Linux Biolinum", 19, FontStyle.Regular);
+            InfoBoxButton._Font = Utils.FontLoader.GetFont("Linux Biolinum", 15, FontStyle.Regular);
 
 
 
@@ -83,7 +83,7 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-            _mainWindow = new MainWindow
+            _mainWindow = new OverlayWindow
             {
                 Scale = 1f,
             };
@@ -94,12 +94,12 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-            _mainWindow.StateChanged += delegate (MainWindow.States state)
+            _mainWindow.StateChanged += delegate (OverlayWindow.States state)
             {
                 switch(state)
                 {
-                    case MainWindow.States.Showing:
-                    case MainWindow.States.Hidden:
+                    case OverlayWindow.States.Showing:
+                    case OverlayWindow.States.Hidden:
                         Update();
                         break;
                 }
@@ -121,7 +121,7 @@ namespace GDMultiStash.Overlay.Elements
 
         public override List<D3DHook.Hook.Common.IOverlayElement> GetImagesRecursive()
         {
-            if (_mainWindow.State == MainWindow.States.Hidden)
+            if (_mainWindow.State == OverlayWindow.States.Hidden)
             {
                 Redraw();
                 return null;

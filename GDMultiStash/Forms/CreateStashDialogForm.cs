@@ -56,14 +56,12 @@ namespace GDMultiStash.Forms
             nameTextBox.Focus();
         }
 
+        private Common.Stash _createdStash = null;
 
-        
-        private readonly List<Common.Stash> _createdStashes = new List<Common.Stash>();
-
-
-        public DialogResult ShowDialog(IWin32Window owner, out Common.Stash[] createdStashes)
+        public DialogResult ShowDialog(IWin32Window owner, out Common.Stash createdStash)
         {
-            createdStashes = null;
+            createdStash = null;
+            _createdStash = null;
 
             GrimDawnGameMode mode = (GrimDawnGameMode)Core.Config.DefaultStashMode;
             scCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.SC);
@@ -72,10 +70,10 @@ namespace GDMultiStash.Forms
             DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;
 
-            if (_createdStashes.Count != 0)
+            if (_createdStash != null)
             {
-                createdStashes = _createdStashes.ToArray();
-                _createdStashes.Clear();
+                createdStash = _createdStash;
+                _createdStash = null;
                 return DialogResult.OK;
             }
             return DialogResult.Cancel;
@@ -88,8 +86,7 @@ namespace GDMultiStash.Forms
             if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
             if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
 
-            Common.Stash stash = Core.Stashes.CreateStash(nameTextBox.Text, exp, mode);
-            _createdStashes.Add(stash);
+            _createdStash = Core.Stashes.CreateStash(nameTextBox.Text, exp, mode);
             Close(DialogResult.OK);
         }
 

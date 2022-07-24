@@ -10,7 +10,7 @@ using GDMultiStash.Common.Overlay.Animations;
 
 namespace GDMultiStash.Overlay.Elements
 {
-    internal class MainWindow : Element
+    internal class OverlayWindow : Element
     {
 
         public static D3DHook.Hook.Common.IImageResource _BackgroundResource;
@@ -30,7 +30,7 @@ namespace GDMultiStash.Overlay.Elements
         private bool _mouseDown = false;
         private bool _updateAppearance = false;
 
-        private readonly InfoWindow _infoWindow;
+        private readonly InfoBox _infoWindow;
         private readonly StashList _stashList;
         private readonly VerticalScrollBar _scrollBar;
 
@@ -60,7 +60,7 @@ namespace GDMultiStash.Overlay.Elements
             }
         }
 
-        public MainWindow() : base()
+        public OverlayWindow() : base()
         {
             AnchorPoint = Anchor.Left;
             Height = 740;
@@ -84,7 +84,7 @@ namespace GDMultiStash.Overlay.Elements
             _scrollBar = new VerticalScrollBar();
             AddChild(_scrollBar);
 
-            _infoWindow = new InfoWindow();
+            _infoWindow = new InfoBox();
             AddChild(_infoWindow);
 
             _scrollBar.ScrollingStart += delegate {

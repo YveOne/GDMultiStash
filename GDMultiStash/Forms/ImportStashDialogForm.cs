@@ -157,6 +157,7 @@ namespace GDMultiStash.Forms
             }
             if (stash != null)
             {
+                Core.Runtime.ReloadOpenedStash(stash.ID);
                 _importedStashes.Add(stash);
             }
 

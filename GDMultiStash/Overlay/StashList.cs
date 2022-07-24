@@ -54,36 +54,26 @@ namespace GDMultiStash.Overlay.Elements
             Core.Runtime.ActiveStashChanged += delegate (object sender, Core.Runtime.ActiveStashChangedEventArgs e) {
                 ChangeActiveStash(e.OldID, e.NewID);
             };
-            Core.Runtime.CurrentModeChanged += delegate {
+            Core.Runtime.ActiveModeChanged += delegate {
                 UpdateList();
             };
-            Core.Runtime.CurrentExpansionChanged += delegate {
+            Core.Runtime.ActiveExpansionChanged += delegate {
                 UpdateList();
             };
-            Core.Runtime.StashesRearranged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e) {
+            Core.Runtime.StashesOrderChanged += delegate (object sender, Core.Runtime.StashListChangedEventArgs e) {
                 UpdateList();
             };
-            Core.Runtime.StashesAdded += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            Core.Runtime.StashesAdded += delegate (object sender, Core.Runtime.StashListChangedEventArgs e)
             {
                 foreach (Common.Stash stash in e.Stashes)
                     AddStashItem(stash);
             };
-            Core.Runtime.StashesRemoved += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            Core.Runtime.StashesRemoved += delegate (object sender, Core.Runtime.StashListChangedEventArgs e)
             {
                 foreach (Common.Stash stash in e.Stashes)
                     RemoveStashItem(stash);
             };
-            Core.Runtime.StashesModeChanged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
-            {
-                foreach (Common.Stash stash in e.Stashes)
-                    UpdateStashItem(stash);
-            };
-            Core.Runtime.StashesNameChanged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
-            {
-                foreach (Common.Stash stash in e.Stashes)
-                    UpdateStashItem(stash);
-            };
-            Core.Runtime.StashesColorChanged += delegate (object sender, Core.Runtime.StashesChangedEventArgs e)
+            Core.Runtime.StashesUpdated += delegate (object sender, Core.Runtime.StashListChangedEventArgs e)
             {
                 foreach (Common.Stash stash in e.Stashes)
                     UpdateStashItem(stash);
