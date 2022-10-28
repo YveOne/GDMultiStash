@@ -1,4 +1,10 @@
 
+v1.23
+- Updated sourcecode
+
+v1.22
+- Added more debug messages to the overlay system (for init exception)
+
 v1.21
 - Added more debug messages to the overlay system
 

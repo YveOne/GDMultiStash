@@ -75,8 +75,14 @@
     <Compile Include="Common\Overlay\ButtonElement.cs" />
     <Compile Include="Common\ExportZipFile.cs" />
     <Compile Include="Console.cs" />
-    <Compile Include="Core\Core.Runtime.StashList.cs" />
-    <Compile Include="Core\Core.Update.cs" />
+    <Compile Include="Global\Global.ConfigurationHandler.cs" />
+    <Compile Include="Global\Global.DatabaseHandler.cs" />
+    <Compile Include="Global\Global.cs" />
+    <Compile Include="Global\Global.LocalizationHandler.cs" />
+    <Compile Include="Global\Global.RuntimeHandler.cs" />
+    <Compile Include="Global\Global.StashesHandler.cs" />
+    <Compile Include="Global\Global.UpdateHandler.cs" />
+    <Compile Include="Global\Global.WindowsHandler.cs" />
     <Compile Include="Forms\MainForm\StashesDragHandler.cs" />
     <Compile Include="Forms\MainForm\StashesDragSource.cs" />
     <Compile Include="Forms\MainForm\StashesDropSink.cs" />
@@ -87,6 +93,7 @@
     <Compile Include="Forms\UpdateAvailableDialogForm.Designer.cs">
       <DependentUpon>UpdateAvailableDialogForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Global\Global.FileSystemHandler.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
     <Compile Include="Overlay\InfoBoxButton.cs" />
     <Compile Include="Overlay\InfoBox.cs" />
@@ -105,14 +112,8 @@
     <Compile Include="Common\Overlay\Element.Properties.cs" />
     <Compile Include="Common\Overlay\ImageElement.cs" />
     <Compile Include="Common\Overlay\ResourceHandler.cs" />
-    <Compile Include="Common\Stash.cs" />
+    <Compile Include="Global\Global.StashObject.cs" />
     <Compile Include="Common\TransferFile.cs" />
-    <Compile Include="Core\Core.cs" />
-    <Compile Include="Core\Core.Files.cs" />
-    <Compile Include="Core\Core.Config.cs" />
-    <Compile Include="Core\Core.GD.cs" />
-    <Compile Include="Core\Core.Runtime.cs" />
-    <Compile Include="Core\Core.Stashes.cs" />
     <Compile Include="Forms\AboutDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,10 +160,8 @@
     </Compile>
     <Compile Include="Services\GDOverlayService.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.Steam.cs" />
-    <Compile Include="Core\Core.Windows.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\GDWindowHookService.cs" />
-    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Utils\FontLoader.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\Easing.cs" />
@@ -170,9 +169,9 @@
     <Compile Include="Native\Native.Hook.cs" />
     <Compile Include="Native\Native.Shortcut.cs" />
     <Compile Include="Services\GDGameHookService.cs" />
-    <Compile Include="Utils\XMLHelper\Utf8StringWriter.cs" />
-    <Compile Include="Utils\XMLHelper\XmlIO.cs" />
-    <Compile Include="Utils\XMLHelper\XmlWriterEE.cs" />
+    <Compile Include="Utils\XML\Utf8StringWriter.cs" />
+    <Compile Include="Utils\XML\XmlIO.cs" />
+    <Compile Include="Utils\XML\XmlWriterEE.cs" />
     <Compile Include="GDSMContext.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.cs" />
     <Compile Include="Native\Native.cs" />
@@ -204,8 +203,6 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Core\Core.Localization.cs" />
-    <Compile Include="Core\Core.Runtime.ActiveStuff.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,6 +1,6 @@
 ﻿using System.Xml;
 
-namespace XMLHelper
+namespace Utils.XML
 {
     internal sealed class XmlWriterEE : XmlWriter
     {

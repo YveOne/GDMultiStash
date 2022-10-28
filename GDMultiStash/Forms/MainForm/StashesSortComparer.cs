@@ -15,11 +15,11 @@ namespace GDMultiStash.Forms
 
         public int Compare(object x, object y)
         {
-            Common.Stash s1 = ((OLVListItem)x).RowObject as Common.Stash;
-            Common.Stash s2 = ((OLVListItem)y).RowObject as Common.Stash;
+            GlobalHandlers.StashObject s1 = ((OLVListItem)x).RowObject as GlobalHandlers.StashObject;
+            GlobalHandlers.StashObject s2 = ((OLVListItem)y).RowObject as GlobalHandlers.StashObject;
 
-            bool s1m = Core.Config.IsMainStashID(s1.ID);
-            bool s2m = Core.Config.IsMainStashID(s2.ID);
+            bool s1m = Global.Configuration.IsMainStashID(s1.ID);
+            bool s2m = Global.Configuration.IsMainStashID(s2.ID);
             if (s1m && s2m) return s1.Expansion.CompareTo(s2.Expansion);
             if (s1m) return -1;
             //if (s2m) return -1;

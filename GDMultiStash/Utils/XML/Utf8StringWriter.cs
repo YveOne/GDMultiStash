@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text;
 
-namespace XMLHelper
+namespace Utils.XML
 {
 	internal sealed class Utf8StringWriter : StringWriter
 	{

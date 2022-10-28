@@ -172,7 +172,7 @@ namespace GDMultiStash.Services
             if (_captureProcess != null) return;
             Console.WriteLine("[D3DHook] AttachProcess() - Looking for Grim Dawn process");
             Process[] processes = Process.GetProcessesByName("Grim Dawn");
-            Console.WriteLine("[D3DHook] AttachProcess() - {0} processes found".Format(processes.Length.ToString()));
+            Console.WriteLine("[D3DHook] AttachProcess() - {0} processes found", processes.Length.ToString());
             int i = -1;
             foreach (Process process in processes)
             {
@@ -182,14 +182,14 @@ namespace GDMultiStash.Services
                 // If the process doesn't have a mainwindowhandle yet, skip it (we need to be able to get the hwnd to set foreground etc)
                 if (process.MainWindowHandle == IntPtr.Zero)
                 {
-                    Console.WriteLine("[D3DHook] AttachProcess() - Process {0} is IntPtr.Zero".Format(i.ToString()));
+                    Console.WriteLine("[D3DHook] AttachProcess() - Process {0} is IntPtr.Zero", i.ToString());
                     continue;
                 }
 
                 // Skip if the process is already hooked (and we want to hook multiple applications)
                 if (HookManager.IsHooked(process.Id))
                 {
-                    Console.WriteLine("[D3DHook] AttachProcess() - Process {0} already hooked".Format(i.ToString()));
+                    Console.WriteLine("[D3DHook] AttachProcess() - Process {0} already hooked", i.ToString());
                     continue;
                 }
 

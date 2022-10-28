@@ -117,22 +117,24 @@ namespace GDMultiStash.Common
 			if (!File.Exists(srcPath)) return false;
 			GDIALib.Parser.Stash.GDCryptoDataBuffer crypto = new GDIALib.Parser.Stash.GDCryptoDataBuffer(File.ReadAllBytes(srcPath));
 			bool success = stash.Read(crypto);
-			if (success)
-			{
-				_usage = 0f;
-				long space = stash.Tabs.Count * stash.Width * stash.Height;
-				long used = 0;
-				foreach (GDIALib.Parser.Stash.StashTab tab in stash.Tabs)
-				{
-					foreach (GDIALib.Parser.Stash.Item item in tab.Items)
-					{
-						used += Core.GD.GetItemSize(item.BaseRecord);
-					}
-				}
-				_usage = (float)used / (float)space;
-			}
 			return success;
 		}
+
+		public void LoadUsage()
+        {
+			_usage = 0f;
+			long space = stash.Tabs.Count * stash.Width * stash.Height;
+			long used = 0;
+			foreach (GDIALib.Parser.Stash.StashTab tab in stash.Tabs)
+			{
+				foreach (GDIALib.Parser.Stash.Item item in tab.Items)
+				{
+					used += Global.Database.GetItemSize(item.BaseRecord);
+				}
+			}
+			_usage = (float)used / (float)space;
+		}
+
 
 		public static bool ValidateFile(string filePath, out TransferFile stash)
 		{

@@ -10,7 +10,7 @@ using GrimDawnLib;
 
 namespace GDMultiStash.Overlay.Elements
 {
-    public class InfoBox : Element
+    internal class InfoBox : Element
     {
 
         public static Font _TitleFont = null;
@@ -71,7 +71,7 @@ namespace GDMultiStash.Overlay.Elements
             };
             AddChild(_loadButton);
 
-            Core.Runtime.ActiveStashChanged += delegate {
+            Global.Runtime.ActiveStashChanged += delegate {
                 UpdateInfoText();
             };
 
@@ -79,15 +79,15 @@ namespace GDMultiStash.Overlay.Elements
             _loadButton.MouseClick += CheatLoadButton_Click;
 
             UpdateButtonText();
-            Core.Config.LanguageChanged += delegate {
+            Global.Configuration.LanguageChanged += delegate {
                 UpdateButtonText();
             };
 
-            Core.Runtime.StashReopenStart += delegate {
+            Global.Runtime.StashReopenStart += delegate {
                 Alpha = 0.33f;
             };
 
-            Core.Runtime.StashReopenEnd += delegate {
+            Global.Runtime.StashReopenEnd += delegate {
                 Alpha = 1.0f;
             };
 
@@ -95,13 +95,13 @@ namespace GDMultiStash.Overlay.Elements
 
         private void UpdateButtonText()
         {
-            _saveButton.Text = Core.Localization.GetString("button_save");
-            _loadButton.Text = Core.Localization.GetString("button_load");
+            _saveButton.Text = Global.L["button_save"];
+            _loadButton.Text = Global.L["button_load"];
         }
 
         private void UpdateInfoText()
         {
-            Common.Stash stash = Core.Stashes.GetStash(Core.Runtime.ActiveStashID);
+            GlobalHandlers.StashObject stash = Global.Stashes.GetStash(Global.Runtime.ActiveStashID);
             if (stash == null) return; // something happend
             _titleElement.Text = stash.Name;
             _lastChangeIntern.Text = stash.LastWriteTime.ToString();
@@ -109,14 +109,14 @@ namespace GDMultiStash.Overlay.Elements
 
         private void CheatSaveButton_Click(object sender, EventArgs e)
         {
-            if (Core.Runtime.StashIsReopening) return;
-            Core.Runtime.SaveCurrentStash();
+            if (Global.Runtime.StashIsReopening) return;
+            Global.Runtime.SaveCurrentStash();
         }
 
         private void CheatLoadButton_Click(object sender, EventArgs e)
         {
-            if (Core.Runtime.StashIsReopening) return;
-            Core.Runtime.LoadCurrentStash();
+            if (Global.Runtime.StashIsReopening) return;
+            Global.Runtime.LoadCurrentStash();
         }
 
     }

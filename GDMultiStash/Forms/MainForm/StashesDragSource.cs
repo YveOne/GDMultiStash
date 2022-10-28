@@ -22,27 +22,27 @@ namespace GDMultiStash.Forms
             _handler = handler;
         }
 
-        private readonly List<Common.Stash> _draggingStashes = new List<Common.Stash>();
-        public List<Common.Stash> DraggingStashes => _draggingStashes;
+        private readonly List<GlobalHandlers.StashObject> _draggingStashes = new List<GlobalHandlers.StashObject>();
+        public List<GlobalHandlers.StashObject> DraggingStashes => _draggingStashes;
 
         private bool _isDraggingMainStash = false;
         public bool IsDraggingMainStash => _isDraggingMainStash;
 
-        private readonly List<Common.Stash> _originalOrderedModels = new List<Common.Stash>();
-        public List<Common.Stash> OriginalOrderedModels => _originalOrderedModels;
+        private readonly List<GlobalHandlers.StashObject> _originalOrderedModels = new List<GlobalHandlers.StashObject>();
+        public List<GlobalHandlers.StashObject> OriginalOrderedModels => _originalOrderedModels;
 
         public override object StartDrag(ObjectListView olv, MouseButtons button, OLVListItem item)
         {
             _draggingStashes.Clear();
             foreach (OLVListItem i in olv.SelectedItems)
             {
-                Common.Stash stash = (Common.Stash)i.RowObject;
+                GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)i.RowObject;
                 _draggingStashes.Add(stash);
             }
             _originalOrderedModels.Clear();
             foreach (OLVListItem i in olv.Items)
             {
-                Common.Stash stash = (Common.Stash)i.RowObject;
+                GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)i.RowObject;
                 _originalOrderedModels.Add(stash);
             }
 
@@ -50,7 +50,7 @@ namespace GDMultiStash.Forms
             // create temp zip file
 
             Common.ExportZipFile zipFile = new Common.ExportZipFile();
-            foreach (Common.Stash s in _draggingStashes) zipFile.AddStash(s);
+            foreach (GlobalHandlers.StashObject s in _draggingStashes) zipFile.AddStash(s);
             zipFile.SaveTo(Path.Combine(Path.GetTempPath(), "transfer." + Path.ChangeExtension(Guid.NewGuid().ToString(), ".zip")));
 
 

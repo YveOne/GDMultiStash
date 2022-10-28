@@ -8,7 +8,7 @@ namespace GDMultiStash.Forms
 
     class StashesDropSink : SimpleDropSink
     {
-        private StashesDragHandler _handler;
+        private readonly StashesDragHandler _handler;
 
         public StashesDropSink(StashesDragHandler handler)
         {
@@ -51,8 +51,8 @@ namespace GDMultiStash.Forms
             }
             else
             {
-                Common.Stash stash = (Common.Stash)args.DropTargetItem.RowObject;
-                if (stash == null || Core.Config.IsMainStashID(stash.ID))
+                GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)args.DropTargetItem.RowObject;
+                if (stash == null || Global.Configuration.IsMainStashID(stash.ID))
                 {
                     args.Effect = DragDropEffects.None;
                     _handler.ResetDragPositions();

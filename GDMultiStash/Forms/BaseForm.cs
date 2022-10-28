@@ -11,17 +11,19 @@ namespace GDMultiStash.Forms
     internal class BaseForm : Form
     {
 
-        private static readonly Core.Localization.StringsProxy L = new Core.Localization.StringsProxy();
-
         public BaseForm() : base()
         {
+        }
+
+        public virtual void InitWindow()
+        {
             Load += delegate {
-                Localize(L);
+                Localize(Global.L);
             };
         }
 
-        protected virtual void Localize(Core.Localization.StringsProxy L)
-        { 
+        protected virtual void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
+        {
         }
 
         public void Localize()
@@ -31,7 +33,7 @@ namespace GDMultiStash.Forms
                 Invoke((MethodInvoker)delegate { Localize(); });
                 return;
             }
-            Localize(L);
+            Localize(Global.L);
         }
 
     }

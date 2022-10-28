@@ -19,13 +19,18 @@ namespace GDMultiStash.Forms
         public ImportDialogForm() : base()
         {
             InitializeComponent();
+        }
+
+        public override void InitWindow()
+        {
+            base.InitWindow();
             overwriteComboBox.SelectionChangeCommitted += overwriteComboBox_SelectionChangeCommitted;
         }
 
         private string _err_invalid_transfer_file;
         private string _err_no_stash_selected;
 
-        protected override void Localize(Core.Localization.StringsProxy L)
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
         {
             Text = "GDMultiStash : " + L["window_import_stash"];
 
@@ -107,7 +112,7 @@ namespace GDMultiStash.Forms
 
         #region Dialog
 
-        private readonly List<Common.Stash> _importedStashes = new List<Common.Stash>();
+        private readonly List<GlobalHandlers.StashObject> _importedStashes = new List<GlobalHandlers.StashObject>();
 
         public DialogResult ShowDialog(IWin32Window owner, string srcFile)
         {
@@ -127,18 +132,18 @@ namespace GDMultiStash.Forms
 
             overwriteComboBox.DisplayMember = "Name";
             overwriteComboBox.ValueMember = "ID";
-            overwriteComboBox.DataSource = Core.Stashes.GetStashesForExpansion(exp);
+            overwriteComboBox.DataSource = Global.Stashes.GetStashesForExpansion(exp);
             overwriteComboBox.SelectedIndex = -1;
             overwriteComboBox.Enabled = false;
 
-            GrimDawnGameMode mode = (GrimDawnGameMode)Core.Config.DefaultStashMode;
+            GrimDawnGameMode mode = (GrimDawnGameMode)Global.Configuration.Settings.DefaultStashMode;
             scCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.SC);
             hcCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.HC);
 
             DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;
 
-            Common.Stash stash = null;
+            GlobalHandlers.StashObject stash = null;
             if (overwriteCheckBox.Checked)
             {
                 if (overwriteComboBox.SelectedIndex == -1)
@@ -146,18 +151,18 @@ namespace GDMultiStash.Forms
                     MessageBox.Show(_err_no_stash_selected, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return DialogResult.None;
                 }
-                stash = Core.Stashes.ImportOverwriteStash(srcFile, (int)overwriteComboBox.SelectedValue);
+                stash = Global.Stashes.ImportOverwriteStash(srcFile, (int)overwriteComboBox.SelectedValue);
             }
             else
             {
                 mode = GrimDawnGameMode.None;
                 if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
                 if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
-                stash = Core.Stashes.ImportStash(srcFile, nameTextBox.Text, exp, mode);
+                stash = Global.Stashes.ImportStash(srcFile, nameTextBox.Text, exp, mode);
             }
             if (stash != null)
             {
-                Core.Runtime.ReloadOpenedStash(stash.ID);
+                Global.Runtime.ReloadOpenedStash(stash.ID);
                 _importedStashes.Add(stash);
             }
 
@@ -168,7 +173,7 @@ namespace GDMultiStash.Forms
 
 
 
-        public DialogResult ShowDialog(IWin32Window owner, out Common.Stash[] importedStashes)
+        public DialogResult ShowDialog(IWin32Window owner, out GlobalHandlers.StashObject[] importedStashes)
         {
             importedStashes = null;
             string filter = string.Join(";", GrimDawn.GetAllTransferExtensions().Select(ext => "*" + ext));
@@ -188,7 +193,7 @@ namespace GDMultiStash.Forms
             return DialogResult.Cancel;
         }
 
-        public DialogResult ShowDialog(IWin32Window owner, IEnumerable<string> files, out Common.Stash[] importedStashes)
+        public DialogResult ShowDialog(IWin32Window owner, IEnumerable<string> files, out GlobalHandlers.StashObject[] importedStashes)
         {
             importedStashes = null;
             if (files.Count() != 0)

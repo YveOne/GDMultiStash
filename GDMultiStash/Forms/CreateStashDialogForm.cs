@@ -18,13 +18,18 @@ namespace GDMultiStash.Forms
         private string _newStashName;
         private int _lastSelectedExpansionIndex = -1;
 
-        public CreateStashDialogForm()
+        public CreateStashDialogForm() : base()
         {
             InitializeComponent();
+        }
+
+        public override void InitWindow()
+        {
+            base.InitWindow();
             expansionComboBox.SelectionChangeCommitted += expansionComboBox_SelectionChangeCommitted;
         }
 
-        protected override void Localize(Core.Localization.StringsProxy L)
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
         {
             Text = "GDMultiStash : " + L["window_create_stash"];
             expansionLabel.Text = L["label_expansion"];
@@ -41,7 +46,7 @@ namespace GDMultiStash.Forms
         {
             if (_lastSelectedExpansionIndex == -1)
             {
-                _lastSelectedExpansionIndex = (int)Core.GD.InstalledGameExpansion;
+                _lastSelectedExpansionIndex = (int)GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath);
             }
 
             expansionComboBox.DisplayMember = "Value";
@@ -56,14 +61,14 @@ namespace GDMultiStash.Forms
             nameTextBox.Focus();
         }
 
-        private Common.Stash _createdStash = null;
+        private GlobalHandlers.StashObject _createdStash = null;
 
-        public DialogResult ShowDialog(IWin32Window owner, out Common.Stash createdStash)
+        public DialogResult ShowDialog(IWin32Window owner, out GlobalHandlers.StashObject createdStash)
         {
             createdStash = null;
             _createdStash = null;
 
-            GrimDawnGameMode mode = (GrimDawnGameMode)Core.Config.DefaultStashMode;
+            GrimDawnGameMode mode = (GrimDawnGameMode)Global.Configuration.Settings.DefaultStashMode;
             scCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.SC);
             hcCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.HC);
 
@@ -86,7 +91,7 @@ namespace GDMultiStash.Forms
             if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
             if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
 
-            _createdStash = Core.Stashes.CreateStash(nameTextBox.Text, exp, mode);
+            _createdStash = Global.Stashes.CreateStash(nameTextBox.Text, exp, mode);
             Close(DialogResult.OK);
         }
 

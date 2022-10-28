@@ -33,6 +33,11 @@ namespace GDMultiStash.Forms
         public SetupDialogForm() : base()
         {
             InitializeComponent();
+        }
+
+        public override void InitWindow()
+        {
+            base.InitWindow();
 
             languageListView.ItemSelectionChanged += LanguageListView_ItemSelectionChanged;
             languageListView.ItemCheck += LanguageListView_ItemCheck;
@@ -48,17 +53,16 @@ namespace GDMultiStash.Forms
             setupTabControl.SelectedIndexChanged += delegate {
                 setupTabControl.Focus();
             };
-
         }
 
         private void SetupForm_Load(object sender, EventArgs e)
         {
-            _settings = Core.Config.GetSettings();
+            _settings = Global.Configuration.Settings.Copy();
 
             DataTable dt = new DataTable();
-            dt.Columns.Add("lang", typeof(Core.Localization.Language));
+            dt.Columns.Add("lang", typeof(GlobalHandlers.LocalizationHandler.Language));
             languageListView.Items.Clear();
-            foreach (Core.Localization.Language lang in Core.Localization.GetLanguages())
+            foreach (GlobalHandlers.LocalizationHandler.Language lang in Global.Localization.Languages)
             {
                 languageListView.Items.Add(new ListViewItem(lang.Name)
                 {
@@ -303,7 +307,7 @@ namespace GDMultiStash.Forms
         private string _label_max_backups_off;
         private string _label_max_backups_unlimited;
 
-        protected override void Localize(Core.Localization.StringsProxy L)
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
         {
             Text = "GDMultiStash : " + L["window_setup"];
             commonTabPage.Text = L["setup_tab_common"];
@@ -427,7 +431,7 @@ namespace GDMultiStash.Forms
             Native.Shortcut link = new Native.Shortcut();
             link.SetDescription(description);
             link.SetPath(asm.Location);
-            link.SetIconLocation(Path.Combine(Core.Config.GamePath, "Grim Dawn.exe"), 0);
+            link.SetIconLocation(Path.Combine(Global.Configuration.Settings.GamePath, "Grim Dawn.exe"), 0);
             link.SetWorkingDirectory(Application.StartupPath);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             link.SaveTo(Path.Combine(desktopPath, "GDMultiStash.lnk"));
@@ -500,12 +504,12 @@ namespace GDMultiStash.Forms
 
         private void AutoStartStartNowButton_Click(object sender, EventArgs e)
         {
-            switch (Core.AutoStartGame(true))
+            switch (Global.Runtime.AutoStartGame(true))
             {
-                case Core.AutoStartResult.AlreadyRunning:
+                case GlobalHandlers.RuntimeHandler.AutoStartResult.AlreadyRunning:
                     MessageBox.Show(_err_gd_already_running, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     break;
-                case Core.AutoStartResult.Success:
+                case GlobalHandlers.RuntimeHandler.AutoStartResult.Success:
                     break;
             }
         }
@@ -516,8 +520,8 @@ namespace GDMultiStash.Forms
             {
                 if(MessageBox.Show(_confirm_save_changed, "", MessageBoxButtons.OKCancel) == DialogResult.OK)
                 {
-                    Core.Config.SetSettings(_settings);
-                    Core.Config.Save();
+                    Global.Configuration.SetSettings(_settings);
+                    Global.Configuration.Save();
                 }
             }
             Program.Restart();
@@ -571,8 +575,8 @@ namespace GDMultiStash.Forms
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            Core.Config.SetSettings(_settings);
-            Core.Config.Save();
+            Global.Configuration.SetSettings(_settings);
+            Global.Configuration.Save();
             Close(DialogResult.OK);
         }
 
@@ -580,8 +584,8 @@ namespace GDMultiStash.Forms
         {
             languageLabel.Focus(); // just dont focus any other button or input
             applyButton.Enabled = false;
-            Core.Config.SetSettings(_settings);
-            Core.Config.Save();
+            Global.Configuration.SetSettings(_settings);
+            Global.Configuration.Save();
         }
 
         public DialogResult ShowDialog(IWin32Window owner, bool isFirstSetup = false)

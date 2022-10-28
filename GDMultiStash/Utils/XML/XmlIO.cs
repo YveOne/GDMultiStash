@@ -4,7 +4,7 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Xml;
 
-namespace XMLHelper
+namespace Utils.XML
 {
     public static class XmlIO
     {

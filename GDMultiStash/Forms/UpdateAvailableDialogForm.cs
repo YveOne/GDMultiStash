@@ -12,28 +12,10 @@ namespace GDMultiStash.Forms
 {
     internal partial class UpdateAvailableDialogForm : DialogForm
     {
-        public UpdateAvailableDialogForm()
+        public UpdateAvailableDialogForm() : base()
         {
             InitializeComponent();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

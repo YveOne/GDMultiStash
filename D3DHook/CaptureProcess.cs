@@ -65,7 +65,6 @@ namespace D3DHook
                 _serverInterface);
 
 
-
             try
             {
 

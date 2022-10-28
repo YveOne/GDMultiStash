@@ -32,19 +32,19 @@ namespace GDMultiStash.Forms
                 List<OLVListItem> items = new List<OLVListItem>();
                 foreach (OLVListItem item in olv.Items)
                 {
-                    Common.Stash stash = (Common.Stash)item.RowObject;
-                    if (Core.Config.IsMainStashID(stash.ID)) continue;
+                    GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)item.RowObject;
+                    if (Global.Configuration.IsMainStashID(stash.ID)) continue;
                     items.Add(item);
                 }
                 foreach (OLVListItem item in items)
                 {
-                    Common.Stash stash = (Common.Stash)item.RowObject;
+                    GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)item.RowObject;
                     orders.Add(stash.Order);
                 }
                 orders.Sort();
                 foreach (OLVListItem item in items)
                 {
-                    Common.Stash stash = (Common.Stash)item.RowObject;
+                    GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)item.RowObject;
                     stash.Order = orders[0];
                     orders.RemoveAt(0);
                 }
@@ -62,7 +62,7 @@ namespace GDMultiStash.Forms
             return _isDragging;
         }
 
-        public bool IsDragging(Common.Stash stash)
+        public bool IsDragging(GlobalHandlers.StashObject stash)
         {
             if (!IsDragging()) return false;
             return DragSource.DraggingStashes.Contains(stash);

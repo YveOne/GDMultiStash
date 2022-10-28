@@ -37,6 +37,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("AutoStartGDArguments")] public string AutoStartGDArguments = "";
 
         [XmlElement("CheckForNewVersion")] public bool CheckForNewVersion = true;
+        [XmlElement("CheckForNewVersionDelay")] public int CheckForNewVersionDelay = 3600; // in seconds
         [XmlElement("AutoUpdate")] public bool AutoUpdate = false;
         [XmlElement("LastVersionCheck")] public long LastVersionCheck = 0L;
 
@@ -102,6 +103,7 @@ namespace GDMultiStash.Common.Config
                 AutoStartGDArguments = AutoStartGDArguments,
 
                 CheckForNewVersion = CheckForNewVersion,
+                CheckForNewVersionDelay = CheckForNewVersionDelay,
                 AutoUpdate = AutoUpdate,
                 LastVersionCheck = LastVersionCheck,
 
@@ -159,6 +161,7 @@ namespace GDMultiStash.Common.Config
             AutoStartGDArguments = s.AutoStartGDArguments;
 
             CheckForNewVersion = s.CheckForNewVersion;
+            CheckForNewVersionDelay = s.CheckForNewVersionDelay;
             AutoUpdate = s.AutoUpdate;
             LastVersionCheck = s.LastVersionCheck;
 

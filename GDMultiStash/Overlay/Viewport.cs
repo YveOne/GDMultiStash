@@ -7,14 +7,13 @@ using System.Drawing;
 
 namespace GDMultiStash.Overlay.Elements
 {
-    public class Viewport : Common.Overlay.Viewport
+    internal class Viewport : Common.Overlay.Viewport
     {
 
         private readonly OverlayWindow _mainWindow;
 
         public Viewport()
         {
-
             Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_R);
             Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_RB);
             Utils.FontLoader.LoadFromResource(Properties.Resources.font_LinBiolinum_RI);
@@ -83,7 +82,7 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-            _mainWindow = new OverlayWindow
+            _mainWindow = new OverlayWindow()
             {
                 Scale = 1f,
             };
@@ -108,8 +107,8 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-            Core.Runtime.WindowSizeChanged += delegate {
-                Size s = Core.Runtime.WindowSize;
+            Global.Runtime.GameWindowSizeChanged += delegate {
+                Size s = Global.Runtime.GameWindowSize;
                 Width = s.Width;
                 Height = s.Height;
             };

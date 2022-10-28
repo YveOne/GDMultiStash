@@ -34,9 +34,6 @@ namespace GDMultiStash.Overlay.Elements
         private readonly StashList _stashList;
         private readonly VerticalScrollBar _scrollBar;
 
-        //private bool showing = false;
-        //private bool shown = false;
-
         public enum States
         {
             Hidden = 0,
@@ -60,7 +57,7 @@ namespace GDMultiStash.Overlay.Elements
             }
         }
 
-        public OverlayWindow() : base()
+        public OverlayWindow()
         {
             AnchorPoint = Anchor.Left;
             Height = 740;
@@ -118,7 +115,7 @@ namespace GDMultiStash.Overlay.Elements
 
             MouseDown += delegate
             {
-                Core.Runtime.DisableMovement();
+                Global.Runtime.DisableMovement();
             };
 
 
@@ -150,7 +147,7 @@ namespace GDMultiStash.Overlay.Elements
             _moveAnimation = new MoveAnimation(this, Utils.Easing.BackOut(1.1f), _moveDuration);
 
             _updateAppearance = true;
-            Core.Config.AppearanceChanged += delegate { _updateAppearance = true; };
+            Global.Configuration.AppearanceChanged += delegate { _updateAppearance = true; };
 
         }
 
@@ -186,11 +183,11 @@ namespace GDMultiStash.Overlay.Elements
             {
                 _updateAppearance = false;
                 redraw = true;
-                Scale = Core.Config.OverlayScale;
-                Width = Core.Config.OverlayWidth;
+                Scale = Global.Configuration.Settings.OverlayScale / 100;
+                Width = Global.Configuration.Settings.OverlayWidth;
                 _moveAnimation.MinX = -Width - 5;
                 _moveAnimation.MaxX = 0;
-                _moveAnimation.Reset(Core.Runtime.StashOpened ? 1f : 0f);
+                _moveAnimation.Reset(Global.Runtime.StashOpened ? 1f : 0f);
             }
             if (_moveAnimation.Animate(ms))
             {
