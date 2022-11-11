@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace GDMultiStash
 {
+
     internal static class Program
     {
 
@@ -33,18 +34,6 @@ namespace GDMultiStash
             Quitting = true;
             new System.Threading.Thread(new System.Threading.ThreadStart(() => {
                 Application.Exit();
-            })).Start();
-        }
-
-        public static bool Restarting { get; private set; }
-
-        public static void Restart()
-        {
-            if (Restarting) return;
-            Restarting = true;
-            new System.Threading.Thread(new System.Threading.ThreadStart(() => {
-                Application.Exit();
-                Process.Start(Application.ExecutablePath);
             })).Start();
         }
 

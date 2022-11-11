@@ -26,11 +26,13 @@ namespace GDMultiStash.Common.Config
 
         [XmlElement("OverlayWidth")] public int OverlayWidth = 450;
         [XmlElement("OverlayScale")] public int OverlayScale = 100;
+        [XmlElement("OverlayTransparency")] public int OverlayTransparency = 90;
 
         [XmlElement("ConfirmClosing")] public bool ConfirmClosing = true;
         [XmlElement("CloseWithGrimDawn")] public bool CloseWithGrimDawn = true;
         [XmlElement("ConfirmStashDelete")] public bool ConfirmStashDelete = true;
         [XmlElement("AutoBackToMain")] public bool AutoBackToMain = true;
+        [XmlElement("HideOnFormClosed")] public bool HideOnFormClosed = false;
 
         [XmlElement("AutoStartGD")] public bool AutoStartGD = false;
         [XmlElement("AutoStartGDCommand")] public string AutoStartGDCommand = "";
@@ -42,7 +44,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("LastVersionCheck")] public long LastVersionCheck = 0L;
 
         [XmlElement("DefaultStashMode")] public int DefaultStashMode = 0;
-
+        
         [XmlElement("ShowColorColumn")] public bool ShowColorColumn = true;
         [XmlElement("ShowExpansionColumn")] public bool ShowExpansionColumn = true;
         [XmlElement("ShowIDColumn")] public bool ShowIDColumn = true;
@@ -92,11 +94,13 @@ namespace GDMultiStash.Common.Config
 
                 OverlayWidth = OverlayWidth,
                 OverlayScale = OverlayScale,
+                OverlayTransparency = OverlayTransparency,
 
                 ConfirmClosing = ConfirmClosing,
                 CloseWithGrimDawn = CloseWithGrimDawn,
                 ConfirmStashDelete = ConfirmStashDelete,
                 AutoBackToMain = AutoBackToMain,
+                HideOnFormClosed = HideOnFormClosed,
 
                 AutoStartGD = AutoStartGD,
                 AutoStartGDCommand = AutoStartGDCommand,
@@ -150,11 +154,13 @@ namespace GDMultiStash.Common.Config
 
             OverlayWidth = s.OverlayWidth;
             OverlayScale = s.OverlayScale;
+            OverlayTransparency = s.OverlayTransparency;
 
             ConfirmClosing = s.ConfirmClosing;
             CloseWithGrimDawn = s.CloseWithGrimDawn;
             ConfirmStashDelete = s.ConfirmStashDelete;
             AutoBackToMain = s.AutoBackToMain;
+            HideOnFormClosed = s.HideOnFormClosed;
 
             AutoStartGD = s.AutoStartGD;
             AutoStartGDCommand = s.AutoStartGDCommand;

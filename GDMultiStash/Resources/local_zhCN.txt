@@ -12,9 +12,6 @@ window_setup = 设置
 window_create_stash = 创建存储
 window_import_stash = 导入存储
 
-setup_tab_common = 通用
-setup_tab_behaviour = 行为
-
 all = 全部
 
 button_file = 文件
@@ -29,8 +26,7 @@ button_abort = 中止
 button_search = 搜索
 button_import = 导入
 button_create_shortcut = 在桌面上创建快捷方式
-button_start_now = 开始\n现在
-button_restart = 重启
+button_start_now = 开始现在
 button_select_all = 全选
 button_unselect_all = 取消全选
 
@@ -51,10 +47,12 @@ label_max_backups_off = 0（无备份）
 label_max_backups_unlimited = -1（无限制）
 label_overlay_width = 覆盖宽度：
 label_overlay_scale = 叠加比例：
+label_overlay_transparency = Overlay Transparency:
 label_auto_back_to_main = 当仓库关闭时切换到主仓库
 label_check_for_new_version = 启动时检查新版本
 label_auto_update_version = 新版本可用时自动更新
-label_default_stash_mode = 新存储的默认模式
+label_default_stash_mode = 新存储的默认模式：
+label_hide_on_form_closed = Hide GDMS when window closed and Grim Dawn running
 
 Confirm_closing = Grim Dawn 仍在运行\n仍然关闭？
 Confirm_delete_stash = 删除选定的存储？\n无法撤消！
@@ -90,6 +88,9 @@ mode_none = 无
 mode_sc = SC （正常）
 mode_hc = HC（专家）
 mode_both = 两者
+
+close_gdms = Close GDMultiStash
+hide_gdms = Hide GDMultiStash
 
 color_default = 默认
 color_green = 绿色

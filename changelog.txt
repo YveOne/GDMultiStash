@@ -1,4 +1,11 @@
 
+v1.25
+- Updated config window: Removed tab control. All options are now on one page
+- Added feature to let GDMS be run in background while GD is running
+
+v1.24
+- Added option to change overlay transparency (set to 0% to disable the fading effect)
+
 v1.23
 - Updated sourcecode
 

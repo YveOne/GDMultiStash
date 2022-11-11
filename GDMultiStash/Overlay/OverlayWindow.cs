@@ -18,7 +18,7 @@ namespace GDMultiStash.Overlay.Elements
 
         private readonly FadeAnimation _fadeAnimation;
         private const float fadeMin = 0.1f;
-        private const float fadeMax = 1.0f;
+
         private const float fadeDuration = 300;
         private const float fadeDurationSlow = 2000;
         private const float fadeDurationSlowDelay = 2000;
@@ -113,13 +113,6 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-            MouseDown += delegate
-            {
-                Global.Runtime.DisableMovement();
-            };
-
-
-
 
 
 
@@ -127,9 +120,11 @@ namespace GDMultiStash.Overlay.Elements
 
 
             Alpha = fadeMin;
-            _fadeAnimation = new FadeAnimation(this, Utils.Easing.PolyOut(), fadeDuration);
-            _fadeAnimation.MinAlpha = fadeMin;
-            _fadeAnimation.MaxAlpha = fadeMax;
+            _fadeAnimation = new FadeAnimation(this, Utils.Easing.PolyOut(), fadeDuration)
+            {
+                MinAlpha = 1.0f,
+                MaxAlpha = 1.0f
+            };
             MouseEnter += (object sender, EventArgs e) => {
                 FadeInFast();
                 _mouseOver = true;
@@ -140,11 +135,13 @@ namespace GDMultiStash.Overlay.Elements
                 _mouseOver = false;
             };
             MouseDown += (object sender, EventArgs e) => {
+                Global.Runtime.DisableMovement();
                 _mouseDown = true;
             };
 
 
             _moveAnimation = new MoveAnimation(this, Utils.Easing.BackOut(1.1f), _moveDuration);
+            _moveAnimation.Delay = 100; // debug: fix lag on npc stash window open
 
             _updateAppearance = true;
             Global.Configuration.AppearanceChanged += delegate { _updateAppearance = true; };
@@ -188,6 +185,7 @@ namespace GDMultiStash.Overlay.Elements
                 _moveAnimation.MinX = -Width - 5;
                 _moveAnimation.MaxX = 0;
                 _moveAnimation.Reset(Global.Runtime.StashOpened ? 1f : 0f);
+                _fadeAnimation.MinAlpha = (float)(100 - Global.Configuration.Settings.OverlayTransparency) / 100f;
             }
             if (_moveAnimation.Animate(ms))
             {

@@ -26,6 +26,12 @@ namespace GDMultiStash.Services
 
         private LocationSize _locationSize;
 
+        public delegate void HookInstalledEventHandler(object sender, EventArgs e);
+        public event HookInstalledEventHandler HookInstalled;
+
+        //public delegate void HookDestroyedEventHandler(object sender, EventArgs e);
+        //public event HookDestroyedEventHandler HookDestroyed;
+
         public delegate void MoveSizeEventHandler(object sender, EventArgs e);
         public event MoveSizeEventHandler MoveSize;
 
@@ -60,7 +66,7 @@ namespace GDMultiStash.Services
             _target = new TargetForm();
             _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += delegate {
-                _target.Invoke(new MethodInvoker(() => FindWindow()));
+                _target.Invoke(new MethodInvoker(() => Hook()));
             };
         }
 
@@ -77,17 +83,12 @@ namespace GDMultiStash.Services
             Application.DoEvents();
         }
 
-        private void FindWindow()
+        private void Hook()
         {
             m_target = Native.FindWindow("Grim Dawn", null);
             if (m_target == IntPtr.Zero) return;
-            Hook();
             StopTimer();
-        }
 
-        private void Hook()
-        {
-            if (m_target == IntPtr.Zero) return; // must be set in FindWindow()
             m_threadId = Native.GetWindowThreadProcessId(m_target, out m_processId);
             m_winEventDelegate = CatchWinEvent;
             m_hook4 = Native.SetWinEventHook(
@@ -110,22 +111,16 @@ namespace GDMultiStash.Services
                 Native.WinEvents.EVENT_SYSTEM_FOREGROUND,
                 m_target, m_winEventDelegate, 0, 0,
                 (uint)Native.WinEventFlags.WINEVENT_OUTOFCONTEXT);
+
             Console.WriteLine("[GDWindowHook] Hooks installed");
             Console.WriteLine(" target: " + m_target.ToString());
             Console.WriteLine(" thread: " + m_threadId.ToString());
             Console.WriteLine(" process: " + m_processId.ToString());
+
+            HookInstalled?.Invoke(null, EventArgs.Empty);
             if (Native.GetForegroundWindow() == m_target)
             {
                 GotFocus?.Invoke(null, EventArgs.Empty);
-            }
-            else
-            {
-                Console.WriteLine("[GDWindowHook] setting to foreground");
-                if (Native.IsIconic(m_target))
-                {
-                    Native.ShowWindowAsync(m_target, Native.SW_RESTORE);
-                }
-                Native.SetForegroundWindow(m_target);
             }
         }
 
@@ -138,6 +133,7 @@ namespace GDMultiStash.Services
             Native.UnhookWinEvent(m_hook2);
             Native.UnhookWinEvent(m_hook3);
             Console.WriteLine("[GDWindowHook] Hooks uninstalled");
+            //HookDestroyed?.Invoke(null, EventArgs.Empty);
         }
 
         public override bool Start()

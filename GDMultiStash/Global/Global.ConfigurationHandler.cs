@@ -286,7 +286,7 @@ namespace GDMultiStash.GlobalHandlers
             {
                 GamePathChanged?.Invoke(null, EventArgs.Empty);
             }
-            if (previous.OverlayScale != Settings.OverlayScale || previous.OverlayWidth != Settings.OverlayWidth)
+            if (previous.OverlayScale != Settings.OverlayScale || previous.OverlayWidth != Settings.OverlayWidth || previous.OverlayTransparency != Settings.OverlayTransparency)
             {
                 AppearanceChanged?.Invoke(null, EventArgs.Empty);
             }

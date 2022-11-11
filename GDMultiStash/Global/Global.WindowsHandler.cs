@@ -33,12 +33,17 @@ namespace GDMultiStash.GlobalHandlers
                 MainWindow.UpdateObjects();
             };
 
-            MainWindow.FormClosed += delegate {
+            MainWindow.FormClosed += delegate (object sender, FormClosedEventArgs e) {
                 Program.Quit();
             };
 
             MainWindow.FormClosing += delegate (object sender, FormClosingEventArgs e) {
-                if (Program.Restarting) return;
+                if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero && Global.Configuration.Settings.HideOnFormClosed)
+                {
+                    e.Cancel = true;
+                    MainWindow.Hide();
+                    return;
+                }
                 if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero && Global.Configuration.Settings.ConfirmClosing)
                 {
                     DialogResult result = MessageBox.Show(Global.Localization.GetString("confirm_closing"), "", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -64,19 +69,21 @@ namespace GDMultiStash.GlobalHandlers
             CreateStashWindow.Localize();
         }
 
-        public void ShowMainWindow(Action onShow)
+        public void ShowMainWindow(Action onShow = null)
         {
             if (MainWindow.Visible) return;
 
             EventHandler shownHandler = null;
             shownHandler = delegate {
                 MainWindow.Shown -= shownHandler;
-                onShow();
+                if (onShow != null) onShow();
             };
 
             MainWindow.Shown += shownHandler;
             MainWindow.TopMost = false;
             MainWindow.Show();
+            MainWindow.Refresh();
+            MainWindow.Update();
         }
 
         public void ShowSetupDialog(bool isFirstSetup = false)

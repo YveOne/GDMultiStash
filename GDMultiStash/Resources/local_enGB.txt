@@ -12,9 +12,6 @@ window_setup = Setup
 window_create_stash = Create Stash
 window_import_stash = Import Stash
 
-setup_tab_common = Common
-setup_tab_behaviour = Behaviour
-
 all = All
 
 button_file = File
@@ -29,8 +26,7 @@ button_abort = Abort
 button_search = Search
 button_import = Import
 button_create_shortcut = Create shortcut on desktop
-button_start_now = Start\nNow
-button_restart = Restart
+button_start_now = Start Now
 button_select_all = Select all
 button_unselect_all = Unselect all
 
@@ -51,10 +47,12 @@ label_max_backups_off = 0 (No Backups)
 label_max_backups_unlimited = -1 (Unlimited)
 label_overlay_width = Overlay Width:
 label_overlay_scale = Overlay Scale:
+label_overlay_transparency = Overlay Transparency:
 label_auto_back_to_main = Switch to main Stash when Stash closed
 label_check_for_new_version = Check for new version on startup
 label_auto_update_version = Auto update when new version available
-label_default_stash_mode = Default mode for new stashes
+label_default_stash_mode = Default mode for new stashes:
+label_hide_on_form_closed = Hide GDMS when window closed and Grim Dawn running
 
 confirm_closing = Grim Dawn is still running\nClose anyway?
 confirm_delete_stash = Delete selected stashes?\nThis cannot be undone!
@@ -90,6 +88,9 @@ mode_none = None
 mode_sc = SC
 mode_hc = HC
 mode_both = Both
+
+close_gdms = Close GDMultiStash
+hide_gdms = Hide GDMultiStash
 
 color_default = Default
 color_green = Green

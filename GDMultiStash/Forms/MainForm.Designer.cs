@@ -234,7 +234,6 @@
             this.Controls.Add(this.topMenuStrip);
             this.Controls.Add(this.bottomMenuStrip);
             this.MainMenuStrip = this.topMenuStrip;
-            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(650, 500);
             this.Name = "MainForm";
             this.Text = "MainForm";

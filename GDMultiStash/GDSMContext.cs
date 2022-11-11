@@ -54,8 +54,11 @@ namespace GDMultiStash
             _singleInstanceMutex = new Mutex(true, "GDMultiStash", out bool createdNew);
             if (!createdNew)
             {
-                //app is already running! Exiting the application
-                MessageBox.Show(Global.L["err_gdms_already_running"]);
+                Native.PostMessage(
+                    (IntPtr)Native.HWND_BROADCAST,
+                    Native.WM_SHOWME,
+                    IntPtr.Zero,
+                    IntPtr.Zero);
                 Program.Quit();
                 return;
             }
@@ -113,50 +116,14 @@ namespace GDMultiStash
 
             Viewport = new Overlay.Elements.Viewport();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             _gdOverlayService = new GDOverlayService(Viewport);
-
             _gdWindowHookService = new GDWindowHookService();
-            _gdWindowHookService.MoveSize += GDWindowHook_MoveSize;
-            _gdWindowHookService.GotFocus += GDWindowHook_GotFocus;
-            _gdWindowHookService.LostFocus += GDWindowHook_LostFocus;
-            _gdWindowHookService.WindowDestroyed += GDWindowHook_WindowDestroyed;
-
             _gdGameHookService = new GDGameHookService();
             _mouseHook = new Native.Mouse.Hook();
 
             StartServices();
-
             ThreadExit += delegate {
-
-                _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
-                _gdWindowHookService.GotFocus -= GDWindowHook_GotFocus;
-                _gdWindowHookService.LostFocus -= GDWindowHook_LostFocus;
-                _gdWindowHookService.WindowDestroyed -= GDWindowHook_WindowDestroyed;
-
                 StopServices();
-
                 _gdWindowHookService.Destroy();
                 _gdGameHookService.Destroy();
                 _gdOverlayService.Destroy();
@@ -212,16 +179,27 @@ namespace GDMultiStash
             _gdOverlayService.Start();
             _gdOverlayService.FrameDrawing += D3DHook_FrameDrawing;
 
-            Global.Runtime.StashStatusChanged += Core_StashStatusChanged;
+            Console.WriteLine("Starting GD Window Hook Service ...");
+            _gdWindowHookService.HookInstalled += GDWindowHook_HookInstalled;
+            _gdWindowHookService.MoveSize += GDWindowHook_MoveSize;
+            _gdWindowHookService.GotFocus += GDWindowHook_GotFocus;
+            _gdWindowHookService.LostFocus += GDWindowHook_LostFocus;
+            _gdWindowHookService.WindowDestroyed += GDWindowHook_WindowDestroyed;
             _gdWindowHookService.Start();
 
+            Global.Runtime.StashStatusChanged += Core_StashStatusChanged;
         }
 
         private void StopServices()
         {
-
-            _gdWindowHookService.Stop();
             Global.Runtime.StashStatusChanged -= Core_StashStatusChanged;
+
+            _gdWindowHookService.HookInstalled -= GDWindowHook_HookInstalled;
+            _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
+            _gdWindowHookService.GotFocus -= GDWindowHook_GotFocus;
+            _gdWindowHookService.LostFocus -= GDWindowHook_LostFocus;
+            _gdWindowHookService.WindowDestroyed -= GDWindowHook_WindowDestroyed;
+            _gdWindowHookService.Stop();
 
             _gdOverlayService.FrameDrawing -= D3DHook_FrameDrawing;
             _gdOverlayService.Stop();
@@ -264,6 +242,20 @@ namespace GDMultiStash
 
         #region GDWindowHook Events
 
+        private void GDWindowHook_HookInstalled(object sender, EventArgs e)
+        {
+            if (Global.Configuration.Settings.AutoStartGD)
+            {
+                Console.WriteLine("Setting GD to foreground");
+                IntPtr m_target = Native.FindWindow("Grim Dawn", null);
+                if (Native.IsIconic(m_target))
+                {
+                    Native.ShowWindowAsync(m_target, Native.SW_RESTORE);
+                }
+                Native.SetForegroundWindow(m_target);
+            }
+        }
+
         private void GDWindowHook_MoveSize(object sender, EventArgs e)
         {
             Global.Runtime.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
@@ -297,6 +289,7 @@ namespace GDMultiStash
             }
             else
             {
+                Global.Windows.ShowMainWindow();
                 Console.WriteLine("   Restarting services...");
                 StopServices();
                 StartServices();
@@ -333,7 +326,8 @@ namespace GDMultiStash
 
         private void MouseHook_MouseMove(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
-            if (!Global.Runtime.GameWindowFocused || !Global.Runtime.StashOpened) return;
+            //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
+            if (!Global.Runtime.GameWindowFocused) return;
             bool hit = Viewport.CheckMouseMove(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
             if (hit)
             {
@@ -342,7 +336,8 @@ namespace GDMultiStash
 
         private void MouseHook_MouseDown(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
-            if (!Global.Runtime.GameWindowFocused || !Global.Runtime.StashOpened) return;
+            //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
+            if (!Global.Runtime.GameWindowFocused) return;
             bool hit = Viewport.CheckMouseDown(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
             if (hit)
             {
@@ -352,7 +347,8 @@ namespace GDMultiStash
         private void MouseHook_MouseUp(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             Global.Runtime.EnableMovement();
-            if (!Global.Runtime.GameWindowFocused || !Global.Runtime.StashOpened) return;
+            //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
+            if (!Global.Runtime.GameWindowFocused) return;
             bool hit = Viewport.CheckMouseUp(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
             if (hit)
             {
@@ -368,7 +364,7 @@ namespace GDMultiStash
                 isBySys = false;
                 return;
             }
-            if (!Global.Runtime.GameWindowFocused || !Global.Runtime.StashOpened) return;
+            if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
             bool hit = Viewport.OnMouseWheel(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y, e.Delta);
             if (hit)
             {

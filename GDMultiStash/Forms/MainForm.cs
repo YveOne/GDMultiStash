@@ -25,6 +25,19 @@ namespace GDMultiStash.Forms
         private Dictionary<int, string> _expansionNames;
         private StashesDragHandler _dragHandler;
 
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == Native.WM_SHOWME)
+            {
+                if (Visible)
+                {
+                    MessageBox.Show(Global.L["err_gdms_already_running"]);
+                }
+                Show();
+            }
+            base.WndProc(ref m);
+        }
+
         public MainForm() : base()
         {
             InitializeComponent();
