@@ -38,6 +38,7 @@ namespace GDMultiStash.GlobalHandlers
                 Console.WriteLine("Runtime: TransferStashSaved START!");
                 Console.WriteLine("    _stashReopening: " + _stashReopening.ToString());
                 Console.WriteLine("    _stashOpened: " + _stashOpened.ToString());
+                Console.WriteLine("    _activeStashID: " + _activeStashID.ToString());
                 if (!_stashReopening && !_stashOpened)
                 {
                     int closedID = _activeStashID;
@@ -49,7 +50,6 @@ namespace GDMultiStash.GlobalHandlers
                     }
                     catch (Exception)
                     {
-                        // stash reopened by using keybinding
                         Console.WriteLine("Runtime: TransferStashSaved - file locked - return");
                         return;
                     }
@@ -382,7 +382,8 @@ namespace GDMultiStash.GlobalHandlers
         public event StashStatusChangedEventHandler StashStatusChanged;
 
         private bool _stashOpened = false;
-        private bool _stashWasOpened = false;
+        private bool _stashWasOpened = false; // this is used to trigger NotifyTransferStashSaved() only once
+        private bool _transferStashSaved = false;
 
         public bool StashOpened
         {
@@ -409,6 +410,7 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (!_stashWasOpened) return;
             _stashWasOpened = false;
+            _transferStashSaved = true;
             TransferStashSaved?.Invoke(null, EventArgs.Empty);
         }
 
@@ -443,25 +445,6 @@ namespace GDMultiStash.GlobalHandlers
                 _reloadOpenedStash = true;
         }
 
-        private delegate bool WaitForConditionDelegate();
-        private bool WaitFor(int time, WaitForConditionDelegate condition = null, int delay = 1)
-        {
-            long timeout = Environment.TickCount + time;
-            while (Environment.TickCount < timeout)
-            {
-                if (condition != null && condition()) return true;
-
-                long timeout2 = Environment.TickCount + delay;
-                while (Environment.TickCount < timeout2)
-                {
-                    System.Threading.Thread.Sleep(1);
-                }
-            }
-            return false;
-        }
-
-
-
 
 
 
@@ -479,21 +462,19 @@ namespace GDMultiStash.GlobalHandlers
 
             ushort keyEscape = (ushort)Native.Keyboard.KeyToScanCode(Keys.Escape);
             ushort keyInteract = GrimDawn.Keybindings.GetKeyBinding(GrimDawnKey.Interact).Primary;
-            int triesLeft;
+            //int triesLeft;
 
-            bool transferSaved = false;
-            TransferStashSavedEventHandler transferSavedHandler = delegate { transferSaved = true; };
-            TransferStashSaved += transferSavedHandler;
+            _transferStashSaved = false;
 
-            System.Threading.Thread.Sleep(33);
 
+            /*
             triesLeft = 4;
             while (triesLeft > 0 && _stashOpened)
             {
                 triesLeft -= 1;
                 Console.WriteLine("_ReopenStashAction() - sending escape key");
                 Native.Keyboard.SendKey(keyEscape);
-                WaitFor(333, () => !_stashOpened, 33);
+                Utils.Funcs.WaitFor(() => !_stashOpened, 500, 33);
                 if (_stashOpened)
                     Console.WriteLine("_ReopenStashAction() failed! stash not closed. Tries left: " + triesLeft);
                 else
@@ -504,32 +485,43 @@ namespace GDMultiStash.GlobalHandlers
                 Console.WriteLine("_ReopenStashAction() ABORT! stash not closed");
                 return;
             }
-
-            System.Threading.Thread.Sleep(33);
+            */
+            Console.WriteLine("_ReopenStashAction() - sending escape key");
+            Native.Keyboard.SendKey(keyEscape);
 
             Console.WriteLine("_ReopenStashAction() - waiting for TransferStashSaved event...");
-            if (WaitFor(333, () =>
+            if (Utils.Funcs.WaitFor(() => !_stashOpened && _transferStashSaved, 5000, 33))
             {
-                return transferSaved;
-            }, 33))
-            {
-                TransferStashSaved -= transferSavedHandler;
                 Console.WriteLine("_ReopenStashAction() - TransferStashSaved received!");
             }
             else
             {
-                TransferStashSaved -= transferSavedHandler;
                 Console.WriteLine("_ReopenStashAction() - TransferStashSaved TIMEOUT! - aborting");
                 return;
             }
 
-            System.Threading.Thread.Sleep(33);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             Console.WriteLine("_ReopenStashAction() - action() START!");
             action();
             Console.WriteLine("_ReopenStashAction() - action() DONE!");
 
-            System.Threading.Thread.Sleep(33);
+            /*
+            _transferStashSaved = false;
 
             triesLeft = 4;
             while (triesLeft > 0 && !_stashOpened)
@@ -537,7 +529,7 @@ namespace GDMultiStash.GlobalHandlers
                 triesLeft -= 1;
                 Console.WriteLine("_ReopenStashAction() - sending interact key");
                 Native.Keyboard.SendKey(keyInteract);
-                WaitFor(333, () => _stashOpened, 33);
+                Utils.Funcs.WaitFor(() => _stashOpened, 500, 33);
                 if (!_stashOpened)
                     Console.WriteLine("_ReopenStashAction() failed! stash not reopened. Tries left: " + triesLeft);
                 else
@@ -545,12 +537,22 @@ namespace GDMultiStash.GlobalHandlers
             }
             if (!_stashOpened)
             {
-                Console.WriteLine("_ReopenStashAction() ABORT! stash not reopened!");
-                return;
+                Console.WriteLine("_ReopenStashAction() stash not reopened!");
             }
+            if (triesLeft < 3)
+            {
+                // interact key send more than once
+                // it could happen that TransferStashSaved event is going to be received
+                Utils.Funcs.WaitFor(() => _transferStashSaved, 1000, 33);
+            }
+            */
+            Console.WriteLine("_ReopenStashAction() - sending interact key");
+            Native.Keyboard.SendKey(keyInteract);
+            Utils.Funcs.WaitFor(() => _stashOpened, 2000, 33);
 
             Console.WriteLine("_ReopenStashAction() DONE!");
         }
+        
 
 
 
@@ -558,38 +560,30 @@ namespace GDMultiStash.GlobalHandlers
 
 
 
-
-        public delegate void StashReopenStartEventHandler(object sender, EventArgs e);
-        public delegate void StashReopenEndEventHandler(object sender, EventArgs e);
+        public delegate void StashReopenStartEventHandler();
+        public delegate void StashReopenEndEventHandler();
         public event StashReopenStartEventHandler StashReopenStart;
         public event StashReopenEndEventHandler StashReopenEnd;
 
         public bool StashIsReopening => _stashReopening;
         private bool _stashReopening = false;
 
-
-
-
         private void ReopenStashAction(Action action)
         {
             if (_stashReopening) return;
+            _stashReopening = true;
             new System.Threading.Thread(new System.Threading.ThreadStart(() => {
-
-                _stashReopening = true;
-                StashReopenStart?.Invoke(null, EventArgs.Empty);
+                StashReopenStart?.Invoke();
                 _ReopenStashAction(action);
-                _stashReopening = false;
-                if (!StashOpened)
+                if (!StashOpened) // something happened
                 {
                     // broadcast that the stash is closed
                     Console.WriteLine("ReopenStashAction() FAILED");
                     StashStatusChanged?.Invoke(null, EventArgs.Empty);
                 }
-                StashReopenEnd?.Invoke(null, EventArgs.Empty);
-
+                StashReopenEnd?.Invoke();
+                _stashReopening = false;
             })).Start();
-
-
         }
 
         public void SwitchToStash(int stashID)

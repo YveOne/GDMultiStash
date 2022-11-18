@@ -56,17 +56,19 @@ namespace GDMultiStash.GlobalHandlers
         public void InitWindows()
         {
             SetupWindow.InitWindow();
-            MainWindow.InitWindow();
             AboutWindow.InitWindow();
             CreateStashWindow.InitWindow();
+            ImportWindow.InitWindow();
+            MainWindow.InitWindow();
         }
 
         public void LocalizeWindows()
         {
             SetupWindow.Localize();
-            MainWindow.Localize();
             AboutWindow.Localize();
             CreateStashWindow.Localize();
+            ImportWindow.Localize();
+            MainWindow.Localize();
         }
 
         public void ShowMainWindow(Action onShow = null)

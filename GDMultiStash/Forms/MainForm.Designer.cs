@@ -89,7 +89,7 @@
             // aboutButton
             // 
             this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(107, 22);
+            this.aboutButton.Size = new System.Drawing.Size(180, 22);
             this.aboutButton.Text = "About";
             this.aboutButton.Click += new System.EventHandler(this.AboutButton_Click);
             // 

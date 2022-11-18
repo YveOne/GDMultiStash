@@ -1,3 +1,5 @@
+v1.26
+- Changed stash switching process: Removed retrying loops to send keyboard input in hope it fixes the stash replaced bug
 
 v1.25
 - Updated config window: Removed tab control. All options are now on one page

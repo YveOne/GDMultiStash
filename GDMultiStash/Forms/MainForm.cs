@@ -835,9 +835,6 @@ namespace GDMultiStash.Forms
             Global.Windows.ShowCreateStashDialog();
         }
 
-
-
-
         #endregion
 
     }

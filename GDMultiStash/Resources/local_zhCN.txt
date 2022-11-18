@@ -52,7 +52,7 @@ label_auto_back_to_main = 当仓库关闭时切换到主仓库
 label_check_for_new_version = 启动时检查新版本
 label_auto_update_version = 新版本可用时自动更新
 label_default_stash_mode = 新存储的默认模式：
-label_hide_on_form_closed = Hide GDMS when window closed and Grim Dawn running
+label_hide_on_form_closed = Hide when the window is closed while Grim Dawn is running
 
 Confirm_closing = Grim Dawn 仍在运行\n仍然关闭？
 Confirm_delete_stash = 删除选定的存储？\n无法撤消！

@@ -169,6 +169,7 @@
     <Compile Include="Native\Native.Hook.cs" />
     <Compile Include="Native\Native.Shortcut.cs" />
     <Compile Include="Services\GDGameHookService.cs" />
+    <Compile Include="Utils\Funcs.cs" />
     <Compile Include="Utils\XML\Utf8StringWriter.cs" />
     <Compile Include="Utils\XML\XmlIO.cs" />
     <Compile Include="Utils\XML\XmlWriterEE.cs" />
