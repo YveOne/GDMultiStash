@@ -519,6 +519,7 @@ namespace GDMultiStash.GlobalHandlers
             Console.WriteLine("_ReopenStashAction() - action() START!");
             action();
             Console.WriteLine("_ReopenStashAction() - action() DONE!");
+            System.Threading.Thread.Sleep(100);
 
             /*
             _transferStashSaved = false;

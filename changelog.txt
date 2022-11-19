@@ -1,3 +1,6 @@
+v1.27
+- Added delays in switching process to fix the move-away-bug
+
 v1.26
 - Changed stash switching process: Removed retrying loops to send keyboard input in hope it fixes the stash replaced bug
 

@@ -73,21 +73,19 @@ public static partial class Native
         public static void SendKey(uint vsc)
         {
             SendKeyDown(vsc);
+            System.Threading.Thread.Sleep(100);
+            Application.DoEvents();
             SendKeyUp(vsc);
         }
 
         public static void SendKeyDown(uint vsc)
         {
             SendKeyboardInput((ushort)vsc, KeyEventF.Scancode | KeyEventF.KeyDown);
-            System.Threading.Thread.Sleep(10);
-            Application.DoEvents();
         }
 
         public static void SendKeyUp(uint vsc)
         {
             SendKeyboardInput((ushort)vsc, KeyEventF.Scancode | KeyEventF.KeyUp);
-            System.Threading.Thread.Sleep(10);
-            Application.DoEvents();
         }
 
     }
