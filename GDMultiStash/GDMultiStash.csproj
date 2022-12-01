@@ -64,17 +64,30 @@
   <ItemGroup>
     <Compile Include="Common\Config\V1\Config.cs" />
     <Compile Include="Common\Config\V1\ConfigSettingList.cs" />
-    <Compile Include="Common\Config\V3\Config.cs" />
-    <Compile Include="Common\Config\V3\ConfigSettingList.cs" />
-    <Compile Include="Common\Config\V3\ConfigStash.cs" />
-    <Compile Include="Common\Config\V3\ConfigStashList.cs" />
+    <Compile Include="Common\Config\V4\Config.cs" />
+    <Compile Include="Common\Config\V4\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\V4\ConfigStash.cs" />
+    <Compile Include="Common\Config\V4\ConfigStashCategory.cs" />
+    <Compile Include="Common\Config\V4\ConfigStashCategoryList.cs" />
+    <Compile Include="Common\Config\V4\ConfigStashList.cs" />
     <Compile Include="Common\Config\ConfigBase.cs" />
     <Compile Include="Common\Overlay\Animations\Animation.cs" />
     <Compile Include="Common\Overlay\Animations\FadeAnimation.cs" />
     <Compile Include="Common\Overlay\Animations\MoveAnimation.cs" />
     <Compile Include="Common\Overlay\ButtonElement.cs" />
     <Compile Include="Common\ExportZipFile.cs" />
+    <Compile Include="Common\StashCategoryObject.cs" />
     <Compile Include="Console.cs" />
+    <Compile Include="Controls\ExComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\ExComboBoxItem.cs" />
+    <Compile Include="Forms\ChangelogDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangelogDialogForm.Designer.cs">
+      <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Global\Global.ConfigurationHandler.cs" />
     <Compile Include="Global\Global.DatabaseHandler.cs" />
     <Compile Include="Global\Global.cs" />
@@ -87,14 +100,15 @@
     <Compile Include="Forms\MainForm\StashesDragSource.cs" />
     <Compile Include="Forms\MainForm\StashesDropSink.cs" />
     <Compile Include="Forms\MainForm\StashesSortComparer.cs" />
-    <Compile Include="Forms\UpdateAvailableDialogForm.cs">
+    <Compile Include="Forms\CategoriesDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\UpdateAvailableDialogForm.Designer.cs">
-      <DependentUpon>UpdateAvailableDialogForm.cs</DependentUpon>
+    <Compile Include="Forms\CategoriesDialogForm.Designer.cs">
+      <DependentUpon>CategoriesDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Global.FileSystemHandler.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
+    <Compile Include="Overlay\InfoBoxReloadButton.cs" />
     <Compile Include="Overlay\InfoBoxButton.cs" />
     <Compile Include="Overlay\InfoBox.cs" />
     <Compile Include="Overlay\VerticalScrollBar.cs" />
@@ -112,7 +126,7 @@
     <Compile Include="Common\Overlay\Element.Properties.cs" />
     <Compile Include="Common\Overlay\ImageElement.cs" />
     <Compile Include="Common\Overlay\ResourceHandler.cs" />
-    <Compile Include="Global\Global.StashObject.cs" />
+    <Compile Include="Common\StashObject.cs" />
     <Compile Include="Common\TransferFile.cs" />
     <Compile Include="Forms\AboutDialogForm.cs">
       <SubType>Form</SubType>
@@ -144,11 +158,11 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\SetupDialogForm.cs">
+    <Compile Include="Forms\ConfigurationDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\SetupDialogForm.Designer.cs">
-      <DependentUpon>SetupDialogForm.cs</DependentUpon>
+    <Compile Include="Forms\ConfigurationDialogForm.Designer.cs">
+      <DependentUpon>ConfigurationDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GrimDawnLib\GrimDawn.Keybindings.cs" />
     <Compile Include="Native\Native.Keyboard.cs" />
@@ -162,6 +176,7 @@
     <Compile Include="GrimDawnLib\GrimDawn.Steam.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\GDWindowHookService.cs" />
+    <Compile Include="Utils\AssemblyInfo.cs" />
     <Compile Include="Utils\FontLoader.cs" />
     <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\Easing.cs" />
@@ -181,6 +196,9 @@
     <EmbeddedResource Include="Forms\AboutDialogForm.resx">
       <DependentUpon>AboutDialogForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangelogDialogForm.resx">
+      <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateStashDialogForm.resx">
       <DependentUpon>CreateStashDialogForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,11 +211,11 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\SetupDialogForm.resx">
-      <DependentUpon>SetupDialogForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ConfigurationDialogForm.resx">
+      <DependentUpon>ConfigurationDialogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\UpdateAvailableDialogForm.resx">
-      <DependentUpon>UpdateAvailableDialogForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\CategoriesDialogForm.resx">
+      <DependentUpon>CategoriesDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -221,6 +239,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\lockWhite.png" />
+    <None Include="Resources\lockBlack.png" />
+    <None Include="Resources\ReloadButtonSmallUp.png" />
+    <None Include="Resources\ReloadButtonSmallOver.png" />
+    <None Include="Resources\ReloadButtonSmallDown.png" />
     <None Include="Resources\scrollbar_bottom.png" />
     <None Include="Resources\scrollbar_top.png" />
     <None Include="Resources\scrollbar.png" />

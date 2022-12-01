@@ -15,11 +15,6 @@ namespace GDMultiStash.GlobalHandlers
         public bool NewVersionAvailable()
         {
             if (!Global.Configuration.Settings.CheckForNewVersion) return false;
-            long timestamp = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
-            long timestampTimeout = timestamp - Global.Configuration.Settings.CheckForNewVersionDelay;
-            if (Global.Configuration.Settings.LastVersionCheck > timestampTimeout) return false;
-            Global.Configuration.Settings.LastVersionCheck = timestamp;
-            Global.Configuration.Save();
             return UpdaterAPI.NewVersionAvailable();
         }
 

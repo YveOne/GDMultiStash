@@ -38,7 +38,7 @@ namespace GDMultiStash.Common
             _entries.Add(new Entry(srcFile, extryName));
         }
 
-        public void AddStash(GlobalHandlers.StashObject stash)
+        public void AddStash(StashObject stash)
         {
             string transferName = string.Format("{0} - {1}", stash.ID, stash.Name);
             transferName = string.Join("_", transferName.Split(Path.GetInvalidFileNameChars()));

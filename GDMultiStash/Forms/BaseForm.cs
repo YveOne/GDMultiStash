@@ -15,7 +15,7 @@ namespace GDMultiStash.Forms
         {
         }
 
-        public virtual void InitWindow()
+        public virtual void Initialize()
         {
             Load += delegate {
                 Localize(Global.L);

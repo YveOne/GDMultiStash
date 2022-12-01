@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+using GDMultiStash.Common;
 using GDMultiStash.Common.Overlay;
 
 namespace GDMultiStash.Overlay.Elements
@@ -12,44 +13,31 @@ namespace GDMultiStash.Overlay.Elements
     internal class StashList : PseudoScrollElement<StashListChild>
     {
 
-        //public static Font _ItemFont = null;
-
         protected override float ItemHeight => 26;
         protected override float ItemMargin => 2f;
+        protected override float ItemMarginStart => 2f;
 
-        private readonly Dictionary<int, StashListDataHolder> _listItems; // stashID -> StashListDataHolder
-        private readonly Dictionary<int, int> _displayID2stashID;
+        private readonly Dictionary<int, StashListChild> _stashId2Item;
+        private readonly Dictionary<int, int> _itemID2stashID;
 
         private readonly float _alphaActive = 1f;
         private readonly float _alphaInactive = 0.66f;
 
-        public delegate void VisibleCountChangedEventHandler(int visibleCount);
-        public event VisibleCountChangedEventHandler VisibleCountChanged;
-
-        private int _lastVisibleCount = 0;
-
         private bool _reqBuildList = true; // build list on startup
-        private bool _reqUpdateList = true;
-
-        private class StashListDataHolder
-        {
-            public GlobalHandlers.StashObject Stash;
-            public StashListChild ListItem;
-        }
 
         public StashList()
         {
             X = 6;
             Y = 19;
             WidthToParent = true;
-            Width = -32;
+            Width = -25;
             Height = 574;
 
             MaxVisibleCount = 20;
             MouseCheckNeedBaseHit = true;
 
-            _listItems = new Dictionary<int, StashListDataHolder>();
-            _displayID2stashID = new Dictionary<int, int>();
+            _itemID2stashID = new Dictionary<int, int>();
+            _stashId2Item = new Dictionary<int, StashListChild>();
 
             Global.Runtime.ActiveStashChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveStashChangedEventArgs e) {
                 ChangeActiveStash(e.OldID, e.NewID);
@@ -65,17 +53,17 @@ namespace GDMultiStash.Overlay.Elements
             };
             Global.Runtime.StashesAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.StashListChangedEventArgs e)
             {
-                foreach (GlobalHandlers.StashObject stash in e.Stashes)
+                foreach (StashObject stash in e.Stashes)
                     AddStashItem(stash);
             };
             Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.StashListChangedEventArgs e)
             {
-                foreach (GlobalHandlers.StashObject stash in e.Stashes)
+                foreach (StashObject stash in e.Stashes)
                     RemoveStashItem(stash);
             };
             Global.Runtime.StashesUpdated += delegate (object sender, GlobalHandlers.RuntimeHandler.StashListChangedEventArgs e)
             {
-                foreach (GlobalHandlers.StashObject stash in e.Stashes)
+                foreach (StashObject stash in e.Stashes)
                     UpdateStashItem(stash);
             };
             Global.Runtime.StashReopenStart += delegate {
@@ -91,19 +79,11 @@ namespace GDMultiStash.Overlay.Elements
         public override void Begin()
         {
             base.Begin();
-
             if (_reqBuildList)
             {
                 _reqBuildList = false;
                 OnBuildList();
             }
-
-            if (_reqUpdateList)
-            {
-                _reqUpdateList = false;
-                OnUpdateList();
-            }
-
         }
 
         public void BuildList()
@@ -111,115 +91,101 @@ namespace GDMultiStash.Overlay.Elements
             _reqBuildList = true;
         }
 
-        public override void UpdateList()
-        {
-            _reqUpdateList = true;
-        }
-
         private void OnBuildList()
         {
-            foreach (StashListDataHolder item in _listItems.Values)
-                item.ListItem.Active = false;
-            _listItems.Clear();
-            _displayID2stashID.Clear();
+            foreach (var item in Items)
+                item.Active = false;
+            Items.Clear();
+            _itemID2stashID.Clear();
+            _stashId2Item.Clear();
             ClearScrollItems();
-            foreach (GlobalHandlers.StashObject stash in Global.Stashes.GetAllStashes())
+            foreach (StashObject stash in Global.Stashes.GetAllStashes())
                 AddStashItem(stash);
         }
 
-        private void OnUpdateList()
+        protected override void OnUpdateListStart()
         {
-            int visibleCount = 0;
             GrimDawnLib.GrimDawnGameMode mode = Global.Runtime.CurrentMode;
             GrimDawnLib.GrimDawnGameExpansion exp = Global.Runtime.CurrentExpansion;
-            foreach (StashListDataHolder i in _listItems.Values)
+            foreach (var item in Items)
             {
-                i.ListItem.Order = i.Stash.Order;
-                i.ListItem.Alpha = _alphaInactive;
-                i.ListItem.Active = false;
-                i.ListItem.Visible = ((
-                    i.Stash.SC == true && mode == GrimDawnLib.GrimDawnGameMode.SC
+                StashObject stash = item.Model as StashObject;
+                item.Order = stash.Order;
+                item.Alpha = _alphaInactive;
+                item.Active = false;
+                item.Visible = ((
+                    stash.SC == true && mode == GrimDawnLib.GrimDawnGameMode.SC
                 ) || (
-                    i.Stash.HC == true && mode == GrimDawnLib.GrimDawnGameMode.HC
-                )) && i.Stash.Expansion == exp;
-                if (i.ListItem.Visible) visibleCount += 1;
+                    stash.HC == true && mode == GrimDawnLib.GrimDawnGameMode.HC
+                )) && stash.Expansion == exp;
             }
-            int stashID = Global.Runtime.ActiveStashID;
-            if (stashID != -1)
+            int activeStashID = Global.Runtime.ActiveStashID;
+            if (_stashId2Item.ContainsKey(activeStashID))
             {
-                _listItems[stashID].ListItem.Active = true;
-                _listItems[stashID].ListItem.Alpha = _alphaActive;
+                StashListChild activeItem = _stashId2Item[activeStashID];
+                activeItem.Alpha = _alphaActive;
+                activeItem.Active = true;
             }
-            if (_lastVisibleCount != visibleCount)
-            {
-                _lastVisibleCount = visibleCount;
-                VisibleCountChanged?.Invoke(visibleCount);
-                CurrentVisibleCount = visibleCount;
-            }
-            base.UpdateList();
         }
 
         public void ChangeActiveStash(int oldID, int newID)
         {
-            if (_listItems.ContainsKey(oldID))
+            if (_stashId2Item.ContainsKey(oldID))
             {
-                _listItems[oldID].ListItem.Active = false;
-                _listItems[oldID].ListItem.Alpha = _alphaInactive;
+                _stashId2Item[oldID].Active = false;
+                _stashId2Item[oldID].Alpha = _alphaInactive;
             }
-            if (_listItems.ContainsKey(newID))
+            if (_stashId2Item.ContainsKey(newID))
             {
-                _listItems[newID].ListItem.Active = true;
-                _listItems[newID].ListItem.Alpha = _alphaActive;
+                _stashId2Item[newID].Active = true;
+                _stashId2Item[newID].Alpha = _alphaActive;
             }
         }
 
-        public void AddStashItem(GlobalHandlers.StashObject stash)
+        public void AddStashItem(StashObject stash)
         {
-            StashListChild si = GetCachedScrollItem();
-            if (si == null)
+            StashListChild item = GetCachedScrollItem();
+            if (item == null)
             {
-                si = new StashListChild()
+                item = new StashListChild(stash)
                 {
                     MouseCheckChildren = false,
                 };
             }
-            si.MouseEnter += Item_MouseEnter;
-            si.MouseLeave += Item_MouseLeave;
-            si.MouseClick += Item_OnClick;
-            si.Active = false;
-            si.Alpha = _alphaInactive;
-            si.Text = stash.Name;
-            si.Order = stash.Order;
-            si.Color = stash.GetDisplayColor();
-            si.Font = stash.GetDisplayFont(); //_ItemFont;
+            item.MouseEnter += Item_MouseEnter;
+            item.MouseLeave += Item_MouseLeave;
+            item.MouseClick += Item_OnClick;
+            item.Active = false;
+            item.Alpha = _alphaInactive;
+            item.Text = stash.Name;
+            item.Order = stash.Order;
+            item.Locked = stash.Locked;
+            item.Color = stash.GetDisplayColor();
+            item.Font = stash.GetDisplayFont();
 
-            _listItems.Add(stash.ID, new StashListDataHolder
-            {
-                Stash = stash,
-                ListItem = si,
-            });
-            _displayID2stashID.Add(si.ID, stash.ID);
-            AddScrollItem(si);
-            _reqUpdateList = true;
+            _itemID2stashID.Add(item.ID, stash.ID);
+            _stashId2Item.Add(stash.ID, item);
+            AddScrollItem(item);
+            UpdateList();
         }
 
-        public void RemoveStashItem(GlobalHandlers.StashObject stash)
+        public void RemoveStashItem(StashObject stash)
         {
-            if (!_listItems.ContainsKey(stash.ID)) return; // not initialized
-            StashListDataHolder data = _listItems[stash.ID];
-            RemoveScrollItem(data.ListItem);
-            _displayID2stashID.Remove(data.ListItem.ID);
-            _listItems.Remove(stash.ID);
-            _reqUpdateList = true;
+            if (!_stashId2Item.ContainsKey(stash.ID)) return;
+            StashListChild item = _stashId2Item[stash.ID];
+            RemoveScrollItem(item);
+            _itemID2stashID.Remove(item.ID);
+            _stashId2Item.Remove(stash.ID);
+            UpdateList();
         }
 
-        public void UpdateStashItem(GlobalHandlers.StashObject stash)
+        public void UpdateStashItem(StashObject stash)
         {
-            if (!_listItems.ContainsKey(stash.ID)) return; // not initialized
-            StashListDataHolder data = _listItems[stash.ID];
-            data.ListItem.Text = stash.Name;
-            data.ListItem.Color = stash.GetDisplayColor();
-            _reqUpdateList = true;
+            if (!_stashId2Item.ContainsKey(stash.ID)) return;
+            StashListChild item = _stashId2Item[stash.ID];
+            item.Text = stash.Name;
+            item.Color = stash.GetDisplayColor();
+            item.Locked = stash.Locked;
         }
 
 
@@ -266,8 +232,8 @@ namespace GDMultiStash.Overlay.Elements
             if (_listDisabled) return;
             if (sender is StashListChild displayItem)
             {
-                if (!_displayID2stashID.ContainsKey(displayItem.ID)) return;
-                int stashID = _displayID2stashID[displayItem.ID];
+                if (!_itemID2stashID.ContainsKey(displayItem.ID)) return;
+                int stashID = _itemID2stashID[displayItem.ID];
                 Global.Runtime.SwitchToStash(stashID);
             }
         }

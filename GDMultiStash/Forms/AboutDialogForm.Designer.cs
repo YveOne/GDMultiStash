@@ -37,8 +37,8 @@
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -145,6 +145,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Special Thanks";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(7, 45);
+            this.label5.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 13);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "tt300 (Chinese translation)";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -155,17 +166,6 @@
             this.label4.Size = new System.Drawing.Size(62, 13);
             this.label4.TabIndex = 0;
             this.label4.Text = "Eclipsonaut";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 45);
-            this.label5.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 13);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "tt300 (Chinese translation)";
             // 
             // AboutDialogForm
             // 

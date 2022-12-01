@@ -1,3 +1,29 @@
+v1.29
+- Fixed backup restoration. A stash could only be restored when it was opened ingame. That has been fixed.
+- Added a reload button in overlay info window to support other tools like GD Stash.
+  When you click on it the stash currently used will FIRST be imported to gdms BEFORE ingame stash is getting closed.
+  With this you can reload your stashes when the original file has been changed by any other tool (like GD Stash).
+- Added lock feature - You can now lock your stashes!
+  Locked stashes won't get overwritten in gdms. If you want to be able to overwrite
+  locked stashes by using the save button you first need to enable it in the options.
+
+v1.28
+- Removed 'auto update' option in config window (you will always get asked now)
+- Updated resource itemsizes.txt: Now using width and height values
+- Fixed backup system (there was a problem where not all old backups got deleted)
+- Removed option for unlimited backups
+- Increased max backups count to 30 in config window
+- Added button 'cleanup backups' in config window
+- Added new colors white and rose
+- Colorized color names in color dropdown in main window
+- Added context menu to change color of multiple stashes
+- removed button 'unselect all' (click 'select all' to unselect)
+- Added changelog window to 'help' menu
+- Changelog window will open after an update
+- Language files are now internal only! Directory 'Data/Locales' will get deleted
+- Overlay stashlist: Fixed a bug where list got not updated correctly
+- Overlay stashlist: Now blocking camera zoom when scrolling by mouse wheel
+
 v1.27
 - Added delays in switching process to fix the move-away-bug
 

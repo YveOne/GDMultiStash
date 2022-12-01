@@ -23,18 +23,19 @@ namespace GDMultiStash.Forms
             InitializeComponent();
         }
 
-        public override void InitWindow()
+        public override void Initialize()
         {
-            base.InitWindow();
+            base.Initialize();
             expansionComboBox.SelectionChangeCommitted += expansionComboBox_SelectionChangeCommitted;
         }
 
         protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
         {
-            Text = "GDMultiStash : " + L["window_create_stash"];
-            expansionLabel.Text = L["label_expansion"];
+            Text = L["createStash"];
+            expansionLabel.Text = L["createStash_expansionLabel"];
+            okButton.Text = L["createStash_okButton"];
 
-            _newStashName = L["new_stash"];
+            _newStashName = L["createStash_newStashName"];
         }
 
         private void expansionComboBox_SelectionChangeCommitted(object sender, EventArgs e)
@@ -61,9 +62,9 @@ namespace GDMultiStash.Forms
             nameTextBox.Focus();
         }
 
-        private GlobalHandlers.StashObject _createdStash = null;
+        private Common.StashObject _createdStash = null;
 
-        public DialogResult ShowDialog(IWin32Window owner, out GlobalHandlers.StashObject createdStash)
+        public DialogResult ShowDialog(IWin32Window owner, out Common.StashObject createdStash)
         {
             createdStash = null;
             _createdStash = null;

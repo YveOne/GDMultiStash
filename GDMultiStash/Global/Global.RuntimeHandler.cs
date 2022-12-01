@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.IO;
 
 using GrimDawnLib;
+using GDMultiStash.Common;
 
 namespace GDMultiStash.GlobalHandlers
 {
@@ -86,19 +87,19 @@ namespace GDMultiStash.GlobalHandlers
 
 
 
-        public enum AutoStartResult
+        public enum GameStartResult
         {
             Disabled = 0,
             AlreadyRunning = 1,
             Success = 2,
+            Error = 3,
         }
 
-        public AutoStartResult AutoStartGame(bool ignoreDisabled = false)
+        public GameStartResult StartGame()
         {
-            if (!Global.Configuration.Settings.AutoStartGD && !ignoreDisabled) return AutoStartResult.Disabled;
-            if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero) return AutoStartResult.AlreadyRunning;
+            if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero) return GameStartResult.AlreadyRunning;
 
-            Console.WriteLine("Autostarting Grim Dawn:");
+            Console.WriteLine("Starting Grim Dawn:");
             Console.WriteLine("- Command: " + Global.Configuration.Settings.AutoStartGDCommand);
             Console.WriteLine("- Arguments: " + Global.Configuration.Settings.AutoStartGDArguments);
             Console.WriteLine("- WorkingDir: " + Global.Configuration.Settings.GamePath);
@@ -113,9 +114,16 @@ namespace GDMultiStash.GlobalHandlers
                     : Global.Configuration.Settings.GamePath
             };
             process.StartInfo = startInfo;
-            process.Start();
-
-            return AutoStartResult.Success;
+            try
+            {
+                process.Start();
+                return GameStartResult.Success;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return GameStartResult.Error;
+            }
         }
 
 
@@ -294,7 +302,7 @@ namespace GDMultiStash.GlobalHandlers
             StashesRestored?.Invoke(null, new StashListChangedEventArgs(stashes));
         }
 
-        public void NotifyStashesUpdated(StashObject stash)
+        public void NotifyStashUpdated(StashObject stash)
         {
             StashesUpdated?.Invoke(null, new StashListChangedEventArgs(stash));
         }
@@ -434,15 +442,12 @@ namespace GDMultiStash.GlobalHandlers
 
         private bool _reloadOpenedStash = false;
 
-        public bool IsStashOpened(int stashID)
-        {
-            return (StashOpened && stashID == ActiveStashID);
-        }
-
         public void ReloadOpenedStash(int stashID)
         {
-            if (IsStashOpened(stashID))
+            if (StashOpened && stashID == ActiveStashID)
+            {
                 _reloadOpenedStash = true;
+            }
         }
 
 
@@ -600,6 +605,12 @@ namespace GDMultiStash.GlobalHandlers
 
         public void LoadCurrentStash()
         {
+            ReopenStashAction(() => Global.Stashes.ExportStash(ActiveStashID));
+        }
+
+        public void ReloadCurrentStash()
+        {
+            Global.Stashes.ImportStash(ActiveStashID);
             ReopenStashAction(() => Global.Stashes.ExportStash(ActiveStashID));
         }
 

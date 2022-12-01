@@ -22,11 +22,12 @@ namespace GDMultiStash.GlobalHandlers
             foreach (string line in lines)
             {
                 splits = line.Split(':');
-                if (splits.Length != 2) continue;
+                if (splits.Length != 3) continue;
                 record = splits[0].Trim();
                 if (record.StartsWith("//")) continue;
-                if (!int.TryParse(splits[1], out int size)) continue;
-                _itemSizes[record] = size;
+                if (!int.TryParse(splits[1], out int width)) continue;
+                if (!int.TryParse(splits[2], out int height)) continue;
+                _itemSizes[record] = width * height;
             }
             Console.WriteLine("- Found " + _itemSizes.Count + " records");
         }

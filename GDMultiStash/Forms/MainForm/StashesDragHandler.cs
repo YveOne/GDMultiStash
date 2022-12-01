@@ -4,6 +4,8 @@ using System.Drawing;
 
 using BrightIdeasSoftware;
 
+using GDMultiStash.Common;
+
 namespace GDMultiStash.Forms
 {
     class StashesDragHandler
@@ -32,19 +34,19 @@ namespace GDMultiStash.Forms
                 List<OLVListItem> items = new List<OLVListItem>();
                 foreach (OLVListItem item in olv.Items)
                 {
-                    GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)item.RowObject;
+                    StashObject stash = (StashObject)item.RowObject;
                     if (Global.Configuration.IsMainStashID(stash.ID)) continue;
                     items.Add(item);
                 }
                 foreach (OLVListItem item in items)
                 {
-                    GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)item.RowObject;
+                    StashObject stash = (StashObject)item.RowObject;
                     orders.Add(stash.Order);
                 }
                 orders.Sort();
                 foreach (OLVListItem item in items)
                 {
-                    GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)item.RowObject;
+                    StashObject stash = (StashObject)item.RowObject;
                     stash.Order = orders[0];
                     orders.RemoveAt(0);
                 }
@@ -62,7 +64,7 @@ namespace GDMultiStash.Forms
             return _isDragging;
         }
 
-        public bool IsDragging(GlobalHandlers.StashObject stash)
+        public bool IsDragging(StashObject stash)
         {
             if (!IsDragging()) return false;
             return DragSource.DraggingStashes.Contains(stash);

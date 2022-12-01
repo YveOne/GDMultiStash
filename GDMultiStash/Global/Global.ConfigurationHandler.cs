@@ -27,7 +27,7 @@ namespace GDMultiStash.GlobalHandlers
         public event SettingChangedDelegate GamePathChanged;
         public event SettingChangedDelegate AppearanceChanged;
 
-        #region Load/Save
+        #region Load/Save Methods
 
         private Common.Config.Config LoadFromFile(string filePath)
         {
@@ -43,51 +43,55 @@ namespace GDMultiStash.GlobalHandlers
                 {
 
                     case 2:
-                        Common.Config.V1.Config configOld = XmlIO.ReadXmlText<Common.Config.V1.Config>(File.ReadAllText(filePath));
-                        Common.Config.Config configNew = new Common.Config.Config();
+                        {
+                            Common.Config.V1.Config configOld = XmlIO.ReadXmlText<Common.Config.V1.Config>(File.ReadAllText(filePath));
+                            Common.Config.Config configNew = new Common.Config.Config();
 
-                        foreach (var stash in configOld.Stashes)
-                            stash.Expansion = 2;
-                        configNew.Version = _configBase.Version;
-                        configNew.Stashes = configOld.Stashes;
-                        configNew.Settings.Language = configOld.Settings.Language;
-                        configNew.Settings.GamePath = configOld.Settings.GamePath;
-                        configNew.Settings.MaxBackups = configOld.Settings.MaxBackups;
-                        configNew.Settings.ConfirmClosing = configOld.Settings.ConfirmClosing;
-                        configNew.Settings.CloseWithGrimDawn = configOld.Settings.CloseWithGrimDawn;
-                        configNew.Settings.ConfirmStashDelete = configOld.Settings.ConfirmStashDelete;
-                        configNew.Settings.AutoStartGD = configOld.Settings.AutoStartGD;
-                        configNew.Settings.AutoStartGDCommand = configOld.Settings.AutoStartGDCommand;
-                        configNew.Settings.AutoStartGDArguments = configOld.Settings.AutoStartGDArguments;
-                        configNew.Settings.LastID = configOld.Settings.LastID;
-                        configNew.Settings.Main2SCID = configOld.Settings.MainSCID;
-                        configNew.Settings.Main2HCID = configOld.Settings.MainHCID;
-                        configNew.Settings.Cur2SCID = configOld.Settings.CurSCID;
-                        configNew.Settings.Cur2HCID = configOld.Settings.CurHCID;
+                            foreach (var stash in configOld.Stashes)
+                                stash.Expansion = 2;
+                            configNew.Version = _configBase.Version;
+                            configNew.Stashes = configOld.Stashes;
+                            configNew.Settings.Language = configOld.Settings.Language;
+                            configNew.Settings.GamePath = configOld.Settings.GamePath;
+                            configNew.Settings.MaxBackups = configOld.Settings.MaxBackups;
+                            configNew.Settings.ConfirmClosing = configOld.Settings.ConfirmClosing;
+                            configNew.Settings.CloseWithGrimDawn = configOld.Settings.CloseWithGrimDawn;
+                            configNew.Settings.ConfirmStashDelete = configOld.Settings.ConfirmStashDelete;
+                            configNew.Settings.AutoStartGD = configOld.Settings.AutoStartGD;
+                            configNew.Settings.AutoStartGDCommand = configOld.Settings.AutoStartGDCommand;
+                            configNew.Settings.AutoStartGDArguments = configOld.Settings.AutoStartGDArguments;
+                            configNew.Settings.LastID = configOld.Settings.LastID;
+                            configNew.Settings.Main2SCID = configOld.Settings.MainSCID;
+                            configNew.Settings.Main2HCID = configOld.Settings.MainHCID;
+                            configNew.Settings.Cur2SCID = configOld.Settings.CurSCID;
+                            configNew.Settings.Cur2HCID = configOld.Settings.CurHCID;
 
-                        WriteToFile(configNew, filePath);
+                            WriteToFile(configNew, filePath);
+                        }
                         break;
 
                     case 3:
-                        string f;
-                        f = Global.Localization.GetLocalizationFile("de-Deutsch.txt");
-                        if (File.Exists(f)) File.Delete(f);
-                        f = Global.Localization.GetLocalizationFile("en-English.txt");
-                        if (File.Exists(f)) File.Delete(f);
-                        f = Global.Localization.GetLocalizationFile("zh-Chinese.txt");
-                        if (File.Exists(f)) File.Delete(f);
-
-                        Common.Config.Config cfg = XmlIO.ReadXmlText<Common.Config.Config>(File.ReadAllText(filePath));
-                        cfg.Version = _configBase.Version;
-                        switch (cfg.Settings.Language)
                         {
-                            case "de": cfg.Settings.Language = "deDE"; break;
-                            case "en": cfg.Settings.Language = "enUS"; break;
-                            case "zh": cfg.Settings.Language = "zhCN"; break;
-                            default: cfg.Settings.Language = "enUS"; break;
-                        }
+                            Common.Config.Config cfg = XmlIO.ReadXmlText<Common.Config.Config>(File.ReadAllText(filePath));
+                            cfg.Version = _configBase.Version;
+                            switch (cfg.Settings.Language)
+                            {
+                                case "de": cfg.Settings.Language = "deDE"; break;
+                                case "en": cfg.Settings.Language = "enUS"; break;
+                                case "zh": cfg.Settings.Language = "zhCN"; break;
+                                default: cfg.Settings.Language = "enUS"; break;
+                            }
 
-                        WriteToFile(cfg, filePath);
+                            WriteToFile(cfg, filePath);
+                        }
+                        break;
+
+                    case 4:
+                        {
+                            string langDir = Path.Combine(Global.FileSystem.DataDirectory, "Locales");
+                            if (Directory.Exists(langDir))
+                                Directory.Delete(langDir, true);
+                        }
                         break;
 
                 }
@@ -138,7 +142,30 @@ namespace GDMultiStash.GlobalHandlers
 
         #endregion
 
-        #region Common Methods
+        #region Settings Methods
+
+        public void SetSettings(Common.Config.ConfigSettingList settings)
+        {
+            Common.Config.ConfigSettingList previous = Settings.Copy();
+            _config.Settings.Set(settings);
+            if (previous.Language != Settings.Language)
+            {
+                Global.Localization.LoadLanguage(Settings.Language);
+                LanguageChanged?.Invoke(null, EventArgs.Empty);
+            }
+            if (previous.GamePath != Settings.GamePath)
+            {
+                GamePathChanged?.Invoke(null, EventArgs.Empty);
+            }
+            if (previous.OverlayScale != Settings.OverlayScale || previous.OverlayWidth != Settings.OverlayWidth || previous.OverlayTransparency != Settings.OverlayTransparency)
+            {
+                AppearanceChanged?.Invoke(null, EventArgs.Empty);
+            }
+        }
+
+        #endregion
+
+        #region Stash Methods
 
         public int GetMainStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
@@ -273,23 +300,47 @@ namespace GDMultiStash.GlobalHandlers
                 || stashID == Settings.Cur2HCID);
         }
 
-        public void SetSettings(Common.Config.ConfigSettingList settings)
+        #endregion
+
+        #region Stash Category Methods
+
+        public IEnumerable<Common.Config.ConfigStashCategory> GetCategories()
         {
-            Common.Config.ConfigSettingList previous = Settings.Copy();
-            _config.Settings.Set(settings);
-            if (previous.Language != Settings.Language)
+            return _config.StashCategories;
+        }
+
+        public Common.Config.ConfigStashCategory GetCategoryByID(int catID)
+        {
+            return _config.StashCategories.Find(c => { return c.ID == catID; });
+        }
+
+        public Common.Config.ConfigStashCategory CreateStashCategory(string name, int id = -1)
+        {
+            Common.Config.ConfigStashCategory cat = null;
+            // generate new id
+            if (id == -1)
             {
-                Global.Localization.LoadLanguage(Settings.Language);
-                LanguageChanged?.Invoke(null, EventArgs.Empty);
+                // find next ID to be used
+                id = 1 + _config.StashCategories.Aggregate(0, (acc, x) => {
+                    return Math.Max(acc, x.ID);
+                });
             }
-            if (previous.GamePath != Settings.GamePath)
+            // explicite id
+            else
             {
-                GamePathChanged?.Invoke(null, EventArgs.Empty);
+                // check if ID already exists
+                cat = GetCategoryByID(id);
+                if (cat != null) return cat;
             }
-            if (previous.OverlayScale != Settings.OverlayScale || previous.OverlayWidth != Settings.OverlayWidth || previous.OverlayTransparency != Settings.OverlayTransparency)
+
+            Console.WriteLine($"Adding Config Stash Category: #{id} {name}");
+            cat = new Common.Config.ConfigStashCategory
             {
-                AppearanceChanged?.Invoke(null, EventArgs.Empty);
-            }
+                Name = name,
+                ID = id,
+            };
+            _config.StashCategories.Add(cat);
+            return cat;
         }
 
         #endregion

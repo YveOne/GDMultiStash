@@ -13,7 +13,7 @@ namespace GDMultiStash.Common.Config
     {
 
 
-        [XmlIgnore] public const int LatestVersion = 3;
+        [XmlIgnore] public const int LatestVersion = 4;
 
         [XmlElement("Version")] public int Version { get; set; }
 

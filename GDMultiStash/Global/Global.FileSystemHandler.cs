@@ -13,14 +13,12 @@ namespace GDMultiStash.GlobalHandlers
 
         public string DataDirectory { get; private set; }
         public string StashesDirectory { get; private set; }
-        public string LocalsDirectory { get; private set; }
         public string ConfigFile { get; private set; }
 
         public FileSystemHandler()
         {
             DataDirectory = Path.Combine(Application.StartupPath, "Data");
             StashesDirectory = Path.Combine(DataDirectory, "Stashes");
-            LocalsDirectory = Path.Combine(DataDirectory, "Locales");
             ConfigFile = Path.Combine(DataDirectory, "Config.xml");
         }
 
@@ -28,7 +26,6 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (!Directory.Exists(DataDirectory)) Directory.CreateDirectory(DataDirectory);
             if (!Directory.Exists(StashesDirectory)) Directory.CreateDirectory(StashesDirectory);
-            if (!Directory.Exists(LocalsDirectory)) Directory.CreateDirectory(LocalsDirectory);
         }
 
         public string GetStashDirectory(int stashID)
@@ -50,7 +47,7 @@ namespace GDMultiStash.GlobalHandlers
 
         public string GetStashTransferFile(int stashID, int backupIndex = -1)
         {
-            return Path.Combine(GetStashDirectory(stashID), "transfer" + (backupIndex >= 0 ? backupIndex.ToString() : ""));
+            return Path.Combine(GetStashDirectory(stashID), "transfer" + (backupIndex > 0 ? backupIndex.ToString() : ""));
         }
 
         public void CreateStashTransferFile(int stashID, GrimDawnLib.GrimDawnGameExpansion expansion)
@@ -87,6 +84,25 @@ namespace GDMultiStash.GlobalHandlers
             return true;
         }
 
+        public void BackupCleanupStashTransferFile(int stashID)
+        {
+            int maxBackups = Global.Configuration.Settings.MaxBackups;
+            System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex(@"^transfer(\d*)$");
+            System.Text.RegularExpressions.Match m;
+            int backupIndex;
+            foreach (string f in Directory.GetFiles(GetStashDirectory(stashID)))
+            {
+                m = re.Match(Path.GetFileName(f));
+                if (!m.Success) continue;
+                if (m.Groups[1].Value == "") continue;
+                backupIndex = int.Parse(m.Groups[1].Value);
+                if (backupIndex > maxBackups)
+                {
+                    File.Delete(f);
+                }
+            }
+        }
+
         public void BackupStashTransferFile(int stashID)
         {
             if (!File.Exists(GetStashTransferFile(stashID))) return;
@@ -97,19 +113,22 @@ namespace GDMultiStash.GlobalHandlers
             }
             if (backupIndex > 0)
             {
+                //if (maxBackups >= 0)
+                //{
+                //for (int i = (maxBackups == 0) ? 1 : maxBackups; i <= backupIndex; i += 1)
                 int maxBackups = Global.Configuration.Settings.MaxBackups;
-                if (maxBackups >= 0)
+                int cur = (maxBackups <= 0) ? 1 : maxBackups;
+                int end = backupIndex;
+                for (int i = cur; i <= end; i += 1)
                 {
-                    for (int i = (maxBackups == 0) ? 1 : maxBackups; i <= backupIndex; i += 1)
-                    {
-                        File.Delete(GetStashTransferFile(stashID, i));
-                        backupIndex -= 1;
-                    }
+                    File.Delete(GetStashTransferFile(stashID, i));
+                    backupIndex -= 1;
                 }
-                else
-                {
-                    // unlimited backups
-                }
+                //}
+                //else
+                //{
+                // unlimited backups
+                //}
             }
             while (backupIndex > 0)
             {

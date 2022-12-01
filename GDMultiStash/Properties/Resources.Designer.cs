@@ -151,16 +151,15 @@ namespace GDMultiStash.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die records/creatures/npcs/npcgear/npc_child_girl_hair01:4
-        ///records/creatures/npcs/npcgear/npc_child_girl_hair02:4
-        ///records/creatures/npcs/npcgear/npc_child_girl_hair03:4
-        ///records/creatures/npcs/npcgear/npc_child_girl_hat01:4
-        ///records/creatures/npcs/npcgear/npc_feet_blacklegion01:4
-        ///records/creatures/npcs/npcgear/npc_feet_blacklegion02:4
-        ///records/creatures/npcs/npcgear/npc_feet_exile01:4
-        ///records/creatures/npcs/npcgear/npc_feet_necromancer01:4
-        ///records/creatures/npcs/npcgear/npc_feet_necromancer02:4
-        ///records/cr [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die records/creatures/npcs/npcgear/npc_child_girl_hair01:2:2
+        ///records/creatures/npcs/npcgear/npc_child_girl_hair02:2:2
+        ///records/creatures/npcs/npcgear/npc_child_girl_hair03:2:2
+        ///records/creatures/npcs/npcgear/npc_child_girl_hat01:2:2
+        ///records/creatures/npcs/npcgear/npc_feet_blacklegion01:2:2
+        ///records/creatures/npcs/npcgear/npc_feet_blacklegion02:2:2
+        ///records/creatures/npcs/npcgear/npc_feet_exile01:2:2
+        ///records/creatures/npcs/npcgear/npc_feet_necromancer01:2:2
+        ///records/creatures/npcs/npcgear/npc_feet_necromancer [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string itemsizes {
             get {
@@ -170,17 +169,15 @@ namespace GDMultiStash.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///err_gamedir_not_found = Spielverzeichnis nicht gefunden!
-        ///err_docsdir_not_found = Dokumentenverzeichnis nicht gefunden!
-        ///err_gd_already_running = Grim Dawn läuft bereits!
-        ///err_invalid_transfer_file = Ungültige Transfer-Datei!
-        ///err_no_stash_selected = Kein Stash ausgewählt!
-        ///err_cannot_delete_stash = Stash &quot;{0}&quot; kann nicht gelöscht werden: {1}
-        ///err_stash_is_active = Stash ist gerade aktiv
-        ///err_gdms_already_running = GDMultiStash läuft bereits!
+        ///language_name = Deutsch
         ///
-        ///window_setup = Einstellungen
-        ///window_create_stash = Stash er [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_please_select_gamedir = Bitte zuerst Spielverzeichnis auswählen
+        ///msg_gamedir_not_found = Spielverzeichnis nicht gefunden!
+        ///msg_docsdir_not_found = Dokumentenverzeichnis nicht gefunden!
+        ///msg_update_available = Neue Version verfügbar: {0}\nJetzt aktualisieren?
+        ///msg_gd_already_running = Grim Dawn läuft bereits!
+        ///msg_confirm_delete_stashes = Ausgewählte Stashes löschen?\nDies kann nicht rückgängig gemacht werden!
+        ///msg_cannot_delete_stash = Stash &quot;{0}&quot; kann nicht gelöscht werden: [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_deDE {
             get {
@@ -190,18 +187,16 @@ namespace GDMultiStash.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///err_gamedir_not_found = Game directory not found!
-        ///err_docsdir_not_found = Documents directory not found!
-        ///err_gd_already_running = Grim Dawn is already running!
-        ///err_invalid_transfer_file = Invalid transfer file!
-        ///err_no_stash_selected = No stash selected!
-        ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
-        ///err_stash_is_active = Stash is currently active
-        ///err_gdms_already_running = GDMultiStash is already running!
+        ///language_name = English (GB)
         ///
-        ///window_setup = Setup
-        ///window_create_stash = Create Stash
-        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_please_select_gamedir = Please first select your game directory
+        ///msg_gamedir_not_found = Game directory not found!
+        ///msg_docsdir_not_found = Documents directory not found!
+        ///msg_update_available = New version available: {0}\nUpdate now?
+        ///msg_gd_already_running = Grim Dawn is already running!
+        ///msg_confirm_delete_stashes = Delete selected stashes?\nThis cannot be undone!
+        ///msg_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
+        ///msg_stash_is_active = Stash is currently [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_enGB {
             get {
@@ -211,18 +206,16 @@ namespace GDMultiStash.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///err_gamedir_not_found = Game directory not found!
-        ///err_docsdir_not_found = Documents directory not found!
-        ///err_gd_already_running = Grim Dawn is already running!
-        ///err_invalid_transfer_file = Invalid transfer file!
-        ///err_no_stash_selected = No stash selected!
-        ///err_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
-        ///err_stash_is_active = Stash is currently active
-        ///err_gdms_already_running = GDMultiStash is already running!
+        ///language_name = English (US)
         ///
-        ///window_setup = Setup
-        ///window_create_stash = Create Stash
-        ///window_import_stas [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_please_select_gamedir = Please first select your game directory
+        ///msg_gamedir_not_found = Game directory not found!
+        ///msg_docsdir_not_found = Documents directory not found!
+        ///msg_update_available = New version available: {0}\nUpdate now?
+        ///msg_gd_already_running = Grim Dawn is already running!
+        ///msg_confirm_delete_stashes = Delete selected stashes?\nThis cannot be undone!
+        ///msg_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
+        ///msg_stash_is_active = Stash is currently [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_enUS {
             get {
@@ -232,32 +225,44 @@ namespace GDMultiStash.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///err_gamedir_not_found = 游戏目录未找到！
-        ///err_docsdir_not_found = 文档目录未找到！
-        ///err_gd_already_running = 恐怖黎明已经在运行！
-        ///err_invalid_transfer_file = 传输文件无效！
-        ///err_no_stash_selected = 没有选择存储！
-        ///err_cannot_delete_stash = 存储“{0}”无法删除：{1}
-        ///err_stash_is_active = 存储当前处于活动状态
-        ///err_gdms_already_running = GDMultiStash 已经在运行！
+        ///language_name = 简体中文
         ///
-        ///window_setup = 设置
-        ///window_create_stash = 创建存储
-        ///window_import_stash = 导入存储
-        ///
-        ///setup_tab_common = 通用
-        ///setup_tab_behaviour = 行为
-        ///
-        ///all = 全部
-        ///
-        ///button_file = 文件
-        ///button_settings = 设置
-        ///button_about = 关于
-        ///button_he [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_please_select_gamedir = Please first select your game directory
+        ///msg_gamedir_not_found = 游戏目录未找到！
+        ///msg_docsdir_not_found = 文档目录未找到！
+        ///msg_update_available = New version available: {0}\nUpdate now?
+        ///msg_gd_already_running = 恐怖黎明已经在运行！
+        ///msg_confirm_delete_stashes = 删除选定的存储？\n无法撤消！
+        ///msg_cannot_delete_stash = 存储“{0}”无法删除：{1}
+        ///msg_stash_is_active = 存储当前处于活动状态
+        ///msg_stash_is_main = Stash is main stash
+        ///msg_invalid_transfer_file = 传输文件无效！
+        ///msg_no_stash_selected = 没有选择存储！
+        ///msg_gdms_alrea [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_zhCN {
             get {
                 return ResourceManager.GetString("local_zhCN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lockBlack {
+            get {
+                object obj = ResourceManager.GetObject("lockBlack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap lockWhite {
+            get {
+                object obj = ResourceManager.GetObject("lockWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -277,6 +282,36 @@ namespace GDMultiStash.Properties {
         internal static System.Drawing.Bitmap radio1 {
             get {
                 object obj = ResourceManager.GetObject("radio1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReloadButtonSmallDown {
+            get {
+                object obj = ResourceManager.GetObject("ReloadButtonSmallDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReloadButtonSmallOver {
+            get {
+                object obj = ResourceManager.GetObject("ReloadButtonSmallOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReloadButtonSmallUp {
+            get {
+                object obj = ResourceManager.GetObject("ReloadButtonSmallUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

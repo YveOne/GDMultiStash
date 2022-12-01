@@ -17,8 +17,5 @@ namespace GDMultiStash
         public static GlobalHandlers.StashesHandler Stashes = new GlobalHandlers.StashesHandler();
         public static GlobalHandlers.UpdateHandler Update = new GlobalHandlers.UpdateHandler();
         public static GlobalHandlers.WindowsHandler Windows = new GlobalHandlers.WindowsHandler();
-
-
-
     }
 }

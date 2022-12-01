@@ -5,22 +5,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+using GDMultiStash.Common;
 using GDMultiStash.Common.Overlay;
 
 namespace GDMultiStash.Overlay.Elements
 {
-    public class StashListChild : PseudoScrollChild
+    internal class StashListChild : PseudoScrollChild
     {
         public static D3DHook.Hook.Common.IImageResource _Radio0Resource;
         public static D3DHook.Hook.Common.IImageResource _Radio1Resource;
+        public static D3DHook.Hook.Common.IImageResource _LockSignResource;
 
         private readonly TextElement _textElement;
         private readonly ImageElement _radioButton;
+        private readonly ImageElement _lockSign;
         private readonly int _textMarginLeft = 30;
 
+        private bool _locked = false;
         private bool _active = false;
 
-        public StashListChild()
+        public StashListChild(StashObject stash) : base(stash)
         {
 
             _textElement = new TextElement()
@@ -41,6 +45,17 @@ namespace GDMultiStash.Overlay.Elements
                 Scale = 0.8f,
             };
             AddChild(_radioButton);
+
+            _lockSign = new ImageElement()
+            {
+                Resource = _LockSignResource,
+                AnchorPoint = Anchor.Right,
+                X = 0,
+                Scale = 0.8f,
+                Visible = false,
+                Alpha = 0.5f,
+            };
+            AddChild(_lockSign);
         }
 
         public string Text
@@ -76,9 +91,20 @@ namespace GDMultiStash.Overlay.Elements
         public bool Active
         {
             get { return _active; }
-            set {
+            set
+            {
                 _active = value;
                 _radioButton.Resource = value ? _Radio1Resource : _Radio0Resource;
+            }
+        }
+
+        public bool Locked
+        {
+            get { return _locked; }
+            set
+            {
+                _locked = value;
+                _lockSign.Visible = value;
             }
         }
 

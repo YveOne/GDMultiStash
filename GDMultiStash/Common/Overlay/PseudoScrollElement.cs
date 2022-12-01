@@ -14,9 +14,12 @@ namespace GDMultiStash.Common.Overlay
         private int _order = 0;
         public virtual int Order { get { return _order; } set { _order = value; } }
 
-        public PseudoScrollChild()
+        public Object Model { get; private set; }
+
+        public PseudoScrollChild(Object model)
         {
             WidthToParent = true;
+            Model = model;
         }
     }
 
@@ -24,6 +27,7 @@ namespace GDMultiStash.Common.Overlay
     {
         protected virtual float ItemHeight => 0f;
         protected virtual float ItemMargin => 0f;
+        protected virtual float ItemMarginStart => 0f;
 
         private readonly List<T> _scrollChildren;
 
@@ -32,13 +36,16 @@ namespace GDMultiStash.Common.Overlay
         private int _scrollIndex = 0;
         private readonly List<T> _cache;
 
+        public delegate void VisibleCountChangedEventHandler(int visibleCount);
+        public event VisibleCountChangedEventHandler VisibleCountChanged;
+
         public PseudoScrollElement()
         {
             _scrollChildren = new List<T>();
             _cache = new List<T>();
         }
 
-        public int ItemCount => _scrollChildren.Count;
+        public List<T> Items => _scrollChildren;
 
         public int Scrollindex
         {
@@ -120,19 +127,39 @@ namespace GDMultiStash.Common.Overlay
             _updateList = true;
         }
 
+        protected virtual void OnUpdateListStart()
+        {
+
+        }
+
+        protected virtual void OnUpdateListEnd()
+        {
+
+        }
+
         public override void Draw(float ms)
         {
             base.Draw(ms);
             if (_updateList)
             {
                 _updateList = false;
+                OnUpdateListStart();
+
+                int visibleCount = 0;
+                foreach (var item in Items)
+                    if (item.Visible) visibleCount += 1;
+                if (CurrentVisibleCount != visibleCount)
+                {
+                    CurrentVisibleCount = visibleCount;
+                    VisibleCountChanged?.Invoke(visibleCount);
+                }
 
                 if (_scrollChildren.Count <= _maxVisibleCount)
                     _scrollIndex = 0;
                 
                 int startIndex = -_scrollIndex;
                 int endIndex = startIndex + _maxVisibleCount - 1;
-                float baseY = _scrollIndex * (ItemHeight + ItemMargin) + ItemMargin;
+                float baseY = _scrollIndex * (ItemHeight + ItemMargin) + ItemMarginStart;
 
                 _scrollChildren.Sort((a, b) => a.Order.CompareTo(b.Order));
 
@@ -145,6 +172,8 @@ namespace GDMultiStash.Common.Overlay
                     t.Visible = i >= startIndex && i <= endIndex;
                     i += 1;
                 }
+
+                OnUpdateListEnd();
             }
         }
 

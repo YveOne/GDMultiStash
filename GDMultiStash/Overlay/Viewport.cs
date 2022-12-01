@@ -53,6 +53,11 @@ namespace GDMultiStash.Overlay.Elements
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 
+            StashListChild._LockSignResource = Resources.CreateImageResource(
+                    Properties.Resources.lockWhite,
+                    System.Drawing.Imaging.ImageFormat.Png
+                    );
+
             InfoBoxButton._UpResource = Resources.CreateImageResource(
                     Properties.Resources.ButtonSmallUp,
                     System.Drawing.Imaging.ImageFormat.Png
@@ -65,6 +70,21 @@ namespace GDMultiStash.Overlay.Elements
 
             InfoBoxButton._OverResource = Resources.CreateImageResource(
                     Properties.Resources.ButtonSmallOver,
+                    System.Drawing.Imaging.ImageFormat.Png
+                    );
+
+            InfoBoxReloadButton._UpResource = Resources.CreateImageResource(
+                    Properties.Resources.ReloadButtonSmallUp,
+                    System.Drawing.Imaging.ImageFormat.Png
+                    );
+
+            InfoBoxReloadButton._DownResource = Resources.CreateImageResource(
+                    Properties.Resources.ReloadButtonSmallDown,
+                    System.Drawing.Imaging.ImageFormat.Png
+                    );
+
+            InfoBoxReloadButton._OverResource = Resources.CreateImageResource(
+                    Properties.Resources.ReloadButtonSmallOver,
                     System.Drawing.Imaging.ImageFormat.Png
                     );
 

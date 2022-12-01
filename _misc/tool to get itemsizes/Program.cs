@@ -61,13 +61,18 @@ namespace ConsoleApp1
 
         static void Main(string[] args)
         {
-            /*
+            
             if (args.Length == 0) return;
             argsList = new List<string>(args);
             string GDPATH = GetNextArg();
-            */
+            
 
-            string GDPATH = "Z:\\Games\\Steam\\steamapps\\common\\Grim Dawn";
+            //string GDPATH = "Z:\\Games\\Steam\\steamapps\\common\\Grim Dawn";
+            if (!Directory.Exists(GDPATH))
+            {
+                Console.WriteLine("Directory not found: " + GDPATH);
+                return;
+            }
 
             //if (Directory.Exists(CWD)) Directory.Delete(CWD, true);
             if (!Directory.Exists(CWD))
@@ -111,9 +116,8 @@ namespace ConsoleApp1
 
 
             Dictionary<string, string> record2bitmap = new Dictionary<string, string>();
-            Dictionary<string, int> bitmapSizes = new Dictionary<string, int>();
-            SortedDictionary<string, int> itemSizes = new SortedDictionary<string, int>();
-
+            Dictionary<string, Size> bitmapSizes = new Dictionary<string, Size>();
+            SortedDictionary<string, Size> itemSizes = new SortedDictionary<string, Size>();
             Dictionary<string, bool> boolTexFiles = new Dictionary<string, bool>();
 
 
@@ -160,7 +164,7 @@ namespace ConsoleApp1
                         int width = img.Width / 32;
                         int height = img.Height / 32;
                         if (width > 8 || height > 8) continue;
-                        bitmapSizes[texFileClean] = width * height;
+                        bitmapSizes[texFileClean] = new Size(width, height);
                         img.Dispose();
                     }
                     else
@@ -183,9 +187,9 @@ namespace ConsoleApp1
             foreach (KeyValuePair<string,string> kvp in record2bitmap)
             {
                 if (!bitmapSizes.ContainsKey(kvp.Value)) continue;
-                int isize = bitmapSizes[kvp.Value];
+                Size isize = bitmapSizes[kvp.Value];
                 itemSizes[kvp.Key] = isize;
-                Console.WriteLine(string.Format("{0} = {1}", kvp.Key, isize));
+                Console.WriteLine(string.Format("{0} = {1} / {2}", kvp.Key, isize.Width, isize.Height));
             }
 
 
@@ -196,12 +200,11 @@ namespace ConsoleApp1
             File.WriteAllText(listFile, "");
             using (StreamWriter sw = File.AppendText(listFile))
             {
-                foreach (KeyValuePair<string, int> kvp in itemSizes)
+                foreach (KeyValuePair<string, Size> kvp in itemSizes)
                 {
-                    sw.WriteLine(kvp.Key + ":" + kvp.Value);
+                    sw.WriteLine(String.Format("{0}:{1}:{2}", kvp.Key, kvp.Value.Width, kvp.Value.Height));
                 }
             }
-
 
 
 

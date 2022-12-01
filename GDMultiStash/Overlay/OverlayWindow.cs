@@ -101,10 +101,10 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-            _stashList.MouseWheel += delegate (object sender, int delta)
+            _stashList.MouseWheel += delegate (object sender, MouseWheelEventArgs e)
             {
-                _stashList.Scrollindex += delta;
-                _scrollBar.ScrollUnitsY -= delta;
+                _stashList.Scrollindex += e.Delta < 0 ? -1 : 1;
+                _scrollBar.ScrollUnitsY -= e.Delta < 0 ? -1 : 1;
             };
 
 
@@ -138,7 +138,29 @@ namespace GDMultiStash.Overlay.Elements
                 Global.Runtime.DisableMovement();
                 _mouseDown = true;
             };
+            MouseWheel += (object sender, MouseWheelEventArgs e) => {
+                System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(() => {
+                    System.Threading.Thread.Sleep(1);
 
+                    Native.Input inp = new Native.Input
+                    {
+                        type = Native.InputType.Mouse,
+                        u = new Native.InputUnion
+                        {
+                            mi = new Native.MouseInput
+                            {
+                                dx = e.X,
+                                dy = e.Y,
+                                mouseData = -e.Delta,
+                                dwFlags = 0x0800,
+                            }
+                        }
+                    };
+                    Native.SendInput(1, new Native.Input[] { inp }, System.Runtime.InteropServices.Marshal.SizeOf(typeof(Native.Input)));
+
+                }));
+                t.Start();
+            };
 
             _moveAnimation = new MoveAnimation(this, Utils.Easing.BackOut(1.1f), _moveDuration);
             _moveAnimation.Delay = 100; // debug: fix lag on npc stash window open

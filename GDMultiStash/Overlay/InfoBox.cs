@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+using GDMultiStash.Common;
 using GDMultiStash.Common.Overlay;
 using GrimDawnLib;
 
@@ -21,17 +22,19 @@ namespace GDMultiStash.Overlay.Elements
 
         private readonly InfoBoxButton _saveButton;
         private readonly InfoBoxButton _loadButton;
+        private readonly InfoBoxReloadButton _reloadButton;
 
         public InfoBox()
         {
             X = 2;
             Y = 605;
-            Width = 265;
+            WidthToParent = true;
+            Width = -10;
             Height = 127;
 
             _titleElement = new TextElement()
             {
-                Width = Width,
+                WidthToParent = true,
                 Height = 25,
                 Font = _TitleFont,
                 Align = StringAlignment.Near,
@@ -44,7 +47,7 @@ namespace GDMultiStash.Overlay.Elements
 
             _lastChangeIntern = new TextElement()
             {
-                Width = Width,
+                WidthToParent = true,
                 Height = 20,
                 Font = _TextFont,
                 Align = StringAlignment.Near,
@@ -65,11 +68,19 @@ namespace GDMultiStash.Overlay.Elements
 
             _loadButton = new InfoBoxButton()
             {
-                X = 6 + 6 + 120,
+                X = _saveButton.X + _saveButton.Width + 6,
                 Y = -5,
                 AnchorPoint = Anchor.BottomLeft,
             };
             AddChild(_loadButton);
+
+            _reloadButton = new InfoBoxReloadButton()
+            {
+                X = -5,
+                Y = -5,
+                AnchorPoint = Anchor.BottomRight,
+            };
+            AddChild(_reloadButton);
 
             Global.Runtime.ActiveStashChanged += delegate {
                 UpdateInfoText();
@@ -77,6 +88,7 @@ namespace GDMultiStash.Overlay.Elements
 
             _saveButton.MouseClick += CheatSaveButton_Click;
             _loadButton.MouseClick += CheatLoadButton_Click;
+            _reloadButton.MouseClick += ReloadButton_Click;
 
             UpdateButtonText();
             Global.Configuration.LanguageChanged += delegate {
@@ -95,13 +107,13 @@ namespace GDMultiStash.Overlay.Elements
 
         private void UpdateButtonText()
         {
-            _saveButton.Text = Global.L["button_save"];
-            _loadButton.Text = Global.L["button_load"];
+            _saveButton.Text = Global.L["overlayWindow_saveButton"];
+            _loadButton.Text = Global.L["overlayWindow_loadButton"];
         }
 
         private void UpdateInfoText()
         {
-            GlobalHandlers.StashObject stash = Global.Stashes.GetStash(Global.Runtime.ActiveStashID);
+            StashObject stash = Global.Stashes.GetStash(Global.Runtime.ActiveStashID);
             if (stash == null) return; // something happend
             _titleElement.Text = stash.Name;
             _lastChangeIntern.Text = stash.LastWriteTime.ToString();
@@ -118,6 +130,15 @@ namespace GDMultiStash.Overlay.Elements
             if (Global.Runtime.StashIsReopening) return;
             Global.Runtime.LoadCurrentStash();
         }
+
+        private void ReloadButton_Click(object sender, EventArgs e)
+        {
+            if (Global.Runtime.StashIsReopening) return;
+            Global.Runtime.ReloadCurrentStash();
+        }
+
+
+        
 
     }
 }

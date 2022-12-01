@@ -30,19 +30,21 @@
         {
             this.topMenuStrip = new System.Windows.Forms.MenuStrip();
             this.fileButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.importStashesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsButton = new System.Windows.Forms.ToolStripMenuItem();
             this.helpButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.changelogButton = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.startGameButton = new System.Windows.Forms.ToolStripMenuItem();
             this.bottomMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.importStashesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.createStashButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCategoriesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundPanel = new System.Windows.Forms.Panel();
             this.stashesListView = new BrightIdeasSoftware.ObjectListView();
             this.showExpansionComboBox = new System.Windows.Forms.ComboBox();
             this.showSoftCoreComboBox = new System.Windows.Forms.CheckBox();
             this.showHardCoreComboBox = new System.Windows.Forms.CheckBox();
             this.selectAllButton = new System.Windows.Forms.Button();
-            this.unselectAllButton = new System.Windows.Forms.Button();
             this.displayMenuPanel = new System.Windows.Forms.Panel();
             this.topMenuStrip.SuspendLayout();
             this.bottomMenuStrip.SuspendLayout();
@@ -56,7 +58,8 @@
             this.topMenuStrip.BackColor = System.Drawing.Color.White;
             this.topMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileButton,
-            this.helpButton});
+            this.helpButton,
+            this.startGameButton});
             this.topMenuStrip.Location = new System.Drawing.Point(0, 0);
             this.topMenuStrip.Name = "topMenuStrip";
             this.topMenuStrip.Size = new System.Drawing.Size(634, 24);
@@ -66,40 +69,64 @@
             // fileButton
             // 
             this.fileButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importStashesButton,
             this.settingsButton});
             this.fileButton.Name = "fileButton";
             this.fileButton.Size = new System.Drawing.Size(37, 20);
             this.fileButton.Text = "File";
             // 
+            // importStashesButton
+            // 
+            this.importStashesButton.Name = "importStashesButton";
+            this.importStashesButton.Size = new System.Drawing.Size(152, 22);
+            this.importStashesButton.Text = "Import Stashes";
+            this.importStashesButton.Click += new System.EventHandler(this.ImportStashesButton_Click);
+            // 
             // settingsButton
             // 
             this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(116, 22);
+            this.settingsButton.Size = new System.Drawing.Size(152, 22);
             this.settingsButton.Text = "Settings";
             this.settingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
             // helpButton
             // 
             this.helpButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.changelogButton,
             this.aboutButton});
             this.helpButton.Name = "helpButton";
             this.helpButton.Size = new System.Drawing.Size(44, 20);
             this.helpButton.Text = "Help";
             // 
+            // changelogButton
+            // 
+            this.changelogButton.Name = "changelogButton";
+            this.changelogButton.Size = new System.Drawing.Size(132, 22);
+            this.changelogButton.Text = "Changelog";
+            this.changelogButton.Click += new System.EventHandler(this.ChangelogButton_Click);
+            // 
             // aboutButton
             // 
             this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(180, 22);
+            this.aboutButton.Size = new System.Drawing.Size(132, 22);
             this.aboutButton.Text = "About";
             this.aboutButton.Click += new System.EventHandler(this.AboutButton_Click);
+            // 
+            // startGameButton
+            // 
+            this.startGameButton.ForeColor = System.Drawing.Color.SeaGreen;
+            this.startGameButton.Name = "startGameButton";
+            this.startGameButton.Size = new System.Drawing.Size(62, 20);
+            this.startGameButton.Text = "Start GD";
+            this.startGameButton.Click += new System.EventHandler(this.StartGameButton_Click);
             // 
             // bottomMenuStrip
             // 
             this.bottomMenuStrip.BackColor = System.Drawing.Color.White;
             this.bottomMenuStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottomMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importStashesButton,
-            this.createStashButton});
+            this.createStashButton,
+            this.editCategoriesButton});
             this.bottomMenuStrip.Location = new System.Drawing.Point(0, 437);
             this.bottomMenuStrip.Name = "bottomMenuStrip";
             this.bottomMenuStrip.Padding = new System.Windows.Forms.Padding(6, 0, 0, 2);
@@ -108,14 +135,6 @@
             this.bottomMenuStrip.TabIndex = 1;
             this.bottomMenuStrip.Text = "bottomMenuStrip";
             // 
-            // importStashesButton
-            // 
-            this.importStashesButton.Margin = new System.Windows.Forms.Padding(10, 2, 0, 0);
-            this.importStashesButton.Name = "importStashesButton";
-            this.importStashesButton.Size = new System.Drawing.Size(97, 20);
-            this.importStashesButton.Text = "Import Stashes";
-            this.importStashesButton.Click += new System.EventHandler(this.ImportStashesButton_Click);
-            // 
             // createStashButton
             // 
             this.createStashButton.Margin = new System.Windows.Forms.Padding(10, 2, 0, 0);
@@ -123,6 +142,13 @@
             this.createStashButton.Size = new System.Drawing.Size(84, 20);
             this.createStashButton.Text = "Create Stash";
             this.createStashButton.Click += new System.EventHandler(this.CreateStashButton_Click);
+            // 
+            // editCategoriesButton
+            // 
+            this.editCategoriesButton.Name = "editCategoriesButton";
+            this.editCategoriesButton.Size = new System.Drawing.Size(98, 22);
+            this.editCategoriesButton.Text = "Edit Categories";
+            this.editCategoriesButton.Click += new System.EventHandler(this.EditCategoriesButton_Click);
             // 
             // backgroundPanel
             // 
@@ -148,7 +174,6 @@
             this.stashesListView.HideSelection = false;
             this.stashesListView.Location = new System.Drawing.Point(5, 5);
             this.stashesListView.Name = "stashesListView";
-            this.stashesListView.RowHeight = 20;
             this.stashesListView.SelectColumnsOnRightClick = false;
             this.stashesListView.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
             this.stashesListView.ShowSortIndicators = false;
@@ -200,17 +225,6 @@
             this.selectAllButton.UseVisualStyleBackColor = true;
             this.selectAllButton.Click += new System.EventHandler(this.SelectAllButton_Click);
             // 
-            // unselectAllButton
-            // 
-            this.unselectAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.unselectAllButton.Location = new System.Drawing.Point(125, 437);
-            this.unselectAllButton.Name = "unselectAllButton";
-            this.unselectAllButton.Size = new System.Drawing.Size(125, 23);
-            this.unselectAllButton.TabIndex = 26;
-            this.unselectAllButton.Text = "Unselect all";
-            this.unselectAllButton.UseVisualStyleBackColor = true;
-            this.unselectAllButton.Click += new System.EventHandler(this.UnselectAllButton_Click);
-            // 
             // displayMenuPanel
             // 
             this.displayMenuPanel.Controls.Add(this.showExpansionComboBox);
@@ -228,7 +242,6 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(634, 461);
             this.Controls.Add(this.displayMenuPanel);
-            this.Controls.Add(this.unselectAllButton);
             this.Controls.Add(this.selectAllButton);
             this.Controls.Add(this.backgroundPanel);
             this.Controls.Add(this.topMenuStrip);
@@ -261,13 +274,15 @@
         private System.Windows.Forms.MenuStrip bottomMenuStrip;
         private System.Windows.Forms.Panel backgroundPanel;
         private BrightIdeasSoftware.ObjectListView stashesListView;
-        private System.Windows.Forms.ToolStripMenuItem importStashesButton;
         private System.Windows.Forms.ToolStripMenuItem createStashButton;
         private System.Windows.Forms.ComboBox showExpansionComboBox;
         private System.Windows.Forms.CheckBox showSoftCoreComboBox;
         private System.Windows.Forms.CheckBox showHardCoreComboBox;
         private System.Windows.Forms.Button selectAllButton;
-        private System.Windows.Forms.Button unselectAllButton;
         private System.Windows.Forms.Panel displayMenuPanel;
+        private System.Windows.Forms.ToolStripMenuItem editCategoriesButton;
+        private System.Windows.Forms.ToolStripMenuItem changelogButton;
+        private System.Windows.Forms.ToolStripMenuItem importStashesButton;
+        private System.Windows.Forms.ToolStripMenuItem startGameButton;
     }
 }

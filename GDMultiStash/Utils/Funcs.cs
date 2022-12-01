@@ -24,6 +24,17 @@ namespace Utils
             return false;
         }
 
+        public static void OpenUrl(string url)
+        {
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = url;
+            process.StartInfo = startInfo;
+            process.Start();
+        }
+
+
 
 
 

@@ -48,6 +48,15 @@ public static partial class Native
                 MouseHookStruct mouseStruct = (MouseHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseHookStruct));
                 _point.x = mouseStruct.pt.x;
                 _point.y = mouseStruct.pt.y;
+
+
+                if ((mouseStruct.flags & 0x01) == 0x01)
+                {
+                    // is injected
+                    return 1;
+                }
+
+
                 MouseEventArgs args = null;
                 switch ((Int32)wParam)
                 {
@@ -88,7 +97,7 @@ public static partial class Native
                         break;
 
                     case WM_MOUSEWHEEL:
-                        args = new MouseEventArgs(MouseButtons.None, 0, mouseStruct.pt.x, mouseStruct.pt.y, mouseStruct.mouseData < 0 ? -1 : +1);
+                        args = new MouseEventArgs(MouseButtons.None, 0, mouseStruct.pt.x, mouseStruct.pt.y, mouseStruct.mouseData);
                         MouseWheel?.Invoke(this, args);
                         break;
 

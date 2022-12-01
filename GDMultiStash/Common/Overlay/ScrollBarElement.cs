@@ -90,8 +90,19 @@ namespace GDMultiStash.Common.Overlay
             }
         }
 
+        private void TriggerScrollingEvent()
+        {
+            Scrolling?.Invoke(this, new ScrollingEventArgs
+            {
+                X = -ScrollUnitsX,
+                Y = -ScrollUnitsY,
+            });
+        }
+
         public void Rearrange()
         {
+            ScrollUnitsX = _scrollUnitsX;
+            ScrollUnitsY = _scrollUnitsY;
             bool hide = true;
             if (ScrollAreaWidthUnits > 0 && _unitsX > ScrollAreaWidthUnits)
             {
@@ -108,7 +119,6 @@ namespace GDMultiStash.Common.Overlay
             }
             if (ScrollAreaHeightUnits > 0 && _unitsY > ScrollAreaHeightUnits)
             {
-
                 _scrollUnitsAspectY = (float)ScrollAreaHeightUnits / _unitsY;
                 _scrollBar.Height = Math.Max(ScrollBarMinHeight, ScrollAreaHeight * _scrollUnitsAspectY);
                 _pixelPerUnitY = (ScrollAreaHeight - _scrollBar.Height) / (_unitsY - ScrollAreaHeightUnits);
@@ -128,8 +138,9 @@ namespace GDMultiStash.Common.Overlay
             base.Draw(elapsed);
             if (_rearrange)
             {
-                _rearrange = false;
                 Rearrange();
+                TriggerScrollingEvent();
+                _rearrange = false;
             }
         }
 
@@ -214,19 +225,13 @@ namespace GDMultiStash.Common.Overlay
                     if (movedY)
                         ScrollUnitsY = _tempUnitsStartY + movedUnitsY;
 
-                    Scrolling?.Invoke(this, new ScrollingEventArgs
-                    {
-                        X = -ScrollUnitsX,
-                        Y = -ScrollUnitsY,
-                    });
+                    TriggerScrollingEvent();
                 }
             }
             return base.CheckMouseMove(x, y);
         }
 
         #endregion
-
-
 
     }
 }

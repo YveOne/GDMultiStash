@@ -20,12 +20,6 @@ namespace GDMultiStash
             Application.Run(new GDMSContext());
         }
 
-        public static void ShowError(string errmsg)
-        {
-            Console.WriteLine("ERROR: " + errmsg);
-            MessageBox.Show(errmsg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
         public static bool Quitting { get; private set; }
 
         public static void Quit()

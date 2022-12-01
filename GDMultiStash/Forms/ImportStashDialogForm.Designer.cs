@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.stashFileTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.transferFileLabel = new System.Windows.Forms.Label();
+            this.stashNameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.overwriteLabel = new System.Windows.Forms.Label();
             this.overwriteComboBox = new System.Windows.Forms.ComboBox();
             this.overwriteCheckBox = new System.Windows.Forms.CheckBox();
             this.scCheckBox = new System.Windows.Forms.CheckBox();
@@ -55,23 +55,23 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Transfer file:";
+            this.transferFileLabel.AutoSize = true;
+            this.transferFileLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.transferFileLabel.Location = new System.Drawing.Point(12, 9);
+            this.transferFileLabel.Name = "label1";
+            this.transferFileLabel.Size = new System.Drawing.Size(65, 13);
+            this.transferFileLabel.TabIndex = 3;
+            this.transferFileLabel.Text = "Transfer file:";
             // 
             // label3
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Location = new System.Drawing.Point(195, 55);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(103, 13);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Name:";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.stashNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.stashNameLabel.Location = new System.Drawing.Point(195, 55);
+            this.stashNameLabel.Name = "label3";
+            this.stashNameLabel.Size = new System.Drawing.Size(103, 13);
+            this.stashNameLabel.TabIndex = 10;
+            this.stashNameLabel.Text = "Name:";
+            this.stashNameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // nameTextBox
             // 
@@ -94,13 +94,13 @@
             // 
             // label2
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(198, 81);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Overwrite:";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.overwriteLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.overwriteLabel.Location = new System.Drawing.Point(198, 81);
+            this.overwriteLabel.Name = "label2";
+            this.overwriteLabel.Size = new System.Drawing.Size(100, 13);
+            this.overwriteLabel.TabIndex = 13;
+            this.overwriteLabel.Text = "Overwrite:";
+            this.overwriteLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // overwriteComboBox
             // 
@@ -176,12 +176,12 @@
             this.Controls.Add(this.scCheckBox);
             this.Controls.Add(this.overwriteCheckBox);
             this.Controls.Add(this.overwriteComboBox);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.overwriteLabel);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.nameTextBox);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.stashNameLabel);
             this.Controls.Add(this.stashFileTextBox);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.transferFileLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "ImportDialogForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -196,11 +196,11 @@
 
         #endregion
         private System.Windows.Forms.TextBox stashFileTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label transferFileLabel;
+        private System.Windows.Forms.Label stashNameLabel;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label overwriteLabel;
         private System.Windows.Forms.ComboBox overwriteComboBox;
         private System.Windows.Forms.CheckBox overwriteCheckBox;
         private System.Windows.Forms.CheckBox scCheckBox;

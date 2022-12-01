@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 using BrightIdeasSoftware;
 
+using GDMultiStash.Common;
+
 namespace GDMultiStash.Forms
 {
 
@@ -51,7 +53,7 @@ namespace GDMultiStash.Forms
             }
             else
             {
-                GlobalHandlers.StashObject stash = (GlobalHandlers.StashObject)args.DropTargetItem.RowObject;
+                StashObject stash = (StashObject)args.DropTargetItem.RowObject;
                 if (stash == null || Global.Configuration.IsMainStashID(stash.ID))
                 {
                     args.Effect = DragDropEffects.None;
