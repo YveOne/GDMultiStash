@@ -5,97 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-using GDMultiStash.Common;
+using GDMultiStash.Common.Objects;
 using GDMultiStash.Common.Overlay;
+using GDMultiStash.Overlay.Controls;
+using GDMultiStash.Overlay.Controls.Base;
 
-namespace GDMultiStash.Overlay.Elements
+namespace GDMultiStash.Overlay
 {
-    internal class StashListChild : PseudoScrollChild
+    internal class StashListChild : SelectableListChild<StashObject>
     {
-        public static D3DHook.Hook.Common.IImageResource _Radio0Resource;
-        public static D3DHook.Hook.Common.IImageResource _Radio1Resource;
-        public static D3DHook.Hook.Common.IImageResource _LockSignResource;
+        public override Color DebugColor => Color.FromArgb(128, 0, 255, 255);
 
-        private readonly TextElement _textElement;
-        private readonly ImageElement _radioButton;
         private readonly ImageElement _lockSign;
-        private readonly int _textMarginLeft = 30;
-
+        private readonly ImageElement _usageIndicator;
         private bool _locked = false;
-        private bool _active = false;
 
-        public StashListChild(StashObject stash) : base(stash)
+        public StashListChild() : base()
         {
-
-            _textElement = new TextElement()
-            {
-                Align = StringAlignment.Near,
-                AnchorPoint = Anchor.Left,
-                X = _textMarginLeft,
-                WidthToParent = true,
-                Width = -_textMarginLeft,
-            };
-            AddChild(_textElement);
-
-            _radioButton = new ImageElement() {
-                Resource = _Radio0Resource,
-                AnchorPoint = Anchor.Left,
-                X = 10,
-                Y = -2,
-                Scale = 0.8f,
-            };
-            AddChild(_radioButton);
-
+            TextWidth -= 60;
             _lockSign = new ImageElement()
             {
-                Resource = _LockSignResource,
+                Resource = StaticResources.LockSignResource,
                 AnchorPoint = Anchor.Right,
-                X = 0,
+                X = -50,
                 Scale = 0.8f,
                 Visible = false,
                 Alpha = 0.5f,
+                AutoSize = true,
             };
-            AddChild(_lockSign);
-        }
-
-        public string Text
-        {
-            get => _textElement.Text;
-            set => _textElement.Text = value;
-        }
-
-        public override float Alpha
-        {
-            get { return base.Alpha; }
-            set { base.Alpha = value; _radioButton.Alpha = value; }
-        }
-
-        public override float Height
-        {
-            get { return base.Height; }
-            set { base.Height = value; _textElement.Height = value; }
-        }
-
-        public Font Font
-        {
-            get => _textElement.Font;
-            set => _textElement.Font = value;
-        }
-
-        public Color Color
-        {
-            get => _textElement.Color;
-            set => _textElement.Color = value;
-        }
-
-        public bool Active
-        {
-            get { return _active; }
-            set
+            _usageIndicator = new ImageElement()
             {
-                _active = value;
-                _radioButton.Resource = value ? _Radio1Resource : _Radio0Resource;
-            }
+                X = -5,
+                AnchorPoint = Anchor.Right,
+                Height = 10,
+                Width = 40,
+            };
+
+            AddChild(_lockSign);
+            AddChild(_usageIndicator);
+
+            MouseClick += delegate { Global.Runtime.SwitchToStash(Model.ID); };
         }
 
         public bool Locked
@@ -108,11 +57,20 @@ namespace GDMultiStash.Overlay.Elements
             }
         }
 
+        public void UpdateUsageIndicator()
+        {
+            if (ParentViewport == null) return;
+            ParentViewport.OverlayResources.AsyncCreateImageResource(Model.UsageIndicator, System.Drawing.Imaging.ImageFormat.Png)
+                .ResourceCreated += delegate(object sender, ResourceHandler.ResourceCreatedEventArgs args) {
+                    _usageIndicator.Resource = args.Resource;
+                };
+        }
 
-
-
-
-
+        public override void ViewportConnected(Viewport parentViewport)
+        {
+            base.ViewportConnected(parentViewport);
+            UpdateUsageIndicator();
+        }
 
     }
 }

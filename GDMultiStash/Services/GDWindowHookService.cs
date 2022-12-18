@@ -26,23 +26,12 @@ namespace GDMultiStash.Services
 
         private LocationSize _locationSize;
 
-        public delegate void HookInstalledEventHandler(object sender, EventArgs e);
-        public event HookInstalledEventHandler HookInstalled;
-
-        //public delegate void HookDestroyedEventHandler(object sender, EventArgs e);
-        //public event HookDestroyedEventHandler HookDestroyed;
-
-        public delegate void MoveSizeEventHandler(object sender, EventArgs e);
-        public event MoveSizeEventHandler MoveSize;
-
-        public delegate void GotFocusEventHandler(object sender, EventArgs e);
-        public event GotFocusEventHandler GotFocus;
-
-        public delegate void LostFocusEventHandler(object sender, EventArgs e);
-        public event LostFocusEventHandler LostFocus;
-
-        public delegate void WindowDestroyedEventHandler(object sender, EventArgs e);
-        public event WindowDestroyedEventHandler WindowDestroyed;
+        public event EventHandler<EventArgs> HookInstalled;
+        //public event EventHandler<EventArgs> HookDestroyed;
+        public event EventHandler<EventArgs> MoveSize;
+        public event EventHandler<EventArgs> GotFocus;
+        public event EventHandler<EventArgs> LostFocus;
+        public event EventHandler<EventArgs> WindowDestroyed;
 
         private readonly System.Timers.Timer _timer;
         private readonly TargetForm _target;
@@ -92,25 +81,25 @@ namespace GDMultiStash.Services
             m_threadId = Native.GetWindowThreadProcessId(m_target, out m_processId);
             m_winEventDelegate = CatchWinEvent;
             m_hook4 = Native.SetWinEventHook(
-                Native.WinEvents.EVENT_OBJECT_DESTROY,
-                Native.WinEvents.EVENT_OBJECT_DESTROY,
+                Native.EVENT.OBJECT_DESTROY,
+                Native.EVENT.OBJECT_DESTROY,
                 m_target, m_winEventDelegate, m_processId, m_threadId,
-                (uint)Native.WinEventFlags.WINEVENT_OUTOFCONTEXT);
+                (uint)Native.WINEVENT.OUTOFCONTEXT);
             m_hook1 = Native.SetWinEventHook(
-                Native.WinEvents.EVENT_SYSTEM_MOVESIZESTART,
-                Native.WinEvents.EVENT_SYSTEM_MOVESIZEEND,
+                Native.EVENT.SYSTEM_MOVESIZESTART,
+                Native.EVENT.SYSTEM_MOVESIZEEND,
                 m_target, m_winEventDelegate, m_processId, m_threadId,
-                (uint)Native.WinEventFlags.WINEVENT_OUTOFCONTEXT);
+                (uint)Native.WINEVENT.OUTOFCONTEXT);
             m_hook2 = Native.SetWinEventHook(
-                Native.WinEvents.EVENT_OBJECT_LOCATIONCHANGE,
-                Native.WinEvents.EVENT_OBJECT_LOCATIONCHANGE,
+                Native.EVENT.OBJECT_LOCATIONCHANGE,
+                Native.EVENT.OBJECT_LOCATIONCHANGE,
                 m_target, m_winEventDelegate, m_processId, m_threadId,
-                (uint)Native.WinEventFlags.WINEVENT_OUTOFCONTEXT);
+                (uint)Native.WINEVENT.OUTOFCONTEXT);
             m_hook3 = Native.SetWinEventHook(
-                Native.WinEvents.EVENT_SYSTEM_FOREGROUND,
-                Native.WinEvents.EVENT_SYSTEM_FOREGROUND,
+                Native.EVENT.SYSTEM_FOREGROUND,
+                Native.EVENT.SYSTEM_FOREGROUND,
                 m_target, m_winEventDelegate, 0, 0,
-                (uint)Native.WinEventFlags.WINEVENT_OUTOFCONTEXT);
+                (uint)Native.WINEVENT.OUTOFCONTEXT);
 
             Console.WriteLine("[GDWindowHook] Hooks installed");
             Console.WriteLine(" target: " + m_target.ToString());
@@ -158,28 +147,33 @@ namespace GDMultiStash.Services
         private bool isMoving = false;
         private bool hasFocus = false;
 
+        public void SetHasFocus(bool v)
+        {
+            hasFocus = v;
+        }
+
         private void CatchWinEvent(IntPtr hWinEventHook, uint eventType, IntPtr hwnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            switch((Native.WinEvents)eventType)
+            switch(eventType)
             {
-                case Native.WinEvents.EVENT_OBJECT_DESTROY:
+                case Native.EVENT.OBJECT_DESTROY:
                     if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero) return;
                     WindowDestroyed?.Invoke(null, new EventArgs());
                     hasFocus = false;
                     Unhook();
                     StartTimer();
                     break;
-                case Native.WinEvents.EVENT_SYSTEM_MOVESIZESTART:
+                case Native.EVENT.SYSTEM_MOVESIZESTART:
                     isMoving = true;
                     break;
-                case Native.WinEvents.EVENT_SYSTEM_MOVESIZEEND:
+                case Native.EVENT.SYSTEM_MOVESIZEEND:
                     MoveSizeInvoke();
                     isMoving = false;
                     break;
-                case Native.WinEvents.EVENT_OBJECT_LOCATIONCHANGE:
+                case Native.EVENT.OBJECT_LOCATIONCHANGE:
                     if (!isMoving) MoveSizeInvoke();
                     break;
-                case Native.WinEvents.EVENT_SYSTEM_FOREGROUND:
+                case Native.EVENT.SYSTEM_FOREGROUND:
                     if (hwnd == m_target)
                     {
                         if (hasFocus) return;

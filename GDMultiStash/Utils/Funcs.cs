@@ -34,7 +34,10 @@ namespace Utils
             process.Start();
         }
 
-
+        public static string GetTempFileName()
+        {
+            return System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
+        }
 
 
 

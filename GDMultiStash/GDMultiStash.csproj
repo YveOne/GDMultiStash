@@ -62,31 +62,88 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\Config\V1\Config.cs" />
-    <Compile Include="Common\Config\V1\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\ConfigColor.cs" />
+    <Compile Include="Common\Config\ConfigColorList.cs" />
+    <Compile Include="Common\Config\ConfigExpansion.cs" />
+    <Compile Include="Common\Config\ConfigExpansionList.cs" />
+    <Compile Include="Common\Config\ConfigExpansionMode.cs" />
     <Compile Include="Common\Config\V4\Config.cs" />
     <Compile Include="Common\Config\V4\ConfigSettingList.cs" />
-    <Compile Include="Common\Config\V4\ConfigStash.cs" />
-    <Compile Include="Common\Config\V4\ConfigStashCategory.cs" />
-    <Compile Include="Common\Config\V4\ConfigStashCategoryList.cs" />
-    <Compile Include="Common\Config\V4\ConfigStashList.cs" />
+    <Compile Include="Common\Config\Config.cs" />
+    <Compile Include="Common\Config\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\ConfigStash.cs" />
+    <Compile Include="Common\Config\ConfigStashGroup.cs" />
+    <Compile Include="Common\Config\ConfigStashGroupList.cs" />
+    <Compile Include="Common\Config\ConfigStashList.cs" />
     <Compile Include="Common\Config\ConfigBase.cs" />
-    <Compile Include="Common\Overlay\Animations\Animation.cs" />
-    <Compile Include="Common\Overlay\Animations\FadeAnimation.cs" />
-    <Compile Include="Common\Overlay\Animations\MoveAnimation.cs" />
+    <Compile Include="Common\Config\V4\ConfigStash.cs" />
+    <Compile Include="Common\Config\V4\ConfigStashList.cs" />
+    <Compile Include="Common\Config\V5\ConfigStashGroup.cs" />
+    <Compile Include="Common\Config\V5\ConfigStashGroupList.cs" />
+    <Compile Include="Common\Config\V5\ConfigColor.cs" />
+    <Compile Include="Common\Config\V5\ConfigColorList.cs" />
+    <Compile Include="Common\Config\V5\ConfigExpansion.cs" />
+    <Compile Include="Common\Config\V5\ConfigExpansionList.cs" />
+    <Compile Include="Common\Config\V5\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\V5\ConfigStash.cs" />
+    <Compile Include="Common\Config\V5\ConfigStashList.cs" />
+    <Compile Include="Common\Config\V5\Config.cs" />
+    <Compile Include="Common\Objects\Sorting\GroupsSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\ObjectListViewSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\ObjectSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\StashesSortComparer.cs" />
+    <Compile Include="Common\Overlay\Animations\AnimationValue.cs" />
+    <Compile Include="Common\Overlay\Animations\Animator.cs" />
+    <Compile Include="Common\Overlay\Animations\Animator.Static.cs" />
+    <Compile Include="Common\Overlay\Animations\AnimatorAnimateEventArgs.cs" />
+    <Compile Include="Common\Overlay\Animations\AnimatorEventHandler.cs" />
     <Compile Include="Common\Overlay\ButtonElement.cs" />
-    <Compile Include="Common\ExportZipFile.cs" />
-    <Compile Include="Common\StashCategoryObject.cs" />
+    <Compile Include="Common\Overlay\PanelElement.cs" />
+    <Compile Include="Common\Overlay\ScrollManager.cs" />
+    <Compile Include="Common\StashesZipFile.cs" />
+    <Compile Include="Common\Objects\StashGroupObject.cs" />
+    <Compile Include="Common\Objects\StashObject.cs" />
     <Compile Include="Console.cs" />
     <Compile Include="Controls\ExComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\ExComboBoxItem.cs" />
+    <Compile Include="Controls\ExObjectListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="Forms\ChangelogDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ChangelogDialogForm.Designer.cs">
       <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TransparentControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateStashGroupDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateStashGroupDialogForm.Designer.cs">
+      <DependentUpon>CreateStashGroupDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.GroupsPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.StashesPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Dragging\BaseDragHandler.cs" />
+    <Compile Include="Forms\Dragging\BaseDragSource.cs" />
+    <Compile Include="Forms\Dragging\BaseDropSink.cs" />
+    <Compile Include="Forms\Dragging\GroupsDragHandler.cs" />
+    <Compile Include="Forms\Dragging\GroupsDragSource.cs" />
+    <Compile Include="Forms\Dragging\GroupsDropSink.cs" />
+    <Compile Include="Forms\ProgressDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProgressDialogForm.Designer.cs">
+      <DependentUpon>ProgressDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Global\Global.ConfigurationHandler.cs" />
     <Compile Include="Global\Global.DatabaseHandler.cs" />
@@ -96,37 +153,40 @@
     <Compile Include="Global\Global.StashesHandler.cs" />
     <Compile Include="Global\Global.UpdateHandler.cs" />
     <Compile Include="Global\Global.WindowsHandler.cs" />
-    <Compile Include="Forms\MainForm\StashesDragHandler.cs" />
-    <Compile Include="Forms\MainForm\StashesDragSource.cs" />
-    <Compile Include="Forms\MainForm\StashesDropSink.cs" />
-    <Compile Include="Forms\MainForm\StashesSortComparer.cs" />
-    <Compile Include="Forms\CategoriesDialogForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\CategoriesDialogForm.Designer.cs">
-      <DependentUpon>CategoriesDialogForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Forms\Dragging\StashesDragHandler.cs" />
+    <Compile Include="Forms\Dragging\StashesDragSource.cs" />
+    <Compile Include="Forms\Dragging\StashesDropSink.cs" />
     <Compile Include="Global\Global.FileSystemHandler.cs" />
+    <Compile Include="Global\SoundHandler.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
-    <Compile Include="Overlay\InfoBoxReloadButton.cs" />
-    <Compile Include="Overlay\InfoBoxButton.cs" />
+    <Compile Include="Native\Native.Constants.cs" />
+    <Compile Include="Overlay\Controls\Base\LargeButton.cs" />
+    <Compile Include="Overlay\Controls\Base\SmallButton.cs" />
+    <Compile Include="Overlay\Controls\GroupSelectButton.cs" />
+    <Compile Include="Overlay\Controls\Base\SelectableListChild.cs" />
+    <Compile Include="Overlay\GroupList.cs" />
+    <Compile Include="Overlay\GroupListChild.cs" />
+    <Compile Include="Overlay\Controls\InfoBoxReloadButton.cs" />
     <Compile Include="Overlay\InfoBox.cs" />
-    <Compile Include="Overlay\VerticalScrollBar.cs" />
+    <Compile Include="Overlay\Panels\BackgroundBorderPanel.cs" />
+    <Compile Include="Overlay\Panels\BackgroundShadowPanel.cs" />
+    <Compile Include="Overlay\Panels\ListBorderPanel.cs" />
+    <Compile Include="Overlay\Panels\ScrollBorderPanel.cs" />
+    <Compile Include="Overlay\StaticResources.cs" />
+    <Compile Include="Overlay\Controls\Base\VerticalScrollBar.cs" />
     <Compile Include="Overlay\StashList.cs" />
     <Compile Include="Common\Overlay\Element.Anchors.cs" />
     <Compile Include="Overlay\OverlayWindow.cs" />
     <Compile Include="Overlay\StashListChild.cs" />
     <Compile Include="Common\Overlay\Element.Mouse.cs" />
-    <Compile Include="Common\Overlay\PseudoScrollElement.cs" />
+    <Compile Include="Common\Overlay\ListBoxElement.cs" />
     <Compile Include="Common\Overlay\ScrollBarElement.cs" />
     <Compile Include="Common\Overlay\TextElement.cs" />
     <Compile Include="Common\Overlay\Viewport.cs" />
     <Compile Include="Common\Overlay\Element.cs" />
-    <Compile Include="Common\Overlay\Anchor.cs" />
     <Compile Include="Common\Overlay\Element.Properties.cs" />
     <Compile Include="Common\Overlay\ImageElement.cs" />
     <Compile Include="Common\Overlay\ResourceHandler.cs" />
-    <Compile Include="Common\StashObject.cs" />
     <Compile Include="Common\TransferFile.cs" />
     <Compile Include="Forms\AboutDialogForm.cs">
       <SubType>Form</SubType>
@@ -166,7 +226,7 @@
     </Compile>
     <Compile Include="GrimDawnLib\GrimDawn.Keybindings.cs" />
     <Compile Include="Native\Native.Keyboard.cs" />
-    <Compile Include="Overlay\Viewport.cs" />
+    <Compile Include="Overlay\GDMSViewport.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,7 +239,7 @@
     <Compile Include="Utils\AssemblyInfo.cs" />
     <Compile Include="Utils\FontLoader.cs" />
     <Compile Include="Utils\FileUtils.cs" />
-    <Compile Include="Utils\Easing.cs" />
+    <Compile Include="Common\Overlay\Animations\Easing.cs" />
     <Compile Include="Native\Native.Mouse.Hook.cs" />
     <Compile Include="Native\Native.Hook.cs" />
     <Compile Include="Native\Native.Shortcut.cs" />
@@ -193,11 +253,15 @@
     <Compile Include="Native\Native.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ZipFile.cs" />
     <EmbeddedResource Include="Forms\AboutDialogForm.resx">
       <DependentUpon>AboutDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangelogDialogForm.resx">
       <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateStashGroupDialogForm.resx">
+      <DependentUpon>CreateStashGroupDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateStashDialogForm.resx">
       <DependentUpon>CreateStashDialogForm.cs</DependentUpon>
@@ -214,14 +278,15 @@
     <EmbeddedResource Include="Forms\ConfigurationDialogForm.resx">
       <DependentUpon>ConfigurationDialogForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\CategoriesDialogForm.resx">
-      <DependentUpon>CategoriesDialogForm.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\ProgressDialogForm.resx">
+      <DependentUpon>ProgressDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Compile Include="Native\Native.Utils.cs" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -239,6 +304,37 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\soundButtonOverTick.wav" />
+    <None Include="Resources\scrollareaTop.png" />
+    <None Include="Resources\scrollareaBottom.png" />
+    <None Include="Resources\scrollareaMiddle.png" />
+    <None Include="Resources\listBorderR.png" />
+    <None Include="Resources\listBorderL.png" />
+    <None Include="Resources\listBorderBR.png" />
+    <None Include="Resources\listBorderBL.png" />
+    <None Include="Resources\listBorderB.png" />
+    <None Include="Resources\listBorderTR.png" />
+    <None Include="Resources\listBorderTL.png" />
+    <None Include="Resources\listBorderT.png" />
+    <None Include="Resources\marble.jpg" />
+    <None Include="Resources\shadowRight.png" />
+    <None Include="Resources\shadowMiddle.png" />
+    <None Include="Resources\shadowLeft.png" />
+    <None Include="Resources\shadowBottomRight.png" />
+    <None Include="Resources\shadowBottomLeft.png" />
+    <None Include="Resources\shadowBottom.png" />
+    <None Include="Resources\shadowTopRight.png" />
+    <None Include="Resources\shadowTopLeft.png" />
+    <None Include="Resources\shadowTop.png" />
+    <None Include="Resources\windowBorderBottom.png" />
+    <None Include="Resources\windowBorderBottomRight.png" />
+    <None Include="Resources\windowBorderTopRight.png" />
+    <None Include="Resources\windowBorderRight.png" />
+    <None Include="Resources\windowBorderTop.png" />
+    <None Include="Resources\windowBackground.jpg" />
+    <None Include="Resources\title.png" />
+    <None Include="Resources\lockedWhite.png" />
+    <None Include="Resources\lockedBlack.png" />
     <None Include="Resources\lockWhite.png" />
     <None Include="Resources\lockBlack.png" />
     <None Include="Resources\ReloadButtonSmallUp.png" />
@@ -255,12 +351,36 @@
     <Content Include="icon64.ico" />
     <Content Include="Resources\background.png" />
     <Content Include="Resources\background_left.png" />
+    <None Include="Resources\border.png" />
+    <None Include="Resources\buttonCloseGray.png" />
+    <None Include="Resources\buttonCloseWhite.png" />
+    <None Include="Resources\buttonMaximizeGray.png" />
+    <None Include="Resources\buttonMaximizeWhite.png" />
+    <None Include="Resources\buttonNormalizeGray.png" />
+    <None Include="Resources\buttonNormalizeWhite.png" />
+    <None Include="Resources\buttonMinimizeGray.png" />
+    <None Include="Resources\buttonMinimizeWhite.png" />
+    <None Include="Resources\buttonLargeUp.png" />
+    <None Include="Resources\ButtonLargeDown.png" />
+    <None Include="Resources\ButtonLargeOver.png" />
+    <None Include="Resources\ButtonDropUpArror.png" />
+    <None Include="Resources\ButtonDropDownArrow.png" />
+    <None Include="Resources\ButtonDropUpArrow.png" />
     <Content Include="Resources\ButtonSmallDown.png" />
     <Content Include="Resources\ButtonSmallOver.png" />
     <Content Include="Resources\ButtonSmallUp.png" />
     <None Include="Resources\local_deDE.txt" />
     <None Include="Resources\local_enGB.txt" />
     <None Include="Resources\local_enUS.txt" />
+    <None Include="Resources\controlBox.png" />
+    <None Include="Resources\buttonTrayGray.png" />
+    <None Include="Resources\buttonTrayWhite.png" />
+    <None Include="Resources\CheckBoxTickDisabled.png" />
+    <None Include="Resources\CheckBoxCrossDisabled.png" />
+    <None Include="Resources\CheckBoxBack.png" />
+    <None Include="Resources\CheckBoxBackHover.png" />
+    <None Include="Resources\CheckBoxTick.png" />
+    <None Include="Resources\CheckBoxCross.png" />
     <Content Include="Resources\itemsizes.txt" />
   </ItemGroup>
   <ItemGroup>

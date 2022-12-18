@@ -13,16 +13,12 @@ namespace GDMultiStash.Forms
 
         public BaseForm() : base()
         {
-        }
-
-        public virtual void Initialize()
-        {
             Load += delegate {
                 Localize(Global.L);
             };
         }
 
-        protected virtual void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
+        protected virtual void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
         }
 

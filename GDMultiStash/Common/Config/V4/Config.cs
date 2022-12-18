@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 using GrimDawnLib;
 
-namespace GDMultiStash.Common.Config
+namespace GDMultiStash.Common.Config.V4
 {
 
     [Serializable]
@@ -18,19 +18,8 @@ namespace GDMultiStash.Common.Config
         [XmlElement("Settings")]
         public ConfigSettingList Settings;
 
-        [XmlArray("Stashes")]
-        [XmlArrayItem("Stash")]
+        [XmlElement("Stashes")]
         public ConfigStashList Stashes;
-
-        [XmlArray("StashCategories")]
-        [XmlArrayItem("Category")]
-        public ConfigStashCategoryList StashCategories;
-
-        public Config(bool IsNew) : base(IsNew)
-        {
-            Stashes = new ConfigStashList();
-            Settings = new ConfigSettingList();
-        }
 
         public Config() : base()
         {

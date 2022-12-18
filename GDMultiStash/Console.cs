@@ -5,15 +5,11 @@ namespace GDMultiStash
     internal class Console
     {
 
-        public delegate void WriteLineEventHandler(string line);
-        public static event WriteLineEventHandler OnWriteLine;
-
-        public static void WriteLine(string text, params string[] args)
+        public static void WriteLine(object text, params object[] args)
         {
             string t = System.DateTime.Now.ToString("HH:mm:ss.fff");
-            string s = $"[{t}] " + string.Format(text, args);
+            string s = $"[{t}] " + string.Format(text.ToString(), args);
             System.Console.WriteLine(s);
-            OnWriteLine?.Invoke(s);
         }
 
         public static void Alert(string msg, MessageBoxIcon icon = MessageBoxIcon.None)

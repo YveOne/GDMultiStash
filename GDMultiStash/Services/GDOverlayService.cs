@@ -20,7 +20,7 @@ namespace GDMultiStash.Services
         private readonly D3DHook.Hook.Common.Overlay _dummyOverlay;
         private readonly D3DHook.Hook.Common.Overlay _overlay;
 
-        private readonly Overlay.Elements.Viewport _viewport;
+        private readonly Overlay.GDMSViewport _viewport;
 
         private CaptureProcess _captureProcess;
         private Thread _drawThread = null;
@@ -29,7 +29,7 @@ namespace GDMultiStash.Services
         public event MessageReceivedEvent RemoteMessage;
         public event FrameDrawingEvent FrameDrawing;
 
-        public GDOverlayService(Overlay.Elements.Viewport viewport)
+        public GDOverlayService(Overlay.GDMSViewport viewport)
         {
             _viewport = viewport;
 
@@ -102,9 +102,8 @@ namespace GDMultiStash.Services
                 if (_drawThread == null) return;
                 Console.WriteLine("[D3DHook] Process attached");
 
-                _viewport.Resources.LoadQueuedResourcesFromCache();
-                _viewport.Update();
-                _viewport.Redraw();
+                _viewport.OverlayResources.LoadQueuedResourcesFromCache();
+                _viewport.Redraw(true);
 
                 Thread.Sleep(1000);
 
@@ -207,7 +206,7 @@ namespace GDMultiStash.Services
                     }
                     else
                     {
-                        if (_viewport.Resources.GetQueuedResources(out List<D3DHook.Hook.Common.IResource> res))
+                        if (_viewport.OverlayResources.CreateAndGetResources(out List<D3DHook.Hook.Common.IResource> res))
                         {
                             _captureProcess.CaptureInterface.InitializeResources(res);
                         }

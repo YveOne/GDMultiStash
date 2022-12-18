@@ -22,7 +22,6 @@ namespace GDMultiStash.Common.Overlay
 
             _back = new ImageElement()
             {
-                AutoSize = false,
                 WidthToParent = true,
                 HeightToParent = true,
                 AnchorPoint = Anchor.Center,
@@ -65,6 +64,30 @@ namespace GDMultiStash.Common.Overlay
         {
             get { return _text.Text; }
             set { _text.Text = value; }
+        }
+
+        public StringAlignment TextAlign
+        {
+            get { return _text.Align; }
+            set { _text.Align = value; }
+        }
+
+        public Anchor TextAnchor
+        {
+            get { return _text.AnchorPoint; }
+            set { _text.AnchorPoint = value; }
+        }
+
+        public float TextWidth
+        {
+            get { return _text.Width; }
+            set { _text.Width = value; }
+        }
+
+        public float TextX
+        {
+            get { return _text.X; }
+            set { _text.X = value; }
         }
 
 

@@ -2,72 +2,32 @@
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using GDMultiStash.Common;
+using GDMultiStash.Common.Objects;
 
 namespace GDMultiStash.GlobalHandlers
 {
     internal class WindowsHandler
     {
 
-        private readonly Forms.MainForm MainWindow;
-        private readonly Forms.ConfigurationDialogForm ConfigurationWindow;
-        private readonly Forms.AboutDialogForm AboutWindow;
-        private readonly Forms.CreateStashDialogForm CreateStashWindow;
-        private readonly Forms.ImportDialogForm ImportWindow;
-        private readonly Forms.CategoriesDialogForm CategoriesWindow;
-        private readonly Forms.ChangelogDialogForm ChangelogWindow;
+        public readonly Forms.MainForm MainWindow;
+        public readonly Forms.ConfigurationDialogForm ConfigurationWindow;
+        public readonly Forms.AboutDialogForm AboutWindow;
+        public readonly Forms.CreateStashDialogForm CreateStashWindow;
+        public readonly Forms.CreateStashGroupDialogForm CreateStashGroupWindow;
+        public readonly Forms.ImportDialogForm ImportWindow;
+        public readonly Forms.ChangelogDialogForm ChangelogWindow;
+        public readonly Forms.ProgressDialogForm ProgressDialog;
 
         public WindowsHandler()
         {
             ConfigurationWindow = new Forms.ConfigurationDialogForm();
             AboutWindow = new Forms.AboutDialogForm();
             CreateStashWindow = new Forms.CreateStashDialogForm();
+            CreateStashGroupWindow = new Forms.CreateStashGroupDialogForm();
             ImportWindow = new Forms.ImportDialogForm();
             MainWindow = new Forms.MainForm();
-            CategoriesWindow = new Forms.CategoriesDialogForm();
             ChangelogWindow = new Forms.ChangelogDialogForm();
-
-            Global.Runtime.ActiveModeChanged += delegate {
-                MainWindow.UpdateObjects();
-            };
-
-            Global.Runtime.StashesAdded += delegate {
-                MainWindow.UpdateObjects();
-            };
-
-            Global.Runtime.StashesRemoved += delegate {
-                MainWindow.UpdateObjects();
-            };
-
-            MainWindow.FormClosed += delegate (object sender, FormClosedEventArgs e) {
-                Program.Quit();
-            };
-
-            MainWindow.FormClosing += delegate (object sender, FormClosingEventArgs e) {
-                if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero && Global.Configuration.Settings.HideOnFormClosed)
-                {
-                    e.Cancel = true;
-                    MainWindow.Hide();
-                    return;
-                }
-                if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero && Global.Configuration.Settings.ConfirmClosing)
-                {
-                    DialogResult result = MessageBox.Show(Global.Localization.GetString("msg_confirm_gdms_closing"), "", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                    e.Cancel = (result == DialogResult.Cancel);
-                }
-            };
-
-        }
-
-        public void InitWindows()
-        {
-            ConfigurationWindow.Initialize();
-            AboutWindow.Initialize();
-            CreateStashWindow.Initialize();
-            ImportWindow.Initialize();
-            MainWindow.Initialize();
-            CategoriesWindow.Initialize();
-            ChangelogWindow.Initialize();
+            ProgressDialog = new Forms.ProgressDialogForm();
         }
 
         public void LocalizeWindows()
@@ -75,10 +35,24 @@ namespace GDMultiStash.GlobalHandlers
             ConfigurationWindow.Localize();
             AboutWindow.Localize();
             CreateStashWindow.Localize();
+            CreateStashGroupWindow.Localize();
             ImportWindow.Localize();
             MainWindow.Localize();
-            CategoriesWindow.Localize();
             ChangelogWindow.Localize();
+            ProgressDialog.Localize();
+        }
+
+        public void CloseMainWindow()
+        {
+            try
+            {
+                MainWindow.Invoke((MethodInvoker)delegate {
+                    MainWindow.Close();
+                });
+            }
+            catch (Exception _ignore)
+            {
+            }
         }
 
         public void ShowMainWindow(Action onShow = null)
@@ -94,18 +68,16 @@ namespace GDMultiStash.GlobalHandlers
             MainWindow.Shown += shownHandler;
             MainWindow.TopMost = false;
             MainWindow.Show();
-            MainWindow.Refresh();
-            MainWindow.Update();
         }
 
         private FormStartPosition DefaultStartPosition => MainWindow.Visible ? FormStartPosition.CenterParent : FormStartPosition.CenterScreen;
         private IWin32Window DefaultDialogOwner => MainWindow.Visible ? MainWindow : null;
 
-        public void ShowConfigurationWindow(bool isFirstSetup = false)
+        public void ShowConfigurationWindow()
         {
             if (ConfigurationWindow.Visible) return;
             ConfigurationWindow.StartPosition = DefaultStartPosition;
-            ConfigurationWindow.ShowDialog(DefaultDialogOwner, isFirstSetup);
+            ConfigurationWindow.ShowDialog(DefaultDialogOwner);
         }
 
         public void ShowAboutDialog()
@@ -115,25 +87,18 @@ namespace GDMultiStash.GlobalHandlers
             AboutWindow.ShowDialog(DefaultDialogOwner);
         }
 
-        public void ShowCreateStashDialog()
+        public void ShowCreateStashDialog(GrimDawnLib.GrimDawnGameExpansion exp, GrimDawnLib.GrimDawnGameMode mode)
         {
             if (CreateStashWindow.Visible) return;
             CreateStashWindow.StartPosition = DefaultStartPosition;
+            CreateStashWindow.ShowDialog(DefaultDialogOwner, exp, mode);
+        }
 
-            bool loop = true;
-            while (loop)
-            {
-
-                if (CreateStashWindow.ShowDialog(DefaultDialogOwner, out StashObject stash) == DialogResult.OK)
-                {
-                    Global.Configuration.Save();
-                    Global.Runtime.NotifyStashesAdded(stash);
-                }
-                else
-                {
-                    loop = false;
-                }
-            }
+        public void ShowCreateStashGroupDialog()
+        {
+            if (CreateStashGroupWindow.Visible) return;
+            CreateStashGroupWindow.StartPosition = DefaultStartPosition;
+            CreateStashGroupWindow.ShowDialog(DefaultDialogOwner);
         }
 
         public void ShowImportDialog()
@@ -158,23 +123,12 @@ namespace GDMultiStash.GlobalHandlers
             }
         }
 
-        public void ShowCategoriesWindow()
-        {
-            if (CategoriesWindow.Visible) return;
-            CategoriesWindow.StartPosition = DefaultStartPosition;
-            if (CategoriesWindow.ShowDialog(DefaultDialogOwner) == DialogResult.OK)
-            {
-                Global.Configuration.Save();
-            }
-        }
-
         public void ShowChangelogWindow()
         {
             if (ChangelogWindow.Visible) return;
             ChangelogWindow.StartPosition = DefaultStartPosition;
             ChangelogWindow.ShowDialog(DefaultDialogOwner);
         }
-
 
 
 

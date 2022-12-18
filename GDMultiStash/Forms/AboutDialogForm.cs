@@ -18,7 +18,7 @@ namespace GDMultiStash.Forms
             InitializeComponent();
         }
 
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
 
         }

@@ -45,25 +45,16 @@ namespace GDMultiStash.Common.Overlay
         public bool MouseOver => _mouseOver;
         private bool _mouseOver = false;
 
-        public bool MouseCheckChildren
-        {
-            get => _checkChildren;
-            set => _checkChildren = value;
-        }
-        private bool _checkChildren = true;
+        public bool MouseCheckChildren { get; set; } = true;
 
-        public bool MouseCheckNeedBaseHit
-        {
-            get => _needBaseHit;
-            set => _needBaseHit = value;
-        }
-        private bool _needBaseHit = false;
+        public bool MouseCheckNeedBaseHit { get; set; } = false;
 
-
+        public bool EventsEnabled = true;
 
         public virtual bool CheckMouseMove(int x, int y)
         {
             if (!_visible) return false;
+            if (!EventsEnabled) return false;
             bool hit = CheckHitRect(x, y);
             bool _wasOver = false;
             if (_mouseOver)
@@ -83,8 +74,8 @@ namespace GDMultiStash.Common.Overlay
                     MouseEnter?.Invoke(this, EventArgs.Empty);
                 }
             }
-            if (_checkChildren && (hit || !_needBaseHit || _wasOver))
-                foreach (Element child in _children)
+            if (MouseCheckChildren && (hit || !MouseCheckNeedBaseHit || _wasOver))
+                foreach (Element child in Children)
                     hit |= child.CheckMouseMove(x, y);
             return hit;
         }
@@ -95,14 +86,15 @@ namespace GDMultiStash.Common.Overlay
         public virtual bool CheckMouseDown(int x, int y)
         {
             if (!_visible) return false;
+            if (!EventsEnabled) return false;
             bool hit = CheckHitRect(x, y);
             if (hit)
             {
                 _mouseClickStartTickCount = Environment.TickCount;
                 MouseDown?.Invoke(this, EventArgs.Empty);
             }
-            if (_checkChildren && (hit || !_needBaseHit))
-                foreach (Element child in _children)
+            if (MouseCheckChildren && (hit || !MouseCheckNeedBaseHit))
+                foreach (Element child in Children)
                     hit |= child.CheckMouseDown(x, y);
             return hit;
         }
@@ -110,6 +102,7 @@ namespace GDMultiStash.Common.Overlay
         public virtual bool CheckMouseUp(int x, int y)
         {
             if (!_visible) return false;
+            if (!EventsEnabled) return false;
             bool hit = CheckHitRect(x, y);
             if (hit)
             {
@@ -119,8 +112,8 @@ namespace GDMultiStash.Common.Overlay
                     MouseClick?.Invoke(this, EventArgs.Empty);
                 }
             }
-            if (_checkChildren && (hit || !_needBaseHit))
-                foreach (Element child in _children)
+            if (MouseCheckChildren && (hit || !MouseCheckNeedBaseHit))
+                foreach (Element child in Children)
                     hit |= child.CheckMouseUp(x, y);
             return hit;
         }
@@ -128,13 +121,14 @@ namespace GDMultiStash.Common.Overlay
         public virtual bool OnMouseWheel(int x, int y, int delta)
         {
             if (!_visible) return false;
+            if (!EventsEnabled) return false;
             bool hit = CheckHitRect(x, y);
             if (hit)
             {
                 MouseWheel?.Invoke(this, new MouseWheelEventArgs(x,y,delta));
             }
-            if (_checkChildren && (hit || !_needBaseHit))
-                foreach (Element child in _children)
+            if (MouseCheckChildren && (hit || !MouseCheckNeedBaseHit))
+                foreach (Element child in Children)
                     hit |= child.OnMouseWheel(x, y, delta);
             return hit;
         }

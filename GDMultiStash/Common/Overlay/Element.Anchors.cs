@@ -6,6 +6,19 @@ using System.Threading.Tasks;
 
 namespace GDMultiStash.Common.Overlay
 {
+    public enum Anchor
+    {
+        TopLeft,
+        Top,
+        TopRight,
+        Right,
+        BottomRight,
+        Bottom,
+        BottomLeft,
+        Left,
+        Center,
+    }
+
     public partial class Element
     {
 
@@ -61,8 +74,8 @@ namespace GDMultiStash.Common.Overlay
                         _anchorPointY = Anchor.Bottom;
                         break;
                 }
-                _resetX = true;
-                _resetY = true;
+                ResetX = true;
+                ResetY = true;
             }
         }
 
@@ -109,8 +122,8 @@ namespace GDMultiStash.Common.Overlay
                         _parentPointY = Anchor.Bottom;
                         break;
                 }
-                _resetX = true;
-                _resetY = true;
+                ResetX = true;
+                ResetY = true;
             }
         }
 

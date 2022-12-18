@@ -15,7 +15,7 @@ namespace GDMultiStash
     internal class GDMSContext : ApplicationContext
     {
 
-        private readonly Overlay.Elements.Viewport _viewport;
+        private readonly Overlay.GDMSViewport _viewport;
         private readonly GDWindowHookService _gdWindowHookService;
         private readonly GDGameHookService _gdGameHookService;
         private readonly GDOverlayService _gdOverlayService;
@@ -26,66 +26,62 @@ namespace GDMultiStash
         public GDMSContext()
         {
             Global.FileSystem.CreateDirectories();
+            Global.Configuration.Load();
 
             Global.Localization.AddLanguageFile("deDE", Properties.Resources.local_deDE);
             Global.Localization.AddLanguageFile("enGB", Properties.Resources.local_enGB);
             Global.Localization.AddLanguageFile("enUS", Properties.Resources.local_enUS);
             Global.Localization.AddLanguageFile("zhCN", Properties.Resources.local_zhCN);
-            Global.Localization.LoadLanguage("enUS");
-
-            Global.Configuration.Load();
+            {
+                string curLangCode = Global.Localization.CurrentCode;
+                if (Global.Localization.LoadLanguage(curLangCode))
+                    Global.Configuration.Settings.Language = curLangCode;
+                else
+                    Global.Localization.LoadLanguage("enUS");
+            }
             Global.Configuration.LanguageChanged += Configuration_LanguageChanged;
 
-            Global.Windows.InitWindows();
+            if (!GrimDawn.ValidGamePath(Global.Configuration.Settings.GamePath))
+                Global.Configuration.Settings.GamePath = GrimDawn.Steam.GamePath64 ?? "";
+            if (!GrimDawn.ValidGamePath(Global.Configuration.Settings.GamePath))
+                Global.Configuration.Settings.GamePath = GrimDawn.GOG.GamePath64 ?? "";
 
             if (Global.Configuration.IsNew)
-            {
-                Global.Windows.ShowConfigurationWindow(true);
-                // language already loaded after setup dialog closed
-            }
+                Global.Windows.ShowConfigurationWindow();
             else
-            {
                 Global.Localization.LoadLanguage(Global.Configuration.Settings.Language);
-            }
-
+            
             // allow only one instance of gdms
             _singleInstanceMutex = new Mutex(true, "GDMultiStash", out bool createdNew);
             if (!createdNew)
             {
                 Native.PostMessage(
-                    (IntPtr)Native.HWND_BROADCAST,
-                    Native.WM_SHOWME,
+                    (IntPtr)Native.HWND.BROADCAST,
+                    Global.WM_SHOWME,
                     IntPtr.Zero,
                     IntPtr.Zero);
                 Program.Quit();
                 return;
             }
 
-            Global.Windows.LocalizeWindows();
-
-            if (Global.Configuration.IsNew)
+            if (!GrimDawn.ValidDocsPath())
             {
-                Global.Stashes.CreateMainStashes();
+                Console.Warning(Global.L.DocumentsDirectoryNotFoundMessage());
+                Program.Quit();
+                return;
             }
 
             // game install path not found? let user choose path
             if (!GrimDawn.ValidGamePath(Global.Configuration.Settings.GamePath))
             {
-                Console.Warning(Global.L["msg_please_select_gamedir"]);
-                Global.Windows.ShowConfigurationWindow(true);
+                Console.Warning(Global.L.SelectGameDirectoryMessage());
+                Global.Windows.ShowConfigurationWindow();
             }
 
             // game install path still not found? poooor user...
             if (!GrimDawn.ValidGamePath(Global.Configuration.Settings.GamePath))
             {
-                Console.Warning(Global.L["msg_gamedir_not_found"]);
-                Program.Quit();
-                return;
-            }
-
-            if (!GrimDawn.ValidDocsPath())
-            {
-                Console.Warning(Global.L["msg_docsdir_not_found"]);
+                Console.Warning(Global.L.GameDirectoryNotFoundMessage());
                 Program.Quit();
                 return;
             }
@@ -93,7 +89,7 @@ namespace GDMultiStash
             // check for new version
             if (Global.Update.NewVersionAvailable())
             {
-                string msg = string.Format(Global.L["msg_update_available"], Global.Update.NewVersionName);
+                string msg = string.Format(Global.L.UpdateAvailableMessage(), Global.Update.NewVersionName);
                 if (MessageBox.Show(msg, "", MessageBoxButtons.OKCancel, MessageBoxIcon.Information) == DialogResult.OK)
                 {
                     Global.Update.StartUpdater();
@@ -101,13 +97,15 @@ namespace GDMultiStash
                 }
             }
 
+            Global.Configuration.UpdateAndCleanup();
+
             Global.Database.LoadItemSizes(Properties.Resources.itemsizes);
             Console.WriteLine($"GD Game Path: {Global.Configuration.Settings.GamePath}");
             Console.WriteLine($"GD Game Expansion: {GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath)}");
-            Console.WriteLine($"Loading Stashes:");
             Global.Stashes.LoadStashes();
+            Global.Stashes.LoadStashGroups();
 
-            _viewport = new Overlay.Elements.Viewport();
+            _viewport = new Overlay.GDMSViewport();
 
             _gdOverlayService = new GDOverlayService(_viewport);
             _gdWindowHookService = new GDWindowHookService();
@@ -123,17 +121,10 @@ namespace GDMultiStash
             };
 
             Global.Windows.ShowMainWindow(() => {
-                Utils.AssemblyInfo ai = new Utils.AssemblyInfo();
-                if (Global.Configuration.Settings.LastToolVersion != ai.Version)
-                {
-                    Global.Configuration.Settings.LastToolVersion = ai.Version;
-                    Global.Configuration.Save();
+                if (Global.Configuration.AppVersionUpdated)
                     Global.Windows.ShowChangelogWindow();
-                }
-                if (Global.Configuration.Settings.AutoStartGD)
-                {
+                if (Global.Configuration.Settings.AutoStartGame)
                     Global.Runtime.StartGame();
-                }
             });
         }
 
@@ -191,11 +182,13 @@ namespace GDMultiStash
             _gdWindowHookService.Start();
 
             Global.Runtime.StashStatusChanged += Core_StashStatusChanged;
+            Global.Runtime.GameStarted += Core_GameStarted;
         }
 
         private void StopServices()
         {
             Global.Runtime.StashStatusChanged -= Core_StashStatusChanged;
+            Global.Runtime.GameStarted -= Core_GameStarted;
 
             _gdWindowHookService.HookInstalled -= GDWindowHook_HookInstalled;
             _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
@@ -234,6 +227,15 @@ namespace GDMultiStash
             }
         }
 
+        private void Core_GameStarted(object sender, EventArgs e)
+        {
+            new Thread(() => {
+                Thread.Sleep(5000);
+                if (Native.FindWindow("Grim Dawn", null) == IntPtr.Zero) return;
+                _gdWindowHookService.SetHasFocus(true);
+            }).Start();
+        }
+
         #region D3DHook Events
 
         private void D3DHook_FrameDrawing(float ms)
@@ -247,7 +249,7 @@ namespace GDMultiStash
 
         private void GDWindowHook_HookInstalled(object sender, EventArgs e)
         {
-            if (Global.Configuration.Settings.AutoStartGD)
+            if (Global.Configuration.Settings.AutoStartGame)
             {
                 Console.WriteLine("Setting GD to foreground");
                 IntPtr m_target = Native.FindWindow("Grim Dawn", null);

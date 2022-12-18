@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-using GDMultiStash.Common;
+using GDMultiStash.Common.Objects;
 using GDMultiStash.Common.Overlay;
+using GDMultiStash.Overlay.Controls;
+using GDMultiStash.Overlay.Controls.Base;
 using GrimDawnLib;
 
-namespace GDMultiStash.Overlay.Elements
+namespace GDMultiStash.Overlay
 {
     internal class InfoBox : Element
     {
@@ -20,17 +22,14 @@ namespace GDMultiStash.Overlay.Elements
         private readonly TextElement _titleElement;
         private readonly TextElement _lastChangeIntern;
 
-        private readonly InfoBoxButton _saveButton;
-        private readonly InfoBoxButton _loadButton;
+        private readonly SmallButton _saveButton;
+        private readonly SmallButton _loadButton;
         private readonly InfoBoxReloadButton _reloadButton;
+
+        public override Color DebugColor => Color.FromArgb(128, 255, 255, 0);
 
         public InfoBox()
         {
-            X = 2;
-            Y = 605;
-            WidthToParent = true;
-            Width = -10;
-            Height = 127;
 
             _titleElement = new TextElement()
             {
@@ -58,7 +57,7 @@ namespace GDMultiStash.Overlay.Elements
             };
             AddChild(_lastChangeIntern);
 
-            _saveButton = new InfoBoxButton()
+            _saveButton = new Controls.Base.SmallButton()
             {
                 X = 6,
                 Y = -5,
@@ -66,7 +65,7 @@ namespace GDMultiStash.Overlay.Elements
             };
             AddChild(_saveButton);
 
-            _loadButton = new InfoBoxButton()
+            _loadButton = new Controls.Base.SmallButton()
             {
                 X = _saveButton.X + _saveButton.Width + 6,
                 Y = -5,
@@ -85,6 +84,9 @@ namespace GDMultiStash.Overlay.Elements
             Global.Runtime.ActiveStashChanged += delegate {
                 UpdateInfoText();
             };
+            Global.Runtime.StashReopenEnd += delegate {
+                UpdateInfoText();
+            };
 
             _saveButton.MouseClick += CheatSaveButton_Click;
             _loadButton.MouseClick += CheatLoadButton_Click;
@@ -96,10 +98,12 @@ namespace GDMultiStash.Overlay.Elements
             };
 
             Global.Runtime.StashReopenStart += delegate {
+                MouseCheckChildren = false;
                 Alpha = 0.33f;
             };
 
             Global.Runtime.StashReopenEnd += delegate {
+                MouseCheckChildren = true;
                 Alpha = 1.0f;
             };
 
@@ -107,8 +111,8 @@ namespace GDMultiStash.Overlay.Elements
 
         private void UpdateButtonText()
         {
-            _saveButton.Text = Global.L["overlayWindow_saveButton"];
-            _loadButton.Text = Global.L["overlayWindow_loadButton"];
+            _saveButton.Text = Global.L.SaveButton();
+            _loadButton.Text = Global.L.LoadButton();
         }
 
         private void UpdateInfoText()
@@ -121,19 +125,16 @@ namespace GDMultiStash.Overlay.Elements
 
         private void CheatSaveButton_Click(object sender, EventArgs e)
         {
-            if (Global.Runtime.StashIsReopening) return;
             Global.Runtime.SaveCurrentStash();
         }
 
         private void CheatLoadButton_Click(object sender, EventArgs e)
         {
-            if (Global.Runtime.StashIsReopening) return;
             Global.Runtime.LoadCurrentStash();
         }
 
         private void ReloadButton_Click(object sender, EventArgs e)
         {
-            if (Global.Runtime.StashIsReopening) return;
             Global.Runtime.ReloadCurrentStash();
         }
 

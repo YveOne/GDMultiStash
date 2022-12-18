@@ -5,139 +5,124 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+using D3DHook.Hook.Common;
+
 namespace GDMultiStash.Common.Overlay
 {
     public partial class Element
     {
-
         public Element()
         {
-            _id = GetNextID();
+            _debugImage = new D3DHook.Hook.Common.ImageElement();
         }
 
         #region ID
 
         private static int _lastID = -1;
+
         private static int GetNextID()
         {
             _lastID += 1;
             return _lastID;
         }
 
-        protected readonly int _id;
-        public int ID => _id;
+        public int ID { get; } = GetNextID();
 
         #endregion
 
-        #region Viewport
+        #region Viewport 
 
-        private Viewport _viewport = null;
-
-        protected virtual Viewport GetViewport()
+        private Viewport _parentViewport = null;
+        protected virtual Viewport ParentViewport
         {
-            if (_viewport != null) return _viewport;
-            _viewport = _parent.GetViewport();
-            return _viewport;
+            get
+            {
+                if (_parentViewport == null && Parent != null)
+                    _parentViewport = Parent.ParentViewport;
+                return _parentViewport;
+            }
+        }
+
+        public virtual void ViewportConnected(Viewport parentViewport)
+        {
+            Children.ForEach(child => child.ViewportConnected(parentViewport));
+
+            if (Debugging)
+                parentViewport.OverlayResources.AsyncCreateColorImageResource(DebugColor)
+                    .ResourceCreated += delegate (object sender, ResourceHandler.ResourceCreatedEventArgs args) {
+                        _debugImage.ResourceUID = args.Resource.UID;
+                    };
         }
 
         #endregion
 
         #region Parent & Children
 
-        private Element _parent = null;
-        private readonly List<Element> _children = new List<Element>();
+        public Element Parent { get; private set; } = null;
 
-        public virtual Element Parent
-        {
-            get { return _parent; }
-        }
+        private List<Element> Children { get; } = new List<Element>();
 
         public void AddChild(Element child)
         {
-            _children.Add(child);
-            child._parent = this;
-            Update();
-            Redraw();
+            // check if child is already in children list
+            //if (Children.FindIndex(e => e.ID == child.ID) != -1)
+            if (Children.Contains(child))
+                return;
+            Children.Add(child);
+            child.Parent = this;
+            Redraw(true);
+            if (ParentViewport != null)
+                child.ViewportConnected(ParentViewport);
         }
 
-        public void RemoveChild(int id)
+        public void RemoveChild(Element child, bool destroy = true)
         {
-            _children.RemoveAll((Element e) => {
-                if (e.ID == id)
-                {
-                    e.Destroy();
-                    return true;
-                }
-                return false;
-            });
-            Update();
-            Redraw();
-        }
-
-        public void RemoveChild(Element e)
-        {
-            RemoveChild(e.ID);
+            if (destroy) child.Destroy();
+            Children.Remove(child);
+            Redraw(true);
         }
 
         public void ClearChildren()
         {
-            foreach (Element e in _children)
-                e.Destroy();
-            _children.Clear();
-            Update();
-            Redraw();
+            foreach (Element child in Children)
+                child.Destroy();
+            Children.Clear();
+            Redraw(true);
         }
 
         #endregion
 
-        private bool _updateRequested = false;
-        private bool _updateRequestResponse = false;
+        #region Requests
 
-        private bool _redrawRequested = false;
-        private bool _redrawRequestResponse = false;
+        protected bool _redrawRequested = false;
+        protected bool _updateRequested = false;
 
-        public virtual bool Update()
+        public virtual void Redraw(bool andUpdate = false)
         {
-            if (_updateRequested) return _updateRequestResponse;
-            _updateRequested = true;
-            if (_parent != null)
-            {
-                _updateRequestResponse = _parent.Update();
-            }
-            return _updateRequestResponse;
-        }
-
-        public virtual bool Redraw()
-        {
-            if (_redrawRequested) return _redrawRequestResponse;
             _redrawRequested = true;
-            if (_parent != null)
-            {
-                _redrawRequestResponse = _parent.Redraw();
-            }
-            return _redrawRequestResponse;
+            _updateRequested |= andUpdate;
         }
 
-        public virtual void Reset()
-        {
-            _resetVisible = true;
-            _resetAlpha = true;
-            _resetScale = true;
-            _resetWidth = true;
-            _resetHeight = true;
-            _resetX = true;
-            _resetY = true;
-            foreach (Element el in _children)
-                el.Reset();
-        }
+        #endregion
 
-        public virtual List<D3DHook.Hook.Common.IOverlayElement> GetImagesRecursive()
+        #region Debugging 
+
+        protected static bool Debugging = false;
+        private readonly D3DHook.Hook.Common.ImageElement _debugImage;
+        public virtual Color DebugColor { get; set; } = Color.FromArgb(0, 0, 0, 0);
+
+        #endregion
+
+        public virtual List<IOverlayElement> GetImagesRecursive()
         {
-            List<D3DHook.Hook.Common.IOverlayElement> imglist = new List<D3DHook.Hook.Common.IOverlayElement>();
-            foreach (Element child in _children)
-            {
+            List<IOverlayElement> imglist = new List<IOverlayElement>();
+
+            if (Debugging)
+                imglist.Add(_debugImage);
+
+            foreach (Element child in Children)
                 imglist.AddRange(child.GetImagesRecursive());
-            }
+
             return imglist;
         }
 
@@ -148,113 +133,75 @@ namespace GDMultiStash.Common.Overlay
             MouseUp = null;
             MouseDown = null;
             MouseClick = null;
-            foreach (Element child in _children)
-                child.Destroy();
-            _children.Clear();
+            Children.ForEach(child => child.Destroy());
+            Children.Clear();
         }
 
         public virtual void Begin()
         {
-            // update failed last frame
-            if (_updateRequested)
-            {
-                _updateRequested = false;
-                Update();
-            }
-
-            // redraw failed last frame
-            if (_redrawRequested)
-            {
-                _redrawRequested = false;
-                Redraw();
-            }
-
-            foreach (Element child in _children)
-                child.Begin();
+            Children.ForEach(child => child.Begin());
         }
 
         public virtual void Draw(float ms)
         {
-            foreach (Element child in _children)
-                child.Draw(ms);
+            Children.ForEach(child => child.Draw(ms));
         }
 
         public virtual void End()
         {
-            _resetWidth |= _resetScale;
-            _resetHeight |= _resetScale;
-            _resetX |= _resetScale;
-            _resetY |= _resetScale;
-            if (_parent != null)
+            ResetWidth |= ResetScale;
+            ResetHeight |= ResetScale;
+            ResetX |= ResetScale || ResetWidth;
+            ResetY |= ResetScale || ResetHeight;
+            if (Parent != null)
             {
-                _resetVisible |= _parent._resetVisible;
-                _resetAlpha |= _parent._resetAlpha;
-                _resetScale |= _parent._resetScale;
-                _resetWidth |= _parent._resetWidth || _resetScale;
-                _resetHeight |= _parent._resetHeight || _resetScale;
-                _resetX |= _parent._resetX || _resetWidth || _resetScale;
-                _resetY |= _parent._resetY || _resetHeight || _resetScale;
+                ResetVisible |= Parent.ResetVisible;
+                ResetAlpha |= Parent.ResetAlpha;
+                ResetScale |= Parent.ResetScale;
+                ResetWidth |= Parent.ResetWidth;
+                ResetHeight |= Parent.ResetHeight;
+                ResetX |= Parent.ResetX;
+                ResetY |= Parent.ResetY;
             }
-            if (_resetVisible) Visible = _visible;
-            if (_resetAlpha) Alpha = _alpha;
-            if (_resetScale) Scale = _scale;
-            if (_resetWidth) Width = _width;
-            if (_resetHeight) Height = _height;
-            if (_resetX) X = _x;
-            if (_resetY) Y = _y;
-            if (_resetVisible || _resetAlpha || _resetScale || _resetWidth || _resetHeight || _resetX || _resetY)
+            if (ResetVisible) Visible = _visible;
+            if (ResetAlpha) Alpha = _alpha;
+            if (ResetScale) Scale = _scale;
+            if (ResetWidth) Width = _width;
+            if (ResetHeight) Height = _height;
+            if (ResetX) X = _x;
+            if (ResetY) Y = _y;
+            if (ResetVisible || ResetAlpha || ResetScale || ResetWidth || ResetHeight || ResetX || ResetY)
             {
+                if (ResetX) _debugImage.X = _xTotal + 0.5f;
+                if (ResetY) _debugImage.Y = _yTotal + 0.5f;
+                if (ResetWidth) _debugImage.Width = _widthTotal + 0.5f;
+                if (ResetHeight) _debugImage.Height = _heightTotal + 0.5f;
+                if (ResetAlpha) _debugImage.Tint = Color.FromArgb((int)(255f * _alphaTotal), 255, 255, 255);
+                if (ResetVisible) _debugImage.Hidden = !_visibleTotal;
                 Redraw();
             }
-            foreach (Element child in _children)
-                child.End();
+            Children.ForEach(child => child.End());
         }
 
         public virtual void Cleanup()
         {
-            if (_updateRequested && _updateRequestResponse)
+            if (ParentViewport != null && _redrawRequested)
             {
-                _updateRequested = false;
-                _updateRequestResponse = false;
-            }
-            if (_redrawRequested && _redrawRequestResponse)
-            {
+                ParentViewport.Redraw(_updateRequested);
                 _redrawRequested = false;
-                _redrawRequestResponse = false;
+                _updateRequested = false;
             }
 
-            _resetVisible = false;
-            _resetAlpha = false;
-            _resetWidth = false;
-            _resetHeight = false;
-            _resetScale = false;
-            _resetX = false;
-            _resetY = false;
+            ResetVisible = false;
+            ResetAlpha = false;
+            ResetWidth = false;
+            ResetHeight = false;
+            ResetScale = false;
+            ResetX = false;
+            ResetY = false;
 
-            foreach (Element child in _children)
-                child.Cleanup();
+            Children.ForEach(child => child.Cleanup());
         }
-
-        public bool ResetVisible => _resetVisible;
-        private bool _resetVisible = true;
-
-        public bool ResetAlpha => _resetAlpha;
-        private bool _resetAlpha = true;
-
-        public bool ResetScale => _resetScale;
-        private bool _resetScale = true;
-
-        public bool ResetWidth => _resetWidth;
-        private bool _resetWidth = true;
-
-        public bool ResetHeight => _resetHeight;
-        private bool _resetHeight = true;
-
-        public bool ResetX => _resetX;
-        private bool _resetX = true;
-
-        public bool ResetY => _resetY;
-        private bool _resetY = true;
 
     }
 }

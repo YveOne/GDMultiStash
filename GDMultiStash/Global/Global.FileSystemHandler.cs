@@ -76,6 +76,7 @@ namespace GDMultiStash.GlobalHandlers
 
         public bool ExportStashTransferFile(int stashID, string destFile)
         {
+            System.Threading.Thread.Sleep(100);
             string srcFile = GetStashTransferFile(stashID);
             if (!File.Exists(srcFile)) return false;
             string destDir = Path.GetDirectoryName(destFile);
@@ -84,8 +85,9 @@ namespace GDMultiStash.GlobalHandlers
             return true;
         }
 
-        public void BackupCleanupStashTransferFile(int stashID)
+        public int BackupCleanupStashTransferFile(int stashID)
         {
+            int deletedFiles = 0;
             int maxBackups = Global.Configuration.Settings.MaxBackups;
             System.Text.RegularExpressions.Regex re = new System.Text.RegularExpressions.Regex(@"^transfer(\d*)$");
             System.Text.RegularExpressions.Match m;
@@ -99,8 +101,10 @@ namespace GDMultiStash.GlobalHandlers
                 if (backupIndex > maxBackups)
                 {
                     File.Delete(f);
+                    deletedFiles++;
                 }
             }
+            return deletedFiles;
         }
 
         public void BackupStashTransferFile(int stashID)

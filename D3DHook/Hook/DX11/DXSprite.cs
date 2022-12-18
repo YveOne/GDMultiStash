@@ -181,13 +181,16 @@ technique11 SpriteTech {
                         IndependentBlendEnable = false,
                     };
                     transparentDesc.RenderTarget[0].IsBlendEnabled = true;
-                    transparentDesc.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;
-                    transparentDesc.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;
-                    transparentDesc.RenderTarget[0].BlendOperation = BlendOperation.Add;
-                    transparentDesc.RenderTarget[0].SourceAlphaBlend = BlendOption.One;
-                    transparentDesc.RenderTarget[0].DestinationAlphaBlend = BlendOption.Zero;
-                    transparentDesc.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;
                     transparentDesc.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;
+
+                    transparentDesc.RenderTarget[0].BlendOperation = BlendOperation.Add;
+                    transparentDesc.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;
+
+                    transparentDesc.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;
+                    transparentDesc.RenderTarget[0].DestinationAlphaBlend = BlendOption.InverseSourceAlpha;
+
+                    transparentDesc.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;
+                    transparentDesc.RenderTarget[0].SourceAlphaBlend = BlendOption.One;
 
                     _transparentBS = ToDispose(new BlendState(_device, transparentDesc));
                 }

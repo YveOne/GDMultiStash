@@ -11,6 +11,8 @@ using System.IO;
 
 using GrimDawnLib;
 
+using GDMultiStash.Common.Objects;
+
 namespace GDMultiStash.Forms
 {
     internal partial class ImportDialogForm : DialogForm
@@ -19,29 +21,17 @@ namespace GDMultiStash.Forms
         public ImportDialogForm() : base()
         {
             InitializeComponent();
+
         }
 
-        public override void Initialize()
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
-            base.Initialize();
-            overwriteComboBox.SelectionChangeCommitted += overwriteComboBox_SelectionChangeCommitted;
-        }
+            Text = L.ImportButton();
 
-        private string _msg_invalid_transfer_file;
-        private string _msg_no_stash_selected;
-
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
-        {
-            Text = L["importWindow"];
-
-            _msg_invalid_transfer_file = L["msg_invalid_transfer_file"];
-            _msg_no_stash_selected = L["msg_no_stash_selected"];
-
-            transferFileLabel.Text = L["importWindow_transferFileLabel"];
-            stashNameLabel.Text = L["importWindow_stashNameLabel"];
-            overwriteLabel.Text = L["importWindow_overwriteLabel"];
-            expansionLabel.Text = L["importWindow_expansionLabel"];
-            okButton.Text = L["importWindow_okButton"];
+            transferFileLabel.Text = L.TransferFileLabel();
+            stashNameLabel.Text = L.StashNameLabel();
+            expansionLabel.Text = L.ExpansionLabel();
+            okButton.Text = L.ImportButton();
         }
 
         private void ImportForm_Load(object sender, EventArgs e)
@@ -60,33 +50,11 @@ namespace GDMultiStash.Forms
 
         private void overwriteCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (overwriteCheckBox.Checked)
-            {
-                nameTextBox.Visible = false;
-                overwriteComboBox.Enabled = true;
-                okButton.Enabled = false;
-                scCheckBox.Visible = false;
-                hcCheckBox.Visible = false;
-                stashNameLabel.Visible = false;
-            }
-            else
-            {
-                nameTextBox.Visible = true;
-                overwriteComboBox.SelectedIndex = -1;
-                overwriteComboBox.Enabled = false;
-                okButton.Enabled = true;
-                scCheckBox.Visible = true;
-                hcCheckBox.Visible = true;
-                stashNameLabel.Visible = true;
-            }
-        }
-
-        private void overwriteComboBox_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if (overwriteCheckBox.Checked && overwriteComboBox.SelectedIndex != -1)
-            {
-                okButton.Enabled = true;
-            }
+            nameTextBox.Visible = true;
+            okButton.Enabled = true;
+            scCheckBox.Visible = true;
+            hcCheckBox.Visible = true;
+            stashNameLabel.Visible = true;
         }
 
 
@@ -112,7 +80,7 @@ namespace GDMultiStash.Forms
 
         #region Dialog
 
-        private readonly List<Common.StashObject> _importedStashes = new List<Common.StashObject>();
+        private readonly List<StashObject> _importedStashes = new List<StashObject>();
 
         public DialogResult ShowDialog(IWin32Window owner, string srcFile)
         {
@@ -121,45 +89,25 @@ namespace GDMultiStash.Forms
             GrimDawnGameExpansion exp = Common.TransferFile.GetExpansionByFile(srcFile);
             if (exp == GrimDawnGameExpansion.Unknown)
             {
-                MessageBox.Show(_msg_invalid_transfer_file, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(Global.L.InvalidTransferFileMessage(), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return DialogResult.None;
             }
 
-            overwriteCheckBox.Checked = false;
             stashFileTextBox.Text = srcFile;
             nameTextBox.Text = Path.GetFileNameWithoutExtension(srcFile);
             expansionTextBox.Text = GrimDawn.GetExpansionName(exp);
 
-            overwriteComboBox.DisplayMember = "Name";
-            overwriteComboBox.ValueMember = "ID";
-            overwriteComboBox.DataSource = Global.Stashes.GetStashesForExpansion(exp);
-            overwriteComboBox.SelectedIndex = -1;
-            overwriteComboBox.Enabled = false;
-
-            GrimDawnGameMode mode = (GrimDawnGameMode)Global.Configuration.Settings.DefaultStashMode;
-            scCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.SC);
-            hcCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.HC);
+            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcore;
+            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcore;
 
             DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;
 
-            Common.StashObject stash = null;
-            if (overwriteCheckBox.Checked)
-            {
-                if (overwriteComboBox.SelectedIndex == -1)
-                {
-                    MessageBox.Show(_msg_no_stash_selected, "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return DialogResult.None;
-                }
-                stash = Global.Stashes.ImportOverwriteStash(srcFile, (int)overwriteComboBox.SelectedValue);
-            }
-            else
-            {
-                mode = GrimDawnGameMode.None;
-                if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
-                if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
-                stash = Global.Stashes.ImportStash(srcFile, nameTextBox.Text, exp, mode);
-            }
+            GrimDawnGameMode mode = GrimDawnGameMode.None;
+            if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
+            if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
+            StashObject stash = Global.Stashes.CreateImportStash(srcFile, nameTextBox.Text, exp, mode);
+
             if (stash != null)
             {
                 Global.Runtime.ReloadOpenedStash(stash.ID);
@@ -173,27 +121,16 @@ namespace GDMultiStash.Forms
 
 
 
-        public DialogResult ShowDialog(IWin32Window owner, out Common.StashObject[] importedStashes)
+        public DialogResult ShowDialog(IWin32Window owner, out StashObject[] importedStashes)
         {
-            importedStashes = null;
-            string filter = string.Join(";", GrimDawn.GetAllTransferExtensions().Select(ext => "*" + ext));
-
-            using (var dialog = new OpenFileDialog()
-            {
-                Filter = "Transfer File|" + filter,
-                Multiselect = true,
-            })
-            {
-                DialogResult result = dialog.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    return ShowDialog(owner, dialog.FileNames, out importedStashes);
-                }
-            }
-            return DialogResult.Cancel;
+            importedStashes = new StashObject[0];
+            DialogResult result = GrimDawn.ShowSelectTransferFilesDialog(out string[] files, true);
+            if (result == DialogResult.OK)
+                return ShowDialog(owner, files, out importedStashes);
+            return result;
         }
 
-        public DialogResult ShowDialog(IWin32Window owner, IEnumerable<string> files, out Common.StashObject[] importedStashes)
+        public DialogResult ShowDialog(IWin32Window owner, IEnumerable<string> files, out StashObject[] importedStashes)
         {
             importedStashes = null;
             if (files.Count() != 0)

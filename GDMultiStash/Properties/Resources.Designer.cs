@@ -63,9 +63,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap background {
+        internal static System.Drawing.Bitmap border {
             get {
-                object obj = ResourceManager.GetObject("background", resourceCulture);
+                object obj = ResourceManager.GetObject("border", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,89 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap background_left {
+        internal static System.Drawing.Bitmap buttonCloseGray {
             get {
-                object obj = ResourceManager.GetObject("background_left", resourceCulture);
+                object obj = ResourceManager.GetObject("buttonCloseGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap buttonCloseWhite {
+            get {
+                object obj = ResourceManager.GetObject("buttonCloseWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonDropDownArrow {
+            get {
+                object obj = ResourceManager.GetObject("ButtonDropDownArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonDropUpArrow {
+            get {
+                object obj = ResourceManager.GetObject("ButtonDropUpArrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonLargeDown {
+            get {
+                object obj = ResourceManager.GetObject("ButtonLargeDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonLargeOver {
+            get {
+                object obj = ResourceManager.GetObject("ButtonLargeOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap buttonLargeUp {
+            get {
+                object obj = ResourceManager.GetObject("buttonLargeUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap buttonMinimizeGray {
+            get {
+                object obj = ResourceManager.GetObject("buttonMinimizeGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap buttonMinimizeWhite {
+            get {
+                object obj = ResourceManager.GetObject("buttonMinimizeWhite", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -106,6 +186,86 @@ namespace GDMultiStash.Properties {
         internal static System.Drawing.Bitmap ButtonSmallUp {
             get {
                 object obj = ResourceManager.GetObject("ButtonSmallUp", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap buttonTrayGray {
+            get {
+                object obj = ResourceManager.GetObject("buttonTrayGray", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap buttonTrayWhite {
+            get {
+                object obj = ResourceManager.GetObject("buttonTrayWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckBoxBack {
+            get {
+                object obj = ResourceManager.GetObject("CheckBoxBack", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckBoxBackHover {
+            get {
+                object obj = ResourceManager.GetObject("CheckBoxBackHover", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckBoxCross {
+            get {
+                object obj = ResourceManager.GetObject("CheckBoxCross", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckBoxCrossDisabled {
+            get {
+                object obj = ResourceManager.GetObject("CheckBoxCrossDisabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckBoxTick {
+            get {
+                object obj = ResourceManager.GetObject("CheckBoxTick", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap CheckBoxTickDisabled {
+            get {
+                object obj = ResourceManager.GetObject("CheckBoxTickDisabled", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -168,16 +328,98 @@ namespace GDMultiStash.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderB {
+            get {
+                object obj = ResourceManager.GetObject("listBorderB", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderBL {
+            get {
+                object obj = ResourceManager.GetObject("listBorderBL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderBR {
+            get {
+                object obj = ResourceManager.GetObject("listBorderBR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderL {
+            get {
+                object obj = ResourceManager.GetObject("listBorderL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderR {
+            get {
+                object obj = ResourceManager.GetObject("listBorderR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderT {
+            get {
+                object obj = ResourceManager.GetObject("listBorderT", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderTL {
+            get {
+                object obj = ResourceManager.GetObject("listBorderTL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap listBorderTR {
+            get {
+                object obj = ResourceManager.GetObject("listBorderTR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 
         ///language_name = Deutsch
         ///
-        ///msg_please_select_gamedir = Bitte zuerst Spielverzeichnis auswählen
-        ///msg_gamedir_not_found = Spielverzeichnis nicht gefunden!
-        ///msg_docsdir_not_found = Dokumentenverzeichnis nicht gefunden!
+        ///// messages
+        ///msg_select_game_directory = Bitte zuerst Spielverzeichnis auswählen
+        ///msg_game_directory_not_found = Spielverzeichnis nicht gefunden!
+        ///msg_documents_directory_not_found = Dokumentenverzeichnis nicht gefunden!
         ///msg_update_available = Neue Version verfügbar: {0}\nJetzt aktualisieren?
-        ///msg_gd_already_running = Grim Dawn läuft bereits!
-        ///msg_confirm_delete_stashes = Ausgewählte Stashes löschen?\nDies kann nicht rückgängig gemacht werden!
-        ///msg_cannot_delete_stash = Stash &quot;{0}&quot; kann nicht gelöscht werden: [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_confirm_closing = Grim Dawn läuft noch!\nDennoch schließen?
+        ///msg_already_running = GDMultiStash läuft bereits!
+        ///msg_game_already_running = Grim Dawn läuft bereits!
+        ///msg_shortcut_creat [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_deDE {
             get {
@@ -189,14 +431,15 @@ namespace GDMultiStash.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die 
         ///language_name = English (GB)
         ///
-        ///msg_please_select_gamedir = Please first select your game directory
-        ///msg_gamedir_not_found = Game directory not found!
-        ///msg_docsdir_not_found = Documents directory not found!
+        ///// messages
+        ///msg_select_game_directory = Please first select your game directory
+        ///msg_game_directory_not_found = Game directory not found!
+        ///msg_documents_directory_not_found = Documents directory not found!
         ///msg_update_available = New version available: {0}\nUpdate now?
-        ///msg_gd_already_running = Grim Dawn is already running!
-        ///msg_confirm_delete_stashes = Delete selected stashes?\nThis cannot be undone!
-        ///msg_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
-        ///msg_stash_is_active = Stash is currently [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_confirm_closing = Grim Dawn is still running\nClose anyway?
+        ///msg_already_running = GDMultiStash is already running!
+        ///msg_game_already_running = Grim Dawn is already running!
+        ///msg_shortcut_created = Shor [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_enGB {
             get {
@@ -208,14 +451,15 @@ namespace GDMultiStash.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die 
         ///language_name = English (US)
         ///
-        ///msg_please_select_gamedir = Please first select your game directory
-        ///msg_gamedir_not_found = Game directory not found!
-        ///msg_docsdir_not_found = Documents directory not found!
+        ///// messages
+        ///msg_select_game_directory = Please first select your game directory
+        ///msg_game_directory_not_found = Game directory not found!
+        ///msg_documents_directory_not_found = Documents directory not found!
         ///msg_update_available = New version available: {0}\nUpdate now?
-        ///msg_gd_already_running = Grim Dawn is already running!
-        ///msg_confirm_delete_stashes = Delete selected stashes?\nThis cannot be undone!
-        ///msg_cannot_delete_stash = Stash &quot;{0}&quot; can not be deleted: {1}
-        ///msg_stash_is_active = Stash is currently [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_confirm_closing = Grim Dawn is still running\nClose anyway?
+        ///msg_already_running = GDMultiStash is already running!
+        ///msg_game_already_running = Grim Dawn is already running!
+        ///msg_shortcut_created = Shor [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_enUS {
             get {
@@ -227,18 +471,18 @@ namespace GDMultiStash.Properties {
         ///   Sucht eine lokalisierte Zeichenfolge, die 
         ///language_name = 简体中文
         ///
-        ///msg_please_select_gamedir = Please first select your game directory
-        ///msg_gamedir_not_found = 游戏目录未找到！
-        ///msg_docsdir_not_found = 文档目录未找到！
+        ///// messages
+        ///msg_select_game_directory = Please first select your game directory
+        ///msg_game_directory_not_found = 游戏目录未找到！
+        ///msg_documents_directory_not_found = 文档目录未找到！
         ///msg_update_available = New version available: {0}\nUpdate now?
-        ///msg_gd_already_running = 恐怖黎明已经在运行！
-        ///msg_confirm_delete_stashes = 删除选定的存储？\n无法撤消！
-        ///msg_cannot_delete_stash = 存储“{0}”无法删除：{1}
-        ///msg_stash_is_active = 存储当前处于活动状态
-        ///msg_stash_is_main = Stash is main stash
+        ///msg_confirm_closing = Grim Dawn 仍在运行\n仍然关闭？
+        ///msg_already_running = GDMultiStash 已经在运行！
+        ///msg_game_already_running = 恐怖黎明已经在运行！
+        ///msg_shortcut_created = 快捷方式已创建
         ///msg_invalid_transfer_file = 传输文件无效！
         ///msg_no_stash_selected = 没有选择存储！
-        ///msg_gdms_alrea [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///msg_backups_cleanedup =  [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string local_zhCN {
             get {
@@ -249,9 +493,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap lockBlack {
+        internal static System.Drawing.Bitmap lockedBlack {
             get {
-                object obj = ResourceManager.GetObject("lockBlack", resourceCulture);
+                object obj = ResourceManager.GetObject("lockedBlack", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -259,9 +503,19 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap lockWhite {
+        internal static System.Drawing.Bitmap lockedWhite {
             get {
-                object obj = ResourceManager.GetObject("lockWhite", resourceCulture);
+                object obj = ResourceManager.GetObject("lockedWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap marble {
+            get {
+                object obj = ResourceManager.GetObject("marble", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -319,6 +573,36 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap scrollareaBottom {
+            get {
+                object obj = ResourceManager.GetObject("scrollareaBottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scrollareaMiddle {
+            get {
+                object obj = ResourceManager.GetObject("scrollareaMiddle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap scrollareaTop {
+            get {
+                object obj = ResourceManager.GetObject("scrollareaTop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap scrollbar {
             get {
                 object obj = ResourceManager.GetObject("scrollbar", resourceCulture);
@@ -342,6 +626,175 @@ namespace GDMultiStash.Properties {
         internal static System.Drawing.Bitmap scrollbar_top {
             get {
                 object obj = ResourceManager.GetObject("scrollbar_top", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowBottom {
+            get {
+                object obj = ResourceManager.GetObject("shadowBottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowBottomLeft {
+            get {
+                object obj = ResourceManager.GetObject("shadowBottomLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowBottomRight {
+            get {
+                object obj = ResourceManager.GetObject("shadowBottomRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowLeft {
+            get {
+                object obj = ResourceManager.GetObject("shadowLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowMiddle {
+            get {
+                object obj = ResourceManager.GetObject("shadowMiddle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowRight {
+            get {
+                object obj = ResourceManager.GetObject("shadowRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowTop {
+            get {
+                object obj = ResourceManager.GetObject("shadowTop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowTopLeft {
+            get {
+                object obj = ResourceManager.GetObject("shadowTopLeft", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shadowTopRight {
+            get {
+                object obj = ResourceManager.GetObject("shadowTopRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.IO.UnmanagedMemoryStream ähnlich wie System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream soundButtonOverTick {
+            get {
+                return ResourceManager.GetStream("soundButtonOverTick", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap title {
+            get {
+                object obj = ResourceManager.GetObject("title", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap windowBackground {
+            get {
+                object obj = ResourceManager.GetObject("windowBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap windowBorderBottom {
+            get {
+                object obj = ResourceManager.GetObject("windowBorderBottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap windowBorderBottomRight {
+            get {
+                object obj = ResourceManager.GetObject("windowBorderBottomRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap windowBorderRight {
+            get {
+                object obj = ResourceManager.GetObject("windowBorderRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap windowBorderTop {
+            get {
+                object obj = ResourceManager.GetObject("windowBorderTop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap windowBorderTopRight {
+            get {
+                object obj = ResourceManager.GetObject("windowBorderTopRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

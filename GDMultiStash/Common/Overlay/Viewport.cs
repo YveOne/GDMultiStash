@@ -9,33 +9,15 @@ namespace GDMultiStash.Common.Overlay
     public class Viewport : Element
     {
 
-        public ResourceHandler Resources => _resourceHandler;
-        private readonly ResourceHandler _resourceHandler;
+
+        public ResourceHandler OverlayResources { get; private set; }
+
+        protected override Viewport ParentViewport => this;
 
         public Viewport()
         {
-            _resourceHandler = new ResourceHandler();
+            OverlayResources = new ResourceHandler();
             MouseCheckNeedBaseHit = true;
-        }
-
-        protected override Viewport GetViewport()
-        {
-            return this;
-        }
-
-        private bool _updateRequested = false;
-        private bool _redrawRequested = false;
-
-        public override bool Update()
-        {
-            _updateRequested = true;
-            return true;
-        }
-
-        public override bool Redraw()
-        {
-            _redrawRequested = true;
-            return true;
         }
 
         public bool UpdateRequested()
@@ -54,9 +36,10 @@ namespace GDMultiStash.Common.Overlay
 
         public virtual bool DrawRoutine(float ms)
         {
-            if (Width <= 0) return false;
-            if (Height <= 0) return false;
+            if (TotalWidth <= 0) return false;
+            if (TotalHeight <= 0) return false;
             base.Begin();
+            _redrawRequested |= Animations.Animator.AnimateAll(ms);
             base.Draw(ms);
             base.End();
             base.Cleanup();

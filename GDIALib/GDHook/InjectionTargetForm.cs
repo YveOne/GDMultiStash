@@ -29,6 +29,7 @@ namespace GDIALib.GDHook
             _messageProcessors.Add(new StashStatusHandler());
             _messageProcessors.Add(new ModeStatusHandler());
             _messageProcessors.Add(new ExpansionStatusHandler());
+            _messageProcessors.Add(new SetModNameStatusHandler());
         }
 
         public void StartInjector()

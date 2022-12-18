@@ -6,131 +6,103 @@ using System.Threading.Tasks;
 
 namespace GDMultiStash.Common.Overlay
 {
-    public class ScrollBarElement : Element
+    public class ScrollBarElement : Element, IScrollable
     {
 
-        protected virtual float ScrollAreaWidth => 0f;
-        protected virtual float ScrollAreaHeight => 0f;
-        protected virtual float ScrollBarMinWidth => 0f;
-        protected virtual float ScrollBarMinHeight => 0f;
-        protected virtual int ScrollAreaWidthUnits => 0;
-        protected virtual int ScrollAreaHeightUnits => 0;
-
-        private int _scrollUnitsX = 0;
-        private int _scrollUnitsY = 0;
-
-        private int _unitsX = 0;
-        private int _unitsY = 0;
-
-        private float _scrollUnitsAspectX = 0;
-        private float _scrollUnitsAspectY = 0;
+        public virtual float ScrollBarMinWidth => 0f;
+        public virtual float ScrollBarMinHeight => 0f;
+        public virtual ScrollOrientation Orientation => ScrollOrientation.None;
 
         private readonly Element _scrollBar;
-
-        private float _pixelPerUnitX = 0;
-        private float _pixelPerUnitY = 0;
-
         private bool _rearrange = true;
-
-        public ScrollBarElement()
-        {
-            _scrollBar = new Element();
-            AddChild(_scrollBar);
-        }
 
         public Element ScrollBar => _scrollBar;
 
+        public ScrollHandler ScrollHandler { get; private set; }
 
-
-
-
-        public int ScrollUnitsX
+        public ScrollBarElement()
         {
-            get => _scrollUnitsX;
+            _scrollBar = new Element()
+            {
+                ScaleWithParent = true,
+            };
+            AddChild(_scrollBar);
+            ScrollHandler = new ScrollHandler(Orientation);
+            ScrollHandler.ScrollPositionXChanged += delegate { _rearrange = true; };
+            ScrollHandler.ScrollPositionYChanged += delegate { _rearrange = true; };
+            ScrollHandler.TotalUnitsXChanged += delegate { _rearrange = true; };
+            ScrollHandler.TotalUnitsYChanged += delegate { _rearrange = true; };
+            ScrollHandler.VisibleUnitsXChanged += delegate { _rearrange = true; };
+            ScrollHandler.VisibleUnitsYChanged += delegate { _rearrange = true; };
+        }
+
+        private float _pixelPerUnitX;
+        private float _pixelPerUnitY;
+
+        public override float Width
+        {
+            get => base.Width;
             set
             {
-                int max = _unitsX - ScrollAreaWidthUnits;
-                if (value > max) value = max;
-                if (value < 0) value = 0;
-                _scrollUnitsX = value;
-                _rearrange = true;
+                _rearrange |= base.Width != value;
+                base.Width = value;
             }
         }
 
-        public int ScrollUnitsY
+        public override float Height
         {
-            get => _scrollUnitsY;
+            get => base.Height;
             set
             {
-                int max = _unitsY - ScrollAreaHeightUnits;
-                if (value > max) value = max;
-                if (value < 0) value = 0;
-                _scrollUnitsY = value;
-                _rearrange = true;
-            }
-        }
-
-        public int UnitsX
-        {
-            get => _unitsX;
-            set
-            {
-                _unitsX = value;
-                _rearrange = true;
-            }
-        }
-
-        public int UnitsY
-        {
-            get => _unitsY;
-            set
-            {
-                _unitsY = value;
-                _rearrange = true;
+                _rearrange |= base.Height != value;
+                base.Height = value;
             }
         }
 
         private void TriggerScrollingEvent()
         {
+            /*
             Scrolling?.Invoke(this, new ScrollingEventArgs
             {
-                X = -ScrollUnitsX,
-                Y = -ScrollUnitsY,
+                X = ScrollHandler.ScrollPositionX,
+                Y = ScrollHandler.ScrollPositionY,
             });
+            */
         }
 
         public void Rearrange()
         {
-            ScrollUnitsX = _scrollUnitsX;
-            ScrollUnitsY = _scrollUnitsY;
             bool hide = true;
-            if (ScrollAreaWidthUnits > 0 && _unitsX > ScrollAreaWidthUnits)
+            float _unscaledWidth = TotalWidth / TotalScale;
+            float _unscaledHeight = TotalHeight / TotalScale;
+            if (ScrollHandler.VisibleUnitsX > 0 && ScrollHandler.TotalUnitsX > ScrollHandler.VisibleUnitsX)
             {
-                _scrollUnitsAspectX = (float)ScrollAreaWidthUnits / _unitsX;
-                _scrollBar.Width = Math.Max(ScrollBarMinWidth, ScrollAreaWidth * _scrollUnitsAspectX);
-                _pixelPerUnitX = (ScrollAreaWidth - _scrollBar.Width) / (_unitsX - ScrollAreaWidthUnits);
-                _scrollBar.X = _pixelPerUnitX * _scrollUnitsX;
+                float _scrollUnitsAspectX = (float)ScrollHandler.VisibleUnitsX / ScrollHandler.TotalUnitsX;
+                _scrollBar.Width = Math.Max(ScrollBarMinWidth, _unscaledWidth * _scrollUnitsAspectX);
+                _pixelPerUnitX = (_unscaledWidth - _scrollBar.Width) / (ScrollHandler.TotalUnitsX - ScrollHandler.VisibleUnitsX);
+                _scrollBar.X = _pixelPerUnitX * ScrollHandler.ScrollPositionX;
                 hide = false;
             }
             else
             {
-                _scrollBar.Width = ScrollAreaWidth;
+                _scrollBar.Width = _unscaledWidth;
                 _scrollBar.X = 0;
             }
-            if (ScrollAreaHeightUnits > 0 && _unitsY > ScrollAreaHeightUnits)
+            if (ScrollHandler.VisibleUnitsY > 0 && ScrollHandler.TotalUnitsY > ScrollHandler.VisibleUnitsY)
             {
-                _scrollUnitsAspectY = (float)ScrollAreaHeightUnits / _unitsY;
-                _scrollBar.Height = Math.Max(ScrollBarMinHeight, ScrollAreaHeight * _scrollUnitsAspectY);
-                _pixelPerUnitY = (ScrollAreaHeight - _scrollBar.Height) / (_unitsY - ScrollAreaHeightUnits);
-                _scrollBar.Y = _pixelPerUnitY * _scrollUnitsY;
+                float _scrollUnitsAspectY = (float)ScrollHandler.VisibleUnitsY / ScrollHandler.TotalUnitsY;
+                _scrollBar.Height = Math.Max(ScrollBarMinHeight, _unscaledHeight * _scrollUnitsAspectY);
+                _pixelPerUnitY = (_unscaledHeight - _scrollBar.Height) / (ScrollHandler.TotalUnitsY - ScrollHandler.VisibleUnitsY);
+                _scrollBar.Y = _pixelPerUnitY * ScrollHandler.ScrollPositionY;
                 hide = false;
             }
             else
             {
-                _scrollBar.Height = ScrollAreaHeight;
+                _scrollBar.Height = _unscaledHeight;
                 _scrollBar.Y = 0;
             }
             _scrollBar.Visible = !hide;
+            TriggerScrollingEvent();
         }
 
         public override void Draw(float elapsed)
@@ -138,9 +110,8 @@ namespace GDMultiStash.Common.Overlay
             base.Draw(elapsed);
             if (_rearrange)
             {
-                Rearrange();
-                TriggerScrollingEvent();
                 _rearrange = false;
+                Rearrange();
             }
         }
 
@@ -152,14 +123,11 @@ namespace GDMultiStash.Common.Overlay
             public int Y;
         }
 
-        public delegate void ScrollingStartEventHandler(object sender, EventArgs e);
-        public event ScrollingStartEventHandler ScrollingStart;
+        public event EventHandler<EventArgs> ScrollingStart;
+        public event EventHandler<EventArgs> ScrollingEnd;
 
-        public delegate void ScrollingEndEventHandler(object sender, EventArgs e);
-        public event ScrollingEndEventHandler ScrollingEnd;
-
-        public delegate void ScrollingEventHandler(object sender, ScrollingEventArgs e);
-        public event ScrollingEventHandler Scrolling;
+        //public delegate void ScrollingEventHandler(object sender, ScrollingEventArgs e);
+        //public event ScrollingEventHandler Scrolling;
 
         private bool _mouseDown = false;
 
@@ -184,8 +152,8 @@ namespace GDMultiStash.Common.Overlay
             _tempMouseStartX = x;
             _tempMouseStartY = y;
 
-            _tempUnitsStartX = ScrollUnitsX;
-            _tempUnitsStartY = ScrollUnitsY;
+            _tempUnitsStartX = ScrollHandler.ScrollPositionX;
+            _tempUnitsStartY = ScrollHandler.ScrollPositionY;
 
             _tempUnitsX = 0;
             _tempUnitsY = 0;
@@ -195,8 +163,11 @@ namespace GDMultiStash.Common.Overlay
 
         public override bool CheckMouseUp(int x, int y)
         {
-            _mouseDown = false;
-            ScrollingEnd?.Invoke(this, EventArgs.Empty);
+            if (_mouseDown)
+            {
+                _mouseDown = false;
+                ScrollingEnd?.Invoke(this, EventArgs.Empty);
+            }
             return base.CheckMouseUp(x, y);
         }
 
@@ -211,8 +182,8 @@ namespace GDMultiStash.Common.Overlay
                 int movedUnitsX = (int)(diffX / _pixelPerUnitX);
                 int movedUnitsY = (int)(diffY / _pixelPerUnitY);
 
-                bool movedX = ScrollAreaWidthUnits > 0 && movedUnitsX != _tempUnitsX;
-                bool movedY = ScrollAreaHeightUnits > 0 && movedUnitsY != _tempUnitsY;
+                bool movedX = ScrollHandler.VisibleUnitsX > 0 && movedUnitsX != _tempUnitsX;
+                bool movedY = ScrollHandler.VisibleUnitsY > 0 && movedUnitsY != _tempUnitsY;
 
                 _tempUnitsX = movedUnitsX;
                 _tempUnitsY = movedUnitsY;
@@ -220,10 +191,10 @@ namespace GDMultiStash.Common.Overlay
                 if (movedX || movedY)
                 {
                     if (movedX)
-                        ScrollUnitsX = _tempUnitsStartX + movedUnitsX;
+                        ScrollHandler.ScrollPositionX = _tempUnitsStartX + movedUnitsX;
 
                     if (movedY)
-                        ScrollUnitsY = _tempUnitsStartY + movedUnitsY;
+                        ScrollHandler.ScrollPositionY = _tempUnitsStartY + movedUnitsY;
 
                     TriggerScrollingEvent();
                 }

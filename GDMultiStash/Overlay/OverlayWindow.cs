@@ -7,32 +7,17 @@ using System.Drawing;
 
 using GDMultiStash.Common.Overlay;
 using GDMultiStash.Common.Overlay.Animations;
+using GDMultiStash.Overlay.Controls;
+using GDMultiStash.Overlay.Controls.Base;
 
-namespace GDMultiStash.Overlay.Elements
+namespace GDMultiStash.Overlay
 {
     internal class OverlayWindow : Element
     {
 
         public static D3DHook.Hook.Common.IImageResource _BackgroundResource;
-        public static D3DHook.Hook.Common.IImageResource _BackgroundLeftResource;
-
-        private readonly FadeAnimation _fadeAnimation;
-        private const float fadeMin = 0.1f;
-
-        private const float fadeDuration = 300;
-        private const float fadeDurationSlow = 2000;
-        private const float fadeDurationSlowDelay = 2000;
-
-        private readonly MoveAnimation _moveAnimation;
-        private const float _moveDuration = 300;
-
-        private bool _mouseOver = false;
-        private bool _mouseDown = false;
-        private bool _updateAppearance = false;
-
-        private readonly InfoBox _infoWindow;
-        private readonly StashList _stashList;
-        private readonly VerticalScrollBar _scrollBar;
+        public static D3DHook.Hook.Common.IImageResource _OverShadowResource;
+        public static D3DHook.Hook.Common.IImageResource _GroupListBackgroundResource;
 
         public enum States
         {
@@ -41,6 +26,29 @@ namespace GDMultiStash.Overlay.Elements
             Shown = 2,
             Hiding = 3,
         }
+
+        private readonly Animator _fadeAnimator;
+        private readonly AnimationValue _fadeValue;
+        private const float fadeDuration = 300;
+        private const float fadeDurationSlow = 2000;
+        private const float fadeDurationSlowDelay = 2000;
+
+        private readonly Animator _moveAnimator;
+        private readonly AnimationValue _moveValue;
+        private const float _moveDuration = 300;
+
+        private bool _mouseOver = false;
+        private bool _mouseDown = false;
+        private bool _updateAppearance = false;
+
+        private readonly InfoBox _infoWindow;
+        private readonly StashList _stashList;
+        private readonly VerticalScrollBar _stashListScrollBar;
+        private readonly GroupSelectButton _groupSelectButton;
+        private readonly ImageElement _overShadow;
+        private readonly GroupList _groupList;
+        private readonly VerticalScrollBar _groupListScrollBar;
+        private readonly ImageElement _groupListBackground;
 
         public delegate void StateChangedEventHandler(States state);
         public event StateChangedEventHandler StateChanged;
@@ -60,51 +68,159 @@ namespace GDMultiStash.Overlay.Elements
         public OverlayWindow()
         {
             AnchorPoint = Anchor.Left;
-            Height = 740;
+
+            _stashList = new StashList()
+            {
+                X = 6,
+                Y = 61,
+                WidthToParent = true,
+                Width = -25,
+            };
+            _stashListScrollBar = new VerticalScrollBar()
+            {
+                AnchorPoint = Anchor.TopRight,
+                X = -5,
+                Y = 55,
+                Width = 9,
+                HeightToParent = true,
+                Height = -213, //567,
+            };
+            _infoWindow = new InfoBox()
+            {
+                X = 6,
+                Y = -10,
+                WidthToParent = true,
+                Width = -14,
+                Height = 127,
+                AnchorPoint = Anchor.BottomLeft,
+            };
+            _overShadow = new ImageElement()
+            {
+                AnchorPoint = Anchor.TopLeft,
+                WidthToParent = true,
+                HeightToParent = true,
+                Visible = false,
+                Alpha = 0,
+                Resource = _OverShadowResource,
+            };
+            _groupSelectButton = new GroupSelectButton()
+            {
+                X = 4,
+                Y = 6,
+                WidthToParent = true,
+                Width = -10,
+                Height = 41,
+            };
+            _groupListBackground = new ImageElement()
+            {
+                X = _groupSelectButton.X + 10,
+                Y = _groupSelectButton.Y + _groupSelectButton.Height,
+                WidthToParent = true,
+                Width = _groupSelectButton.Width - 10 -10,
+                Resource = _GroupListBackgroundResource,
+                Visible = false,
+            };
+            _groupList = new GroupList()
+            {
+                X = 5,
+                Y = 10,
+                WidthToParent = true,
+                Width = -15,
+            };
+            _groupListScrollBar = new VerticalScrollBar()
+            {
+                AnchorPoint = Anchor.TopRight,
+                X = -2,
+                Y = 10,
+                Width = 10,
+                HeightToParent = true,
+                Height = -20,
+            };
 
             AddChild(new ImageElement()
             {
+                DebugColor = Color.FromArgb(128, 0, 0, 0),
                 Resource = _BackgroundResource,
                 AnchorPoint = Anchor.TopRight,
+                Width = 600,
+                HeightToParent = true,
             });
 
-            AddChild(new ImageElement()
+            AddChild(new Panels.BackgroundBorderPanel()
             {
-                Resource = _BackgroundLeftResource,
-                AnchorPoint = Anchor.TopLeft,
-                X = -23,
+                AnchorPoint = Anchor.TopRight,
+                WidthToParent = true,
+                HeightToParent = true,
+                Height = -143,
             });
 
-            _stashList = new StashList();
+            AddChild(new Panels.BackgroundBorderPanel()
+            {
+                AnchorPoint = Anchor.BottomRight,
+                WidthToParent = true,
+                Height = 143,
+            });
+
+            AddChild(new Panels.BackgroundShadowPanel()
+            {
+                AnchorPoint = Anchor.BottomRight,
+                WidthToParent = true,
+                Width = -9,
+                Height = 131,
+                X = -6,
+                Y = -6,
+                Alpha = 0.8f
+            });
+
+            AddChild(new Panels.ListBorderPanel()
+            {
+                AnchorPoint = Anchor.TopRight,
+                WidthToParent = true,
+                HeightToParent = true,
+                Width = -4,
+                Height = -199,
+                X = -3,
+                Y = 48,
+            });
+
+            AddChild(new Panels.ScrollBorderPanel()
+            {
+                AnchorPoint = Anchor.TopRight,
+                HeightToParent = true,
+                Width = 45,
+                Height = -205,
+                X = -1,
+                Y = 51,
+            });
+
             AddChild(_stashList);
-
-            _scrollBar = new VerticalScrollBar();
-            AddChild(_scrollBar);
-
-            _infoWindow = new InfoBox();
+            AddChild(_stashListScrollBar);
             AddChild(_infoWindow);
+            AddChild(_overShadow);
 
-            _scrollBar.ScrollingStart += delegate {
-                _stashList.LockMouseMove = true;
+            AddChild(_groupSelectButton);
+            _groupListBackground.AddChild(_groupList);
+            _groupListBackground.AddChild(_groupListScrollBar);
+            AddChild(_groupListBackground);
+
+
+
+
+
+
+
+
+
+            new ScrollManager(_stashList, _stashListScrollBar);
+            _stashListScrollBar.ScrollingStart += delegate {
+                _groupSelectButton.EventsEnabled = false;
+                _stashList.EventsEnabled = false;
+                _infoWindow.EventsEnabled = false;
             };
-            _scrollBar.ScrollingEnd += delegate {
-                _stashList.LockMouseMove = false;
-            };
-            _scrollBar.Scrolling += delegate (object sender, ScrollBarElement.ScrollingEventArgs e) {
-                _stashList.Scrollindex = e.Y;
-            };
-            _stashList.VisibleCountChanged += delegate (int visibleCount) {
-                _scrollBar.UnitsY = visibleCount;
-            };
-
-
-
-
-
-            _stashList.MouseWheel += delegate (object sender, MouseWheelEventArgs e)
-            {
-                _stashList.Scrollindex += e.Delta < 0 ? -1 : 1;
-                _scrollBar.ScrollUnitsY -= e.Delta < 0 ? -1 : 1;
+            _stashListScrollBar.ScrollingEnd += delegate {
+                _groupSelectButton.EventsEnabled = true;
+                _stashList.EventsEnabled = true;
+                _infoWindow.EventsEnabled = true;
             };
 
 
@@ -113,18 +229,6 @@ namespace GDMultiStash.Overlay.Elements
 
 
 
-
-
-
-
-
-
-            Alpha = fadeMin;
-            _fadeAnimation = new FadeAnimation(this, Utils.Easing.PolyOut(), fadeDuration)
-            {
-                MinAlpha = 1.0f,
-                MaxAlpha = 1.0f
-            };
             MouseEnter += (object sender, EventArgs e) => {
                 FadeInFast();
                 _mouseOver = true;
@@ -140,8 +244,6 @@ namespace GDMultiStash.Overlay.Elements
             };
             MouseWheel += (object sender, MouseWheelEventArgs e) => {
                 System.Threading.Thread t = new System.Threading.Thread(new System.Threading.ThreadStart(() => {
-                    System.Threading.Thread.Sleep(1);
-
                     Native.Input inp = new Native.Input
                     {
                         type = Native.InputType.Mouse,
@@ -157,31 +259,141 @@ namespace GDMultiStash.Overlay.Elements
                         }
                     };
                     Native.SendInput(1, new Native.Input[] { inp }, System.Runtime.InteropServices.Marshal.SizeOf(typeof(Native.Input)));
-
                 }));
                 t.Start();
             };
 
-            _moveAnimation = new MoveAnimation(this, Utils.Easing.BackOut(1.1f), _moveDuration);
-            _moveAnimation.Delay = 100; // debug: fix lag on npc stash window open
 
-            _updateAppearance = true;
-            Global.Configuration.AppearanceChanged += delegate { _updateAppearance = true; };
 
+            _fadeValue = new AnimationValue() {
+                Easer = Easing.PolyOut(),
+                Min = 1,
+                Max = 1,
+            };
+            _fadeAnimator = Animator.Create(fadeDuration);
+            _fadeAnimator.AnimationStart += delegate {
+            };
+            _fadeAnimator.AnimationAnimate += delegate (object sender, AnimatorAnimateEventArgs args) {
+                Alpha = _fadeValue.Convert(args.Value);
+            };
+            _fadeAnimator.AnimationEnd += delegate {
+            };
+
+
+
+            _moveValue = new AnimationValue()
+            {
+                Easer = Easing.PolyOut(), //Easing.BackOut(1.1f),
+                Min = 0,
+                Max = 0,
+            };
+            _moveAnimator = Animator.Create(_moveDuration);
+            _moveAnimator.Delay = 100; // debug: fix lag on npc stash window open
+            _moveAnimator.AnimationStart += delegate {
+            };
+            _moveAnimator.AnimationAnimate += delegate (object sender, AnimatorAnimateEventArgs args) {
+                X = _moveValue.Convert(args.Value);
+            };
+            _moveAnimator.AnimationEnd += delegate {
+                switch (_state)
+                {
+                    case States.Showing:
+                        State = States.Shown;
+                        _fadeAnimator.Duration = fadeDurationSlow;
+                        _fadeAnimator.Delay = fadeDurationSlowDelay;
+                        _fadeAnimator.Value = 0f;
+                        break;
+                    case States.Hiding:
+                        State = States.Hidden;
+                        _groupSelectButton.CloseDropDown();
+                        break;
+                }
+            };
+
+            // group dropdown effect
+            {
+                AnimationValue overShadowFading = new AnimationValue()
+                {
+                    Easer = Easing.PolyOut(),
+                    Min = 0,
+                    Max = 0.66f,
+                };
+                AnimationValue groupListBackFading = new AnimationValue()
+                {
+                    Easer = Easing.PolyOut(),
+                    Min = 0,
+                    Max = 1,
+                };
+                Animator animator = Animator.Create(200);
+                animator.AnimationAnimate += delegate (object sender, AnimatorAnimateEventArgs args) {
+                    _overShadow.Alpha = overShadowFading.Convert(args.Value);
+                    _groupListBackground.Alpha = groupListBackFading.Convert(args.Value);
+                };
+                animator.AnimationStart += delegate {
+                    _overShadow.Visible = true;
+                    _groupListBackground.Visible = true;
+                };
+                animator.AnimationEnd += delegate {
+                    _overShadow.Visible = animator.Value != 0;
+                    _groupListBackground.Visible = animator.Value != 0;
+                };
+                _groupSelectButton.DropDownOpened += delegate {
+                    animator.Value = 1;
+                    _stashList.EventsEnabled = false;
+                    _stashListScrollBar.EventsEnabled = false;
+                    _infoWindow.EventsEnabled = false;
+                };
+                _groupSelectButton.DropDownClosed += delegate {
+                    animator.Value = 0;
+                    _stashList.EventsEnabled = true;
+                    _stashListScrollBar.EventsEnabled = true;
+                    _infoWindow.EventsEnabled = true;
+                };
+            }
+
+
+
+
+
+            new ScrollManager(_groupList, _groupListScrollBar);
+            _groupListScrollBar.ScrollingStart += delegate {
+                _groupSelectButton.EventsEnabled = false;
+            };
+            _groupListScrollBar.ScrollingEnd += delegate {
+                _groupSelectButton.EventsEnabled = true;
+            };
+
+
+
+
+
+
+
+
+
+
+
+            _updateAppearance = true; // update on startup
+            Global.Configuration.AppearanceChanged += delegate {
+                _updateAppearance = true;
+            };
+            Global.Runtime.ActiveGroupChanged += delegate {
+                _groupSelectButton.CloseDropDown();
+            };
         }
 
         private void FadeInFast()
         {
-            _fadeAnimation.Duration = fadeDuration;
-            _fadeAnimation.Delay = 0f;
-            _fadeAnimation.Value = 1f;
+            _fadeAnimator.Duration = fadeDuration;
+            _fadeAnimator.Delay = 0f;
+            _fadeAnimator.Value = 1f;
         }
 
         private void FadeOutFast()
         {
-            _fadeAnimation.Duration = fadeDuration;
-            _fadeAnimation.Delay = 0f;
-            _fadeAnimation.Value = 0f;
+            _fadeAnimator.Duration = fadeDuration;
+            _fadeAnimator.Delay = 0f;
+            _fadeAnimator.Value = 0f;
         }
         
         public override bool CheckMouseUp(int x, int y)
@@ -197,64 +409,45 @@ namespace GDMultiStash.Overlay.Elements
         public override void Draw(float ms)
         {
             base.Draw(ms);
-            bool redraw = false;
             if (_updateAppearance)
             {
                 _updateAppearance = false;
-                redraw = true;
-                Scale = Global.Configuration.Settings.OverlayScale / 100;
+
+                Scale = (float)Global.Configuration.Settings.OverlayScale / 100f;
                 Width = Global.Configuration.Settings.OverlayWidth;
-                _moveAnimation.MinX = -Width - 5;
-                _moveAnimation.MaxX = 0;
-                _moveAnimation.Reset(Global.Runtime.StashOpened ? 1f : 0f);
-                _fadeAnimation.MinAlpha = (float)(100 - Global.Configuration.Settings.OverlayTransparency) / 100f;
-            }
-            if (_moveAnimation.Animate(ms))
-            {
-                redraw = true;
-            }
-            else
-            {
-                switch(_state)
-                {
-                    case States.Showing:
-                        State = States.Shown;
-                        _fadeAnimation.Duration = fadeDurationSlow;
-                        _fadeAnimation.Delay = fadeDurationSlowDelay;
-                        _fadeAnimation.Value = 0f;
-                        break;
-                    case States.Hiding:
-                        State = States.Hidden;
-                        break;
-                }
-            }
-            if (_state == States.Shown)
-            {
-                // only enable fading when sliding finished
-                if (_fadeAnimation.Animate(ms))
-                    redraw = true;
-            }
-            if (redraw)
+
+                _stashList.ScrollHandler.VisibleUnitsY = Global.Configuration.Settings.OverlayStashesCount;
+                Height = 222 + _stashList.Height;
+
+                _groupList.ScrollHandler.VisibleUnitsY = Global.Configuration.Settings.OverlayStashesCount + 5;
+                _groupListBackground.Height = _groupList.Height + 20;
+
+                _moveValue.Min = -TotalWidth - 5;
+                _moveAnimator.Reset(Global.Runtime.StashOpened ? 1f : 0f);
+                _fadeValue.Min = (float)(100 - Global.Configuration.Settings.OverlayTransparency) / 100f;
+                _fadeAnimator.Reset(Global.Runtime.StashOpened ? 1f : 0f);
+
                 Redraw();
+            }
         }
 
         public void Show()
         {
-            if (_moveAnimation.Value == 0f)
+            if (_moveAnimator.Value == 0f)
             {
                 // box is max left (not visible on screen)
-                // reset alpha to 1
-                _fadeAnimation.Reset(1f);
-                _scrollBar.ScrollUnitsY = 0;
-                _stashList.Scrollindex = 0;
+                // reset alpha to 1 (visible)
+                _fadeAnimator.Reset(1);
+                //if (Global.Configuration.Settings.AutoBackToMain)
+                //    _stashList.ScrollHandler.ScrollPositionY = 0;
             }
-            _moveAnimation.Value = 1f;
+            _moveAnimator.Value = 1f;
             State = States.Showing;
         }
 
         public void Hide()
         {
-            _moveAnimation.Value = 0f;
+            _moveAnimator.Value = 0f;
             State = States.Hiding;
         }
 

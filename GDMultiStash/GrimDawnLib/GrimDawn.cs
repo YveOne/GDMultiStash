@@ -69,22 +69,17 @@ namespace GrimDawnLib
             {
                 { GrimDawnGameMode.SC, "t" },
                 { GrimDawnGameMode.HC, "h" },
-                { GrimDawnGameMode.None, "" },
             };
 
-        public static string[] GetExpansionNames()
+        public static GrimDawnGameExpansion[] GetExpansionList()
         {
-            return new string[3] {
-                GameExpansionNames[GrimDawnGameExpansion.BaseGame],
-                GameExpansionNames[GrimDawnGameExpansion.AshesOfMalmouth],
-                GameExpansionNames[GrimDawnGameExpansion.ForgottenGods],
-            };
+            return GameExpansionNames.Keys.ToArray();
         }
 
         public static string GetTransferExtension(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
             string m = mode2extension.ContainsKey(mode) ? mode2extension[mode] : "";
-            return "." + expansion2extension[exp] + m;
+            return $".{expansion2extension[exp]}{m}";
         }
 
         public static string GetTransferFile(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
@@ -92,20 +87,9 @@ namespace GrimDawnLib
             return Path.Combine(DocumentsSavePath, "transfer" + GetTransferExtension(exp, mode));
         }
 
-
-
-
-
-
-
         public static string GetExpansionName(GrimDawnGameExpansion exp)
         {
             return (exp != GrimDawnGameExpansion.Unknown) ? GameExpansionNames[exp] : "???";
-        }
-
-        public static string GetExpansionName(int exp)
-        {
-            return GetExpansionName((GrimDawnGameExpansion)exp);
         }
 
         public static GrimDawnGameExpansion GetInstalledExpansionFromPath(string gamePath)
@@ -204,8 +188,22 @@ namespace GrimDawnLib
             return File.GetLastWriteTime(GetTransferFilePath(expansion, mode));
         }
 
-
-
+        public static System.Windows.Forms.DialogResult ShowSelectTransferFilesDialog(out string[] files, bool multiselect = false)
+        {
+            string filter = string.Join(";", GetAllTransferExtensions().Select(ext => "*" + ext));
+            files = new string[0];
+            using (var dialog = new System.Windows.Forms.OpenFileDialog()
+            {
+                Filter = "transfer|" + filter,
+                Multiselect = multiselect,
+            })
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                    files = dialog.FileNames;
+                return result;
+            }
+        }
 
     }
 }

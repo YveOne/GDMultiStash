@@ -46,8 +46,8 @@ public static partial class Native
             protected override int HookProc(int nCode, IntPtr wParam, IntPtr lParam)
             {
                 MouseHookStruct mouseStruct = (MouseHookStruct)Marshal.PtrToStructure(lParam, typeof(MouseHookStruct));
-                _point.x = mouseStruct.pt.x;
-                _point.y = mouseStruct.pt.y;
+                _point.X = mouseStruct.pt.X;
+                _point.Y = mouseStruct.pt.Y;
 
 
                 if ((mouseStruct.flags & 0x01) == 0x01)
@@ -62,42 +62,42 @@ public static partial class Native
                 {
 
                     case WM_MOUSEMOVE:
-                        args = new MouseEventArgs(MouseButtons.None, 0, mouseStruct.pt.x, mouseStruct.pt.y, 0);
+                        args = new MouseEventArgs(MouseButtons.None, 0, mouseStruct.pt.X, mouseStruct.pt.Y, 0);
                         MouseMove?.Invoke(this, args);
                         break;
 
                     case WM_LBUTTONDOWN:
-                        args = new MouseEventArgs(MouseButtons.Left, 0, mouseStruct.pt.x, mouseStruct.pt.y, 0);
+                        args = new MouseEventArgs(MouseButtons.Left, 0, mouseStruct.pt.X, mouseStruct.pt.Y, 0);
                         MouseDown?.Invoke(this, args);
                         break;
 
                     case WM_RBUTTONDOWN:
-                        args = new MouseEventArgs(MouseButtons.Right, 0, mouseStruct.pt.x, mouseStruct.pt.y, 0);
+                        args = new MouseEventArgs(MouseButtons.Right, 0, mouseStruct.pt.X, mouseStruct.pt.Y, 0);
                         MouseDown?.Invoke(this, args);
                         break;
 
                     case WM_MBUTTONDOWN:
-                        args = new MouseEventArgs(MouseButtons.Middle, 0, mouseStruct.pt.x, mouseStruct.pt.y, 0);
+                        args = new MouseEventArgs(MouseButtons.Middle, 0, mouseStruct.pt.X, mouseStruct.pt.Y, 0);
                         MouseDown?.Invoke(this, args);
                         break;
 
                     case WM_LBUTTONUP:
-                        args = new MouseEventArgs(MouseButtons.Left, 0, mouseStruct.pt.x, mouseStruct.pt.y, 0);
+                        args = new MouseEventArgs(MouseButtons.Left, 0, mouseStruct.pt.X, mouseStruct.pt.Y, 0);
                         MouseUp?.Invoke(this, args);
                         break;
 
                     case WM_RBUTTONUP:
-                        args = new MouseEventArgs(MouseButtons.Right, 0, mouseStruct.pt.x, mouseStruct.pt.y, 0);
+                        args = new MouseEventArgs(MouseButtons.Right, 0, mouseStruct.pt.X, mouseStruct.pt.Y, 0);
                         MouseUp?.Invoke(this, args);
                         break;
 
                     case WM_MBUTTONUP:
-                        args = new MouseEventArgs(MouseButtons.Middle, 0, mouseStruct.pt.x, mouseStruct.pt.y, 0);
+                        args = new MouseEventArgs(MouseButtons.Middle, 0, mouseStruct.pt.X, mouseStruct.pt.Y, 0);
                         MouseUp?.Invoke(this, args);
                         break;
 
                     case WM_MOUSEWHEEL:
-                        args = new MouseEventArgs(MouseButtons.None, 0, mouseStruct.pt.x, mouseStruct.pt.y, mouseStruct.mouseData);
+                        args = new MouseEventArgs(MouseButtons.None, 0, mouseStruct.pt.X, mouseStruct.pt.Y, mouseStruct.mouseData);
                         MouseWheel?.Invoke(this, args);
                         break;
 

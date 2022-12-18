@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.IO;
 
 using GrimDawnLib;
-using GDMultiStash.Common;
+using GDMultiStash.Common.Objects;
+using GDMultiStash.Common.Objects.Sorting;
 
 namespace GDMultiStash.GlobalHandlers
 {
@@ -14,80 +15,20 @@ namespace GDMultiStash.GlobalHandlers
     {
 
         private readonly Dictionary<int, StashObject> _stashes;
-
-        private readonly List<StashCategoryObject> _categories;
+        private readonly Dictionary<int, StashGroupObject> _stashGroups;
 
         public StashesHandler()
         {
             _stashes = new Dictionary<int, StashObject>();
-            _categories = new List<StashCategoryObject>();
+            _stashGroups = new Dictionary<int, StashGroupObject>();
         }
 
         #region Stashes
 
-        private string GetMainStashName(GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
-        {
-            string stashNameExp = ((int)expansion).ToString();
-            string stashNameMode = mode == GrimDawnGameMode.SC ? "sc" : "hc";
-            string stashNameKey = $"mainStash_{stashNameExp}{stashNameMode}";
-            string stashName = Global.Localization.GetString(stashNameKey);
-            return stashName;
-        }
-
-        private int CreateMainStash(GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
-        {
-            string stashName = GetMainStashName(expansion, mode);
-            Console.WriteLine($"Creating Main Stash: {stashName}");
-            StashObject stash = new StashObject(Global.Configuration.CreateStash(stashName, expansion, mode));
-            string filePath = GrimDawn.GetTransferFilePath(expansion, mode);
-            if (File.Exists(filePath))
-            {
-                Console.WriteLine($"- import from: {filePath}");
-                Global.FileSystem.ImportStashTransferFile(stash.ID, filePath);
-            }
-            else
-            {
-                Console.WriteLine($"- export to: {filePath}");
-                Global.FileSystem.CreateStashTransferFile(stash.ID, expansion);
-                Global.FileSystem.ExportStashTransferFile(stash.ID, filePath);
-            }
-            return stash.ID;
-        }
-
-        public void CreateMainStashes()
-        {
-            int stashID;
-
-            stashID = CreateMainStash(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.SC);
-            Global.Configuration.Settings.Main0SCID = stashID;
-            Global.Configuration.Settings.Cur0SCID = stashID;
-
-            stashID = CreateMainStash(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.HC);
-            Global.Configuration.Settings.Main0HCID = stashID;
-            Global.Configuration.Settings.Cur0HCID = stashID;
-
-            stashID = CreateMainStash(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.SC);
-            Global.Configuration.Settings.Main1SCID = stashID;
-            Global.Configuration.Settings.Cur1SCID = stashID;
-
-            stashID = CreateMainStash(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.HC);
-            Global.Configuration.Settings.Main1HCID = stashID;
-            Global.Configuration.Settings.Cur1HCID = stashID;
-
-            stashID = CreateMainStash(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.SC);
-            Global.Configuration.Settings.Main2SCID = stashID;
-            Global.Configuration.Settings.Cur2SCID = stashID;
-
-            stashID = CreateMainStash(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.HC);
-            Global.Configuration.Settings.Main2HCID = stashID;
-            Global.Configuration.Settings.Cur2HCID = stashID;
-
-            Global.Configuration.Save();
-        }
-
         public void LoadStashes()
         {
-            foreach (Common.Config.ConfigStash cfgStash in Global.Configuration.GetStashes())
+            Console.WriteLine($"Loading Stashes:");
+            foreach (Common.Config.ConfigStash cfgStash in Global.Configuration.Stashes)
             {
                 StashObject stash = new StashObject(cfgStash);
                 _stashes.Add(cfgStash.ID, stash);
@@ -100,16 +41,10 @@ namespace GDMultiStash.GlobalHandlers
 
         public StashObject[] GetAllStashes()
         {
+            //return _stashes.Values.ToList().OrderBy(s => s.Order).ToArray();
             return _stashes.Values.ToArray();
         }
-
-        public StashObject[] GetShownStashes(int exp, bool sc, bool hc)
-        {
-            return Array.FindAll(GetAllStashes(), delegate (StashObject stash) {
-                return (exp == -1 || exp == (int)stash.Expansion) && ((!sc && !hc) || (sc == stash.SC && hc == stash.HC));
-            });
-        }
-
+        
         public StashObject[] GetStashesForExpansion(GrimDawnGameExpansion exp)
         {
             return Array.FindAll(GetAllStashes(), delegate (StashObject stash) {
@@ -120,9 +55,7 @@ namespace GDMultiStash.GlobalHandlers
         public StashObject GetStash(int stashID)
         {
             if (_stashes.TryGetValue(stashID, out StashObject stash))
-            {
                 return stash;
-            }
             return null;
         }
 
@@ -131,31 +64,24 @@ namespace GDMultiStash.GlobalHandlers
             return _stashes.ContainsKey(stashID);
         }
 
-        public StashObject ImportOverwriteStash(string src, int stashID)
+        public bool ImportOverwriteStash(string src, StashObject stash)
         {
-            StashObject stash = GetStash(stashID);
-            if (stash == null) return null;
-            if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, true))
+            if (Common.TransferFile.ValidateFile(src, out Common.TransferFile transfer))
             {
-                stash.LoadTransferFile();
-                return stash;
+                if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, true))
+                {
+                    stash.SetTransferFile(transfer);
+                    return true;
+                }
             }
-            return null;
+            else
+            {
+                // TODO: WARNING
+            }
+            return false;
         }
 
-        public StashObject ImportStash(string src, string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode = GrimDawnGameMode.None)
-        {
-            StashObject stash = new StashObject(Global.Configuration.CreateStash(name, expansion, mode));
-            if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, true))
-            {
-                stash.LoadTransferFile();
-                _stashes.Add(stash.ID, stash);
-                return stash;
-            }
-            return null;
-        }
-
-        public StashObject CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode = GrimDawnGameMode.None)
+        public StashObject CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
         {
             StashObject stash = new StashObject(Global.Configuration.CreateStash(name, expansion, mode));
             Global.FileSystem.CreateStashTransferFile(stash.ID, expansion);
@@ -168,6 +94,16 @@ namespace GDMultiStash.GlobalHandlers
         {
             _stashes.Remove(stashID);
             Global.Configuration.DeleteStash(stashID);
+        }
+
+        public void CleanupBackups()
+        {
+            int deletedFiles = 0;
+            foreach (var stash in GetAllStashes())
+            {
+                deletedFiles += Global.FileSystem.BackupCleanupStashTransferFile(stash.ID);
+            }
+            System.Windows.Forms.MessageBox.Show(Global.L.BackupsCleanedUpMessage(deletedFiles));
         }
 
         public string[] GetBackupFiles(int stashID)
@@ -192,63 +128,80 @@ namespace GDMultiStash.GlobalHandlers
             }
         }
 
-        public bool ImportStash(int stashID)
+        public StashObject CreateImportStash(string src, string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode = GrimDawnGameMode.None)
         {
-            string externalFile = GrimDawn.GetTransferFilePath(Global.Runtime.CurrentExpansion, Global.Runtime.CurrentMode);
+            if (Common.TransferFile.ValidateFile(src, out Common.TransferFile transfer))
+            {
+                StashObject stash = new StashObject(Global.Configuration.CreateStash(name, expansion, mode));
+                if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, true))
+                {
+                    stash.SetTransferFile(transfer);
+                    _stashes.Add(stash.ID, stash);
+                    return stash;
+                }
+            }
+            else
+            {
+                // TODO: WARNING
+            }
+            return null;
+        }
+
+
+
+
+        public bool ImportStash(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        {
+            string externalFile = GrimDawn.GetTransferFilePath(exp, mode);
             Console.WriteLine($"Importing Stash #{stashID}");
-            Console.WriteLine($"  mode: {Global.Runtime.CurrentMode}");
-            Console.WriteLine($"  file: {externalFile}");
+            Console.WriteLine($"  exp : {exp}");
+            Console.WriteLine($"  mode: {mode}");
+            Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID)}");
+            Console.WriteLine($"  game: {externalFile}");
             StashObject stash = GetStash(stashID);
             if (stash.Locked)
             {
                 Console.WriteLine($"  LOCKED !!!");
                 return true;
             }
-            if (Global.FileSystem.ImportStashTransferFile(Global.Runtime.ActiveStashID, externalFile))
+            if (Global.FileSystem.ImportStashTransferFile(stashID, externalFile))
             {
-                _stashes[Global.Runtime.ActiveStashID].LoadTransferFile();
+                _stashes[stashID].LoadTransferFile();
+                Global.Runtime.NotifyStashesImported(_stashes[stashID]);
                 return true;
             }
             return false;
         }
 
-        public bool ExportStash(int stashID)
+        public bool ImportStash(int stashID)
         {
-            string externalFile = GrimDawn.GetTransferFilePath(Global.Runtime.CurrentExpansion, Global.Runtime.CurrentMode);
-            Console.WriteLine($"Exporting Stash #{stashID}");
-            Console.WriteLine($"  mode: {Global.Runtime.CurrentMode}");
-            Console.WriteLine($"  file: {externalFile}");
-            if (!Global.FileSystem.ExportStashTransferFile(Global.Runtime.ActiveStashID, externalFile))
-            {
-                Console.WriteLine($"EXPORT FAILED");
-                return false;
-            }
-            return ExportSharedModeStash(stashID);
+            return ImportStash(stashID, Global.Runtime.CurrentExpansion, Global.Runtime.CurrentMode);
         }
 
-        public bool ExportSharedModeStash(int stashID)
+        public void ExportStash(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
-            StashObject stash = GetStash(stashID);
-            if (!stash.SC || !stash.HC) return true; // stash is not shared mode
-
-            GrimDawnGameMode oppositeMode = Global.Runtime.CurrentMode == GrimDawnGameMode.SC
-                ? GrimDawnGameMode.HC
-                : GrimDawnGameMode.SC;
-
-            // opposite mode got different stash selected
-            if (stashID != Global.Configuration.GetMainStashID(Global.Runtime.CurrentExpansion, oppositeMode)) return true;
-
-            string externalFile = GrimDawn.GetTransferFile(Global.Runtime.CurrentExpansion, oppositeMode);
-            Console.WriteLine($"Exporting shared mode transfer file:");
-            Console.WriteLine($"  stash id: {stashID}");
-            Console.WriteLine($"  mode: {Global.Runtime.CurrentMode} -> {oppositeMode}");
-            Console.WriteLine($"  file: {externalFile}");
-            if (!Global.FileSystem.ExportStashTransferFile(stashID, externalFile))
+            string externalFile = GrimDawn.GetTransferFilePath(exp, mode);
+            Console.WriteLine($"Exporting Stash #{stashID}");
+            Console.WriteLine($"  exp : {exp}");
+            Console.WriteLine($"  mode: {mode}");
+            Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID)}");
+            Console.WriteLine($"  game: {externalFile}");
+            if (Global.FileSystem.ExportStashTransferFile(stashID, externalFile))
             {
-                Console.WriteLine($"EXPORT (SHARED) FAILED");
-                return false;
+                Global.Runtime.NotifyStashesExported(_stashes[stashID]);
             }
-            return true;
+            else
+            {
+                Console.WriteLine($"EXPORT FAILED");
+            }
+        }
+
+        public void ExportStash(int stashID)
+        {
+            // usually there should only one environment (expansion+mode combo) for one stash
+            // but just to be on safe side use foreach loop
+            foreach(var env in Global.Configuration.GetStashEnvironments(stashID))
+                ExportStash(stashID, env.Expansion, env.Mode);
         }
 
         public bool SwitchToStash(int toStashID)
@@ -259,32 +212,60 @@ namespace GDMultiStash.GlobalHandlers
             Console.WriteLine($"Switching to stash #{toStashID}");
             if (!ImportStash(Global.Runtime.ActiveStashID)) return false;
             Global.Runtime.ActiveStashID = toStashID;
-            if (!ExportStash(toStashID)) return false;
+            ExportStash(toStashID);
             Global.Configuration.Save();
             return true;
         }
 
         #endregion
 
-        #region Categories
+        #region Stash Groups
 
-        public void LoadCategories()
+        public void LoadStashGroups()
         {
-            uint order = 0;
-            foreach (Common.Config.ConfigStashCategory cfgCat in Global.Configuration.GetCategories())
+            Console.WriteLine($"Loading Stash Groups:");
+            foreach (Common.Config.ConfigStashGroup cfgStashGroup in Global.Configuration.StashGroups)
             {
-                StashCategoryObject cat = new StashCategoryObject(cfgCat, order++);
-                _categories.Add(cat);
-                Console.WriteLine($"   #{cat.ID} {cat.Name}");
+                StashGroupObject grp = new StashGroupObject(cfgStashGroup);
+                _stashGroups.Add(grp.ID, grp);
+                Console.WriteLine($"   #{grp.ID} {grp.Name}");
             }
-            // ensure main category exists
+        }
 
+        public StashGroupObject GetStashGroup(int grpId)
+        {
+            if (_stashGroups.TryGetValue(grpId, out StashGroupObject grp))
+                return grp;
+            return null;
+        }
 
+        public StashGroupObject[] GetAllStashGroups()
+        {
+            return _stashGroups.Values.ToList().OrderBy(s => s.Order).ToArray();
+        }
 
+        public StashGroupObject[] GetSortedStashGroups()
+        {
+            List<StashGroupObject> l = _stashGroups.Values.ToList();
+            l.Sort(new GroupsSortComparer());
+            return l.ToArray();
+        }
 
-            // ensure categories of stashes exist
+        public StashGroupObject CreateStashGroup(string name)
+        {
+            StashGroupObject group = new StashGroupObject(Global.Configuration.CreateStashGroup(name));
+            _stashGroups.Add(group.ID, group);
+            return group;
+        }
 
-
+        public void DeleteStashGroup(int groupID)
+        {
+            _stashGroups.Remove(groupID);
+            Global.Configuration.DeleteStashGroup(groupID);
+            foreach(StashObject stash in _stashes.Values)
+                if (stash.GroupID == groupID)
+                    stash.GroupID = 0;
+            Global.Runtime.NotifyStashesOrderChanged();
         }
 
 
@@ -293,8 +274,13 @@ namespace GDMultiStash.GlobalHandlers
 
 
 
-
         #endregion
+
+
+
+
+
+        //ActiveGroupID
 
     }
 }

@@ -27,6 +27,7 @@ namespace GDMultiStash
             if (Quitting) return;
             Quitting = true;
             new System.Threading.Thread(new System.Threading.ThreadStart(() => {
+                Global.Windows.CloseMainWindow();
                 Application.Exit();
             })).Start();
         }

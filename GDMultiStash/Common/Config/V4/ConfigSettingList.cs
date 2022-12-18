@@ -6,21 +6,24 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.Xml;
 
-namespace GDMultiStash.Common.Config
+namespace GDMultiStash.Common.Config.V4
 {
     [Serializable]
     public class ConfigSettingList
     {
 
+        [XmlIgnore] private static readonly int _LastRevision = 3;
+        [XmlIgnore] public int LastRevision => _LastRevision;
+        [XmlElement("Revision")] public int Revision = _LastRevision;
         [XmlElement("LastToolVersion")] public string LastToolVersion = "";
-
+        
         [XmlElement("WindowWidth")] public int WindowWidth = 650;
         [XmlElement("WindowHeight")] public int WindowHeight = 500;
 
         [XmlElement("Language")] public string Language = "enUS";
         [XmlElement("GamePath")] public string GamePath = "";
 
-        [XmlElement("ShowExpansion")] public int ShowExpansion = -1;
+        [XmlIgnore] public int ShowExpansion = -1;
         [XmlElement("ShowSoftcore")] public bool ShowSoftcore = false;
         [XmlElement("ShowHardcore")] public bool ShowHardcore = false;
 
@@ -34,7 +37,6 @@ namespace GDMultiStash.Common.Config
         [XmlElement("CloseWithGrimDawn")] public bool CloseWithGrimDawn = true;
         [XmlElement("ConfirmStashDelete")] public bool ConfirmStashDelete = true;
         [XmlElement("AutoBackToMain")] public bool AutoBackToMain = true;
-        [XmlElement("HideOnFormClosed")] public bool HideOnFormClosed = false;
         [XmlElement("SaveOverwritesLocked")] public bool SaveOverwritesLocked = false;
 
         [XmlElement("AutoStartGD")] public bool AutoStartGD = false;
@@ -45,11 +47,8 @@ namespace GDMultiStash.Common.Config
 
         [XmlElement("DefaultStashMode")] public int DefaultStashMode = 0;
         
-        [XmlElement("ShowColorColumn")] public bool ShowColorColumn = true;
-        [XmlElement("ShowExpansionColumn")] public bool ShowExpansionColumn = true;
         [XmlElement("ShowIDColumn")] public bool ShowIDColumn = true;
         [XmlElement("ShowLastChangeColumn")] public bool ShowLastChangeColumn = true;
-        [XmlElement("ShowLockedColumn")] public bool ShowLockedColumn = false;
 
         [XmlAnyElement("Comment1")] public XmlComment Comment1 = new XmlDocument().CreateComment("Change the following only if you know what you are doing!");
 
@@ -81,6 +80,7 @@ namespace GDMultiStash.Common.Config
         {
             return new ConfigSettingList
             {
+                Revision = Revision,
                 LastToolVersion = LastToolVersion,
 
                 WindowWidth = WindowWidth,
@@ -103,7 +103,6 @@ namespace GDMultiStash.Common.Config
                 CloseWithGrimDawn = CloseWithGrimDawn,
                 ConfirmStashDelete = ConfirmStashDelete,
                 AutoBackToMain = AutoBackToMain,
-                HideOnFormClosed = HideOnFormClosed,
                 SaveOverwritesLocked = SaveOverwritesLocked,
 
                 AutoStartGD = AutoStartGD,
@@ -114,11 +113,8 @@ namespace GDMultiStash.Common.Config
 
                 DefaultStashMode = DefaultStashMode,
 
-                ShowColorColumn = ShowColorColumn,
-                ShowExpansionColumn = ShowExpansionColumn,
                 ShowIDColumn = ShowIDColumn,
                 ShowLastChangeColumn = ShowLastChangeColumn,
-                ShowLockedColumn = ShowLockedColumn,
 
                 LastID = LastID,
 
@@ -142,6 +138,7 @@ namespace GDMultiStash.Common.Config
 
         public void Set(ConfigSettingList s)
         {
+            Revision = s.Revision;
             LastToolVersion = s.LastToolVersion;
 
             WindowWidth = s.WindowWidth;
@@ -164,7 +161,6 @@ namespace GDMultiStash.Common.Config
             CloseWithGrimDawn = s.CloseWithGrimDawn;
             ConfirmStashDelete = s.ConfirmStashDelete;
             AutoBackToMain = s.AutoBackToMain;
-            HideOnFormClosed = s.HideOnFormClosed;
             SaveOverwritesLocked = s.SaveOverwritesLocked;
 
             AutoStartGD = s.AutoStartGD;
@@ -175,11 +171,8 @@ namespace GDMultiStash.Common.Config
 
             DefaultStashMode = s.DefaultStashMode;
 
-            ShowColorColumn = s.ShowColorColumn;
-            ShowExpansionColumn = s.ShowExpansionColumn;
             ShowIDColumn = s.ShowIDColumn;
             ShowLastChangeColumn = s.ShowLastChangeColumn;
-            ShowLockedColumn = s.ShowLockedColumn;
 
             LastID = s.LastID;
 

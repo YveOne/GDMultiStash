@@ -28,261 +28,566 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.topMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.fileButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.importStashesButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.changelogButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.aboutButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.startGameButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.bottomMenuStrip = new System.Windows.Forms.MenuStrip();
-            this.createStashButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.editCategoriesButton = new System.Windows.Forms.ToolStripMenuItem();
-            this.backgroundPanel = new System.Windows.Forms.Panel();
-            this.stashesListView = new BrightIdeasSoftware.ObjectListView();
-            this.showExpansionComboBox = new System.Windows.Forms.ComboBox();
-            this.showSoftCoreComboBox = new System.Windows.Forms.CheckBox();
-            this.showHardCoreComboBox = new System.Windows.Forms.CheckBox();
-            this.selectAllButton = new System.Windows.Forms.Button();
-            this.displayMenuPanel = new System.Windows.Forms.Panel();
-            this.topMenuStrip.SuspendLayout();
-            this.bottomMenuStrip.SuspendLayout();
-            this.backgroundPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.stashesListView)).BeginInit();
-            this.displayMenuPanel.SuspendLayout();
+            this.captionMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.captionFileButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionImportButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionImportTransferFilesButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionExportButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionExportTransferFilesButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionSettingsButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionHelpButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionChangelogButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionAboutButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.stashes_menuStrip = new System.Windows.Forms.MenuStrip();
+            this.stashes_createStashButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.pagesPaddingPanel = new System.Windows.Forms.Panel();
+            this.groups_pagePanel = new System.Windows.Forms.Panel();
+            this.groups_menuStrip = new System.Windows.Forms.MenuStrip();
+            this.groups_createStashGroupButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.groups_listViewBorderPanel = new System.Windows.Forms.Panel();
+            this.groups_listView = new BrightIdeasSoftware.ObjectListView();
+            this.stashes_pagePanel = new System.Windows.Forms.Panel();
+            this.stashes_shownItemsCountLabel = new System.Windows.Forms.Label();
+            this.stashes_menuFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.stashes_showExpansionComboBox = new System.Windows.Forms.ComboBox();
+            this.stashes_showSoftCoreCheckbox = new System.Windows.Forms.CheckBox();
+            this.stashes_showHardCoreCheckbox = new System.Windows.Forms.CheckBox();
+            this.stashes_listViewBorderPanel = new System.Windows.Forms.Panel();
+            this.stashes_listView = new GDMultiStash.Controls.ExObjectListView();
+            this.formPaddingPanel = new System.Windows.Forms.Panel();
+            this.groupsPageButton = new System.Windows.Forms.Button();
+            this.stashesPageButton = new System.Windows.Forms.Button();
+            this.titlePanel = new GDMultiStash.Controls.TransparentPanel();
+            this.formBackgroundPanel = new GDMultiStash.Controls.TransparentPanel();
+            this.captionCloseButton = new System.Windows.Forms.Button();
+            this.captionMinimizeButton = new System.Windows.Forms.Button();
+            this.captionTrayButton = new System.Windows.Forms.Button();
+            this.captionGameButton = new System.Windows.Forms.Button();
+            this.captionMenuStrip.SuspendLayout();
+            this.stashes_menuStrip.SuspendLayout();
+            this.pagesPaddingPanel.SuspendLayout();
+            this.groups_pagePanel.SuspendLayout();
+            this.groups_menuStrip.SuspendLayout();
+            this.groups_listViewBorderPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groups_listView)).BeginInit();
+            this.stashes_pagePanel.SuspendLayout();
+            this.stashes_menuFlowLayoutPanel.SuspendLayout();
+            this.stashes_listViewBorderPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.stashes_listView)).BeginInit();
+            this.formPaddingPanel.SuspendLayout();
+            this.formBackgroundPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // topMenuStrip
+            // captionMenuStrip
             // 
-            this.topMenuStrip.BackColor = System.Drawing.Color.White;
-            this.topMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileButton,
-            this.helpButton,
-            this.startGameButton});
-            this.topMenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.topMenuStrip.Name = "topMenuStrip";
-            this.topMenuStrip.Size = new System.Drawing.Size(634, 24);
-            this.topMenuStrip.TabIndex = 0;
-            this.topMenuStrip.Text = "topMenuStrip";
+            this.captionMenuStrip.BackColor = System.Drawing.Color.DimGray;
+            this.captionMenuStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.captionMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionFileButton,
+            this.captionHelpButton});
+            this.captionMenuStrip.Location = new System.Drawing.Point(130, 2);
+            this.captionMenuStrip.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.captionMenuStrip.Name = "captionMenuStrip";
+            this.captionMenuStrip.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
+            this.captionMenuStrip.Size = new System.Drawing.Size(119, 30);
+            this.captionMenuStrip.TabIndex = 0;
+            this.captionMenuStrip.Text = "topMenuStrip";
             // 
-            // fileButton
+            // captionFileButton
             // 
-            this.fileButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.importStashesButton,
-            this.settingsButton});
-            this.fileButton.Name = "fileButton";
-            this.fileButton.Size = new System.Drawing.Size(37, 20);
-            this.fileButton.Text = "File";
+            this.captionFileButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionImportButton,
+            this.captionExportButton,
+            this.captionSettingsButton});
+            this.captionFileButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.captionFileButton.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.captionFileButton.Name = "captionFileButton";
+            this.captionFileButton.Padding = new System.Windows.Forms.Padding(3);
+            this.captionFileButton.Size = new System.Drawing.Size(42, 30);
+            this.captionFileButton.Text = "File";
             // 
-            // importStashesButton
+            // captionImportButton
             // 
-            this.importStashesButton.Name = "importStashesButton";
-            this.importStashesButton.Size = new System.Drawing.Size(152, 22);
-            this.importStashesButton.Text = "Import Stashes";
-            this.importStashesButton.Click += new System.EventHandler(this.ImportStashesButton_Click);
+            this.captionImportButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionImportTransferFilesButton});
+            this.captionImportButton.Name = "captionImportButton";
+            this.captionImportButton.Size = new System.Drawing.Size(131, 24);
+            this.captionImportButton.Text = "Import";
             // 
-            // settingsButton
+            // captionImportTransferFilesButton
             // 
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(152, 22);
-            this.settingsButton.Text = "Settings";
-            this.settingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
+            this.captionImportTransferFilesButton.Name = "captionImportTransferFilesButton";
+            this.captionImportTransferFilesButton.Size = new System.Drawing.Size(212, 24);
+            this.captionImportTransferFilesButton.Text = "Import Transfer Files";
+            this.captionImportTransferFilesButton.Click += new System.EventHandler(this.ImportTransferFilesButton_Click);
             // 
-            // helpButton
+            // captionExportButton
             // 
-            this.helpButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.changelogButton,
-            this.aboutButton});
-            this.helpButton.Name = "helpButton";
-            this.helpButton.Size = new System.Drawing.Size(44, 20);
-            this.helpButton.Text = "Help";
+            this.captionExportButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionExportTransferFilesButton});
+            this.captionExportButton.Name = "captionExportButton";
+            this.captionExportButton.Size = new System.Drawing.Size(131, 24);
+            this.captionExportButton.Text = "Export";
             // 
-            // changelogButton
+            // captionExportTransferFilesButton
             // 
-            this.changelogButton.Name = "changelogButton";
-            this.changelogButton.Size = new System.Drawing.Size(132, 22);
-            this.changelogButton.Text = "Changelog";
-            this.changelogButton.Click += new System.EventHandler(this.ChangelogButton_Click);
+            this.captionExportTransferFilesButton.Name = "captionExportTransferFilesButton";
+            this.captionExportTransferFilesButton.Size = new System.Drawing.Size(163, 24);
+            this.captionExportTransferFilesButton.Text = "Transfer Files";
+            this.captionExportTransferFilesButton.Click += new System.EventHandler(this.TopMenuExportTransferFilesButton_Click);
             // 
-            // aboutButton
+            // captionSettingsButton
             // 
-            this.aboutButton.Name = "aboutButton";
-            this.aboutButton.Size = new System.Drawing.Size(132, 22);
-            this.aboutButton.Text = "About";
-            this.aboutButton.Click += new System.EventHandler(this.AboutButton_Click);
+            this.captionSettingsButton.Name = "captionSettingsButton";
+            this.captionSettingsButton.Size = new System.Drawing.Size(131, 24);
+            this.captionSettingsButton.Text = "Settings";
+            this.captionSettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
-            // startGameButton
+            // captionHelpButton
             // 
-            this.startGameButton.ForeColor = System.Drawing.Color.SeaGreen;
-            this.startGameButton.Name = "startGameButton";
-            this.startGameButton.Size = new System.Drawing.Size(62, 20);
-            this.startGameButton.Text = "Start GD";
-            this.startGameButton.Click += new System.EventHandler(this.StartGameButton_Click);
+            this.captionHelpButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionChangelogButton,
+            this.captionAboutButton});
+            this.captionHelpButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.captionHelpButton.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.captionHelpButton.Name = "captionHelpButton";
+            this.captionHelpButton.Padding = new System.Windows.Forms.Padding(3);
+            this.captionHelpButton.Size = new System.Drawing.Size(51, 30);
+            this.captionHelpButton.Text = "Help";
             // 
-            // bottomMenuStrip
+            // captionChangelogButton
             // 
-            this.bottomMenuStrip.BackColor = System.Drawing.Color.White;
-            this.bottomMenuStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottomMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createStashButton,
-            this.editCategoriesButton});
-            this.bottomMenuStrip.Location = new System.Drawing.Point(0, 437);
-            this.bottomMenuStrip.Name = "bottomMenuStrip";
-            this.bottomMenuStrip.Padding = new System.Windows.Forms.Padding(6, 0, 0, 2);
-            this.bottomMenuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.bottomMenuStrip.Size = new System.Drawing.Size(634, 24);
-            this.bottomMenuStrip.TabIndex = 1;
-            this.bottomMenuStrip.Text = "bottomMenuStrip";
+            this.captionChangelogButton.Name = "captionChangelogButton";
+            this.captionChangelogButton.Size = new System.Drawing.Size(150, 24);
+            this.captionChangelogButton.Text = "Changelog";
+            this.captionChangelogButton.Click += new System.EventHandler(this.ChangelogButton_Click);
             // 
-            // createStashButton
+            // captionAboutButton
             // 
-            this.createStashButton.Margin = new System.Windows.Forms.Padding(10, 2, 0, 0);
-            this.createStashButton.Name = "createStashButton";
-            this.createStashButton.Size = new System.Drawing.Size(84, 20);
-            this.createStashButton.Text = "Create Stash";
-            this.createStashButton.Click += new System.EventHandler(this.CreateStashButton_Click);
+            this.captionAboutButton.Name = "captionAboutButton";
+            this.captionAboutButton.Size = new System.Drawing.Size(150, 24);
+            this.captionAboutButton.Text = "About";
+            this.captionAboutButton.Click += new System.EventHandler(this.AboutButton_Click);
             // 
-            // editCategoriesButton
+            // stashes_menuStrip
             // 
-            this.editCategoriesButton.Name = "editCategoriesButton";
-            this.editCategoriesButton.Size = new System.Drawing.Size(98, 22);
-            this.editCategoriesButton.Text = "Edit Categories";
-            this.editCategoriesButton.Click += new System.EventHandler(this.EditCategoriesButton_Click);
+            this.stashes_menuStrip.BackColor = System.Drawing.Color.White;
+            this.stashes_menuStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.stashes_menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stashes_createStashButton});
+            this.stashes_menuStrip.Location = new System.Drawing.Point(0, 388);
+            this.stashes_menuStrip.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.stashes_menuStrip.Name = "stashes_menuStrip";
+            this.stashes_menuStrip.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.stashes_menuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.stashes_menuStrip.Size = new System.Drawing.Size(431, 28);
+            this.stashes_menuStrip.TabIndex = 1;
+            this.stashes_menuStrip.Text = "bottomMenuStrip";
             // 
-            // backgroundPanel
+            // stashes_createStashButton
             // 
-            this.backgroundPanel.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.backgroundPanel.Controls.Add(this.stashesListView);
-            this.backgroundPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.backgroundPanel.Location = new System.Drawing.Point(0, 24);
-            this.backgroundPanel.Name = "backgroundPanel";
-            this.backgroundPanel.Padding = new System.Windows.Forms.Padding(5);
-            this.backgroundPanel.Size = new System.Drawing.Size(634, 413);
-            this.backgroundPanel.TabIndex = 2;
+            this.stashes_createStashButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stashes_createStashButton.Margin = new System.Windows.Forms.Padding(10, 2, 0, 0);
+            this.stashes_createStashButton.Name = "stashes_createStashButton";
+            this.stashes_createStashButton.Size = new System.Drawing.Size(103, 24);
+            this.stashes_createStashButton.Text = "Create Stash";
+            this.stashes_createStashButton.Click += new System.EventHandler(this.Stashes_CreateStashButton_Click);
             // 
-            // stashesListView
+            // pagesPaddingPanel
             // 
-            this.stashesListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.stashesListView.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
-            this.stashesListView.CellEditUseWholeCell = false;
-            this.stashesListView.Cursor = System.Windows.Forms.Cursors.Default;
-            this.stashesListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.stashesListView.FullRowSelect = true;
-            this.stashesListView.GridLines = true;
-            this.stashesListView.HeaderUsesThemes = true;
-            this.stashesListView.HideSelection = false;
-            this.stashesListView.Location = new System.Drawing.Point(5, 5);
-            this.stashesListView.Name = "stashesListView";
-            this.stashesListView.SelectColumnsOnRightClick = false;
-            this.stashesListView.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
-            this.stashesListView.ShowSortIndicators = false;
-            this.stashesListView.Size = new System.Drawing.Size(624, 403);
-            this.stashesListView.SortGroupItemsByPrimaryColumn = false;
-            this.stashesListView.TabIndex = 0;
-            this.stashesListView.UseCompatibleStateImageBehavior = false;
-            this.stashesListView.View = System.Windows.Forms.View.Details;
+            this.pagesPaddingPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pagesPaddingPanel.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.pagesPaddingPanel.Controls.Add(this.groups_pagePanel);
+            this.pagesPaddingPanel.Controls.Add(this.stashes_pagePanel);
+            this.pagesPaddingPanel.Location = new System.Drawing.Point(20, 60);
+            this.pagesPaddingPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.pagesPaddingPanel.Name = "pagesPaddingPanel";
+            this.pagesPaddingPanel.Padding = new System.Windows.Forms.Padding(20);
+            this.pagesPaddingPanel.Size = new System.Drawing.Size(782, 456);
+            this.pagesPaddingPanel.TabIndex = 2;
             // 
-            // showExpansionComboBox
+            // groups_pagePanel
             // 
-            this.showExpansionComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.showExpansionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.showExpansionComboBox.DropDownWidth = 200;
-            this.showExpansionComboBox.FormattingEnabled = true;
-            this.showExpansionComboBox.Location = new System.Drawing.Point(42, 3);
-            this.showExpansionComboBox.Name = "showExpansionComboBox";
-            this.showExpansionComboBox.Size = new System.Drawing.Size(173, 21);
-            this.showExpansionComboBox.TabIndex = 22;
+            this.groups_pagePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.groups_pagePanel.Controls.Add(this.groups_menuStrip);
+            this.groups_pagePanel.Controls.Add(this.groups_listViewBorderPanel);
+            this.groups_pagePanel.Location = new System.Drawing.Point(461, 20);
+            this.groups_pagePanel.Margin = new System.Windows.Forms.Padding(0);
+            this.groups_pagePanel.Name = "groups_pagePanel";
+            this.groups_pagePanel.Size = new System.Drawing.Size(301, 416);
+            this.groups_pagePanel.TabIndex = 2;
             // 
-            // showSoftCoreComboBox
+            // groups_menuStrip
             // 
-            this.showSoftCoreComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.showSoftCoreComboBox.AutoSize = true;
-            this.showSoftCoreComboBox.Location = new System.Drawing.Point(223, 6);
-            this.showSoftCoreComboBox.Name = "showSoftCoreComboBox";
-            this.showSoftCoreComboBox.Size = new System.Drawing.Size(15, 14);
-            this.showSoftCoreComboBox.TabIndex = 23;
-            this.showSoftCoreComboBox.UseVisualStyleBackColor = true;
+            this.groups_menuStrip.BackColor = System.Drawing.Color.White;
+            this.groups_menuStrip.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groups_menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.groups_createStashGroupButton});
+            this.groups_menuStrip.Location = new System.Drawing.Point(0, 388);
+            this.groups_menuStrip.Margin = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.groups_menuStrip.Name = "groups_menuStrip";
+            this.groups_menuStrip.Padding = new System.Windows.Forms.Padding(0, 0, 0, 2);
+            this.groups_menuStrip.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.groups_menuStrip.Size = new System.Drawing.Size(301, 28);
+            this.groups_menuStrip.TabIndex = 2;
+            this.groups_menuStrip.Text = "bottomMenuStrip";
             // 
-            // showHardCoreComboBox
+            // groups_createGroupButton
             // 
-            this.showHardCoreComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.showHardCoreComboBox.AutoSize = true;
-            this.showHardCoreComboBox.Location = new System.Drawing.Point(253, 6);
-            this.showHardCoreComboBox.Name = "showHardCoreComboBox";
-            this.showHardCoreComboBox.Size = new System.Drawing.Size(15, 14);
-            this.showHardCoreComboBox.TabIndex = 24;
-            this.showHardCoreComboBox.UseVisualStyleBackColor = true;
+            this.groups_createStashGroupButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groups_createStashGroupButton.Margin = new System.Windows.Forms.Padding(10, 2, 0, 0);
+            this.groups_createStashGroupButton.Name = "groups_createGroupButton";
+            this.groups_createStashGroupButton.Size = new System.Drawing.Size(109, 24);
+            this.groups_createStashGroupButton.Text = "Create Group";
+            this.groups_createStashGroupButton.Click += new System.EventHandler(this.Groups_CreateStashGroupButton_Click);
             // 
-            // selectAllButton
+            // groups_listViewBorderPanel
             // 
-            this.selectAllButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.selectAllButton.Location = new System.Drawing.Point(1, 437);
-            this.selectAllButton.Name = "selectAllButton";
-            this.selectAllButton.Size = new System.Drawing.Size(125, 23);
-            this.selectAllButton.TabIndex = 25;
-            this.selectAllButton.Text = "Select all";
-            this.selectAllButton.UseVisualStyleBackColor = true;
-            this.selectAllButton.Click += new System.EventHandler(this.SelectAllButton_Click);
+            this.groups_listViewBorderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groups_listViewBorderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.groups_listViewBorderPanel.Controls.Add(this.groups_listView);
+            this.groups_listViewBorderPanel.Location = new System.Drawing.Point(0, 0);
+            this.groups_listViewBorderPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.groups_listViewBorderPanel.Name = "groups_listViewBorderPanel";
+            this.groups_listViewBorderPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.groups_listViewBorderPanel.Size = new System.Drawing.Size(301, 360);
+            this.groups_listViewBorderPanel.TabIndex = 0;
             // 
-            // displayMenuPanel
+            // groups_listView
             // 
-            this.displayMenuPanel.Controls.Add(this.showExpansionComboBox);
-            this.displayMenuPanel.Controls.Add(this.showSoftCoreComboBox);
-            this.displayMenuPanel.Controls.Add(this.showHardCoreComboBox);
-            this.displayMenuPanel.Location = new System.Drawing.Point(354, -1);
-            this.displayMenuPanel.Name = "displayMenuPanel";
-            this.displayMenuPanel.Size = new System.Drawing.Size(275, 25);
-            this.displayMenuPanel.TabIndex = 27;
+            this.groups_listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.groups_listView.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
+            this.groups_listView.CellEditUseWholeCell = false;
+            this.groups_listView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.groups_listView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groups_listView.FullRowSelect = true;
+            this.groups_listView.GridLines = true;
+            this.groups_listView.HideSelection = false;
+            this.groups_listView.Location = new System.Drawing.Point(10, 10);
+            this.groups_listView.Margin = new System.Windows.Forms.Padding(20);
+            this.groups_listView.Name = "groups_listView";
+            this.groups_listView.SelectColumnsOnRightClick = false;
+            this.groups_listView.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
+            this.groups_listView.ShowGroups = false;
+            this.groups_listView.ShowSortIndicators = false;
+            this.groups_listView.Size = new System.Drawing.Size(281, 340);
+            this.groups_listView.SortGroupItemsByPrimaryColumn = false;
+            this.groups_listView.TabIndex = 1;
+            this.groups_listView.UseCompatibleStateImageBehavior = false;
+            this.groups_listView.View = System.Windows.Forms.View.Details;
+            // 
+            // stashes_pagePanel
+            // 
+            this.stashes_pagePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.stashes_pagePanel.Controls.Add(this.stashes_shownItemsCountLabel);
+            this.stashes_pagePanel.Controls.Add(this.stashes_menuFlowLayoutPanel);
+            this.stashes_pagePanel.Controls.Add(this.stashes_listViewBorderPanel);
+            this.stashes_pagePanel.Controls.Add(this.stashes_menuStrip);
+            this.stashes_pagePanel.Location = new System.Drawing.Point(20, 20);
+            this.stashes_pagePanel.Margin = new System.Windows.Forms.Padding(0);
+            this.stashes_pagePanel.Name = "stashes_pagePanel";
+            this.stashes_pagePanel.Size = new System.Drawing.Size(431, 416);
+            this.stashes_pagePanel.TabIndex = 1;
+            // 
+            // stashes_shownItemsCountLabel
+            // 
+            this.stashes_shownItemsCountLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.stashes_shownItemsCountLabel.Location = new System.Drawing.Point(10, 360);
+            this.stashes_shownItemsCountLabel.Name = "stashes_shownItemsCountLabel";
+            this.stashes_shownItemsCountLabel.Size = new System.Drawing.Size(411, 27);
+            this.stashes_shownItemsCountLabel.TabIndex = 26;
+            this.stashes_shownItemsCountLabel.Text = "x/y stashes";
+            this.stashes_shownItemsCountLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // stashes_menuFlowLayoutPanel
+            // 
+            this.stashes_menuFlowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.stashes_menuFlowLayoutPanel.Controls.Add(this.stashes_showExpansionComboBox);
+            this.stashes_menuFlowLayoutPanel.Controls.Add(this.stashes_showSoftCoreCheckbox);
+            this.stashes_menuFlowLayoutPanel.Controls.Add(this.stashes_showHardCoreCheckbox);
+            this.stashes_menuFlowLayoutPanel.Location = new System.Drawing.Point(1, 390);
+            this.stashes_menuFlowLayoutPanel.Name = "stashes_menuFlowLayoutPanel";
+            this.stashes_menuFlowLayoutPanel.Size = new System.Drawing.Size(364, 25);
+            this.stashes_menuFlowLayoutPanel.TabIndex = 25;
+            // 
+            // stashes_showExpansionComboBox
+            // 
+            this.stashes_showExpansionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.stashes_showExpansionComboBox.DropDownWidth = 200;
+            this.stashes_showExpansionComboBox.FormattingEnabled = true;
+            this.stashes_showExpansionComboBox.Location = new System.Drawing.Point(0, 0);
+            this.stashes_showExpansionComboBox.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
+            this.stashes_showExpansionComboBox.Name = "stashes_showExpansionComboBox";
+            this.stashes_showExpansionComboBox.Size = new System.Drawing.Size(212, 24);
+            this.stashes_showExpansionComboBox.TabIndex = 22;
+            // 
+            // stashes_showSoftCoreCheckbox
+            // 
+            this.stashes_showSoftCoreCheckbox.AutoSize = true;
+            this.stashes_showSoftCoreCheckbox.Location = new System.Drawing.Point(228, 3);
+            this.stashes_showSoftCoreCheckbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 4);
+            this.stashes_showSoftCoreCheckbox.Name = "stashes_showSoftCoreCheckbox";
+            this.stashes_showSoftCoreCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.stashes_showSoftCoreCheckbox.TabIndex = 23;
+            this.stashes_showSoftCoreCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // stashes_showHardCoreCheckbox
+            // 
+            this.stashes_showHardCoreCheckbox.AutoSize = true;
+            this.stashes_showHardCoreCheckbox.Location = new System.Drawing.Point(251, 3);
+            this.stashes_showHardCoreCheckbox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 4);
+            this.stashes_showHardCoreCheckbox.Name = "stashes_showHardCoreCheckbox";
+            this.stashes_showHardCoreCheckbox.Size = new System.Drawing.Size(15, 14);
+            this.stashes_showHardCoreCheckbox.TabIndex = 24;
+            this.stashes_showHardCoreCheckbox.UseVisualStyleBackColor = true;
+            // 
+            // stashes_listViewBorderPanel
+            // 
+            this.stashes_listViewBorderPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.stashes_listViewBorderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
+            this.stashes_listViewBorderPanel.Controls.Add(this.stashes_listView);
+            this.stashes_listViewBorderPanel.Location = new System.Drawing.Point(0, 0);
+            this.stashes_listViewBorderPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.stashes_listViewBorderPanel.Name = "stashes_listViewBorderPanel";
+            this.stashes_listViewBorderPanel.Padding = new System.Windows.Forms.Padding(10);
+            this.stashes_listViewBorderPanel.Size = new System.Drawing.Size(431, 360);
+            this.stashes_listViewBorderPanel.TabIndex = 1;
+            // 
+            // stashes_listView
+            // 
+            this.stashes_listView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.stashes_listView.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
+            this.stashes_listView.CellEditUseWholeCell = false;
+            this.stashes_listView.Cursor = System.Windows.Forms.Cursors.Default;
+            this.stashes_listView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.stashes_listView.FullRowSelect = true;
+            this.stashes_listView.GridLines = true;
+            this.stashes_listView.GroupHeadingBackColor = System.Drawing.Color.Gray;
+            this.stashes_listView.GroupHeadingCountFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stashes_listView.GroupHeadingCountForeColor = System.Drawing.Color.Black;
+            this.stashes_listView.GroupHeadingFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stashes_listView.GroupHeadingForeColor = System.Drawing.Color.Black;
+            this.stashes_listView.HideSelection = false;
+            this.stashes_listView.Location = new System.Drawing.Point(10, 10);
+            this.stashes_listView.Margin = new System.Windows.Forms.Padding(20);
+            this.stashes_listView.Name = "stashes_listView";
+            this.stashes_listView.SelectColumnsOnRightClick = false;
+            this.stashes_listView.SelectColumnsOnRightClickBehaviour = BrightIdeasSoftware.ObjectListView.ColumnSelectBehaviour.None;
+            this.stashes_listView.SeparatorColor = System.Drawing.Color.Empty;
+            this.stashes_listView.ShowSortIndicators = false;
+            this.stashes_listView.Size = new System.Drawing.Size(411, 340);
+            this.stashes_listView.SortGroupItemsByPrimaryColumn = false;
+            this.stashes_listView.TabIndex = 0;
+            this.stashes_listView.UseCompatibleStateImageBehavior = false;
+            this.stashes_listView.View = System.Windows.Forms.View.Details;
+            // 
+            // formPaddingPanel
+            // 
+            this.formPaddingPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.formPaddingPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.formPaddingPanel.Controls.Add(this.groupsPageButton);
+            this.formPaddingPanel.Controls.Add(this.stashesPageButton);
+            this.formPaddingPanel.Controls.Add(this.pagesPaddingPanel);
+            this.formPaddingPanel.Location = new System.Drawing.Point(8, 54);
+            this.formPaddingPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.formPaddingPanel.Name = "formPaddingPanel";
+            this.formPaddingPanel.Padding = new System.Windows.Forms.Padding(20);
+            this.formPaddingPanel.Size = new System.Drawing.Size(822, 536);
+            this.formPaddingPanel.TabIndex = 28;
+            // 
+            // groupsPageButton
+            // 
+            this.groupsPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupsPageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupsPageButton.Location = new System.Drawing.Point(165, 28);
+            this.groupsPageButton.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.groupsPageButton.Name = "groupsPageButton";
+            this.groupsPageButton.Size = new System.Drawing.Size(143, 32);
+            this.groupsPageButton.TabIndex = 4;
+            this.groupsPageButton.Text = "Groups";
+            this.groupsPageButton.UseVisualStyleBackColor = true;
+            // 
+            // stashesPageButton
+            // 
+            this.stashesPageButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.stashesPageButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stashesPageButton.Location = new System.Drawing.Point(20, 28);
+            this.stashesPageButton.Margin = new System.Windows.Forms.Padding(0, 0, 2, 0);
+            this.stashesPageButton.Name = "stashesPageButton";
+            this.stashesPageButton.Size = new System.Drawing.Size(143, 32);
+            this.stashesPageButton.TabIndex = 3;
+            this.stashesPageButton.Text = "Stashes";
+            this.stashesPageButton.UseVisualStyleBackColor = true;
+            // 
+            // titlePanel
+            // 
+            this.titlePanel.Location = new System.Drawing.Point(11, 11);
+            this.titlePanel.Name = "titlePanel";
+            this.titlePanel.Size = new System.Drawing.Size(115, 40);
+            this.titlePanel.TabIndex = 29;
+            // 
+            // formBackgroundPanel
+            // 
+            this.formBackgroundPanel.Controls.Add(this.captionCloseButton);
+            this.formBackgroundPanel.Controls.Add(this.captionMinimizeButton);
+            this.formBackgroundPanel.Controls.Add(this.captionTrayButton);
+            this.formBackgroundPanel.Controls.Add(this.captionGameButton);
+            this.formBackgroundPanel.Controls.Add(this.captionMenuStrip);
+            this.formBackgroundPanel.Controls.Add(this.titlePanel);
+            this.formBackgroundPanel.Controls.Add(this.formPaddingPanel);
+            this.formBackgroundPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.formBackgroundPanel.Location = new System.Drawing.Point(1, 1);
+            this.formBackgroundPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.formBackgroundPanel.Name = "formBackgroundPanel";
+            this.formBackgroundPanel.Padding = new System.Windows.Forms.Padding(8);
+            this.formBackgroundPanel.Size = new System.Drawing.Size(838, 598);
+            this.formBackgroundPanel.TabIndex = 30;
+            // 
+            // captionCloseButton
+            // 
+            this.captionCloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.captionCloseButton.BackColor = System.Drawing.Color.DimGray;
+            this.captionCloseButton.FlatAppearance.BorderSize = 0;
+            this.captionCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.captionCloseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.captionCloseButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.captionCloseButton.Location = new System.Drawing.Point(796, 2);
+            this.captionCloseButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.captionCloseButton.Name = "captionCloseButton";
+            this.captionCloseButton.Size = new System.Drawing.Size(40, 30);
+            this.captionCloseButton.TabIndex = 37;
+            this.captionCloseButton.UseVisualStyleBackColor = false;
+            // 
+            // captionMinimizeButton
+            // 
+            this.captionMinimizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.captionMinimizeButton.BackColor = System.Drawing.Color.DimGray;
+            this.captionMinimizeButton.FlatAppearance.BorderSize = 0;
+            this.captionMinimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.captionMinimizeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.captionMinimizeButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.captionMinimizeButton.Location = new System.Drawing.Point(754, 2);
+            this.captionMinimizeButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.captionMinimizeButton.Name = "captionMinimizeButton";
+            this.captionMinimizeButton.Size = new System.Drawing.Size(40, 30);
+            this.captionMinimizeButton.TabIndex = 36;
+            this.captionMinimizeButton.UseVisualStyleBackColor = false;
+            // 
+            // captionTrayButton
+            // 
+            this.captionTrayButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.captionTrayButton.BackColor = System.Drawing.Color.DimGray;
+            this.captionTrayButton.FlatAppearance.BorderSize = 0;
+            this.captionTrayButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.captionTrayButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.captionTrayButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.captionTrayButton.Location = new System.Drawing.Point(712, 2);
+            this.captionTrayButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.captionTrayButton.Name = "captionTrayButton";
+            this.captionTrayButton.Size = new System.Drawing.Size(40, 30);
+            this.captionTrayButton.TabIndex = 35;
+            this.captionTrayButton.UseVisualStyleBackColor = false;
+            // 
+            // captionGameButton
+            // 
+            this.captionGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.captionGameButton.BackColor = System.Drawing.Color.DimGray;
+            this.captionGameButton.FlatAppearance.BorderSize = 0;
+            this.captionGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.captionGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.captionGameButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.captionGameButton.Location = new System.Drawing.Point(567, 2);
+            this.captionGameButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.captionGameButton.Name = "captionGameButton";
+            this.captionGameButton.Size = new System.Drawing.Size(143, 30);
+            this.captionGameButton.TabIndex = 5;
+            this.captionGameButton.Text = "Groups";
+            this.captionGameButton.UseVisualStyleBackColor = false;
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(634, 461);
-            this.Controls.Add(this.displayMenuPanel);
-            this.Controls.Add(this.selectAllButton);
-            this.Controls.Add(this.backgroundPanel);
-            this.Controls.Add(this.topMenuStrip);
-            this.Controls.Add(this.bottomMenuStrip);
-            this.MainMenuStrip = this.topMenuStrip;
-            this.MinimumSize = new System.Drawing.Size(650, 500);
+            this.BackColor = System.Drawing.Color.Black;
+            this.ClientSize = new System.Drawing.Size(840, 600);
+            this.Controls.Add(this.formBackgroundPanel);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.MainMenuStrip = this.captionMenuStrip;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(600, 600);
             this.Name = "MainForm";
-            this.Text = "MainForm";
+            this.Padding = new System.Windows.Forms.Padding(1);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.topMenuStrip.ResumeLayout(false);
-            this.topMenuStrip.PerformLayout();
-            this.bottomMenuStrip.ResumeLayout(false);
-            this.bottomMenuStrip.PerformLayout();
-            this.backgroundPanel.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.stashesListView)).EndInit();
-            this.displayMenuPanel.ResumeLayout(false);
-            this.displayMenuPanel.PerformLayout();
+            this.captionMenuStrip.ResumeLayout(false);
+            this.captionMenuStrip.PerformLayout();
+            this.stashes_menuStrip.ResumeLayout(false);
+            this.stashes_menuStrip.PerformLayout();
+            this.pagesPaddingPanel.ResumeLayout(false);
+            this.groups_pagePanel.ResumeLayout(false);
+            this.groups_pagePanel.PerformLayout();
+            this.groups_menuStrip.ResumeLayout(false);
+            this.groups_menuStrip.PerformLayout();
+            this.groups_listViewBorderPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groups_listView)).EndInit();
+            this.stashes_pagePanel.ResumeLayout(false);
+            this.stashes_pagePanel.PerformLayout();
+            this.stashes_menuFlowLayoutPanel.ResumeLayout(false);
+            this.stashes_menuFlowLayoutPanel.PerformLayout();
+            this.stashes_listViewBorderPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.stashes_listView)).EndInit();
+            this.formPaddingPanel.ResumeLayout(false);
+            this.formBackgroundPanel.ResumeLayout(false);
+            this.formBackgroundPanel.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip topMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem fileButton;
-        private System.Windows.Forms.ToolStripMenuItem settingsButton;
-        private System.Windows.Forms.ToolStripMenuItem helpButton;
-        private System.Windows.Forms.ToolStripMenuItem aboutButton;
-        private System.Windows.Forms.MenuStrip bottomMenuStrip;
-        private System.Windows.Forms.Panel backgroundPanel;
-        private BrightIdeasSoftware.ObjectListView stashesListView;
-        private System.Windows.Forms.ToolStripMenuItem createStashButton;
-        private System.Windows.Forms.ComboBox showExpansionComboBox;
-        private System.Windows.Forms.CheckBox showSoftCoreComboBox;
-        private System.Windows.Forms.CheckBox showHardCoreComboBox;
-        private System.Windows.Forms.Button selectAllButton;
-        private System.Windows.Forms.Panel displayMenuPanel;
-        private System.Windows.Forms.ToolStripMenuItem editCategoriesButton;
-        private System.Windows.Forms.ToolStripMenuItem changelogButton;
-        private System.Windows.Forms.ToolStripMenuItem importStashesButton;
-        private System.Windows.Forms.ToolStripMenuItem startGameButton;
+        private System.Windows.Forms.MenuStrip captionMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem captionFileButton;
+        private System.Windows.Forms.ToolStripMenuItem captionSettingsButton;
+        private System.Windows.Forms.ToolStripMenuItem captionHelpButton;
+        private System.Windows.Forms.ToolStripMenuItem captionAboutButton;
+        private System.Windows.Forms.MenuStrip stashes_menuStrip;
+        private System.Windows.Forms.Panel pagesPaddingPanel;
+        private Controls.ExObjectListView stashes_listView;
+        private System.Windows.Forms.ToolStripMenuItem stashes_createStashButton;
+        private System.Windows.Forms.ComboBox stashes_showExpansionComboBox;
+        private System.Windows.Forms.CheckBox stashes_showSoftCoreCheckbox;
+        private System.Windows.Forms.CheckBox stashes_showHardCoreCheckbox;
+        private System.Windows.Forms.ToolStripMenuItem captionChangelogButton;
+        private System.Windows.Forms.ToolStripMenuItem captionImportButton;
+        private System.Windows.Forms.Panel formPaddingPanel;
+        private GDMultiStash.Controls.TransparentPanel titlePanel;
+        private GDMultiStash.Controls.TransparentPanel formBackgroundPanel;
+        private System.Windows.Forms.ToolStripMenuItem captionImportTransferFilesButton;
+        private System.Windows.Forms.ToolStripMenuItem captionExportButton;
+        private System.Windows.Forms.ToolStripMenuItem captionExportTransferFilesButton;
+        private System.Windows.Forms.Panel stashes_listViewBorderPanel;
+        private System.Windows.Forms.Panel stashes_pagePanel;
+        private System.Windows.Forms.Button groupsPageButton;
+        private System.Windows.Forms.Button stashesPageButton;
+        private System.Windows.Forms.Panel groups_pagePanel;
+        private System.Windows.Forms.Button captionGameButton;
+        private System.Windows.Forms.Button captionTrayButton;
+        private System.Windows.Forms.Button captionMinimizeButton;
+        private System.Windows.Forms.Button captionCloseButton;
+        private System.Windows.Forms.FlowLayoutPanel stashes_menuFlowLayoutPanel;
+        private System.Windows.Forms.Label stashes_shownItemsCountLabel;
+        private System.Windows.Forms.MenuStrip groups_menuStrip;
+        private System.Windows.Forms.ToolStripMenuItem groups_createStashGroupButton;
+        private System.Windows.Forms.Panel groups_listViewBorderPanel;
+        private BrightIdeasSoftware.ObjectListView groups_listView;
     }
 }

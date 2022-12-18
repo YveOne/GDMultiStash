@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace GDMultiStash.Common.Config
+namespace GDMultiStash.Common.Config.V4
 {
-    [Serializable]
+	[Serializable]
 	public class ConfigStash
 	{
 

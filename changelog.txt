@@ -1,3 +1,27 @@
+v1.30
+- Fixed: Reloading a locked stash not working
+- Fixed: Saving a stash is now also loading it
+- Local language will be auto selected on first startup (if translation exists)
+- Changelog window will no more pop up on first startup
+- Removed listview column "Locked" - Moved option to context menu (right click a stash)
+- Removed listview column "Color" - Use option in context menu instead (right click a stash)
+- Updated main window design
+- Added button to config window to extract translation files
+- Updated config file structure
+- Removed option 'default mode for new stashes' - Use checkboxes in main window
+- Fixed a bug where config files with older versions got not upgraded correctly
+- Removed button 'select all'
+- Fixed restoring stashes when game is not running
+- Removed feature to drag&drop files out of the listview to explorer (was causing lags)
+- Removed option to overwrite stashes in import window (use new solution below)
+- Added context menu option to overwrite (import+overwrite) a stash
+- Simply create stashes/groups by hitting enter key while name textbox got focus
+- Added option in config window to change amount of displayed stashes in overlay window
+- Fixed custom scaling of overlay window not getting applied correctly (but still causing some graphical issues)
+- Improved Overlay System
+- Added stash grouping feature .. hell yeah
+- And a few other bugfixes
+
 v1.29
 - Fixed backup restoration. A stash could only be restored when it was opened ingame. That has been fixed.
 - Added a reload button in overlay info window to support other tools like GD Stash.

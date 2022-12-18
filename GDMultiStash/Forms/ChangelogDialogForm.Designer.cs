@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.versionSelectComboBox = new System.Windows.Forms.ComboBox();
-            this.changelogTextBox = new System.Windows.Forms.TextBox();
+            this.changelogTextBox = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // versionSelectComboBox
@@ -71,6 +71,6 @@
         #endregion
 
         private System.Windows.Forms.ComboBox versionSelectComboBox;
-        private System.Windows.Forms.TextBox changelogTextBox;
+        private System.Windows.Forms.RichTextBox changelogTextBox;
     }
 }

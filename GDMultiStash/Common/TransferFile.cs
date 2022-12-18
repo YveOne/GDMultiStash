@@ -39,7 +39,8 @@ namespace GDMultiStash.Common
 		};
 
 		private readonly GDIALib.Parser.Stash.Stash stash;
-		private float _usage = 0f;
+		private float _usageTotal = 0f;
+		private List<float> _usagePages = new List<float>() { 0,0,0,0,0,0 };
 
 		public TransferFile()
 		{
@@ -51,14 +52,19 @@ namespace GDMultiStash.Common
 			this.stash = stash;
 		}
 
-		public float Usage
+		public float TotalUsage
 		{
-			get { return _usage; }
+			get { return _usageTotal; }
 		}
 
-		public string UsageText
+		public string TotalUsageText
 		{
-			get { return ((int)(_usage * 100)) + "%"; }
+			get { return ((int)(_usageTotal * 100)) + "%"; }
+		}
+
+		public IList<float> TabsUsage
+		{
+			get => _usagePages.AsReadOnly();
 		}
 
 		public bool IsEmpty
@@ -122,26 +128,29 @@ namespace GDMultiStash.Common
 
 		public void LoadUsage()
         {
-			_usage = 0f;
-			long space = stash.Tabs.Count * stash.Width * stash.Height;
-			long used = 0;
+			_usageTotal = 0f;
+			long spacePerTab = stash.Width * stash.Height;
+			long spacePerStash = stash.Tabs.Count * spacePerTab;
+			long usedTotal = 0;
+			int index = 0;
 			foreach (GDIALib.Parser.Stash.StashTab tab in stash.Tabs)
 			{
+				int usedPage = 0;
 				foreach (GDIALib.Parser.Stash.Item item in tab.Items)
-				{
-					used += Global.Database.GetItemSize(item.BaseRecord);
-				}
+					usedPage += Global.Database.GetItemSize(item.BaseRecord);
+				usedTotal += usedPage;
+				_usagePages[index] = (float)usedPage / (float)spacePerTab;
+				index += 1;
 			}
-			_usage = (float)used / (float)space;
+			_usageTotal = (float)usedTotal / (float)spacePerStash;
 		}
 
-
-		public static bool ValidateFile(string filePath, out TransferFile stash)
+		public static bool ValidateFile(string filePath, out TransferFile f)
 		{
-			stash = null;
+			f = null;
 			if (!File.Exists(filePath)) return false;
-			stash = new TransferFile();
-			return stash.ReadFromFile(filePath);
+			f = new TransferFile();
+			return f.ReadFromFile(filePath);
 		}
 
 		public static bool ValidateFile(string filePath)

@@ -7,990 +7,571 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 
 using GDMultiStash.Common;
+using GDMultiStash.Common.Objects;
 
 namespace GDMultiStash.Forms
 {
     internal partial class MainForm : BaseForm
     {
 
-        private readonly OLVColumn columnID;
-        private readonly OLVColumn columnOrder;
-        private readonly OLVColumn columnSC;
-        private readonly OLVColumn columnHC;
-        private readonly OLVColumn columnName;
-        private readonly OLVColumn columnLastChange;
-        private readonly OLVColumn columnUsage;
-        private readonly OLVColumn columnActive;
-        private readonly OLVColumn columnExpansion;
-        private readonly OLVColumn columnColor;
-        private readonly OLVColumn columnLocked;
+        #region constants
 
-        private Dictionary<int, string> _expansionNames;
-        private StashesDragHandler _dragHandler;
+        private const int WindowCaptionDragHeight = 60;
+        private const int WindowResizeBorderSize = 8;
+
+        private const int listViewColumnsHeight = 30;
+        private const int listViewColumnsFontHeight = 11;
+        private const int listViewRowHeight = 25;
+        private const int listViewGroupHeaderHeight = 25;
+        private const int listViewGroupSpaceBetween = 5;
+
+        private readonly Padding formPadding = new Padding(20, 20, 20, 20);
+        private readonly Padding pagesPadding = new Padding(5, 5, 5, 5);
+        private readonly Padding listViewBorderPadding = new Padding(5, 5, 5, 5);
+
+        private readonly Color formBackColor = Color.FromArgb(28, 28, 28);
+
+        private readonly Color interactiveForeColor = Color.FromArgb(200, 200, 200);
+        private readonly Color interactiveForeColorHighlight = Color.FromArgb(250, 250, 250);
+        private readonly Color passiveForeColor = Color.FromArgb(120, 120, 120);
+
+        private readonly Color captionButtonBackColor = Color.FromArgb(28, 28, 28);
+        private readonly Color captionButtonBackColorHover = Color.FromArgb(50, 50, 50);
+        private readonly Color captionButtonBackColorPressed = Color.FromArgb(70, 70, 70);
+
+        private readonly Color pageButtonBackColor = Color.FromArgb(35, 35, 35);
+        private readonly Color pageButtonBackColorActive = Color.FromArgb(45, 45, 45);
+        private readonly Color pagePanelBackColor = Color.FromArgb(45, 45, 45);
+
+        private readonly Color toolStripBackColor = Color.FromArgb(45, 45, 45);
+        private readonly Color toolStripButtonBackColor = Color.FromArgb(45, 45, 45);
+        private readonly Color toolStripButtonBackColorHover = Color.FromArgb(45, 45, 45);
+
+        private readonly Color listViewBackColor = Color.FromArgb(37, 37, 37);
+        private readonly Color listViewItemBackColor = Color.FromArgb(50, 50, 50);
+        private readonly Color listViewCellBorderColor = Color.FromArgb(37, 37, 37);
+        private readonly Color listViewGroupHeaderBackColor = Color.FromArgb(60, 60, 60);
+        private readonly Color listViewGroupHeaderCountForeColor = Color.FromArgb(180, 180, 180);
+        private readonly Color listViewGroupHeaderForeColor = Color.FromArgb(245, 245, 245);
+        private readonly Color listViewGroupHeaderSeparatorColor = Color.FromArgb(50, 50, 50);
+
+        #endregion
+
+        #region classes
+
+        private class ToolStripRenderer : ToolStripProfessionalRenderer
+        {
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                if (e.Item.OwnerItem == null)
+                {
+                    // first level buttons
+                    Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+                    e.Graphics.FillRectangle(new SolidBrush(e.Item.BackColor), rc);
+                    return;
+                }
+                //if (!e.Item.Selected) base.OnRenderMenuItemBackground(e);
+                base.OnRenderMenuItemBackground(e);
+            }
+        }
+
+        private class DefaultOLVColumn : OLVColumn
+        {
+            public DefaultOLVColumn() : base()
+            {
+                Searchable = false;
+                Groupable = false;
+                Sortable = false;
+                IsEditable = false;
+                CheckBoxes = false;
+            }
+            public new int Width
+            {
+                get => base.Width;
+                set
+                {
+                    base.Width = value;
+                    base.MaximumWidth = value;
+                    base.MinimumWidth = value;
+                }
+            }
+        }
+
+        //used to debug the border not positioned correctly
+        private class CellBorderDecorationEx : CellBorderDecoration
+        {
+            private int w;
+            public CellBorderDecorationEx(int w, Color col)
+            {
+                this.w = w;
+                BorderPen = new Pen(col);
+                FillBrush = null;
+                BoundsPadding = new Size(0, 0);
+                CornerRounding = 0;
+            }
+            protected override Rectangle CalculateBounds()
+            {
+                Rectangle r = base.CellBounds;
+                r.X -= 1;
+                r.Y -= 1;
+                r.Width += w;
+                r.Height += 1;
+                return r;
+            }
+        }
+
+        private class RowBorderDecorationEx : RowBorderDecoration
+        {
+            private int w;
+            public RowBorderDecorationEx(int w, Color col)
+            {
+                this.w = w;
+                BorderPen = new Pen(col);
+                FillBrush = null;
+                BoundsPadding = new Size(0, 0);
+                CornerRounding = 0;
+            }
+            protected override Rectangle CalculateBounds()
+            {
+                Rectangle r = base.CellBounds;
+                r.X -= 1;
+                r.Y = r.Y - 2 + r.Height;
+                r.Width += w;
+                r.Height = 1;
+                return r;
+            }
+        }
+
+        #endregion
+
+        #region WndProc 
+
+        Rectangle BorderTop { get { return new Rectangle(0, 0, ClientSize.Width, WindowResizeBorderSize); } }
+        Rectangle BorderLeft { get { return new Rectangle(0, 0, WindowResizeBorderSize, ClientSize.Height); } }
+        Rectangle BorderBottom { get { return new Rectangle(0, ClientSize.Height - WindowResizeBorderSize, ClientSize.Width, WindowResizeBorderSize); } }
+        Rectangle BorderRight { get { return new Rectangle(ClientSize.Width - WindowResizeBorderSize, 0, WindowResizeBorderSize, ClientSize.Height); } }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                // this is required to be able
+                // to minimize/restore the window by click
+                // on taskbar item
+                CreateParams cp = base.CreateParams;
+                cp.Style |= Native.WS.MINIMIZEBOX;
+                cp.ClassStyle |= Native.CS_DBLCLKS;
+                return cp;
+            }
+        }
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == Native.WM_SHOWME)
-            {
-                if (Visible)
-                    MessageBox.Show(Global.L["msg_gdms_already_running"], "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
-                    Show();
-            }
+            if (m.Msg == Native.WM_NCLBUTTONDBLCLK) return; // disable doubleclick on titlebar
             base.WndProc(ref m);
+            if (m.Msg == Global.WM_SHOWME)
+            {
+                if (!Visible)
+                    Show();
+                else
+                    MessageBox.Show(Global.L.AlreadyRunningMessage(), "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            else if (m.Msg == 0x84)
+            {
+                var cursor = PointToClient(Cursor.Position);
+
+                bool tHit = BorderTop.Contains(cursor);
+                bool lHit = BorderLeft.Contains(cursor);
+                bool rHit = BorderRight.Contains(cursor);
+                bool bHit = BorderBottom.Contains(cursor);
+                if (bHit && rHit) m.Result = (IntPtr)Native.HT.BOTTOMRIGHT;
+                else if (bHit && lHit) m.Result = (IntPtr)Native.HT.BOTTOMLEFT;
+                else if (tHit && rHit) m.Result = (IntPtr)Native.HT.TOPRIGHT;
+                else if (tHit && lHit) m.Result = (IntPtr)Native.HT.TOPLEFT;
+                else if (bHit) m.Result = (IntPtr)Native.HT.BOTTOM;
+                else if (rHit) m.Result = (IntPtr)Native.HT.RIGHT;
+                else if (lHit) m.Result = (IntPtr)Native.HT.LEFT;
+                else if (tHit) m.Result = (IntPtr)Native.HT.TOP;
+                else if (cursor.Y < WindowCaptionDragHeight)
+                {
+                    m.Result = (IntPtr)Native.HT.CAPTION;
+                    return;
+                }
+
+            }
+
+        }
+
+        #endregion
+
+        private delegate Image ButtonImageGetter();
+        private event EventHandler SpaceClick;
+
+        private readonly NotifyIcon trayIcon;
+
+        private readonly CellBorderDecorationEx cellBorderFirstDecoration;
+        private readonly CellBorderDecorationEx cellBorderDecoration;
+        private readonly RowBorderDecorationEx rowBorderFirstDecoration;
+        private readonly RowBorderDecorationEx rowBorderDecoration;
+
+        private readonly ImageDecoration lockDecoration;
+
+        private readonly ImageDecoration chkHideDecoration;
+        private readonly ImageDecoration chkBackDecoration;
+        private readonly ImageDecoration chkBackHoverDecoration;
+        private readonly ImageDecoration chkTickDecoration;
+        private readonly ImageDecoration chkTickDisabledDecoration;
+        private readonly ImageDecoration chkCrossDecoration;
+        private readonly ImageDecoration chkCrossDisabledDecoration;
+
+        private int currentPageIndex = -1;
+        private readonly EventHandler<EventArgs> PageChanged;
+        private readonly List<Button> pageButtons = new List<Button>();
+        private readonly List<Panel> pagePanels = new List<Panel>();
+
+        private void InitializeButton(Button button,
+            Color backColor, Color backColorHover, Color backColorPressed,
+            Color foreColor, Color foreColorHover,
+            ButtonImageGetter imageNormal,
+            ButtonImageGetter imageHover,
+            Action onClick)
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatAppearance.MouseOverBackColor = backColorHover;
+            button.FlatAppearance.MouseDownBackColor = backColorPressed;
+            button.BackColor = backColor;
+            button.ForeColor = foreColor;
+            button.Image = imageNormal();
+            button.MouseEnter += delegate { button.ForeColor = foreColorHover; button.Image = imageHover(); };
+            button.MouseLeave += delegate { button.ForeColor = foreColor; button.Image = imageNormal(); };
+            button.Click += delegate { onClick(); };
+            button.GotFocus += delegate { titlePanel.Focus(); }; // unfocus, hide ugly border
+        }
+
+        private void InitializeToolStripButton(ToolStripMenuItem item,
+            Color backColor, Color backColorHover,
+            Color foreColor, Color foreColorHover)
+        {
+            bool hover = false;
+            bool opened = false;
+            item.MouseEnter += delegate { hover = true; item.ForeColor = foreColorHover; item.BackColor = backColorHover; };
+            item.MouseLeave += delegate { hover = false; if (!opened) item.ForeColor = foreColor; item.BackColor = backColor; };
+            item.DropDownOpened += delegate { opened = true; item.ForeColor = foreColorHover; };
+            item.DropDownClosed += delegate { opened = false; if (!hover) item.ForeColor = foreColor; };
+            item.BackColor = backColor;
+            item.ForeColor = foreColor;
+        }
+
+        private void ShowPage(int pageIndex)
+        {
+            if (currentPageIndex != -1)
+            {
+                pageButtons[currentPageIndex].BackColor = pageButtonBackColor;
+                pageButtons[currentPageIndex].ForeColor = interactiveForeColor;
+                pagePanels[currentPageIndex].Visible = false;
+            }
+            currentPageIndex = pageIndex;
+            pageButtons[currentPageIndex].BackColor = pageButtonBackColorActive;
+            pageButtons[currentPageIndex].ForeColor = interactiveForeColorHighlight;
+            pagePanels[currentPageIndex].Visible = true;
+            PageChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void InitializePage(Button button, Panel page)
+        {
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatAppearance.MouseDownBackColor = pageButtonBackColorActive;
+            button.FlatAppearance.MouseOverBackColor = pageButtonBackColorActive;
+            button.BackColor = pageButtonBackColor;
+            button.ForeColor = interactiveForeColor;
+
+            page.BackColor = pagePanelBackColor;
+            page.Dock = DockStyle.Fill;
+            page.Visible = false;
+
+            int pageIndex = pageButtons.Count;
+            pageButtons.Add(button);
+            pagePanels.Add(page);
+
+            button.MouseEnter += delegate { button.ForeColor = interactiveForeColorHighlight; };
+            button.MouseLeave += delegate { if (pageIndex != currentPageIndex) button.ForeColor = interactiveForeColor; };
+            button.Click += delegate { ShowPage(pageIndex); };
+            button.GotFocus += delegate { titlePanel.Focus(); }; // unfocus, hide ugly border
+        }
+
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        {
+            Text = Global.AppName;
+
+            // form
+            captionGameButton.Text = L.StartGameButton();
+            captionFileButton.Text = L.FileButton();
+            captionHelpButton.Text = L.HelpButton();
+            captionImportButton.Text = L.ImportButton();
+            captionImportTransferFilesButton.Text = L.TransferFilesButton();
+            captionExportButton.Text = L.ExportButton();
+            captionExportTransferFilesButton.Text = L.TransferFilesButton();
+            captionSettingsButton.Text = L.SettingsButton();
+            captionChangelogButton.Text = L.ChangelogButton();
+            captionAboutButton.Text = L.AboutButton();
+
+            // stashes
+            stashes_columnID.Text = L.IdColumn();
+            stashes_columnName.Text = L.NameColumn();
+            stashes_columnUsage.Text = L.UsageColumn();
+            stashes_columnLastChange.Text = L.LastChangeColumn();
+            stashes_columnSC.Text = L.SoftcoreColumn();
+            stashes_columnHC.Text = L.HardcoreColumn();
+            stashes_createStashButton.Text = L.CreateStashButton();
+            stashes_showSoftCoreCheckbox.Text = stashes_columnSC.Text;
+            stashes_showHardCoreCheckbox.Text = stashes_columnHC.Text;
+
+            // groups
+            groups_createStashGroupButton.Text = L.CreateGroupButton();
+            groups_columnID.Text = L.IdColumn();
+            groups_columnName.Text = L.NameColumn();
         }
 
         public MainForm() : base()
         {
             InitializeComponent();
+
+            DoubleBuffered = true;
             Icon = Properties.Resources.icon32;
-            Text = "GD MultiStash";
+            FormBorderStyle = FormBorderStyle.None;
+            SetStyle(ControlStyles.ResizeRedraw, true);
 
-            stashesListView.CellRightClick += StashesListView_CellRightClick;
-            stashesListView.ColumnRightClick += StashesListView_ColumnRightClick;
-            stashesListView.SubItemChecking += StashesListView_SubItemChecking;
-            stashesListView.CellEditFinished += StashesListView_CellEditFinished;
-            stashesListView.CellEditStarting += StashesListView_CellEditStarting;
-            stashesListView.CellEditFinishing += StashesListView_CellEditFinishing;
+            #region Init Buttons
 
-            int displayIndex = 0;
-
-            columnOrder = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Text = "Order",
-                Name = "orderColumn",
-                AspectName = "Order",
-                MaximumWidth = 50,
-                MinimumWidth = 50,
-                Width = 50,
-                Searchable = false,
-                Groupable = false,
-                Sortable = true,
-
-                TextAlign = HorizontalAlignment.Right,
-            };
-
- 
-            stashesListView.HeaderUsesThemes = false;
-            stashesListView.BaseSmallImageList = new ImageList();
-            stashesListView.BaseSmallImageList.Images.Add("lock", Properties.Resources.lockBlack);
-
-
-            columnLocked = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Name = "lockedColumn",
-                AspectName = "Locked",
-                MaximumWidth = 40,
-                MinimumWidth = 40,
-                Width = 40,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                ShowTextInHeader = false,
-                HeaderImageKey = "lock",
-
-                IsEditable = true,
-                CheckBoxes = true,
-                TextAlign = HorizontalAlignment.Center,
-            };
-
-            columnID = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Name = "idColumn",
-                AspectName = "ID",
-                MaximumWidth = 50,
-                MinimumWidth = 50,
-                Width = 50,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                TextAlign = HorizontalAlignment.Left,
-                IsEditable = false,
-            };
-
-            columnName = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Name = "nameColumn",
-                AspectName = "Name",
-                MaximumWidth = -1,
-                MinimumWidth = 100,
-                Width = 100,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                IsEditable = true,
-                FillsFreeSpace = true,
-                CellEditUseWholeCell = true,
-            };
-
-            columnSC = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Text = "SC",
-                Name = "scColumn",
-                AspectName = "SC",
-                MaximumWidth = 30,
-                MinimumWidth = 30,
-                Width = 30,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                IsEditable = true,
-                CheckBoxes = true,
-                TextAlign = HorizontalAlignment.Center,
-            };
-
-            columnHC = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Text = "HC",
-                Name = "hcColumn",
-                AspectName = "HC",
-                MaximumWidth = 30,
-                MinimumWidth = 30,
-                Width = 30,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                IsEditable = true,
-                CheckBoxes = true,
-                TextAlign = HorizontalAlignment.Center,
-            };
-
-            columnUsage = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Name = "usageColumn",
-                MaximumWidth = 45,
-                MinimumWidth = 45,
-                Width = 45,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                IsEditable = false,
-                AspectGetter = delegate (object row) {
-                    StashObject stash = (StashObject)row;
-                    return stash.TransferFileLoaded ? stash.UsageText : "???";
-                },
-                TextAlign = HorizontalAlignment.Right,
-            };
-
-            columnLastChange = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Name = "lastChangeColumn",
-                MaximumWidth = 130,
-                MinimumWidth = 130,
-                Width = 130,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                IsEditable = false,
-                AspectGetter = delegate (object row) {
-                    StashObject stash = (StashObject)row;
-                    return stash.TransferFileLoaded ? stash.LastWriteTime.ToString() : " File Not Found";
-                },
-                TextAlign = HorizontalAlignment.Right,
-            };
-
-            columnActive = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Text = "",
-                Name = "activeColumn",
-                MaximumWidth = 30,
-                MinimumWidth = 30,
-                Width = 30,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                IsEditable = false,
-                AspectGetter = delegate (object row) {
-                    StashObject stash = (StashObject)row;
-                    if (stash.ID == Global.Runtime.ActiveStashID) return ">>>";
-                    return "";
-                },
-                TextAlign = HorizontalAlignment.Center,
-            };
-
-            columnExpansion = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Text = "Exp",
-                Name = "expansionColumn",
-                MaximumWidth = 50,
-                MinimumWidth = 50,
-                Width = 50,
-                Searchable = false,
-                Groupable = true,
-                Sortable = false,
-
-                IsEditable = false,
-                AspectGetter = delegate (object row) {
-                    StashObject stash = (StashObject)row;
-                    switch((int)stash.Expansion)
+            InitializeButton(captionGameButton,
+                captionButtonBackColor, Color.FromArgb(0, 102, 77), Color.FromArgb(0, 135, 102),
+                interactiveForeColor, Color.FromArgb(255, 255, 255),
+                delegate { return null; },
+                delegate { return null; },
+                delegate {
+                    switch (Global.Runtime.StartGame())
                     {
-                        case 0: return "GD";
-                        case 1: return "AoM";
-                        case 2: return "FG";
+                        case GlobalHandlers.RuntimeHandler.GameStartResult.AlreadyRunning:
+                            MessageBox.Show(Global.L.GameAlreadyRunningMessage(), "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            break;
+                        case GlobalHandlers.RuntimeHandler.GameStartResult.Success:
+                            break;
                     }
-                    return "???";
-                },
-                TextAlign = HorizontalAlignment.Right,
-            };
-
-            columnColor = new OLVColumn()
-            {
-                DisplayIndex = displayIndex++,
-                Name = "colorColumn",
-                AspectName = "Color",
-                MaximumWidth = 70,
-                MinimumWidth = 70,
-                Width = 70,
-                Searchable = false,
-                Groupable = false,
-                Sortable = false,
-
-                IsEditable = true,
-                CellEditUseWholeCell = true,
-            };
-
-
-        }
-
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-
-
-            Width = Global.Configuration.Settings.WindowWidth;
-            Height = Global.Configuration.Settings.WindowHeight;
-            ResizeEnd += delegate {
-                Global.Configuration.Settings.WindowWidth = Width;
-                Global.Configuration.Settings.WindowHeight = Height;
-                Global.Configuration.Save();
-                UpdateDisplayMenu();
-            };
-            FormWindowState LastWindowState = WindowState;
-            Resize += delegate {
-                if (LastWindowState == WindowState) return;
-                LastWindowState = WindowState;
-                UpdateDisplayMenu();
-            };
-
-
-
-
-
-            stashesListView.MultiSelect = true;
-
-            stashesListView.PrimarySortColumn = columnOrder;
-            stashesListView.PrimarySortOrder = SortOrder.Ascending;
-
-            stashesListView.CustomSorter = delegate (OLVColumn column, SortOrder order) {
-                stashesListView.ListViewItemSorter = new StashesSortComparer();
-            };
-            
-            _expansionNames = new Dictionary<int, string>() {
-                { -1, "" },
-                { 0, GrimDawnLib.GrimDawn.GetExpansionName(0) },
-                { 1, GrimDawnLib.GrimDawn.GetExpansionName(1) },
-                { 2, GrimDawnLib.GrimDawn.GetExpansionName(2) },
-            };
-            showExpansionComboBox.DisplayMember = "Value";
-            showExpansionComboBox.ValueMember = "Key";
-            showExpansionComboBox.DataSource = new BindingSource(_expansionNames, null);
-            showExpansionComboBox.SelectedValue = Global.Configuration.Settings.ShowExpansion;
-            showSoftCoreComboBox.Checked = Global.Configuration.Settings.ShowSoftcore;
-            showHardCoreComboBox.Checked = Global.Configuration.Settings.ShowHardcore;
-            showExpansionComboBox.SelectionChangeCommitted += delegate {
-                Global.Configuration.Settings.ShowExpansion = (int)showExpansionComboBox.SelectedValue;
-                Global.Configuration.Save();
-                UpdateObjects();
-            };
-            showSoftCoreComboBox.CheckedChanged += delegate {
-                Global.Configuration.Settings.ShowSoftcore = showSoftCoreComboBox.Checked;
-                Global.Configuration.Save();
-                UpdateObjects();
-            };
-            showHardCoreComboBox.CheckedChanged += delegate {
-                Global.Configuration.Settings.ShowHardcore = showHardCoreComboBox.Checked;
-                Global.Configuration.Save();
-                UpdateObjects();
-            };
-
-
-
-
-
-
-
-
-
-
-
-            Global.Runtime.ActiveStashChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveStashChangedEventArgs e)
-            {
-                //UpdateObjects(); //we dont need to use it
-                stashesListView.Invoke((MethodInvoker)delegate {
-                    foreach (OLVListItem item in stashesListView.Items)
-                    {
-                        StashObject stash = (StashObject)item.RowObject;
-                        if (stash.ID == e.OldID || stash.ID == e.NewID)
-                        {
-                            stashesListView.RefreshItem(item);
-                        }
-                    }
-                });
-            };
-
-            _dragHandler = new StashesDragHandler(stashesListView);
-            _dragHandler.DragSource.DragEnd += delegate {
-                UpdateObjects();
-                Global.Configuration.Save();
-                Global.Runtime.NotifyStashesOrderChanged();
-            };
-
-            stashesListView.UseCellFormatEvents = true;
-
-            stashesListView.SelectedIndexChanged += delegate {
-                bool allSelected = true;
-                foreach (OLVListItem item in stashesListView.Items)
-                    if (!item.Selected) allSelected = false;
-                selectAllButton.Text = allSelected ? _unselect_all : _select_all;
-            };
-
-            stashesListView.FormatCell += delegate (object sender, FormatCellEventArgs e) {
-
-                if (e.Column != columnColor
-                    && e.Column != columnName
-                    && e.Column != columnID)
-                    return;
-
-                StashObject stash = (StashObject)e.Model;
-                bool isMain = Global.Configuration.IsMainStashID(stash.ID);
-                bool isActive = Global.Runtime.ActiveStashID == stash.ID;
-
-                if (e.Column == columnColor)
-                {
-                    e.SubItem.BackColor = Color.Black;
-                    e.SubItem.ForeColor = stash.GetDisplayColor();
-                    e.SubItem.Font = new Font("Consolas", 9, FontStyle.Bold);
                 }
-                if (e.Column == columnName || e.Column == columnID)
-                {
-                    FontStyle fs = FontStyle.Regular;
-                    if (isMain) fs |= FontStyle.Italic;
-                    if (isActive) fs |= FontStyle.Bold;
-                    e.SubItem.Font = new Font(e.Item.Font, fs);
-                }
-            };
+                );
 
-            Bitmap mainCheckBoxOverlay = new Bitmap(13, 13, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            using (Graphics gfx = Graphics.FromImage(mainCheckBoxOverlay))
-            using (SolidBrush brush = new SolidBrush(Color.FromArgb(255, 255, 255)))
+            InitializeButton(captionTrayButton,
+                captionButtonBackColor, captionButtonBackColorHover, captionButtonBackColorPressed,
+                interactiveForeColor, interactiveForeColorHighlight,
+                delegate { return Properties.Resources.buttonTrayGray; },
+                delegate { return Properties.Resources.buttonTrayWhite; },
+                delegate { Hide(); }
+                );
+
+            InitializeButton(captionMinimizeButton,
+                captionButtonBackColor, captionButtonBackColorHover, captionButtonBackColorPressed,
+                interactiveForeColor, interactiveForeColorHighlight,
+                delegate { return Properties.Resources.buttonMinimizeGray; },
+                delegate { return Properties.Resources.buttonMinimizeWhite; },
+                delegate { WindowState = FormWindowState.Minimized; }
+                );
+
+            InitializeButton(captionCloseButton,
+                captionButtonBackColor, Color.FromArgb(150, 32, 5), Color.FromArgb(207, 49, 12),
+                interactiveForeColor, Color.FromArgb(255, 255, 255),
+                delegate { return Properties.Resources.buttonCloseGray; },
+                delegate { return Properties.Resources.buttonCloseWhite; },
+                delegate { Close(); }
+                );
+
+            InitializeToolStripButton(captionFileButton,
+                captionButtonBackColor, captionButtonBackColorHover,
+                interactiveForeColor, interactiveForeColorHighlight
+                );
+
+            InitializeToolStripButton(captionHelpButton,
+                captionButtonBackColor, captionButtonBackColorHover,
+                interactiveForeColor, interactiveForeColorHighlight
+                );
+
+            captionMenuStrip.Renderer = new ToolStripRenderer();
+
+            #endregion
+
+            #region Init Decos
+
+            cellBorderFirstDecoration = new CellBorderDecorationEx(-1, listViewCellBorderColor);
+            cellBorderDecoration = new CellBorderDecorationEx(0, listViewCellBorderColor);
+            rowBorderFirstDecoration = new RowBorderDecorationEx(-1, listViewCellBorderColor);
+            rowBorderDecoration = new RowBorderDecorationEx(0, listViewCellBorderColor);
+
+            using (Bitmap bmp = new Bitmap(15, 15, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
+            using (Graphics gfx = Graphics.FromImage(bmp))
+            using (SolidBrush brush = new SolidBrush(listViewItemBackColor))
             {
-                gfx.FillRectangle(brush, 0, 0, 13, 13);
+                gfx.FillRectangle(brush, 0, 0, 15, 15);
+                chkHideDecoration = new ImageDecoration(new Bitmap(bmp), ContentAlignment.MiddleCenter)
+                {
+                    Transparency = 255,
+                    Offset = new Size(-1, -1),
+                    ShrinkToWidth = false,
+                };
             }
-            ImageDecoration mainCheckBoxDeco = new ImageDecoration(mainCheckBoxOverlay, ContentAlignment.MiddleCenter)
+            chkBackDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxBack, new Size(15, 15)), ContentAlignment.MiddleCenter)
             {
-                Transparency = 180,
-                Offset = new Size(-1, 0),
+                Transparency = 255,
+                Offset = new Size(-1, -1),
+                ShrinkToWidth = false,
             };
-            ImageDecoration lockDecoration = new ImageDecoration(new Bitmap(Properties.Resources.lockBlack, new Size(15, 15)), ContentAlignment.MiddleRight)
+            chkBackHoverDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxBackHover, new Size(15, 15)), ContentAlignment.MiddleCenter)
+            {
+                Transparency = 255,
+                Offset = new Size(-1, -1),
+                ShrinkToWidth = false,
+            };
+            chkTickDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxTick, new Size(21, 21)), ContentAlignment.MiddleCenter)
+            {
+                Transparency = 255,
+                Offset = new Size(-1, -1),
+                ShrinkToWidth = false,
+            };
+            chkTickDisabledDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxTickDisabled, new Size(21, 21)), ContentAlignment.MiddleCenter)
+            {
+                Transparency = 255,
+                Offset = new Size(-1, -1),
+                ShrinkToWidth = false,
+            };
+            chkCrossDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxCross, new Size(21, 21)), ContentAlignment.MiddleCenter)
+            {
+                Transparency = 255,
+                Offset = new Size(-1, -1),
+                ShrinkToWidth = false,
+            };
+            chkCrossDisabledDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxCrossDisabled, new Size(21, 21)), ContentAlignment.MiddleCenter)
+            {
+                Transparency = 255,
+                Offset = new Size(-1, -1),
+                ShrinkToWidth = false,
+            };
+
+
+
+
+            lockDecoration = new ImageDecoration(new Bitmap(Properties.Resources.lockedWhite, new Size(15, 15)), ContentAlignment.MiddleRight)
             {
                 Transparency = 180,
                 Offset = new Size(-5, 0),
             };
 
-            
+            #endregion
 
+            BackColor = formBackColor;
+            formBackgroundPanel.BackColor = formBackColor;
+            BackgroundImage = Properties.Resources.border;
+            BackgroundImageLayout = ImageLayout.Stretch;
+            titlePanel.BackgroundImage = Properties.Resources.title;
+            titlePanel.BackgroundImageLayout = ImageLayout.Zoom;
 
-            stashesListView.FormatRow += delegate (object sender, FormatRowEventArgs e) {
+            formPaddingPanel.BackColor = formBackColor;
+            formPaddingPanel.Padding = formPadding;
 
-                StashObject stash = (StashObject)e.Model;
-                bool isMain = Global.Configuration.IsMainStashID(stash.ID);
-                bool isDragging = _dragHandler.IsDragging(stash);
-                bool isSelected = e.Item.Selected;
+            pagesPaddingPanel.BackColor = pagePanelBackColor;
+            pagesPaddingPanel.Padding = pagesPadding;
 
-                if (isDragging)
-                {
-                    e.Item.BackColor = Color.Teal;
-                    e.Item.ForeColor = Color.White;
-                }
-                else
-                {
-                    if (stash.TransferFileLoaded)
-                    {
-                        if (isMain)
-                        {
-                            //e.Item.ForeColor = Color.Gray;
-                        }
-                    }
-                    else
-                    {
-                        e.Item.ForeColor = Color.Red;
-                    }
-                    OLVListSubItem subItem;
-                    if (isMain)
-                    {
-                        subItem = e.Item.GetSubItem(columnLocked.Index);
-                        if (subItem != null) subItem.Decoration = mainCheckBoxDeco;
-                        subItem = e.Item.GetSubItem(columnSC.Index);
-                        if (subItem != null) subItem.Decoration = mainCheckBoxDeco;
-                        subItem = e.Item.GetSubItem(columnHC.Index);
-                        if (subItem != null) subItem.Decoration = mainCheckBoxDeco;
-                    }
-                    if (stash.Locked)
-                    {
-                        subItem = e.Item.GetSubItem(columnName.Index);
-                        if (subItem != null) subItem.Decoration = lockDecoration;
-                    }
-                }
+            captionMenuStrip.BackColor = formBackColor;
 
-            };
-
-            AllowDrop = true;
-            DragEnter += TransferFile_DragEnter;
-            DragDrop += TransferFile_DragDrop;
-            stashesListView.DragDrop += TransferFile_DragDrop;
-
-            UpdateColumns();
-            UpdateObjects();
-
-
-
-
-
-
-
-
-            stashesListView.ShowGroups = false;
-            if (stashesListView.ShowGroups)
+            trayIcon = new NotifyIcon()
             {
-                stashesListView.HasCollapsibleGroups = true;
-                stashesListView.AlwaysGroupByColumn = columnExpansion;
-                columnExpansion.GroupKeyGetter = delegate (object rowObject) {
-                    StashObject stash = (StashObject)rowObject;
-                    return GrimDawnLib.GrimDawn.GetExpansionName(stash.Expansion);
-                };
-                stashesListView.BuildGroups(columnExpansion, SortOrder.None);
-            }
-            editCategoriesButton.Visible = false;
-            
+                Icon = Properties.Resources.icon32,
+                Visible = false,
+                ContextMenu = new ContextMenu(new MenuItem[] {
+                    new MenuItem("Exit", delegate {
+                        Program.Quit();
+                    })
+                }),
+            };
+            trayIcon.DoubleClick += delegate { Show(); };
+
+            AllowDrop = true; // used to drag transfer files into the window
+
+            // unselect items by clicking on empty space
+            EventHandler spaceClickhandler = new EventHandler((sender, e) => SpaceClick?.Invoke(sender, e));
+            formBackgroundPanel.Click += spaceClickhandler;
+            formPaddingPanel.Click += spaceClickhandler;
+            pagesPaddingPanel.Click += spaceClickhandler;
+
+            InitializeStashesPage();
+            InitializePage(stashesPageButton, stashes_pagePanel);
+
+            InitializeGroupsPage();
+            InitializePage(groupsPageButton, groups_pagePanel);
+
+            ShowPage(0);
         }
-
-
-        private void TransferFile_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop)) e.Effect = DragDropEffects.Copy;
-        }
-
-        private void TransferFile_DragDrop(object sender, DragEventArgs e)
-        {
-            if (_dragHandler.IsDragging()) return;
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            Global.Windows.ShowImportDialog(files);
-        }
-
-
-
-
-
-
-
-        private void UpdateColumns()
-        {
-            stashesListView.Columns.Clear();
-            List<ColumnHeader> h = new List<ColumnHeader>();
-            h.Add(columnActive);
-            if (Global.Configuration.Settings.ShowLockedColumn) h.Add(columnLocked);
-            if (Global.Configuration.Settings.ShowIDColumn) h.Add(columnID);
-            h.Add(columnName);
-            if (Global.Configuration.Settings.ShowColorColumn) h.Add(columnColor);
-            h.Add(columnUsage);
-            if (Global.Configuration.Settings.ShowLastChangeColumn) h.Add(columnLastChange);
-            if (Global.Configuration.Settings.ShowExpansionColumn) h.Add(columnExpansion);
-            h.Add(columnSC);
-            h.Add(columnHC);
-            stashesListView.Columns.AddRange(h.ToArray());
-            //UpdateObjects();
-        }
-
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            UpdateObjects();
-            UpdateDisplayMenu();
+            Width = Global.Configuration.Settings.WindowWidth;
+            Height = Global.Configuration.Settings.WindowHeight;
+            // following events only after cfg has been initialized!
+            ResizeEnd += MainForm_ResizeEnd;
+            FormClosed += MainForm_FormClosed;
+            FormClosing += MainForm_FormClosing;
         }
 
-        private string _msg_gd_already_running;
-        private string _msg_confirm_delete_stashes;
-        private string _msg_cannot_delete_stash;
-        private string _msg_stash_is_active;
-        private string _msg_stash_is_main;
+        #region methods
 
-        private string _select_all;
-        private string _unselect_all;
-
-        private string _color_default;
-        private string _color_green;
-        private string _color_blue;
-        private string _color_purple;
-        private string _color_gold;
-        private string _color_gray;
-        private string _color_white;
-        private string _color_rose;
-
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
+        public new void Show()
         {
-            Text = L["mainWindow"];
-
-            // top menu
-            fileButton.Text = L["mainWindow_fileButton"];
-            importStashesButton.Text = L["mainWindow_importStashesButton"];
-            settingsButton.Text = L["mainWindow_settingsButton"];
-            helpButton.Text = L["mainWindow_helpButton"];
-            changelogButton.Text = L["mainWindow_changelogButton"];
-            aboutButton.Text = L["mainWindow_aboutButton"];
-            startGameButton.Text = L["mainWindow_startGameButton"];
-            selectAllButton.Text = L["mainWindow_selectAllButton"];
-
-            // bottom menu
-            createStashButton.Text = L["mainWindow_createStashButton"];
-            editCategoriesButton.Text = L["mainWindow_editCategoriesButton"];
-
-            // columns
-            columnLocked.Text = L["mainWindow_columnLocked"];
-            columnID.Text = L["mainWindow_columnID"];
-            columnName.Text = L["mainWindow_columnName"];
-            columnUsage.Text = L["mainWindow_columnUsage"];
-            columnLastChange.Text = L["mainWindow_columnLastChange"];
-            columnColor.Text = L["mainWindow_columnColor"];
-            columnExpansion.Text = L["mainWindow_columnExpansion"];
-            columnSC.Text = L["mainWindow_columnSC"];
-            columnHC.Text = L["mainWindow_columnHC"];
-
-            // strings
-
-            _msg_gd_already_running = L["msg_gd_already_running"];
-            _msg_confirm_delete_stashes = L["msg_confirm_delete_stashes"];
-            _msg_cannot_delete_stash = L["msg_cannot_delete_stash"];
-            _msg_stash_is_active = L["msg_stash_is_active"];
-            _msg_stash_is_main = L["msg_stash_is_main"];
-
-            _select_all = L["mainWindow_selectAllButton"];
-            _unselect_all = L["mainWindow_unselectAllButton"];
-
-            _color_default = L["color_default"];
-            _color_green = L["color_green"];
-            _color_blue = L["color_blue"];
-            _color_purple = L["color_purple"];
-            _color_gold = L["color_gold"];
-            _color_gray = L["color_gray"];
-            _color_white = L["color_white"];
-            _color_rose = L["color_rose"];
-
-            _expansionNames[-1] = L["mainWindow_expansionNames_all"];
-            showExpansionComboBox.DataSource = new BindingSource(_expansionNames, null);
-            showExpansionComboBox.SelectedValue = Global.Configuration.Settings.ShowExpansion;
+            base.Show();
+            if (trayIcon != null)
+                trayIcon.Visible = false;
         }
 
-        public void UpdateObjects()
+        public new void Hide()
         {
-            if (!Visible) return;
-
-            
-            int scrollY = stashesListView.TopItemIndex;
-            stashesListView.ClearObjects();
-            stashesListView.SetObjects(Global.Stashes.GetShownStashes(
-                Global.Configuration.Settings.ShowExpansion,
-                Global.Configuration.Settings.ShowSoftcore,
-                Global.Configuration.Settings.ShowHardcore
-                ));
-            stashesListView.Sort();
-            stashesListView.TopItemIndex = scrollY;
-
-            UpdateDisplayMenu();
-        }
-
-        private void UpdateDisplayMenu()
-        {
-            int wndStyle = Native.GetWindowLong(stashesListView.Handle, Native.GWL_STYLE);
-            bool vsVisible = (wndStyle & Native.WS_VSCROLL) != 0;
-            displayMenuPanel.Left = (Width - 650) + 354 + (vsVisible ? -17 : 0);
-        }
-
-
-        private bool ShowStashDeleteWarning()
-        {
-            return MessageBox.Show(_msg_confirm_delete_stashes, "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) == DialogResult.OK;
-        }
-
-        public StashObject[] GetSelectedObjects()
-        {
-            List<StashObject> objects = new List<StashObject>();
-            foreach (OLVListItem item in stashesListView.SelectedItems)
-            {
-                objects.Add((StashObject)item.RowObject);
-            }
-            return objects.ToArray();
-        }
-
-        public StashObject[] GetDisabledObjects()
-        {
-            List<StashObject> objects = new List<StashObject>();
-            foreach (OLVListItem item in stashesListView.Items)
-            {
-                if (!item.Enabled)
-                    objects.Add((StashObject)item.RowObject);
-            }
-            return objects.ToArray();
-        }
-
-        public StashObject[] GetEnabledObjects()
-        {
-            List<StashObject> objects = new List<StashObject>();
-            foreach (OLVListItem item in stashesListView.Items)
-            {
-                if (item.Enabled)
-                    objects.Add((StashObject)item.RowObject);
-            }
-            return objects.ToArray();
-        }
-
-
-
-
-        #region StashListView Events
-
-        private void StashesListView_ColumnRightClick(object sender, ColumnClickEventArgs e)
-        {
-            if (!Native.GetCursorPos(out Native.Point p)) return;
-            ContextMenuStrip menu = new ContextMenuStrip() {
-                Width = 200,
-            };
-            ToolStripCheckedListBox checkedList = new ToolStripCheckedListBox() { 
-            };
-            checkedList.AddItem(columnLocked.Text, Global.Configuration.Settings.ShowLockedColumn);
-            checkedList.AddItem(columnID.Text, Global.Configuration.Settings.ShowIDColumn);
-            checkedList.AddItem(columnColor.Text, Global.Configuration.Settings.ShowColorColumn);
-            checkedList.AddItem(columnLastChange.Text, Global.Configuration.Settings.ShowLastChangeColumn);
-            checkedList.AddItem(columnExpansion.Text, Global.Configuration.Settings.ShowExpansionColumn);
-            checkedList.ItemCheck += delegate (object s, ItemCheckEventArgs f) {
-                bool chckd = f.NewValue == CheckState.Checked;
-                switch (f.Index)
-                {
-                    case 0: Global.Configuration.Settings.ShowLockedColumn = chckd; break;
-                    case 1: Global.Configuration.Settings.ShowIDColumn = chckd; break;
-                    case 2: Global.Configuration.Settings.ShowColorColumn = chckd; break;
-                    case 3: Global.Configuration.Settings.ShowLastChangeColumn = chckd; break;
-                    case 4: Global.Configuration.Settings.ShowExpansionColumn = chckd; break;
-                }
-                UpdateColumns();
-                UpdateObjects();
-                Global.Configuration.Save();
-            };
-
-            menu.Items.Insert(menu.Items.Count, checkedList);
-
-
-
-            
-
-            menu.Show(p.x, p.y);
-        }
-
-        private void StashesListView_CellRightClick(object sender, CellRightClickEventArgs args)
-        {
-            if (args.Model == null) return; // clicked in empty content
-
-            StashObject stash = (StashObject)args.Model;
-            ContextMenuStrip menu = new ContextMenuStrip();
-
-            StashObject[] selectedStashes = GetSelectedObjects();
-
-            if (selectedStashes.Length == 1)
-            {
-                menu.Items.Insert(0, new ToolStripLabel("#" + stash.ID + " " + stash.Name)
-                {
-                    ForeColor = Color.Gray,
-                });
-                menu.Items.Insert(1, new ToolStripLabel(stash.LastWriteTime.ToString())
-                {
-                    ForeColor = Color.Gray,
-                });
-            }
-            else
-            {
-                menu.Items.Insert(0, new ToolStripLabel(string.Format("({0})", selectedStashes.Length))
-                {
-                    ForeColor = Color.Gray,
-                });
-            }
-
-            menu.Items.Add(new ToolStripSeparator());
-
-            {
-                Dictionary<string, string> colorList = new Dictionary<string, string>();
-                colorList.Add("#ebdec3", _color_default);
-                colorList.Add("#34eb58", _color_green);
-                colorList.Add("#5ecfff", _color_blue);
-                colorList.Add("#af69ff", _color_purple);
-                colorList.Add("#ffcc00", _color_gold);
-                colorList.Add("#aaaaaa", _color_gray);
-                colorList.Add("#f0f0f0", _color_white);
-                colorList.Add("#f765ad", _color_rose);
-
-                menu.Items.Add(Global.L["mainWindow_context_Color"]);
-                ToolStripMenuItem btn = menu.Items[menu.Items.Count - 1] as ToolStripMenuItem;
-                foreach(KeyValuePair<string,string> kvp in colorList)
-                {
-                    ToolStripMenuItem mi = new ToolStripMenuItem(kvp.Value, null, delegate (object s, EventArgs e)
-                    {
-                        foreach (StashObject st in selectedStashes)
-                        {
-                            st.Color = kvp.Key;
-                        }
-                        Global.Configuration.Save();
-                        UpdateObjects();
-                    });
-                    mi.BackColor = Color.FromArgb(0,0,0);
-                    Color cFore;
-                    try
-                    {
-                        cFore = ColorTranslator.FromHtml(kvp.Key);
-                    }
-                    catch (Exception)
-                    {
-                        cFore = Color.FromArgb(255, 235, 222, 195);
-                    }
-                    mi.ForeColor = cFore;
-                    mi.MouseEnter += delegate { mi.ForeColor = Color.Black; };
-                    mi.MouseLeave += delegate { mi.ForeColor = cFore; };
-                    btn.DropDownItems.Add(mi);
-                }
-                if (btn.DropDownItems.Count == 0)
-                {
-                    //TODO?
-                }
-            }
-
-            menu.Items.Add(new ToolStripSeparator());
-
-            if (selectedStashes.Length == 1)
-            {
-                menu.Items.Add(Global.L["mainWindow_context_restorBackup"]);
-                ToolStripMenuItem restoreButtn = menu.Items[menu.Items.Count - 1] as ToolStripMenuItem;
-                restoreButtn.DropDownItems.AddRange(Array.ConvertAll<string, ToolStripItem>(Global.Stashes.GetBackupFiles(stash.ID), delegate (string file) {
-                    string fileName = System.IO.Path.GetFileName(file);
-                    string fileDate = System.IO.File.GetLastWriteTime(file).ToString();
-                    TransferFile transferFile = Common.TransferFile.FromFile(file);
-                    transferFile.LoadUsage();
-                    string itemText = string.Format("{0} - {1} - {2}", fileName, fileDate, transferFile.UsageText);
-                    return new ToolStripMenuItem(itemText, null, delegate (object s, EventArgs e) {
-                        Global.Stashes.RestoreTransferFile(stash.ID, file);
-                        Global.Runtime.ReloadOpenedStash(stash.ID);
-                        stash.LoadTransferFile();
-                        UpdateObjects(); // because the cell is not updated correctly
-                        Global.Runtime.NotifyStashesRestored(stash);
-                    });
-                }));
-                if (restoreButtn.DropDownItems.Count == 0)
-                {
-                    restoreButtn.DropDownItems.Insert(0, new ToolStripMenuItem(Global.L["mainWindow_context_noBackups"]) {
-                        ForeColor = Color.Gray
-                    });
-                }
-            }
-
-            menu.Items.Add(Global.L["mainWindow_context_exportStashes"], null, delegate (object s, EventArgs e) {
-
-                ExportZipFile zipFile = new ExportZipFile();
-                foreach (StashObject selStash in selectedStashes) zipFile.AddStash(selStash);
-
-                using (var dialog = new SaveFileDialog()
-                {
-                    Filter = "Zip Archive|*.zip",
-                    FileName = "TransferFiles.zip",
-                })
-                {
-                    DialogResult result = dialog.ShowDialog();
-                    if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                    {
-                        zipFile.SaveTo(dialog.FileName);
-                    }
-                }
-
-            });
-
-            menu.Items.Add(new ToolStripSeparator());
-            menu.Items.Add(Global.L["mainWindow_context_deleteStashes"], null, delegate (object s, EventArgs e) {
-                if (Global.Configuration.Settings.ConfirmStashDelete && !ShowStashDeleteWarning()) return;
-
-                List<StashObject> deletedStashes = new List<StashObject>();
-                foreach (StashObject stash2delete in selectedStashes)
-                {
-                    if (Global.Configuration.IsMainStashID(stash2delete.ID))
-                    {
-                        MessageBox.Show(string.Format(_msg_cannot_delete_stash, stash2delete.Name, _msg_stash_is_main), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        continue;
-                    }
-                    if (Global.Configuration.IsCurrentStashID(stash2delete.ID))
-                    {
-                        MessageBox.Show(string.Format(_msg_cannot_delete_stash, stash2delete.Name, _msg_stash_is_active), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        continue;
-                    }
-                    Global.Stashes.DeleteStash(stash2delete.ID);
-                    deletedStashes.Add(stash2delete);
-                }
-                Global.Configuration.Save();
-                Global.Runtime.NotifyStashesRemoved(deletedStashes);
-                UpdateObjects();
-            });
-            
-            args.MenuStrip = menu;
-        }
-
-        private void StashesListView_SubItemChecking(object sender, SubItemCheckingEventArgs args)
-        {
-            StashObject stash = (StashObject)args.RowObject;
-            if (Global.Configuration.IsMainStashID(stash.ID))
-            {
-                args.Canceled = true;
-                return;
-            }
-            switch (args.Column.AspectName.ToLower())
-            {
-                case "sc":
-                    stash.SC = args.NewValue == CheckState.Checked;
-                    break;
-                case "hc":
-                    stash.HC = args.NewValue == CheckState.Checked;
-                    break;
-                case "locked":
-                    stash.Locked = args.NewValue == CheckState.Checked;
-                    break;
-            }
-            Global.Configuration.Save();
-            //Global.Runtime.NotifyStashUpdated(stash);
-            Global.Runtime.NotifyStashesOrderChanged();
-        }
-
-        private void StashesListView_CellEditStarting(object sender, CellEditEventArgs e)
-        {
-            if (e.Column == columnColor)
-            {
-                StashObject stash = (StashObject)e.RowObject;
-
-                Controls.ExComboBox cb = new Controls.ExComboBox();
-                cb.Bounds = e.CellBounds;
-                cb.Font = new Font("Consolas", 9, FontStyle.Bold);
-                cb.DropDownStyle = ComboBoxStyle.DropDown;
-                cb.SelectionChangeCommitted += delegate {
-                    stashesListView.FinishCellEdit();
-                };
-
-                Dictionary<string, string> colorList = new Dictionary<string, string>();
-                colorList.Add("#ebdec3", _color_default);
-                colorList.Add("#34eb58", _color_green);
-                colorList.Add("#5ecfff", _color_blue);
-                colorList.Add("#af69ff", _color_purple);
-                colorList.Add("#ffcc00", _color_gold);
-                colorList.Add("#aaaaaa", _color_gray);
-                colorList.Add("#f0f0f0", _color_white);
-                colorList.Add("#f765ad", _color_rose);
-
-                foreach (KeyValuePair<string, string> kvp in colorList)
-                {
-                    Controls.ExComboBoxItem cbItem = new Controls.ExComboBoxItem(kvp.Key, kvp.Value);
-                    cbItem.Backcolor = Color.FromArgb(0, 0, 0);
-                    try
-                    {
-                        cbItem.Forecolor = ColorTranslator.FromHtml(kvp.Key);
-                    }
-                    catch (Exception)
-                    {
-                        cbItem.Forecolor = Color.FromArgb(255, 235, 222, 195);
-                    }
-                    cb.Items.Add(cbItem);
-                }
-
-                e.Control = cb;
-                new System.Threading.Thread(() => {
-                    System.Threading.Thread.Sleep(1);
-                    cb.Invoke((MethodInvoker)delegate {
-                        cb.Text = stash.Color.ToLower();
-                        cb.SelectionStart = 0;
-                        cb.SelectionLength = cb.Text.Length;
-                    });
-                }).Start();
-            }
-        }
-
-        private void StashesListView_CellEditFinishing(object sender, CellEditEventArgs e)
-        {
-            if (e.Column == columnColor)
-            {
-                Controls.ExComboBox cb = (Controls.ExComboBox)e.Control;
-                if (cb.SelectedIndex != -1)
-                {
-                    Controls.ExComboBoxItem item = (Controls.ExComboBoxItem)cb.SelectedItem;
-                    e.NewValue = item.Value;
-                }
-            }
-        }
-
-        private void StashesListView_CellEditFinished(object sender, CellEditEventArgs args)
-        {
-            StashObject stash = (StashObject)args.RowObject;
-            if (args.Column == columnName || args.Column == columnColor || args.Column == columnLocked)
-            {
-                Global.Runtime.NotifyStashUpdated(stash);
-            }
-            else
-            {
-                return;
-            }
-            Global.Configuration.Save();
+            base.Hide();
+            if (trayIcon != null)
+                trayIcon.Visible = true;
         }
 
         #endregion
 
-        #region Events
+        #region events
 
-        private void SelectAllButton_Click(object sender, EventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            stashesListView.Focus();
-            bool allSelected = true;
-            foreach (OLVListItem item in stashesListView.Items)
-                if (!item.Selected) allSelected = false;
-            foreach (OLVListItem item in stashesListView.Items)
-                item.Selected = !allSelected;
+            Program.Quit();
+        }
 
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Program.Quitting)
+            {
+                trayIcon.Visible = false;
+                return;
+            }
+            bool gameOpened = Native.FindWindow("Grim Dawn", null) != IntPtr.Zero;
+            if (gameOpened && Global.Configuration.Settings.ConfirmClosing)
+            {
+                DialogResult result = MessageBox.Show(Global.L.ConfirmClosingMessage(), "", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                e.Cancel = (result == DialogResult.Cancel);
+            }
+        }
 
-            //stashesListView.EnsureModelVisible(((OLVListItem)stashesListView.Items[10]).RowObject);
-
-
+        private void MainForm_ResizeEnd(object sender, EventArgs e)
+        {
+            Global.Configuration.Settings.WindowWidth = Width;
+            Global.Configuration.Settings.WindowHeight = Height;
+            Global.Configuration.Save();
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            Global.Windows.ShowConfigurationWindow(false);
+            Global.Windows.ShowConfigurationWindow();
         }
 
         private void AboutButton_Click(object sender, EventArgs e)
@@ -998,36 +579,39 @@ namespace GDMultiStash.Forms
             Global.Windows.ShowAboutDialog();
         }
 
-        private void CreateStashButton_Click(object sender, EventArgs e)
-        {
-            Global.Windows.ShowCreateStashDialog();
-        }
-
-        private void EditCategoriesButton_Click(object sender, EventArgs e)
-        {
-            Global.Windows.ShowCategoriesWindow();
-        }
-
         private void ChangelogButton_Click(object sender, EventArgs e)
         {
             Global.Windows.ShowChangelogWindow();
         }
 
-        private void ImportStashesButton_Click(object sender, EventArgs e)
+        private void ImportTransferFilesButton_Click(object sender, EventArgs e)
         {
             Global.Windows.ShowImportDialog();
         }
 
-        private void StartGameButton_Click(object sender, EventArgs e)
+        private void TopMenuExportTransferFilesButton_Click(object sender, EventArgs e)
         {
-            switch (Global.Runtime.StartGame())
+
+            // TODO: redundant code in right click context -> export selected stashes
+
+            StashesZipFile zipFile = new StashesZipFile();
+            foreach (StashObject selStash in Global.Stashes.GetAllStashes()) zipFile.AddStash(selStash);
+
+            using (var dialog = new SaveFileDialog()
             {
-                case GlobalHandlers.RuntimeHandler.GameStartResult.AlreadyRunning:
-                    MessageBox.Show(_msg_gd_already_running, "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    break;
-                case GlobalHandlers.RuntimeHandler.GameStartResult.Success:
-                    break;
+                Filter = $"{Global.L.ZipArchive()}|*.zip",
+                FileName = "TransferFiles.zip",
+            })
+            {
+                DialogResult result = dialog.ShowDialog();
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
+                {
+                    zipFile.SaveTo(dialog.FileName);
+                }
             }
+
+
+
         }
 
         #endregion

@@ -13,7 +13,7 @@ namespace D3DHook.Hook.Common
         private readonly int _width = 0;
         private readonly int _height = 0;
 
-        public ImageResource(System.Drawing.Bitmap bitmap, System.Drawing.Imaging.ImageFormat format)
+        public ImageResource(System.Drawing.Image bitmap, System.Drawing.Imaging.ImageFormat format)
         {
             ImageData = bitmap.ToByteArray(format);
             _width = bitmap.Width;

@@ -1,105 +1,90 @@
 ﻿
 language_name = Deutsch
 
-msg_please_select_gamedir = Bitte zuerst Spielverzeichnis auswählen
-msg_gamedir_not_found = Spielverzeichnis nicht gefunden!
-msg_docsdir_not_found = Dokumentenverzeichnis nicht gefunden!
+// messages
+msg_select_game_directory = Bitte zuerst Spielverzeichnis auswählen
+msg_game_directory_not_found = Spielverzeichnis nicht gefunden!
+msg_documents_directory_not_found = Dokumentenverzeichnis nicht gefunden!
 msg_update_available = Neue Version verfügbar: {0}\nJetzt aktualisieren?
-msg_gd_already_running = Grim Dawn läuft bereits!
-msg_confirm_delete_stashes = Ausgewählte Stashes löschen?\nDies kann nicht rückgängig gemacht werden!
-msg_cannot_delete_stash = Stash "{0}" kann nicht gelöscht werden: {1}
-msg_stash_is_active = Stash ist gerade aktiv
-msg_stash_is_main = Dieser Stash ist ein Hauptstash
+msg_confirm_closing = Grim Dawn läuft noch!\nDennoch schließen?
+msg_already_running = GDMultiStash läuft bereits!
+msg_game_already_running = Grim Dawn läuft bereits!
+msg_shortcut_created = Verknüpfung wurde erstellt
 msg_invalid_transfer_file = Ungültige Transfer-Datei!
 msg_no_stash_selected = Kein Stash ausgewählt!
-msg_gdms_already_running = GDMultiStash läuft bereits!
-msg_confirm_gdms_closing = Grim Dawn läuft noch!\nDennoch schließen?
+msg_backups_cleanedup = Backups gesäubert.\n{0} Dateien gelöscht.
+msg_confirm_delete_stashes = Ausgewählte Stashes löschen?\nDies kann nicht rückgängig gemacht werden!
+msg_confirm_delete_stash_groups = Ausgewählte Gruppen löschen?\nDies kann nicht rückgängig gemacht werden!
+msg_cannot_delete_stash = Stash "{0}" kann nicht gelöscht werden:\n{1}
+msg_stash_is_active = Dieser Stash ist gerade aktiv
+msg_stash_is_main = Dies ist ein Hauptstash
+msg_cannot_delete_stash_group = Gruppe "{0}" kann nicht gelöscht werden:\n{1}
+msg_stash_group_is_main = Dies ist eine Hauptgruppe
 
-mainWindow = GDMultiStash
-mainWindow_fileButton = Datei
-mainWindow_importStashesButton = Importieren
-mainWindow_settingsButton = Einstellungen
-mainWindow_helpButton = Hilfe
-mainWindow_changelogButton = Changelog
-mainWindow_aboutButton = Über GDMultiStash
-mainWindow_startGameButton = GD starten
-mainWindow_selectAllButton = Alle auswählen
-mainWindow_unselectAllButton = Alle abwählen
-mainWindow_createStashButton = Stash erstellen
-mainWindow_editCategoriesButton = Kategorien bearbeiten
+// buttons
+btn_file = Datei
+btn_help = Hilfe
+btn_start_game = GD starten
+btn_import = Importieren
+btn_export = Exportieren
+btn_transfer_files = Transfer-Dateien
+btn_settings = Einstellungen
+btn_changelog = Changelog
+btn_about = Über GDMultiStash
+btn_color = Farbe
+btn_lock = Sperren
+btn_unlock = Entsperren
+btn_rename = Umbenennen
+btn_restore_backup = Backup wiederherstellen
+btn_delete = Löschen
+btn_create = Erstellen
+btn_create_stash = Stash erstellen
+btn_save = Speichern
+btn_apply = Annehmen
+btn_search = Suchen
+btn_create_shortcut = Verknüpfung auf dem Desktop erstellen
+btn_cleanup_backups = Backups säubern
+btn_extract_translations = Extrahiere Übersetzungsdateien
+btn_load = Laden
+btn_create_group = Gruppe erstellen
+btn_overwrite = Überschreiben
 
-mainWindow_columnID = ID
-mainWindow_columnName = Name
-mainWindow_columnUsage = Voll
-mainWindow_columnLastChange = Letzte Änderung
-mainWindow_columnColor = Farbe
-mainWindow_columnExpansion = Exp.
-mainWindow_columnSC = SC
-mainWindow_columnHC = HC
-mainWindow_columnLocked = Gesperrt
+// listview columns
+lvc_id = ID
+lvc_name = Name
+lvc_usage = Voll
+lvc_last_change = Letzte Änderung
+lvc_softcore = SC
+lvc_hardcore = HC
 
-mainWindow_expansionNames_all = Alle
+// labels
+lbl_no_backups = (Keine Backups)
+lbl_shown_stashes = {0}/{1} Stashes
+lbl_language = Sprache:
+lbl_game_path = Pfad zum Spiel:
+lbl_close_with_game = Zusammen mit GD schließen
+lbl_confirm_closing = Das Schließen des Fensters bestätigen, wenn GD noch läuft
+lbl_confirm_deleting = Bestätige das Löschen von Stashes und Gruppen
+lbl_game_start_options = Spiel Start-Optionen
+lbl_game_start_command = Befehl:
+lbl_game_start_arguments = Argumente:
+lbl_auto_start_game = Starte Grim Dawn zusammen mit GDMultiStash
+lbl_max_backups = Max. Backups:
+lbl_backups_off = 0 (Keine Backups)
+lbl_overlay_width = Overlay Breite:
+lbl_overlay_scale = Overlay Größe:
+lbl_overlay_transparency = Overlay Transparenz:
+lbl_overlay_stashes_count = Anzahl angezeigter Stashes:
+lbl_auto_back_to_main = Wechsel zum Haupt-Stash wenn Stash geschlossen wurde
+lbl_check_version = Überprüfe auf neue Version beim Start
+lbl_save_locked_stashes = Speicher gesperrte Stashes mit dem Speichern-Button
+lbl_expansion = Erweiterung:
+lbl_transfer_file = Transfer Datei:
+lbl_stash_name = Stash Name:
+lbl_group = Gruppe:
+lbl_name = Name:
 
-mainWindow_context_restorBackup = Backup wiederherstellen
-mainWindow_context_noBackups = (Keine Backups)
-mainWindow_context_exportStashes = Exportieren
-mainWindow_context_deleteStashes = Löschen
-mainWindow_context_Color = Farbe
-
-configWindow = GDMultiStash : Einstellungen
-configWindow_saveButton = Speichern
-configWindow_applyButton = Annehmen
-configWindow_gamePathSearchButton = Suchen
-configWindow_createShortcutButton = Verknüpfung auf dem Desktop erstellen
-configWindow_shortcutCreatedMessage = Verknüpfung wurde erstellt
-configWindow_cleanupBackupsButton = Backups säubern
-configWindow_languageLabel = Sprache:
-configWindow_gamePathLabel = Pfad zum Spiel:
-configWindow_confirmClosingCheckBox = Bestätige das Schließen wenn Grim Dawn noch läuft
-configWindow_closeWithGrimDawnCheckBox = Schließe GDMultiStash wenn Grim Dawn geschlossen wurde
-configWindow_confirmStashDeleteCheckBox = Bestätige das Löschen von Stashes
-configWindow_gameStartGroupBox = Spiel Start-Optionen
-configWindow_gameStartCommandLabel = Befehl:
-configWindow_gameStartArgumentsLabel = Argumente:
-configWindow_gameAutoStartCheckBox = Starte Grim Dawn zusammen mit GDMultiStash
-configWindow_maxBackupsLabel = Max. Backups:
-configWindow_maxBackups_noBackups = 0 (Keine Backups)
-configWindow_overlayWidthLabel = Overlay Breite:
-configWindow_overlayScaleLabel = Overlay Größe:
-configWindow_overlayTransparencyLabel = Overlay Transparenz:
-configWindow_autoBackToMainCheckBox = Wechsel zum Haupt-Stash wenn Stash geschlossen wurde
-configWindow_checkVersionCheckBox = Überprüfe auf neue Version beim Start
-configWindow_hideOnFormClosedCheckBox = Verstecke wenn das Fenster geschlossen wurde während Grim Dawn läuft
-configWindow_saveOverLockedCheckBox = Der Speichern-Button im Overlay ignoriert gesperrte Stashes
-configWindow_defaultStashModeLabel = Standard Mode für neue Stashes:
-configWindow_defaultStashMode_none = Keins
-configWindow_defaultStashMode_sc = SC
-configWindow_defaultStashMode_hc = HC
-configWindow_defaultStashMode_both = Beide
-
-
-overlayWindow_saveButton = Speichern
-overlayWindow_loadButton = Laden
-
-importWindow = GDMultiStash : Stash importieren
-importWindow_okButton = Importieren
-importWindow_transferFileLabel = Transfer Datei:
-importWindow_stashNameLabel = Stash Name:
-importWindow_overwriteLabel = Überschreiben:
-importWindow_expansionLabel = Erweiterung:
-
-createStash = GDMultiStash : Stash erstellen
-createStash_expansionLabel = Erweiterung:
-createStash_newStashName = Neuer Stash
-createStash_okButton = Erstellen
-
-mainStash_0sc = Main (SC, Base)
-mainStash_0hc = Main (HC, Base)
-mainStash_1sc = Main (SC, AoM)
-mainStash_1hc = Main (HC, AoM)
-mainStash_2sc = Main (SC, FG)
-mainStash_2hc = Main (HC, FG)
-
+// default colors
 color_default = Standard
 color_green = Grün
 color_blue = Blau
@@ -108,3 +93,16 @@ color_gold = Gold
 color_gray = Grau
 color_white = Weiß
 color_rose = Rosé
+
+main_group_name = Main
+main_stash_name_0sc = Main (SC, Base)
+main_stash_name_0hc = Main (HC, Base)
+main_stash_name_1sc = Main (SC, AoM)
+main_stash_name_1hc = Main (HC, AoM)
+main_stash_name_2sc = Main (SC, FG)
+main_stash_name_2hc = Main (HC, FG)
+
+default_stash_name = Neuer Stash
+default_stash_group_name = Neue Gruppe
+
+zip_archive = Zip Archiv

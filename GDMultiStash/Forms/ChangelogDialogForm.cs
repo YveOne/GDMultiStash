@@ -19,6 +19,8 @@ namespace GDMultiStash.Forms
         public ChangelogDialogForm() : base()
         {
             InitializeComponent();
+
+            versionSelectComboBox.SelectionChangeCommitted += VersionSelectComboBox_SelectionChangeCommitted;
         }
 
         private void ChangelogDialogForm_Load(object sender, EventArgs e)
@@ -39,14 +41,7 @@ namespace GDMultiStash.Forms
             changelogTextBox.Text = logs.Values.ElementAt(0);
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            versionSelectComboBox.SelectionChangeCommitted += VersionSelectComboBox_SelectionChangeCommitted;
-        }
-
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsProxy L)
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
 
         }

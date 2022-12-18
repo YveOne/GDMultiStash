@@ -35,15 +35,9 @@
             this.autoStartGDCommandComboBox = new System.Windows.Forms.ComboBox();
             this.gameStartArgumentsLabel = new System.Windows.Forms.Label();
             this.gameInstallPathsComboBox = new System.Windows.Forms.ComboBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.languageListView = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gamePathSearchButton = new System.Windows.Forms.Button();
             this.languageLabel = new System.Windows.Forms.Label();
             this.gamePathLabel = new System.Windows.Forms.Label();
-            this.defaultStashModeLabel = new System.Windows.Forms.Label();
-            this.defaultStashModeComboBox = new System.Windows.Forms.ComboBox();
             this.checkVersionCheckBox = new System.Windows.Forms.CheckBox();
             this.autoBackToMainCheckBox = new System.Windows.Forms.CheckBox();
             this.confirmStashDeleteCheckBox = new System.Windows.Forms.CheckBox();
@@ -64,15 +58,17 @@
             this.createShortcutButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.languageComboBox = new System.Windows.Forms.ComboBox();
+            this.extractTranslationFilesButton = new System.Windows.Forms.Button();
+            this.cleanupBackupsButton = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.hideOnFormClosedCheckBox = new System.Windows.Forms.CheckBox();
+            this.overlayStashesCountLabel = new System.Windows.Forms.Label();
+            this.overlayStashesCountTrackBar = new System.Windows.Forms.TrackBar();
+            this.overlayStashesCountValueLabel = new System.Windows.Forms.Label();
+            this.saveOverLockedCheckBox = new System.Windows.Forms.CheckBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
-            this.cleanupBackupsButton = new System.Windows.Forms.Button();
-            this.saveOverLockedCheckBox = new System.Windows.Forms.CheckBox();
             this.gameStartGroupBox.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxBackupsTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayWidthTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayScaleTrackBar)).BeginInit();
@@ -80,6 +76,7 @@
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.overlayStashesCountTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
             // gameAutoStartCheckBox
@@ -152,58 +149,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gameInstallPathsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.gameInstallPathsComboBox.FormattingEnabled = true;
-            this.gameInstallPathsComboBox.Location = new System.Drawing.Point(166, 28);
+            this.gameInstallPathsComboBox.Location = new System.Drawing.Point(258, 28);
             this.gameInstallPathsComboBox.Name = "gameInstallPathsComboBox";
-            this.gameInstallPathsComboBox.Size = new System.Drawing.Size(761, 21);
+            this.gameInstallPathsComboBox.Size = new System.Drawing.Size(669, 21);
             this.gameInstallPathsComboBox.TabIndex = 10;
-            // 
-            // panel2
-            // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel2.BackColor = System.Drawing.Color.Silver;
-            this.panel2.Controls.Add(this.panel3);
-            this.panel2.Location = new System.Drawing.Point(7, 30);
-            this.panel2.Name = "panel2";
-            this.panel2.Padding = new System.Windows.Forms.Padding(1);
-            this.panel2.Size = new System.Drawing.Size(133, 516);
-            this.panel2.TabIndex = 5;
-            // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.panel3.Controls.Add(this.languageListView);
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(1, 1);
-            this.panel3.Name = "panel3";
-            this.panel3.Padding = new System.Windows.Forms.Padding(5);
-            this.panel3.Size = new System.Drawing.Size(131, 514);
-            this.panel3.TabIndex = 10;
-            // 
-            // languageListView
-            // 
-            this.languageListView.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.languageListView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.languageListView.CheckBoxes = true;
-            this.languageListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-            this.languageListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.languageListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            this.languageListView.HideSelection = false;
-            this.languageListView.LabelWrap = false;
-            this.languageListView.Location = new System.Drawing.Point(5, 5);
-            this.languageListView.MultiSelect = false;
-            this.languageListView.Name = "languageListView";
-            this.languageListView.Scrollable = false;
-            this.languageListView.ShowGroups = false;
-            this.languageListView.Size = new System.Drawing.Size(121, 504);
-            this.languageListView.TabIndex = 0;
-            this.languageListView.UseCompatibleStateImageBehavior = false;
-            this.languageListView.View = System.Windows.Forms.View.List;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Width = 100;
             // 
             // gamePathSearchButton
             // 
@@ -229,38 +178,17 @@
             // gamePathLabel
             // 
             this.gamePathLabel.AutoSize = true;
-            this.gamePathLabel.Location = new System.Drawing.Point(169, 13);
+            this.gamePathLabel.Location = new System.Drawing.Point(260, 13);
             this.gamePathLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.gamePathLabel.Name = "gamePathLabel";
             this.gamePathLabel.Size = new System.Drawing.Size(63, 13);
             this.gamePathLabel.TabIndex = 1;
             this.gamePathLabel.Text = "Game Path:";
             // 
-            // defaultStashModeLabel
-            // 
-            this.defaultStashModeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.defaultStashModeLabel.AutoSize = true;
-            this.defaultStashModeLabel.Location = new System.Drawing.Point(23, 243);
-            this.defaultStashModeLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
-            this.defaultStashModeLabel.Name = "defaultStashModeLabel";
-            this.defaultStashModeLabel.Size = new System.Drawing.Size(150, 13);
-            this.defaultStashModeLabel.TabIndex = 16;
-            this.defaultStashModeLabel.Text = "Default mode for new stashes:";
-            // 
-            // defaultStashModeComboBox
-            // 
-            this.defaultStashModeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.defaultStashModeComboBox.FormattingEnabled = true;
-            this.defaultStashModeComboBox.Location = new System.Drawing.Point(224, 240);
-            this.defaultStashModeComboBox.Name = "defaultStashModeComboBox";
-            this.defaultStashModeComboBox.Size = new System.Drawing.Size(154, 21);
-            this.defaultStashModeComboBox.TabIndex = 15;
-            // 
             // checkVersionCheckBox
             // 
             this.checkVersionCheckBox.AutoSize = true;
-            this.checkVersionCheckBox.Location = new System.Drawing.Point(26, 362);
+            this.checkVersionCheckBox.Location = new System.Drawing.Point(26, 192);
             this.checkVersionCheckBox.Name = "checkVersionCheckBox";
             this.checkVersionCheckBox.Size = new System.Drawing.Size(132, 17);
             this.checkVersionCheckBox.TabIndex = 13;
@@ -271,7 +199,7 @@
             // autoBackToMainCheckBox
             // 
             this.autoBackToMainCheckBox.AutoSize = true;
-            this.autoBackToMainCheckBox.Location = new System.Drawing.Point(26, 293);
+            this.autoBackToMainCheckBox.Location = new System.Drawing.Point(26, 227);
             this.autoBackToMainCheckBox.Name = "autoBackToMainCheckBox";
             this.autoBackToMainCheckBox.Size = new System.Drawing.Size(218, 17);
             this.autoBackToMainCheckBox.TabIndex = 12;
@@ -282,7 +210,7 @@
             // confirmStashDeleteCheckBox
             // 
             this.confirmStashDeleteCheckBox.AutoSize = true;
-            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(26, 339);
+            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(26, 273);
             this.confirmStashDeleteCheckBox.Name = "confirmStashDeleteCheckBox";
             this.confirmStashDeleteCheckBox.Size = new System.Drawing.Size(140, 17);
             this.confirmStashDeleteCheckBox.TabIndex = 2;
@@ -293,7 +221,7 @@
             // closeWithGrimDawnCheckBox
             // 
             this.closeWithGrimDawnCheckBox.AutoSize = true;
-            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(26, 217);
+            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(26, 169);
             this.closeWithGrimDawnCheckBox.Name = "closeWithGrimDawnCheckBox";
             this.closeWithGrimDawnCheckBox.Size = new System.Drawing.Size(238, 17);
             this.closeWithGrimDawnCheckBox.TabIndex = 1;
@@ -304,7 +232,7 @@
             // confirmClosingCheckBox
             // 
             this.confirmClosingCheckBox.AutoSize = true;
-            this.confirmClosingCheckBox.Location = new System.Drawing.Point(26, 194);
+            this.confirmClosingCheckBox.Location = new System.Drawing.Point(26, 146);
             this.confirmClosingCheckBox.Name = "confirmClosingCheckBox";
             this.confirmClosingCheckBox.Size = new System.Drawing.Size(246, 17);
             this.confirmClosingCheckBox.TabIndex = 0;
@@ -316,7 +244,7 @@
             // 
             this.maxBackupsValueLabel.AutoSize = true;
             this.maxBackupsValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.maxBackupsValueLabel.Location = new System.Drawing.Point(390, 267);
+            this.maxBackupsValueLabel.Location = new System.Drawing.Point(390, 308);
             this.maxBackupsValueLabel.Name = "maxBackupsValueLabel";
             this.maxBackupsValueLabel.Size = new System.Drawing.Size(53, 20);
             this.maxBackupsValueLabel.TabIndex = 5;
@@ -325,7 +253,7 @@
             // maxBackupsLabel
             // 
             this.maxBackupsLabel.AutoSize = true;
-            this.maxBackupsLabel.Location = new System.Drawing.Point(23, 267);
+            this.maxBackupsLabel.Location = new System.Drawing.Point(23, 308);
             this.maxBackupsLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.maxBackupsLabel.Name = "maxBackupsLabel";
             this.maxBackupsLabel.Size = new System.Drawing.Size(74, 13);
@@ -337,7 +265,7 @@
             this.maxBackupsTrackBar.AutoSize = false;
             this.maxBackupsTrackBar.BackColor = System.Drawing.Color.White;
             this.maxBackupsTrackBar.LargeChange = 1;
-            this.maxBackupsTrackBar.Location = new System.Drawing.Point(218, 267);
+            this.maxBackupsTrackBar.Location = new System.Drawing.Point(218, 308);
             this.maxBackupsTrackBar.Maximum = 6;
             this.maxBackupsTrackBar.Name = "maxBackupsTrackBar";
             this.maxBackupsTrackBar.Size = new System.Drawing.Size(166, 20);
@@ -347,7 +275,7 @@
             // overlayWidthLabel
             // 
             this.overlayWidthLabel.AutoSize = true;
-            this.overlayWidthLabel.Location = new System.Drawing.Point(23, 392);
+            this.overlayWidthLabel.Location = new System.Drawing.Point(23, 344);
             this.overlayWidthLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.overlayWidthLabel.Name = "overlayWidthLabel";
             this.overlayWidthLabel.Size = new System.Drawing.Size(77, 13);
@@ -358,7 +286,7 @@
             // 
             this.overlayTransparencyValueLabel.AutoSize = true;
             this.overlayTransparencyValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayTransparencyValueLabel.Location = new System.Drawing.Point(390, 444);
+            this.overlayTransparencyValueLabel.Location = new System.Drawing.Point(390, 396);
             this.overlayTransparencyValueLabel.Name = "overlayTransparencyValueLabel";
             this.overlayTransparencyValueLabel.Size = new System.Drawing.Size(53, 20);
             this.overlayTransparencyValueLabel.TabIndex = 19;
@@ -368,20 +296,19 @@
             // 
             this.overlayWidthTrackBar.AutoSize = false;
             this.overlayWidthTrackBar.BackColor = System.Drawing.Color.White;
-            this.overlayWidthTrackBar.LargeChange = 10;
-            this.overlayWidthTrackBar.Location = new System.Drawing.Point(218, 392);
-            this.overlayWidthTrackBar.Maximum = 15;
+            this.overlayWidthTrackBar.LargeChange = 1;
+            this.overlayWidthTrackBar.Location = new System.Drawing.Point(218, 344);
+            this.overlayWidthTrackBar.Maximum = 20;
             this.overlayWidthTrackBar.Name = "overlayWidthTrackBar";
             this.overlayWidthTrackBar.Size = new System.Drawing.Size(166, 20);
             this.overlayWidthTrackBar.TabIndex = 6;
-            this.overlayWidthTrackBar.Value = 10;
             this.overlayWidthTrackBar.Scroll += new System.EventHandler(this.OverlayWidthTrackBar_Scroll);
             // 
             // overlayScaleValueLabel
             // 
             this.overlayScaleValueLabel.AutoSize = true;
             this.overlayScaleValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayScaleValueLabel.Location = new System.Drawing.Point(390, 418);
+            this.overlayScaleValueLabel.Location = new System.Drawing.Point(390, 370);
             this.overlayScaleValueLabel.Name = "overlayScaleValueLabel";
             this.overlayScaleValueLabel.Size = new System.Drawing.Size(53, 20);
             this.overlayScaleValueLabel.TabIndex = 11;
@@ -390,7 +317,7 @@
             // overlayTransparencyLabel
             // 
             this.overlayTransparencyLabel.AutoSize = true;
-            this.overlayTransparencyLabel.Location = new System.Drawing.Point(23, 444);
+            this.overlayTransparencyLabel.Location = new System.Drawing.Point(23, 396);
             this.overlayTransparencyLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.overlayTransparencyLabel.Name = "overlayTransparencyLabel";
             this.overlayTransparencyLabel.Size = new System.Drawing.Size(114, 13);
@@ -400,7 +327,7 @@
             // overlayScaleLabel
             // 
             this.overlayScaleLabel.AutoSize = true;
-            this.overlayScaleLabel.Location = new System.Drawing.Point(23, 418);
+            this.overlayScaleLabel.Location = new System.Drawing.Point(23, 370);
             this.overlayScaleLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
             this.overlayScaleLabel.Name = "overlayScaleLabel";
             this.overlayScaleLabel.Size = new System.Drawing.Size(76, 13);
@@ -411,7 +338,7 @@
             // 
             this.overlayWidthValueLabel.AutoSize = true;
             this.overlayWidthValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayWidthValueLabel.Location = new System.Drawing.Point(390, 392);
+            this.overlayWidthValueLabel.Location = new System.Drawing.Point(390, 344);
             this.overlayWidthValueLabel.Name = "overlayWidthValueLabel";
             this.overlayWidthValueLabel.Size = new System.Drawing.Size(53, 20);
             this.overlayWidthValueLabel.TabIndex = 8;
@@ -421,7 +348,8 @@
             // 
             this.overlayScaleTrackBar.AutoSize = false;
             this.overlayScaleTrackBar.BackColor = System.Drawing.Color.White;
-            this.overlayScaleTrackBar.Location = new System.Drawing.Point(218, 418);
+            this.overlayScaleTrackBar.LargeChange = 1;
+            this.overlayScaleTrackBar.Location = new System.Drawing.Point(218, 370);
             this.overlayScaleTrackBar.Maximum = 20;
             this.overlayScaleTrackBar.Name = "overlayScaleTrackBar";
             this.overlayScaleTrackBar.Size = new System.Drawing.Size(166, 20);
@@ -433,19 +361,19 @@
             this.overlayTransparencyTrackBar.AutoSize = false;
             this.overlayTransparencyTrackBar.BackColor = System.Drawing.Color.White;
             this.overlayTransparencyTrackBar.LargeChange = 1;
-            this.overlayTransparencyTrackBar.Location = new System.Drawing.Point(218, 444);
+            this.overlayTransparencyTrackBar.Location = new System.Drawing.Point(218, 396);
             this.overlayTransparencyTrackBar.Name = "overlayTransparencyTrackBar";
             this.overlayTransparencyTrackBar.Size = new System.Drawing.Size(166, 20);
             this.overlayTransparencyTrackBar.TabIndex = 17;
-            this.overlayTransparencyTrackBar.Scroll += new System.EventHandler(this.overlayTransparencyTrackBar_Scroll);
+            this.overlayTransparencyTrackBar.Scroll += new System.EventHandler(this.OverlayTransparencyTrackBar_Scroll);
             // 
             // createShortcutButton
             // 
             this.createShortcutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.createShortcutButton.AutoSize = true;
-            this.createShortcutButton.Location = new System.Drawing.Point(9, 578);
+            this.createShortcutButton.Location = new System.Drawing.Point(6, 465);
             this.createShortcutButton.Name = "createShortcutButton";
-            this.createShortcutButton.Size = new System.Drawing.Size(232, 23);
+            this.createShortcutButton.Size = new System.Drawing.Size(226, 23);
             this.createShortcutButton.TabIndex = 3;
             this.createShortcutButton.Text = "Create Shortcut";
             this.createShortcutButton.UseVisualStyleBackColor = true;
@@ -466,11 +394,14 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
+            this.panel4.Controls.Add(this.languageComboBox);
+            this.panel4.Controls.Add(this.extractTranslationFilesButton);
+            this.panel4.Controls.Add(this.cleanupBackupsButton);
             this.panel4.Controls.Add(this.panel5);
+            this.panel4.Controls.Add(this.createShortcutButton);
             this.panel4.Controls.Add(this.languageLabel);
             this.panel4.Controls.Add(this.gamePathLabel);
             this.panel4.Controls.Add(this.gamePathSearchButton);
-            this.panel4.Controls.Add(this.panel2);
             this.panel4.Controls.Add(this.gameInstallPathsComboBox);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 0);
@@ -479,13 +410,48 @@
             this.panel4.Size = new System.Drawing.Size(1014, 566);
             this.panel4.TabIndex = 1;
             // 
+            // languageComboBox
+            // 
+            this.languageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.languageComboBox.FormattingEnabled = true;
+            this.languageComboBox.Location = new System.Drawing.Point(6, 28);
+            this.languageComboBox.Name = "languageComboBox";
+            this.languageComboBox.Size = new System.Drawing.Size(226, 21);
+            this.languageComboBox.TabIndex = 9;
+            // 
+            // extractTranslationFilesButton
+            // 
+            this.extractTranslationFilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.extractTranslationFilesButton.AutoSize = true;
+            this.extractTranslationFilesButton.Location = new System.Drawing.Point(6, 523);
+            this.extractTranslationFilesButton.Name = "extractTranslationFilesButton";
+            this.extractTranslationFilesButton.Size = new System.Drawing.Size(226, 23);
+            this.extractTranslationFilesButton.TabIndex = 21;
+            this.extractTranslationFilesButton.Text = "Extract translation files";
+            this.extractTranslationFilesButton.UseVisualStyleBackColor = true;
+            this.extractTranslationFilesButton.Click += new System.EventHandler(this.ExtractTranslationFilesButton_Click);
+            // 
+            // cleanupBackupsButton
+            // 
+            this.cleanupBackupsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cleanupBackupsButton.AutoSize = true;
+            this.cleanupBackupsButton.Location = new System.Drawing.Point(6, 494);
+            this.cleanupBackupsButton.Name = "cleanupBackupsButton";
+            this.cleanupBackupsButton.Size = new System.Drawing.Size(226, 23);
+            this.cleanupBackupsButton.TabIndex = 4;
+            this.cleanupBackupsButton.Text = "Cleanup Backups";
+            this.cleanupBackupsButton.UseVisualStyleBackColor = true;
+            this.cleanupBackupsButton.Click += new System.EventHandler(this.CleanupBackupsButton_Click);
+            // 
             // panel5
             // 
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel5.Controls.Add(this.overlayStashesCountLabel);
+            this.panel5.Controls.Add(this.overlayStashesCountTrackBar);
+            this.panel5.Controls.Add(this.overlayStashesCountValueLabel);
             this.panel5.Controls.Add(this.saveOverLockedCheckBox);
-            this.panel5.Controls.Add(this.hideOnFormClosedCheckBox);
             this.panel5.Controls.Add(this.overlayWidthLabel);
             this.panel5.Controls.Add(this.confirmClosingCheckBox);
             this.panel5.Controls.Add(this.overlayTransparencyLabel);
@@ -495,32 +461,62 @@
             this.panel5.Controls.Add(this.overlayTransparencyValueLabel);
             this.panel5.Controls.Add(this.maxBackupsLabel);
             this.panel5.Controls.Add(this.confirmStashDeleteCheckBox);
-            this.panel5.Controls.Add(this.defaultStashModeLabel);
             this.panel5.Controls.Add(this.overlayScaleValueLabel);
             this.panel5.Controls.Add(this.overlayScaleTrackBar);
             this.panel5.Controls.Add(this.closeWithGrimDawnCheckBox);
             this.panel5.Controls.Add(this.checkVersionCheckBox);
             this.panel5.Controls.Add(this.maxBackupsTrackBar);
             this.panel5.Controls.Add(this.overlayWidthValueLabel);
-            this.panel5.Controls.Add(this.defaultStashModeComboBox);
             this.panel5.Controls.Add(this.overlayWidthTrackBar);
             this.panel5.Controls.Add(this.autoBackToMainCheckBox);
             this.panel5.Controls.Add(this.gameStartGroupBox);
-            this.panel5.Location = new System.Drawing.Point(146, 55);
+            this.panel5.Location = new System.Drawing.Point(238, 55);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(862, 491);
+            this.panel5.Size = new System.Drawing.Size(770, 491);
             this.panel5.TabIndex = 20;
             // 
-            // hideOnFormClosedCheckBox
+            // overlayStashesCountLabel
             // 
-            this.hideOnFormClosedCheckBox.AutoSize = true;
-            this.hideOnFormClosedCheckBox.Location = new System.Drawing.Point(26, 171);
-            this.hideOnFormClosedCheckBox.Name = "hideOnFormClosedCheckBox";
-            this.hideOnFormClosedCheckBox.Size = new System.Drawing.Size(299, 17);
-            this.hideOnFormClosedCheckBox.TabIndex = 20;
-            this.hideOnFormClosedCheckBox.Text = "Hide GDMS when window closed and Grim Dawn running";
-            this.hideOnFormClosedCheckBox.UseVisualStyleBackColor = true;
-            this.hideOnFormClosedCheckBox.CheckedChanged += new System.EventHandler(this.HideOnFormClosedCheckBox_CheckedChanged);
+            this.overlayStashesCountLabel.AutoSize = true;
+            this.overlayStashesCountLabel.Location = new System.Drawing.Point(23, 422);
+            this.overlayStashesCountLabel.Margin = new System.Windows.Forms.Padding(3, 10, 3, 0);
+            this.overlayStashesCountLabel.Name = "overlayStashesCountLabel";
+            this.overlayStashesCountLabel.Size = new System.Drawing.Size(125, 13);
+            this.overlayStashesCountLabel.TabIndex = 23;
+            this.overlayStashesCountLabel.Text = "Displayed stashes count:";
+            // 
+            // overlayStashesCountTrackBar
+            // 
+            this.overlayStashesCountTrackBar.AutoSize = false;
+            this.overlayStashesCountTrackBar.BackColor = System.Drawing.Color.White;
+            this.overlayStashesCountTrackBar.LargeChange = 1;
+            this.overlayStashesCountTrackBar.Location = new System.Drawing.Point(218, 422);
+            this.overlayStashesCountTrackBar.Maximum = 15;
+            this.overlayStashesCountTrackBar.Name = "overlayStashesCountTrackBar";
+            this.overlayStashesCountTrackBar.Size = new System.Drawing.Size(166, 20);
+            this.overlayStashesCountTrackBar.TabIndex = 22;
+            this.overlayStashesCountTrackBar.Scroll += new System.EventHandler(this.OverlayShownStashesTrackBar_Scroll);
+            // 
+            // overlayStashesCountValueLabel
+            // 
+            this.overlayStashesCountValueLabel.AutoSize = true;
+            this.overlayStashesCountValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.overlayStashesCountValueLabel.Location = new System.Drawing.Point(390, 422);
+            this.overlayStashesCountValueLabel.Name = "overlayStashesCountValueLabel";
+            this.overlayStashesCountValueLabel.Size = new System.Drawing.Size(53, 20);
+            this.overlayStashesCountValueLabel.TabIndex = 24;
+            this.overlayStashesCountValueLabel.Text = "label1";
+            // 
+            // saveOverLockedCheckBox
+            // 
+            this.saveOverLockedCheckBox.AutoSize = true;
+            this.saveOverLockedCheckBox.Location = new System.Drawing.Point(26, 250);
+            this.saveOverLockedCheckBox.Name = "saveOverLockedCheckBox";
+            this.saveOverLockedCheckBox.Size = new System.Drawing.Size(261, 17);
+            this.saveOverLockedCheckBox.TabIndex = 21;
+            this.saveOverLockedCheckBox.Text = "Overwrite locked stashes when using save button";
+            this.saveOverLockedCheckBox.UseVisualStyleBackColor = true;
+            this.saveOverLockedCheckBox.CheckedChanged += new System.EventHandler(this.SaveOverLockedCheckBox_CheckedChanged);
             // 
             // saveButton
             // 
@@ -544,36 +540,11 @@
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
             // 
-            // cleanupBackupsButton
-            // 
-            this.cleanupBackupsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cleanupBackupsButton.AutoSize = true;
-            this.cleanupBackupsButton.Location = new System.Drawing.Point(247, 578);
-            this.cleanupBackupsButton.Name = "cleanupBackupsButton";
-            this.cleanupBackupsButton.Size = new System.Drawing.Size(145, 23);
-            this.cleanupBackupsButton.TabIndex = 4;
-            this.cleanupBackupsButton.Text = "Cleanup Backups";
-            this.cleanupBackupsButton.UseVisualStyleBackColor = true;
-            this.cleanupBackupsButton.Click += new System.EventHandler(this.CleanupBackupsButton_Click);
-            // 
-            // saveOverLockedCheckBox
-            // 
-            this.saveOverLockedCheckBox.AutoSize = true;
-            this.saveOverLockedCheckBox.Location = new System.Drawing.Point(26, 316);
-            this.saveOverLockedCheckBox.Name = "saveOverLockedCheckBox";
-            this.saveOverLockedCheckBox.Size = new System.Drawing.Size(261, 17);
-            this.saveOverLockedCheckBox.TabIndex = 21;
-            this.saveOverLockedCheckBox.Text = "Overwrite locked stashes when using save button";
-            this.saveOverLockedCheckBox.UseVisualStyleBackColor = true;
-            this.saveOverLockedCheckBox.CheckedChanged += new System.EventHandler(this.SaveOverLockedCheckBox_CheckedChanged);
-            // 
             // ConfigurationDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1032, 608);
-            this.Controls.Add(this.cleanupBackupsButton);
-            this.Controls.Add(this.createShortcutButton);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.panel1);
@@ -582,8 +553,6 @@
             this.Load += new System.EventHandler(this.SetupForm_Load);
             this.gameStartGroupBox.ResumeLayout(false);
             this.gameStartGroupBox.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.maxBackupsTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayWidthTrackBar)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayScaleTrackBar)).EndInit();
@@ -593,22 +562,19 @@
             this.panel4.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.overlayStashesCountTrackBar)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListView languageListView;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button applyButton;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Label gamePathLabel;
         private System.Windows.Forms.Button gamePathSearchButton;
         private System.Windows.Forms.Label languageLabel;
         private System.Windows.Forms.CheckBox confirmClosingCheckBox;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.CheckBox closeWithGrimDawnCheckBox;
         private System.Windows.Forms.CheckBox confirmStashDeleteCheckBox;
         private System.Windows.Forms.Button createShortcutButton;
@@ -618,7 +584,6 @@
         private System.Windows.Forms.Label gameStartArgumentsLabel;
         private System.Windows.Forms.Label gameStartCommandLabel;
         private System.Windows.Forms.ComboBox autoStartGDCommandComboBox;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.TrackBar maxBackupsTrackBar;
         private System.Windows.Forms.Label maxBackupsLabel;
         private System.Windows.Forms.Label maxBackupsValueLabel;
@@ -631,15 +596,17 @@
         private System.Windows.Forms.CheckBox autoBackToMainCheckBox;
         private System.Windows.Forms.ComboBox gameInstallPathsComboBox;
         private System.Windows.Forms.CheckBox checkVersionCheckBox;
-        private System.Windows.Forms.Label defaultStashModeLabel;
-        private System.Windows.Forms.ComboBox defaultStashModeComboBox;
         private System.Windows.Forms.Label overlayTransparencyValueLabel;
         private System.Windows.Forms.Label overlayTransparencyLabel;
         private System.Windows.Forms.TrackBar overlayTransparencyTrackBar;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.CheckBox hideOnFormClosedCheckBox;
         private System.Windows.Forms.Button cleanupBackupsButton;
         private System.Windows.Forms.CheckBox saveOverLockedCheckBox;
+        private System.Windows.Forms.Button extractTranslationFilesButton;
+        private System.Windows.Forms.ComboBox languageComboBox;
+        private System.Windows.Forms.Label overlayStashesCountLabel;
+        private System.Windows.Forms.TrackBar overlayStashesCountTrackBar;
+        private System.Windows.Forms.Label overlayStashesCountValueLabel;
     }
 }

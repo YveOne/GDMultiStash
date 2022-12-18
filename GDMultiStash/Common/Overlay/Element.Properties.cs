@@ -25,8 +25,8 @@ namespace GDMultiStash.Common.Overlay
                 _visible = value;
 
                 bool _visibleTotalLast = _visibleTotal;
-                _visibleTotal = value && (_parent == null || _parent.TotalVisible);
-                _resetVisible |= _visibleTotal != _visibleTotalLast;
+                _visibleTotal = value && (Parent == null || Parent.TotalVisible);
+                ResetVisible |= _visibleTotal != _visibleTotalLast;
             }
         }
 
@@ -47,8 +47,8 @@ namespace GDMultiStash.Common.Overlay
                 _alpha = value;
 
                 float _alphaTotalLast = _alphaTotal;
-                _alphaTotal = value * (_parent != null ? _parent._alphaTotal : 1);
-                _resetAlpha |= _alphaTotal != _alphaTotalLast;
+                _alphaTotal = value * (Parent != null ? Parent._alphaTotal : 1);
+                ResetAlpha |= _alphaTotal != _alphaTotalLast;
             }
         }
 
@@ -58,8 +58,19 @@ namespace GDMultiStash.Common.Overlay
 
         private float _scale = 1f;
         private float _scaleTotal = 1f;
+        private bool _scaleWithParent = true;
 
         public float TotalScale => _scaleTotal;
+
+        public bool ScaleWithParent
+        {
+            get { return _scaleWithParent; }
+            set
+            {
+                _scaleWithParent = value;
+                Scale = _scale; // trigger update
+            }
+        }
 
         public virtual float Scale
         {
@@ -69,8 +80,8 @@ namespace GDMultiStash.Common.Overlay
                 _scale = value;
 
                 float _scaleTotalLast = _scaleTotal;
-                _scaleTotal = value * (_parent != null ? _parent._scaleTotal : 1);
-                _resetScale |= _scaleTotal != _scaleTotalLast;
+                _scaleTotal = value * (Parent != null && _scaleWithParent ? Parent._scaleTotal : 1);
+                ResetScale |= _scaleTotal != _scaleTotalLast;
             }
         }
 
@@ -92,11 +103,11 @@ namespace GDMultiStash.Common.Overlay
                 float _widthTotalLast = _widthTotal;
 
                 _widthTotal = value * _scaleTotal;
-                if (_widthToParent && _parent != null)
-                    _widthTotal = _parent._widthTotal + _widthTotal;
+                if (_widthToParent && Parent != null)
+                    _widthTotal = Parent._widthTotal + _widthTotal;
 
                 if (_widthTotal < 0) _widthTotal = 0;
-                _resetWidth |= _widthTotal != _widthTotalLast;
+                ResetWidth |= _widthTotal != _widthTotalLast;
             }
         }
 
@@ -118,11 +129,11 @@ namespace GDMultiStash.Common.Overlay
                 float _heightTotalLast = _heightTotal;
 
                 _heightTotal = value * _scaleTotal;
-                if (_heightToParent && _parent != null)
-                    _heightTotal = _parent._heightTotal + _heightTotal;
+                if (_heightToParent && Parent != null)
+                    _heightTotal = Parent._heightTotal + _heightTotal;
 
                 if (_heightTotal < 0) _heightTotal = 0;
-                _resetHeight |= _heightTotal != _heightTotalLast;
+                ResetHeight |= _heightTotal != _heightTotalLast;
             }
         }
 
@@ -176,9 +187,9 @@ namespace GDMultiStash.Common.Overlay
 
                 float _xTotalLast = _xTotal;
                 _xTotal = _x;
-                if (_parent != null)
+                if (Parent != null)
                 {
-                    _xTotal *= _parent._scaleTotal;
+                    _xTotal *= Parent._scaleTotal;
 
                     float addAnchorPointX = 0;
                     float addParentPointX = 0;
@@ -200,15 +211,15 @@ namespace GDMultiStash.Common.Overlay
                             addParentPointX = 0;
                             break;
                         case Anchor.Center:
-                            addParentPointX = _parent._widthTotal / 2;
+                            addParentPointX = Parent._widthTotal / 2;
                             break;
                         case Anchor.Right:
-                            addParentPointX = _parent._widthTotal;
+                            addParentPointX = Parent._widthTotal;
                             break;
                     }
                     _xTotal += Parent._xTotal + addParentPointX + addAnchorPointX;
                 }
-                _resetX |= _xTotal != _xTotalLast;
+                ResetX |= _xTotal != _xTotalLast;
             }
         }
 
@@ -230,9 +241,9 @@ namespace GDMultiStash.Common.Overlay
 
                 float _yTotalLast = _yTotal;
                 _yTotal = _y;
-                if (_parent != null)
+                if (Parent != null)
                 {
-                    _yTotal *= _parent._scaleTotal;
+                    _yTotal *= Parent._scaleTotal;
 
                     float addAnchorPointY = 0;
                     float addParentPointY = 0;
@@ -254,17 +265,35 @@ namespace GDMultiStash.Common.Overlay
                             addParentPointY = 0;
                             break;
                         case Anchor.Center:
-                            addParentPointY = _parent._heightTotal / 2;
+                            addParentPointY = Parent._heightTotal / 2;
                             break;
                         case Anchor.Bottom:
-                            addParentPointY = _parent._heightTotal;
+                            addParentPointY = Parent._heightTotal;
                             break;
                     }
                     _yTotal += Parent._yTotal + addParentPointY + addAnchorPointY;
                 }
-                _resetY |= _yTotal != _yTotalLast;
+                ResetY |= _yTotal != _yTotalLast;
             }
         }
+
+        #endregion
+
+        #region Resetting (protected, private set)
+
+        public bool ResetVisible { get; private set; } = true;
+
+        public bool ResetAlpha { get; private set; } = true;
+
+        public bool ResetScale { get; private set; } = true;
+
+        public bool ResetWidth { get; private set; } = true;
+
+        public bool ResetHeight { get; private set; } = true;
+
+        public bool ResetX { get; private set; } = true;
+
+        public bool ResetY { get; private set; } = true;
 
         #endregion
 

@@ -21,13 +21,13 @@ namespace GDMultiStash.Common.Overlay
 
         public TextElement()
         {
-            _imageElement = new ImageElement();
+            _imageElement = new ImageElement()
+            {
+                WidthToParent = true,
+                HeightToParent = true,
+            };
             AddChild(_imageElement);
         }
-
-        private static readonly int recreateMaxPerFrame = 50; 
-        private static int _recreatedThisFrame = 0;
-        private static readonly Dictionary<string, D3DHook.Hook.Common.IImageResource> _resourceCache = new Dictionary<string, D3DHook.Hook.Common.IImageResource>();
 
         public override void Draw(float ms)
         {
@@ -35,53 +35,16 @@ namespace GDMultiStash.Common.Overlay
             if (_needRecreate)
             {
                 if (_font == null) return;
-                if (_recreatedThisFrame >= recreateMaxPerFrame) return;
                 if (TotalWidth <= 0 || TotalHeight <= 0) return;
                 _needRecreate = false;
-                _recreatedThisFrame += 1;
 
                 int useWidth = (int)(TotalWidth / TotalScale);
                 int useHeight = (int)(TotalHeight / TotalScale);
 
-                string resKey = string.Format("{0};{1};{2};{3};{4};{5};{6};{7}",
-                    _font.Name,
-                    _font.Bold ? 1 : 0,
-                    _font.Italic ? 1 : 0,
-                    _text,
-                    useWidth,
-                    useHeight,
-                    _color.ToString(),
-                    _alignment.ToString()
-                    );
-
-                if (_resourceCache.ContainsKey(resKey))
-                {
-                    _imageElement.Resource = _resourceCache[resKey];
-                }
-                else
-                {
-                    using (Bitmap bmp = new Bitmap(useWidth, useHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-                    {
-                        Graphics g = Graphics.FromImage(bmp);
-                        var brush = new SolidBrush(_color);
-                        using (StringFormat sf = new StringFormat()
-                        {
-                            Alignment = _alignment,
-                            LineAlignment = StringAlignment.Center,
-                            Trimming = StringTrimming.None,
-                            FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.NoClip,
-                        })
-                        {
-                            //g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias; // text is better readable without this...
-                            g.DrawString(_text, _font, brush, new Rectangle(0, 0, bmp.Width, bmp.Height), sf);
-                        }
-
-                        //bmp.Save(System.Windows.Forms.Application.StartupPath+"\\..\\"+ID+".png");
-
-                        _imageElement.Resource = GetViewport().Resources.CreateImageResource(bmp);
-                        _resourceCache.Add(resKey, _imageElement.Resource);
-                    }
-                }
+                ParentViewport.OverlayResources.AsyncCreateTextImageResource(_text, _font, useWidth, useHeight, _color, _alignment)
+                    .ResourceCreated += delegate (object sender, ResourceHandler.ResourceCreatedEventArgs args) {
+                        _imageElement.Resource = args.Resource;
+                    };
             }
         }
 
@@ -89,7 +52,6 @@ namespace GDMultiStash.Common.Overlay
         {
             base.End();
             if (ResetHeight || ResetScale || ResetWidth) _needRecreate = true;
-            _recreatedThisFrame = 0;
         }
 
         public Font Font

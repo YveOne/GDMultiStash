@@ -33,9 +33,6 @@
             this.stashNameLabel = new System.Windows.Forms.Label();
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.okButton = new System.Windows.Forms.Button();
-            this.overwriteLabel = new System.Windows.Forms.Label();
-            this.overwriteComboBox = new System.Windows.Forms.ComboBox();
-            this.overwriteCheckBox = new System.Windows.Forms.CheckBox();
             this.scCheckBox = new System.Windows.Forms.CheckBox();
             this.hcCheckBox = new System.Windows.Forms.CheckBox();
             this.expansionLabel = new System.Windows.Forms.Label();
@@ -53,21 +50,21 @@
             this.stashFileTextBox.TabIndex = 4;
             this.stashFileTextBox.TabStop = false;
             // 
-            // label1
+            // transferFileLabel
             // 
             this.transferFileLabel.AutoSize = true;
             this.transferFileLabel.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.transferFileLabel.Location = new System.Drawing.Point(12, 9);
-            this.transferFileLabel.Name = "label1";
+            this.transferFileLabel.Name = "transferFileLabel";
             this.transferFileLabel.Size = new System.Drawing.Size(65, 13);
             this.transferFileLabel.TabIndex = 3;
             this.transferFileLabel.Text = "Transfer file:";
             // 
-            // label3
+            // stashNameLabel
             // 
             this.stashNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.stashNameLabel.Location = new System.Drawing.Point(195, 55);
-            this.stashNameLabel.Name = "label3";
+            this.stashNameLabel.Name = "stashNameLabel";
             this.stashNameLabel.Size = new System.Drawing.Size(103, 13);
             this.stashNameLabel.TabIndex = 10;
             this.stashNameLabel.Text = "Name:";
@@ -91,37 +88,6 @@
             this.okButton.Text = "Import";
             this.okButton.UseVisualStyleBackColor = true;
             this.okButton.Click += new System.EventHandler(this.OkButton_Click);
-            // 
-            // label2
-            // 
-            this.overwriteLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.overwriteLabel.Location = new System.Drawing.Point(198, 81);
-            this.overwriteLabel.Name = "label2";
-            this.overwriteLabel.Size = new System.Drawing.Size(100, 13);
-            this.overwriteLabel.TabIndex = 13;
-            this.overwriteLabel.Text = "Overwrite:";
-            this.overwriteLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // overwriteComboBox
-            // 
-            this.overwriteComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.overwriteComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.overwriteComboBox.FormattingEnabled = true;
-            this.overwriteComboBox.Location = new System.Drawing.Point(325, 78);
-            this.overwriteComboBox.Name = "overwriteComboBox";
-            this.overwriteComboBox.Size = new System.Drawing.Size(169, 21);
-            this.overwriteComboBox.TabIndex = 14;
-            // 
-            // overwriteCheckBox
-            // 
-            this.overwriteCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.overwriteCheckBox.AutoSize = true;
-            this.overwriteCheckBox.Location = new System.Drawing.Point(304, 81);
-            this.overwriteCheckBox.Name = "overwriteCheckBox";
-            this.overwriteCheckBox.Size = new System.Drawing.Size(15, 14);
-            this.overwriteCheckBox.TabIndex = 15;
-            this.overwriteCheckBox.UseVisualStyleBackColor = true;
-            this.overwriteCheckBox.CheckedChanged += new System.EventHandler(this.overwriteCheckBox_CheckedChanged);
             // 
             // scCheckBox
             // 
@@ -174,9 +140,6 @@
             this.Controls.Add(this.expansionLabel);
             this.Controls.Add(this.hcCheckBox);
             this.Controls.Add(this.scCheckBox);
-            this.Controls.Add(this.overwriteCheckBox);
-            this.Controls.Add(this.overwriteComboBox);
-            this.Controls.Add(this.overwriteLabel);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.nameTextBox);
             this.Controls.Add(this.stashNameLabel);
@@ -200,9 +163,6 @@
         private System.Windows.Forms.Label stashNameLabel;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Button okButton;
-        private System.Windows.Forms.Label overwriteLabel;
-        private System.Windows.Forms.ComboBox overwriteComboBox;
-        private System.Windows.Forms.CheckBox overwriteCheckBox;
         private System.Windows.Forms.CheckBox scCheckBox;
         private System.Windows.Forms.CheckBox hcCheckBox;
         private System.Windows.Forms.Label expansionLabel;

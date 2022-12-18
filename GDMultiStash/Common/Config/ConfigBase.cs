@@ -12,25 +12,13 @@ namespace GDMultiStash.Common.Config
     public class ConfigBase
     {
 
+        [XmlIgnore] public const int LatestVersion = 6;
 
-        [XmlIgnore] public const int LatestVersion = 4;
-
-        [XmlElement("Version")] public int Version { get; set; }
-
-
-        [XmlIgnore]
-        public bool IsNew { get; private set; }
-
-        public ConfigBase(bool isNew)
-        {
-            Version = LatestVersion;
-            IsNew = isNew;
-        }
+        [XmlElement("Version")] public int OldVersion = 0; // deprecated. TODO: remove me in future release
+        [XmlAttribute("Version")] public int Version = LatestVersion;
 
         public ConfigBase()
         {
-            Version = LatestVersion;
-            IsNew = false;
         }
 
     }

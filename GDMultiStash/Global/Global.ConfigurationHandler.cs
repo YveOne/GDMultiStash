@@ -16,81 +16,148 @@ namespace GDMultiStash.GlobalHandlers
         private Common.Config.Config _config;
 
         public Common.Config.ConfigSettingList Settings => _config.Settings;
+        public List<Common.Config.ConfigStash> Stashes => _config.Stashes.Items;
+        public List<Common.Config.ConfigColor> Colors => _config.Colors.Items;
+        public List<Common.Config.ConfigStashGroup> StashGroups => _config.StashGroups.Items;
+        public List<Common.Config.ConfigExpansion> Expansions => _config.Expansions.Items;
 
-        public bool IsNew => _config.IsNew;
-
-        public int PreviousVersion => _previousVersion;
-        private int _previousVersion = 0;
+        public bool IsNew { get; private set; }
 
         public delegate void SettingChangedDelegate(object sender, EventArgs e);
         public event SettingChangedDelegate LanguageChanged;
         public event SettingChangedDelegate GamePathChanged;
         public event SettingChangedDelegate AppearanceChanged;
 
+        public bool AppVersionUpdated { get; private set; }
+        public bool ConfigRevisionChanged { get; private set; }
+        public int OldConfigRevision { get; private set; }
+
+        private bool needSaveAfterUpdate = false;
+
         #region Load/Save Methods
 
         private Common.Config.Config LoadFromFile(string filePath)
         {
             Common.Config.ConfigBase _configBase = XmlIO.ReadXmlText<Common.Config.ConfigBase>(File.ReadAllText(filePath));
+
+            if (_configBase.OldVersion != 0)
+                _configBase.Version = _configBase.OldVersion;
             Console.WriteLine("Version of config file: " + _configBase.Version);
 
-            _previousVersion = _configBase.Version;
-            while (_configBase.Version < Common.Config.ConfigBase.LatestVersion)
+            while (_configBase.Version++ < Common.Config.ConfigBase.LatestVersion)
             {
-                _configBase.Version += 1;
                 Console.WriteLine(string.Format("Updating Config to v{0}...", _configBase.Version.ToString()));
                 switch (_configBase.Version)
                 {
-
-                    case 2:
+                    case 5:
                         {
-                            Common.Config.V1.Config configOld = XmlIO.ReadXmlText<Common.Config.V1.Config>(File.ReadAllText(filePath));
-                            Common.Config.Config configNew = new Common.Config.Config();
-
-                            foreach (var stash in configOld.Stashes)
-                                stash.Expansion = 2;
+                            Common.Config.V4.Config configOld = XmlIO.ReadXmlText<Common.Config.V4.Config>(File.ReadAllText(filePath));
+                            Common.Config.V5.Config configNew = XmlIO.ReadXmlText<Common.Config.V5.Config>(File.ReadAllText(filePath));
                             configNew.Version = _configBase.Version;
-                            configNew.Stashes = configOld.Stashes;
-                            configNew.Settings.Language = configOld.Settings.Language;
-                            configNew.Settings.GamePath = configOld.Settings.GamePath;
-                            configNew.Settings.MaxBackups = configOld.Settings.MaxBackups;
-                            configNew.Settings.ConfirmClosing = configOld.Settings.ConfirmClosing;
-                            configNew.Settings.CloseWithGrimDawn = configOld.Settings.CloseWithGrimDawn;
-                            configNew.Settings.ConfirmStashDelete = configOld.Settings.ConfirmStashDelete;
-                            configNew.Settings.AutoStartGD = configOld.Settings.AutoStartGD;
-                            configNew.Settings.AutoStartGDCommand = configOld.Settings.AutoStartGDCommand;
-                            configNew.Settings.AutoStartGDArguments = configOld.Settings.AutoStartGDArguments;
-                            configNew.Settings.LastID = configOld.Settings.LastID;
-                            configNew.Settings.Main2SCID = configOld.Settings.MainSCID;
-                            configNew.Settings.Main2HCID = configOld.Settings.MainHCID;
-                            configNew.Settings.Cur2SCID = configOld.Settings.CurSCID;
-                            configNew.Settings.Cur2HCID = configOld.Settings.CurHCID;
+
+                            configNew.OldVersion = 0;
+                            configNew.Settings.AutoStartGame = configOld.Settings.AutoStartGD;
+                            configNew.Settings.StartGameCommand = configOld.Settings.AutoStartGDCommand;
+                            configNew.Settings.StartGameArguments = configOld.Settings.AutoStartGDArguments;
+                            configNew.Stashes.LastID = configOld.Settings.LastID;
+                            configNew.Expansions.Items.Clear();
+                            configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
+                            {
+                                ID = (int)GrimDawnGameExpansion.BaseGame,
+                                Name = GrimDawn.GetExpansionName(GrimDawnGameExpansion.BaseGame),
+                                SC = new Common.Config.ConfigExpansionMode()
+                                {
+                                    MainID = configOld.Settings.Main0SCID,
+                                    CurrentID = configOld.Settings.Cur0SCID,
+                                },
+                                HC = new Common.Config.ConfigExpansionMode()
+                                {
+                                    MainID = configOld.Settings.Main0HCID,
+                                    CurrentID = configOld.Settings.Cur0HCID,
+                                },
+                            });
+                            configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
+                            {
+                                ID = (int)GrimDawnGameExpansion.AshesOfMalmouth,
+                                Name = GrimDawn.GetExpansionName(GrimDawnGameExpansion.AshesOfMalmouth),
+                                SC = new Common.Config.ConfigExpansionMode()
+                                {
+                                    MainID = configOld.Settings.Main1SCID,
+                                    CurrentID = configOld.Settings.Cur1SCID,
+                                },
+                                HC = new Common.Config.ConfigExpansionMode()
+                                {
+                                    MainID = configOld.Settings.Main1HCID,
+                                    CurrentID = configOld.Settings.Cur1HCID,
+                                },
+                            });
+                            configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
+                            {
+                                ID = (int)GrimDawnGameExpansion.ForgottenGods,
+                                Name = GrimDawn.GetExpansionName(GrimDawnGameExpansion.ForgottenGods),
+                                SC = new Common.Config.ConfigExpansionMode()
+                                {
+                                    MainID = configOld.Settings.Main2SCID,
+                                    CurrentID = configOld.Settings.Cur2SCID,
+                                },
+                                HC = new Common.Config.ConfigExpansionMode()
+                                {
+                                    MainID = configOld.Settings.Main2HCID,
+                                    CurrentID = configOld.Settings.Cur2HCID,
+                                },
+                            });
 
                             WriteToFile(configNew, filePath);
                         }
                         break;
 
-                    case 3:
+                    case 6:
                         {
-                            Common.Config.Config cfg = XmlIO.ReadXmlText<Common.Config.Config>(File.ReadAllText(filePath));
-                            cfg.Version = _configBase.Version;
-                            switch (cfg.Settings.Language)
+                            Common.Config.V5.Config configOld = XmlIO.ReadXmlText<Common.Config.V5.Config>(File.ReadAllText(filePath));
+                            Common.Config.Config configNew = XmlIO.ReadXmlText<Common.Config.Config>(File.ReadAllText(filePath));
+                            configNew.Version = _configBase.Version;
+
+                            configNew.Stashes.Items.Clear();
+                            foreach (Common.Config.V5.ConfigStash stash in configOld.Stashes.Items)
                             {
-                                case "de": cfg.Settings.Language = "deDE"; break;
-                                case "en": cfg.Settings.Language = "enUS"; break;
-                                case "zh": cfg.Settings.Language = "zhCN"; break;
-                                default: cfg.Settings.Language = "enUS"; break;
+                                configNew.Stashes.Items.Add(new Common.Config.ConfigStash()
+                                {
+                                    ID = stash.ID,
+                                    Order = stash.Order,
+                                    SC = stash.SC,
+                                    HC = stash.HC,
+                                    Expansion = stash.Expansion,
+                                    GroupID = stash.GroupID,
+                                    Name = stash.Name,
+                                    Color = stash.Color,
+                                    Locked = stash.Locked,
+                                });
                             }
 
-                            WriteToFile(cfg, filePath);
-                        }
-                        break;
+                            configNew.StashGroups.Items.Clear();
+                            foreach (Common.Config.V5.ConfigStashGroup cat in configOld.StashGroups.Items)
+                            {
+                                configNew.StashGroups.Items.Add(new Common.Config.ConfigStashGroup()
+                                {
+                                    ID = cat.ID,
+                                    Name = cat.Name,
+                                    Order = cat.Order,
+                                });
+                            }
 
-                    case 4:
-                        {
-                            string langDir = Path.Combine(Global.FileSystem.DataDirectory, "Locales");
-                            if (Directory.Exists(langDir))
-                                Directory.Delete(langDir, true);
+                            configNew.Expansions.Items.Clear();
+                            foreach (Common.Config.V5.ConfigExpansion exp in configOld.Expansions.Items)
+                            {
+                                configNew.Expansions.Items.Add(new Common.Config.ConfigExpansion()
+                                {
+                                    ID = exp.ID,
+                                    NameCommentValue = exp.Name,
+                                    SC = exp.SC,
+                                    HC = exp.HC,
+                                });
+                            }
+
+                            WriteToFile(configNew, filePath);
                         }
                         break;
 
@@ -102,36 +169,44 @@ namespace GDMultiStash.GlobalHandlers
             return XmlIO.ReadXmlText<Common.Config.Config>(File.ReadAllText(filePath));
         }
 
-        public Common.Config.Config LoadOrCreate(string filePath)
-        {
-            Console.WriteLine("Loading config from file: " + filePath);
-            if (File.Exists(filePath))
-            {
-                return LoadFromFile(filePath);
-            }
-            else
-            {
-                Console.WriteLine("- File not found -> Create new config");
-                return new Common.Config.Config(true);
-            }
-        }
-
-        public static void WriteToFile(Common.Config.Config cfg, string filePath)
+        public static void WriteToFile<T>(T cfg, string filePath)
         {
             Console.WriteLine("Writing config to file: " + filePath);
-            if (File.Exists(filePath))
-            {
-                Console.WriteLine("- Deleting old file");
-                File.Delete(filePath);
-            }
-            Console.WriteLine("- Writing new file");
+            if (File.Exists(filePath)) File.Delete(filePath);
             XmlIO.WriteXmlFile(cfg, filePath);
         }
 
         public void Load()
         {
+            string filePath = Global.FileSystem.ConfigFile;
             Console.WriteLine("Loading config");
-            _config = LoadOrCreate(Global.FileSystem.ConfigFile);
+            if (File.Exists(filePath))
+            {
+                _config = LoadFromFile(filePath);
+                IsNew = false;
+            }
+            else
+            {
+                Console.WriteLine("- File not found -> Create new config");
+                _config = new Common.Config.Config();
+                IsNew = true;
+            }
+
+            Utils.AssemblyInfo ai = new Utils.AssemblyInfo();
+            if (ai.Version != Settings.LastToolVersion)
+            {
+                AppVersionUpdated = Settings.LastToolVersion != "";
+                Settings.LastToolVersion = ai.Version;
+                needSaveAfterUpdate = true;
+            }
+
+            if (Settings.LastRevision != Settings.Revision)
+            {
+                ConfigRevisionChanged = true;
+                OldConfigRevision = Settings.Revision;
+                Settings.Revision = Settings.LastRevision;
+                needSaveAfterUpdate = true;
+            }
         }
 
         public void Save()
@@ -140,9 +215,130 @@ namespace GDMultiStash.GlobalHandlers
             WriteToFile(_config, Global.FileSystem.ConfigFile);
         }
 
+        public void UpdateAndCleanup()
+        {
+            int rev = OldConfigRevision;
+            if (rev != Settings.LastRevision)
+            {
+                while(++rev <= Settings.LastRevision)
+                {
+                    switch(rev)
+                    {
+                        case 4:
+                            string langDir = Path.Combine(Global.FileSystem.DataDirectory, "Locales");
+                            if (Directory.Exists(langDir))
+                                Directory.Delete(langDir, true);
+                            break;
+                    }
+                }
+            }
+
+            foreach(GrimDawnGameExpansion exp in GrimDawn.GetExpansionList())
+            {
+                if (exp == GrimDawnGameExpansion.Unknown) continue;
+                Common.Config.ConfigExpansion cfgExp = _config.Expansions.Items.Find(ex => { return ex.ID == (int)exp; });
+                if (cfgExp == null)
+                {
+                    CreateExpansion(exp);
+                    needSaveAfterUpdate = true;
+                }
+                else
+                {
+                    // update the name in the comment
+                    cfgExp.NameCommentValue = GrimDawn.GetExpansionName(exp);
+                }
+            }
+            _config.Expansions.Items.Sort((x, y) => x.ID.CompareTo(y.ID));
+
+            if (_config.Colors.Items.Count == 0)
+            {
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#ebdec3", Name = Global.L.DefaultColor() });
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#34eb58", Name = Global.L.GreenColor() });
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#5ecfff", Name = Global.L.BlueColor() });
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#af69ff", Name = Global.L.PurpleColor() });
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#ffcc00", Name = Global.L.GoldColor() });
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#aaaaaa", Name = Global.L.GrayColor() });
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#f0f0f0", Name = Global.L.WhiteColor() });
+                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#f765ad", Name = Global.L.RoseColor() });
+            }
+
+
+
+
+
+            List<int> existingStashGroupIds = new List<int>();
+            List< Common.Config.ConfigStashGroup> stashGroupsToDelete = new List<Common.Config.ConfigStashGroup>();
+            foreach (Common.Config.ConfigStashGroup cat in StashGroups)
+            {
+                if (existingStashGroupIds.Contains(cat.ID))
+                    stashGroupsToDelete.Add(cat);
+                else
+                    existingStashGroupIds.Add(cat.ID);
+            }
+            if (stashGroupsToDelete.Count > 0)
+            {
+                foreach (Common.Config.ConfigStashGroup cat in stashGroupsToDelete)
+                    StashGroups.Remove(cat);
+                needSaveAfterUpdate = true;
+            }
+            if (!existingStashGroupIds.Contains(0))
+            {
+                CreateMainGroup(Global.L.MainGroupName());
+                existingStashGroupIds.Add(0);
+                needSaveAfterUpdate = true;
+            }
+            _config.StashGroups.Items.Sort((x, y) => x.ID.CompareTo(y.ID));
+
+
+
+
+            foreach (Common.Config.ConfigStash stash in Stashes)
+            {
+                if (!existingStashGroupIds.Contains(stash.GroupID))
+                {
+                    stash.GroupID = 0;
+                    needSaveAfterUpdate = true;
+                }
+            }
+
+
+
+
+
+
+
+            if (needSaveAfterUpdate)
+                Global.Configuration.Save();
+        }
+
+        public void CreateExpansion(GrimDawnGameExpansion exp)
+        {
+            _config.Expansions.Items.Add(new Common.Config.ConfigExpansion()
+            {
+                ID = (int)exp,
+                NameCommentValue = GrimDawn.GetExpansionName(exp),
+            });
+
+            int index = _config.Expansions.Items.Count - 1;
+            int stashID;
+
+            stashID = CreateMainStash(exp, GrimDawnGameMode.SC);
+            _config.Expansions.Items[index].SC.MainID = stashID;
+            _config.Expansions.Items[index].SC.CurrentID = stashID;
+
+            stashID = CreateMainStash(exp, GrimDawnGameMode.HC);
+            _config.Expansions.Items[index].HC.MainID = stashID;
+            _config.Expansions.Items[index].HC.CurrentID = stashID;
+        }
+
         #endregion
 
         #region Settings Methods
+
+        public Common.Config.ConfigSettingList GetSettings()
+        {
+            return Settings.Copy();
+        }
 
         public void SetSettings(Common.Config.ConfigSettingList settings)
         {
@@ -153,11 +349,18 @@ namespace GDMultiStash.GlobalHandlers
                 Global.Localization.LoadLanguage(Settings.Language);
                 LanguageChanged?.Invoke(null, EventArgs.Empty);
             }
+            if (previous.MaxBackups != Settings.MaxBackups)
+            {
+                Global.Stashes.CleanupBackups();
+            }
             if (previous.GamePath != Settings.GamePath)
             {
                 GamePathChanged?.Invoke(null, EventArgs.Empty);
             }
-            if (previous.OverlayScale != Settings.OverlayScale || previous.OverlayWidth != Settings.OverlayWidth || previous.OverlayTransparency != Settings.OverlayTransparency)
+            if (previous.OverlayScale != Settings.OverlayScale
+                || previous.OverlayWidth != Settings.OverlayWidth
+                || previous.OverlayTransparency != Settings.OverlayTransparency
+                || previous.OverlayStashesCount != Settings.OverlayStashesCount)
             {
                 AppearanceChanged?.Invoke(null, EventArgs.Empty);
             }
@@ -167,95 +370,83 @@ namespace GDMultiStash.GlobalHandlers
 
         #region Stash Methods
 
+        private string GetMainStashName(GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
+        {
+            string stashNameExp = ((int)expansion).ToString();
+            string stashNameMode = mode == GrimDawnGameMode.SC ? "sc" : "hc";
+            // UNSECURE!
+            return Global.L._.List[$"main_stash_name_{stashNameExp}{stashNameMode}"];
+        }
+
+        private int CreateMainStash(GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
+        {
+            string stashName = GetMainStashName(expansion, mode);
+            Console.WriteLine($"Creating Main Stash: {stashName}");
+            Common.Config.ConfigStash stash = Global.Configuration.CreateStash(stashName, expansion, mode);
+            string filePath = GrimDawn.GetTransferFilePath(expansion, mode);
+            if (File.Exists(filePath))
+            {
+                Console.WriteLine($"- import from: {filePath}");
+                Global.FileSystem.ImportStashTransferFile(stash.ID, filePath);
+            }
+            else
+            {
+                Console.WriteLine($"- export to: {filePath}");
+                Global.FileSystem.CreateStashTransferFile(stash.ID, expansion);
+                Global.FileSystem.ExportStashTransferFile(stash.ID, filePath);
+            }
+            return stash.ID;
+        }
+
+        private Common.Config.ConfigExpansionMode GetExpansionMode(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        {
+            if (exp == GrimDawnGameExpansion.Unknown) return null;
+            Common.Config.ConfigExpansion cExp = Expansions[(int)exp];
+            if (mode == GrimDawnGameMode.SC) return cExp.SC;
+            if (mode == GrimDawnGameMode.HC) return cExp.HC;
+            return null;
+        }
+
         public int GetMainStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
-            switch (exp)
-            {
-                case GrimDawnGameExpansion.BaseGame:
-                    if (mode == GrimDawnGameMode.SC) return Settings.Main0SCID;
-                    if (mode == GrimDawnGameMode.HC) return Settings.Main0HCID;
-                    break;
-                case GrimDawnGameExpansion.AshesOfMalmouth:
-                    if (mode == GrimDawnGameMode.SC) return Settings.Main1SCID;
-                    if (mode == GrimDawnGameMode.HC) return Settings.Main1HCID;
-                    break;
-                case GrimDawnGameExpansion.ForgottenGods:
-                    if (mode == GrimDawnGameMode.SC) return Settings.Main2SCID;
-                    if (mode == GrimDawnGameMode.HC) return Settings.Main2HCID;
-                    break;
-            }
-            return -1;
+            return GetExpansionMode(exp, mode).MainID;
         }
 
         public int GetCurrentStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
-            switch (exp)
-            {
-                case GrimDawnGameExpansion.BaseGame:
-                    if (mode == GrimDawnGameMode.SC) return Settings.Cur0SCID;
-                    if (mode == GrimDawnGameMode.HC) return Settings.Cur0HCID;
-                    break;
-                case GrimDawnGameExpansion.AshesOfMalmouth:
-                    if (mode == GrimDawnGameMode.SC) return Settings.Cur1SCID;
-                    if (mode == GrimDawnGameMode.HC) return Settings.Cur1HCID;
-                    break;
-                case GrimDawnGameExpansion.ForgottenGods:
-                    if (mode == GrimDawnGameMode.SC) return Settings.Cur2SCID;
-                    if (mode == GrimDawnGameMode.HC) return Settings.Cur2HCID;
-                    break;
-            }
-            return -1;
+            return GetExpansionMode(exp, mode).CurrentID;
         }
 
         public void SetCurrentStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode, int stashID)
         {
-            switch (exp)
-            {
-                case GrimDawnGameExpansion.BaseGame:
-                    if (mode == GrimDawnGameMode.SC) Settings.Cur0SCID = stashID;
-                    if (mode == GrimDawnGameMode.HC) Settings.Cur0HCID = stashID;
-                    break;
-                case GrimDawnGameExpansion.AshesOfMalmouth:
-                    if (mode == GrimDawnGameMode.SC) Settings.Cur1SCID = stashID;
-                    if (mode == GrimDawnGameMode.HC) Settings.Cur1HCID = stashID;
-                    break;
-                case GrimDawnGameExpansion.ForgottenGods:
-                    if (mode == GrimDawnGameMode.SC) Settings.Cur2SCID = stashID;
-                    if (mode == GrimDawnGameMode.HC) Settings.Cur2HCID = stashID;
-                    break;
-            }
+            GetExpansionMode(exp, mode).CurrentID = stashID;
         }
 
         public Common.Config.ConfigStash GetStashByID(int stashID)
         {
-            return _config.Stashes.Find(s => { return s.ID == stashID; });
+            return Stashes.Find(s => { return s.ID == stashID; });
         }
 
         public int GetStashIndex(int stashID)
         {
-            return _config.Stashes.FindIndex((stash) => { return stash.ID == stashID; });
+            return Stashes.FindIndex((stash) => { return stash.ID == stashID; });
         }
 
-        public IEnumerable<Common.Config.ConfigStash> GetStashes()
-        {
-            return _config.Stashes;
-        }
-
-        public Common.Config.ConfigStash CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode = GrimDawnGameMode.None)
+        public Common.Config.ConfigStash CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
         {
             Console.WriteLine(string.Format(@"Adding Config Stash: {0} (expansion: {1}, mode: {2})", name, expansion.ToString(), mode.ToString()));
 
-            _config.Settings.LastID += 1;
+            _config.Stashes.LastID += 1;
             Common.Config.ConfigStash stash = new Common.Config.ConfigStash
             {
                 Name = name,
-                ID = _config.Settings.LastID,
-                Order = _config.Settings.LastID,
+                ID = _config.Stashes.LastID,
+                Order = _config.Stashes.LastID,
                 Expansion = (int)expansion,
                 SC = mode.HasFlag(GrimDawnGameMode.SC),
                 HC = mode.HasFlag(GrimDawnGameMode.HC),
             };
-            _config.Stashes.Add(stash);
+            Stashes.Add(stash);
 
             Console.WriteLine("- id: " + stash.ID);
             Global.FileSystem.CreateStashDirectory(stash.ID);
@@ -270,7 +461,7 @@ namespace GDMultiStash.GlobalHandlers
             if (index != -1)
             {
                 Console.WriteLine(string.Format(@"- index: {0}", index));
-                _config.Stashes.RemoveAt(index);
+                Stashes.RemoveAt(index);
                 return true;
             }
             else
@@ -282,66 +473,114 @@ namespace GDMultiStash.GlobalHandlers
 
         public bool IsMainStashID(int stashID)
         {
-            return (stashID == Settings.Main0SCID
-                || stashID == Settings.Main0HCID
-                || stashID == Settings.Main1SCID
-                || stashID == Settings.Main1HCID
-                || stashID == Settings.Main2SCID
-                || stashID == Settings.Main2HCID);
+            foreach(Common.Config.ConfigExpansion cexp in Expansions)
+            {
+                if (cexp.SC.MainID == stashID) return true;
+                if (cexp.HC.MainID == stashID) return true;
+            }
+            return false;
         }
 
         public bool IsCurrentStashID(int stashID)
         {
-            return (stashID == Settings.Cur0SCID
-                || stashID == Settings.Cur0HCID
-                || stashID == Settings.Cur1SCID
-                || stashID == Settings.Cur1HCID
-                || stashID == Settings.Cur2SCID
-                || stashID == Settings.Cur2HCID);
+            foreach (Common.Config.ConfigExpansion cexp in Expansions)
+            {
+                if (cexp.SC.CurrentID == stashID) return true;
+                if (cexp.HC.CurrentID == stashID) return true;
+            }
+            return false;
+        }
+
+        public GrimDawnGameEnvironment[] GetStashEnvironments(int stashId)
+        {
+            List<GrimDawnGameEnvironment> l = new List<GrimDawnGameEnvironment>();
+            foreach (var cfgExp in Expansions)
+            {
+                if (stashId == cfgExp.SC.CurrentID)
+                    l.Add(new GrimDawnGameEnvironment()
+                    {
+                        Expansion = (GrimDawnGameExpansion)cfgExp.ID,
+                        Mode = GrimDawnGameMode.SC
+                    });
+                if (stashId == cfgExp.HC.CurrentID)
+                    l.Add(new GrimDawnGameEnvironment()
+                    {
+                        Expansion = (GrimDawnGameExpansion)cfgExp.ID,
+                        Mode = GrimDawnGameMode.HC
+                    });
+            }
+            return l.ToArray();
         }
 
         #endregion
 
-        #region Stash Category Methods
+        #region Stash Group Methods
 
-        public IEnumerable<Common.Config.ConfigStashCategory> GetCategories()
+        public Common.Config.ConfigStashGroup GetGroupByID(int grpID)
         {
-            return _config.StashCategories;
+            return StashGroups.Find(c => { return c.ID == grpID; });
         }
 
-        public Common.Config.ConfigStashCategory GetCategoryByID(int catID)
+        public Common.Config.ConfigStashGroup CreateMainGroup(string name)
         {
-            return _config.StashCategories.Find(c => { return c.ID == catID; });
-        }
-
-        public Common.Config.ConfigStashCategory CreateStashCategory(string name, int id = -1)
-        {
-            Common.Config.ConfigStashCategory cat = null;
-            // generate new id
-            if (id == -1)
-            {
-                // find next ID to be used
-                id = 1 + _config.StashCategories.Aggregate(0, (acc, x) => {
-                    return Math.Max(acc, x.ID);
-                });
-            }
-            // explicite id
-            else
-            {
-                // check if ID already exists
-                cat = GetCategoryByID(id);
-                if (cat != null) return cat;
-            }
-
-            Console.WriteLine($"Adding Config Stash Category: #{id} {name}");
-            cat = new Common.Config.ConfigStashCategory
+            int id = 0;
+            Console.WriteLine($"Config: Adding Main Group: #{id} {name}");
+            Common.Config.ConfigStashGroup grp = new Common.Config.ConfigStashGroup
             {
                 Name = name,
                 ID = id,
+                Order = id,
             };
-            _config.StashCategories.Add(cat);
-            return cat;
+            StashGroups.Add(grp);
+            return grp;
         }
+
+
+
+        public Common.Config.ConfigStashGroup CreateStashGroup(string name)
+        {
+            _config.StashGroups.LastID += 1;
+            int id = _config.StashGroups.LastID;
+            Console.WriteLine($"Config: Adding Group: #{id} {name}");
+            Common.Config.ConfigStashGroup grp = new Common.Config.ConfigStashGroup
+            {
+                Name = name,
+                ID = id,
+                Order = id,
+            };
+            StashGroups.Add(grp);
+            return grp;
+        }
+
+        public bool IsMainStashGroupID(int groupID)
+        {
+            // well ...
+            return groupID == 0;
+        }
+
+        public bool DeleteStashGroup(int groupID)
+        {
+            Console.WriteLine(string.Format(@"Deleting Config Stash Group with id {0}", groupID));
+
+            int index = GetStashGroupIndex(groupID);
+            if (index != -1)
+            {
+                Console.WriteLine(string.Format(@"- index: {0}", index));
+                StashGroups.RemoveAt(index);
+                return true;
+            }
+            else
+            {
+                Console.WriteLine(string.Format(@"- No Config Stash Group found with that id"));
+                return false;
+            }
+        }
+
+        public int GetStashGroupIndex(int groupID)
+        {
+            return StashGroups.FindIndex((group) => { return group.ID == groupID; });
+        }
+
 
         #endregion
 

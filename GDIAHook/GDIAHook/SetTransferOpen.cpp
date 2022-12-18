@@ -42,34 +42,39 @@ void SetTransferOpen::DisableHook() {
 	Unhook((PVOID*)&originalMethod, HookedMethod);
 }
 
+
 void* __fastcall SetTransferOpen::HookedMethod(void* This, bool isOpen) {
 
 	GAME::Engine* engine = fnGetEngine();
 	GAME::GameInfo* gameInfo = fnGetGameInfo(engine);
 	if (gameInfo != nullptr) {
 
+			int expansionId = fnGetLoadedExpansionId(engine);
+			DataItemPtr item1(new DataItem(TYPE_GameInfo_Expansion, sizeof(expansionId), (char*)&expansionId));
+			_m_dataQueue->push(item1);
+			SetEvent(_m_hEvent);
 
-		bool isHardcore = fnGetHardcore(gameInfo);
-		int expansionId = fnGetLoadedExpansionId(engine);
+			bool isHardcore = fnGetHardcore(gameInfo);
+			DataItemPtr item2(new DataItem(TYPE_GameInfo_IsHardcore, sizeof(isHardcore), (char*)&isHardcore));
+			_m_dataQueue->push(item2);
+			SetEvent(_m_hEvent);
 
-		DataItemPtr item1(new DataItem(TYPE_GameInfo_Expansion, sizeof(expansionId), (char*)&expansionId));
-		_m_dataQueue->push(item1);
-		SetEvent(_m_hEvent);
+			std::wstring modName;
+			int modIndex = fnGetGameInfoMode(gameInfo);
 
-		DataItemPtr item2(new DataItem(TYPE_GameInfo_IsHardcore, sizeof(isHardcore), (char*)&isHardcore));
-		_m_dataQueue->push(item2);
-		SetEvent(_m_hEvent);
+			fnGetModNameArg(gameInfo, &modName);
+			modName.erase(std::remove(modName.begin(), modName.end(), '\r'), modName.end());
+			modName.erase(std::remove(modName.begin(), modName.end(), '\n'), modName.end());
+			DataItemPtr item3(new DataItem(TYPE_GameInfo_SetModName, modName.size() * sizeof(wchar_t), (char*)modName.c_str()));
+			_m_dataQueue->push(item3);
+			SetEvent(_m_hEvent);
 
+			if (modIndex == 0 || modName == L"survivalmode") {
+				char b[1];
+				b[0] = (isOpen ? 1 : 0);
+				g_self->TransferData(1, (char*)b);
+			}
 
-		std::wstring modName;
-		int modIndex = fnGetGameInfoMode(gameInfo);
-		fnGetModNameArg(gameInfo, &modName);
-
-		if (modIndex == 0 || modName == L"survivalmode") {
-			char b[1];
-			b[0] = (isOpen ? 1 : 0);
-			g_self->TransferData(1, (char*)b);
-		}
 	}
 
 
