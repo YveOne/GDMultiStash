@@ -136,6 +136,8 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter LoadButton => _.Get("btn_load");
             public _Core.StringGetter CreateGroupButton => _.Get("btn_create_group");
             public _Core.StringGetter OverwriteButton => _.Get("btn_overwrite");
+            public _Core.StringGetter StashesButton => _.Get("btn_stashes");
+            public _Core.StringGetter GroupsButton => _.Get("btn_groups");
 
 
 
@@ -158,6 +160,7 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter OverlayScaleLabel => _.Get("lbl_overlay_scale");
             public _Core.StringGetter OverlayTransparencyLabel => _.Get("lbl_overlay_transparency");
             public _Core.StringGetter OverlayStashesCountLabel => _.Get("lbl_overlay_stashes_count");
+            public _Core.StringGetter OverlayShowWorkloadLabel => _.Get("lbl_overlay_show_workload");
             public _Core.StringGetter AutoBackToMainLabel => _.Get("lbl_auto_back_to_main");
             public _Core.StringGetter CheckVersionLabel => _.Get("lbl_check_version");
             public _Core.StringGetter SaveLockedStashesLabel => _.Get("lbl_save_locked_stashes");

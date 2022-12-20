@@ -27,7 +27,7 @@ namespace GDMultiStash.Overlay
             {
                 Resource = StaticResources.LockSignResource,
                 AnchorPoint = Anchor.Right,
-                X = -50,
+                X = -55,
                 Scale = 0.8f,
                 Visible = false,
                 Alpha = 0.5f,
@@ -35,7 +35,7 @@ namespace GDMultiStash.Overlay
             };
             _usageIndicator = new ImageElement()
             {
-                X = -5,
+                X = -10,
                 AnchorPoint = Anchor.Right,
                 Height = 10,
                 Width = 40,
@@ -57,9 +57,20 @@ namespace GDMultiStash.Overlay
             }
         }
 
+        public bool ShowWorkload
+        {
+            get { return _usageIndicator.Visible; }
+            set
+            {
+                _usageIndicator.Visible = value;
+                _lockSign.X = value ? -55 : -10 ;
+            }
+        }
+
         public void UpdateUsageIndicator()
         {
             if (ParentViewport == null) return;
+            ParentViewport.OverlayResources.DeleteResource(_usageIndicator.Resource);
             ParentViewport.OverlayResources.AsyncCreateImageResource(Model.UsageIndicator, System.Drawing.Imaging.ImageFormat.Png)
                 .ResourceCreated += delegate(object sender, ResourceHandler.ResourceCreatedEventArgs args) {
                     _usageIndicator.Resource = args.Resource;

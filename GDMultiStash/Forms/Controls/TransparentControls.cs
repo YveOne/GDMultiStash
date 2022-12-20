@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace GDMultiStash.Controls
+namespace GDMultiStash.Forms.Controls
 {
     internal class TransparentPanel : Panel
     {

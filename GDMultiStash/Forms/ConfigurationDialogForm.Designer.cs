@@ -68,6 +68,7 @@
             this.saveOverLockedCheckBox = new System.Windows.Forms.CheckBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.applyButton = new System.Windows.Forms.Button();
+            this.overlayShowWorkloadCheckBox = new System.Windows.Forms.CheckBox();
             this.gameStartGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.maxBackupsTrackBar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.overlayWidthTrackBar)).BeginInit();
@@ -448,6 +449,7 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel5.Controls.Add(this.overlayShowWorkloadCheckBox);
             this.panel5.Controls.Add(this.overlayStashesCountLabel);
             this.panel5.Controls.Add(this.overlayStashesCountTrackBar);
             this.panel5.Controls.Add(this.overlayStashesCountValueLabel);
@@ -540,6 +542,17 @@
             this.applyButton.UseVisualStyleBackColor = true;
             this.applyButton.Click += new System.EventHandler(this.ApplyButton_Click);
             // 
+            // overlayShowWorkloadCheckBox
+            // 
+            this.overlayShowWorkloadCheckBox.AutoSize = true;
+            this.overlayShowWorkloadCheckBox.Location = new System.Drawing.Point(26, 449);
+            this.overlayShowWorkloadCheckBox.Name = "overlayShowWorkloadCheckBox";
+            this.overlayShowWorkloadCheckBox.Size = new System.Drawing.Size(147, 17);
+            this.overlayShowWorkloadCheckBox.TabIndex = 25;
+            this.overlayShowWorkloadCheckBox.Text = "Show workload in overlay";
+            this.overlayShowWorkloadCheckBox.UseVisualStyleBackColor = true;
+            this.overlayShowWorkloadCheckBox.CheckedChanged += new System.EventHandler(this.OverlayShowWorkloadCheckBox_CheckedChanged);
+            // 
             // ConfigurationDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -608,5 +621,6 @@
         private System.Windows.Forms.Label overlayStashesCountLabel;
         private System.Windows.Forms.TrackBar overlayStashesCountTrackBar;
         private System.Windows.Forms.Label overlayStashesCountValueLabel;
+        private System.Windows.Forms.CheckBox overlayShowWorkloadCheckBox;
     }
 }

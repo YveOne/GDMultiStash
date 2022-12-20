@@ -48,6 +48,8 @@ btn_extract_translations = Extrahiere Übersetzungsdateien
 btn_load = Laden
 btn_create_group = Gruppe erstellen
 btn_overwrite = Überschreiben
+btn_stashes = Stashes
+btn_groups = Gruppen
 
 // listview columns
 lvc_id = ID
@@ -75,6 +77,7 @@ lbl_overlay_width = Overlay Breite:
 lbl_overlay_scale = Overlay Größe:
 lbl_overlay_transparency = Overlay Transparenz:
 lbl_overlay_stashes_count = Anzahl angezeigter Stashes:
+lbl_overlay_show_workload = Zeige Auslastung im Overlay
 lbl_auto_back_to_main = Wechsel zum Haupt-Stash wenn Stash geschlossen wurde
 lbl_check_version = Überprüfe auf neue Version beim Start
 lbl_save_locked_stashes = Speicher gesperrte Stashes mit dem Speichern-Button

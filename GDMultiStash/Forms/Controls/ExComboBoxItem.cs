@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace GDMultiStash.Controls
+namespace GDMultiStash.Forms.Controls
 {
     internal class ExComboBoxItem
     {

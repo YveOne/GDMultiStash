@@ -48,6 +48,8 @@ btn_extract_translations = Extract translation files
 btn_load = 加载
 btn_create_group = Create Group
 btn_overwrite = Overwrite
+btn_stashes = Stashes
+btn_groups = Groups
 
 // listview columns
 lvc_id = ID
@@ -75,6 +77,7 @@ lbl_overlay_width = 覆盖宽度：
 lbl_overlay_scale = 叠加比例：
 lbl_overlay_transparency = Overlay Transparency:
 lbl_overlay_stashes_count = Displayed stashes count:
+lbl_overlay_show_workload = Show workload in overlay
 lbl_auto_back_to_main = 当仓库关闭时切换到主仓库
 lbl_check_version = 启动时检查新版本
 lbl_save_locked_stashes = Save locked stashes when using save button

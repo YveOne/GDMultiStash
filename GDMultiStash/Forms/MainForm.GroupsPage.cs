@@ -54,6 +54,14 @@ namespace GDMultiStash.Forms
 
         private void InitializeGroupsPage()
         {
+
+            Controls.PseudoScrollBarPanel scrollCover = new Controls.PseudoScrollBarPanel(groups_listView)
+            {
+                BackColor = listViewBackColor,
+                BarColor = scrollBarColor,
+                BarWidth = SystemInformation.VerticalScrollBarWidth - 5
+            };
+
             groups_listViewBorderPanel.BackColor = listViewBackColor;
             groups_listViewBorderPanel.Padding = listViewBorderPadding;
 
@@ -158,6 +166,7 @@ namespace GDMultiStash.Forms
                 item.Selected = false;
                 groups_listView.RefreshItem(item);
             }
+            groups_listView.CancelCellEdit();
         }
 
         private void Groups_RefreshAllObjects()

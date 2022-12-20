@@ -650,7 +650,7 @@ namespace GDMultiStash.GlobalHandlers
         public void SaveCurrentStash()
         {
             ReopenStashAction(() => {
-                Global.Stashes.ImportStash(ActiveStashID);
+                Global.Stashes.ImportStash(ActiveStashID, Global.Configuration.Settings.SaveOverwritesLocked);
                 Global.Stashes.ExportStash(ActiveStashID);
             });
         }

@@ -1,3 +1,18 @@
+v1.31
+- Added a logo on game start up to indicate that GDMS is running
+- Bugfix: Collapsing a group nomore activates edit mode for stash name
+- Added config option to show/hide capacity indicators in overlay
+- Improved DirectX Hook: Now consuming less memory by reusing cached resources
+- SC/HC checkboxes in display menu (at bottom) now using three states
+  checked (green tick): show only stashes where it is also checked
+  unchecked (red cross): show only stashes where is is also not checked
+  indeterminate (empty): show all stashes
+  Examples:
+    - leaving both empty will show all stashes
+    - set SC to checked and HC empty will show all stashes where SC is checked
+    - set both to checked will only show stashes where both are checked
+    This only affects the main window list, not the ingame stash list
+
 v1.30
 - Fixed: Reloading a locked stash not working
 - Fixed: Saving a stash is now also loading it

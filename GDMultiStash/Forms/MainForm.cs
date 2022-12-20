@@ -55,6 +55,8 @@ namespace GDMultiStash.Forms
         private readonly Color listViewGroupHeaderForeColor = Color.FromArgb(245, 245, 245);
         private readonly Color listViewGroupHeaderSeparatorColor = Color.FromArgb(50, 50, 50);
 
+        private readonly Color scrollBarColor = Color.FromArgb(100, 100, 100);
+
         #endregion
 
         #region classes
@@ -305,6 +307,9 @@ namespace GDMultiStash.Forms
         protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
             Text = Global.AppName;
+
+            stashesPageButton.Text = L.StashesButton();
+            groupsPageButton.Text = L.GroupsButton();
 
             // form
             captionGameButton.Text = L.StartGameButton();

@@ -66,6 +66,7 @@ namespace GDMultiStash.Forms
             autoBackToMainCheckBox.Checked = _settings.AutoBackToMain;
             checkVersionCheckBox.Checked = _settings.CheckForNewVersion;
             saveOverLockedCheckBox.Checked = _settings.SaveOverwritesLocked;
+            overlayShowWorkloadCheckBox.Checked = _settings.OverlayShowWorkload;
 
             applyButton.Enabled = false;
 
@@ -283,6 +284,7 @@ namespace GDMultiStash.Forms
             overlayWidthLabel.Text = L.OverlayWidthLabel();
             overlayTransparencyLabel.Text = L.OverlayTransparencyLabel();
             overlayStashesCountLabel.Text = L.OverlayStashesCountLabel();
+            overlayShowWorkloadCheckBox.Text = L.OverlayShowWorkloadLabel();
             autoBackToMainCheckBox.Text = L.AutoBackToMainLabel();
             checkVersionCheckBox.Text = L.CheckVersionLabel();
             saveOverLockedCheckBox.Text = L.SaveLockedStashesLabel();
@@ -430,6 +432,12 @@ namespace GDMultiStash.Forms
         private void SaveOverLockedCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _settings.SaveOverwritesLocked = saveOverLockedCheckBox.Checked;
+            applyButton.Enabled = true;
+        }
+
+        private void OverlayShowWorkloadCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _settings.OverlayShowWorkload = overlayShowWorkloadCheckBox.Checked;
             applyButton.Enabled = true;
         }
 

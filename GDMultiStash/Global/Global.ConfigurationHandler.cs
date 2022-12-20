@@ -34,6 +34,26 @@ namespace GDMultiStash.GlobalHandlers
 
         private bool needSaveAfterUpdate = false;
 
+        public int CheckStateToInt(System.Windows.Forms.CheckState state)
+        {
+            switch (state)
+            {
+                case System.Windows.Forms.CheckState.Checked: return 1;
+                case System.Windows.Forms.CheckState.Unchecked: return 0;
+            }
+            return -1;
+        }
+
+        public System.Windows.Forms.CheckState IntToCheckState(int state)
+        {
+            switch (state)
+            {
+                case 0: return System.Windows.Forms.CheckState.Unchecked;
+                case 1: return System.Windows.Forms.CheckState.Checked;
+            }
+            return System.Windows.Forms.CheckState.Indeterminate;
+        }
+
         #region Load/Save Methods
 
         private Common.Config.Config LoadFromFile(string filePath)
@@ -160,6 +180,7 @@ namespace GDMultiStash.GlobalHandlers
                             WriteToFile(configNew, filePath);
                         }
                         break;
+
 
                 }
                 Console.WriteLine("... Done");
@@ -360,7 +381,8 @@ namespace GDMultiStash.GlobalHandlers
             if (previous.OverlayScale != Settings.OverlayScale
                 || previous.OverlayWidth != Settings.OverlayWidth
                 || previous.OverlayTransparency != Settings.OverlayTransparency
-                || previous.OverlayStashesCount != Settings.OverlayStashesCount)
+                || previous.OverlayStashesCount != Settings.OverlayStashesCount
+                || previous.OverlayShowWorkload != Settings.OverlayShowWorkload)
             {
                 AppearanceChanged?.Invoke(null, EventArgs.Empty);
             }
@@ -387,7 +409,7 @@ namespace GDMultiStash.GlobalHandlers
             if (File.Exists(filePath))
             {
                 Console.WriteLine($"- import from: {filePath}");
-                Global.FileSystem.ImportStashTransferFile(stash.ID, filePath);
+                Global.FileSystem.ImportStashTransferFile(stash.ID, filePath, out bool changed);
             }
             else
             {

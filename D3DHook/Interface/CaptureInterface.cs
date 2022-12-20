@@ -19,7 +19,7 @@ namespace D3DHook.Interface
     public delegate void InitResourcesEvent(InitResourcesEventArgs args);
     [Serializable]
     public delegate void FrameDrawingEvent(float ms);
-
+    
     [Serializable]
     public class CaptureInterface : MarshalByRefObject
     {
@@ -54,7 +54,7 @@ namespace D3DHook.Interface
         public event DrawOverlayEvent DrawOverlay;
 
         public event InitResourcesEvent InitResources;
-
+        
 
         #endregion
 
@@ -279,7 +279,6 @@ namespace D3DHook.Interface
         /// </summary>
         public event DrawOverlayEvent DrawOverlay;
 
-
         public event InitResourcesEvent InitResources;
 
         #endregion
@@ -305,7 +304,7 @@ namespace D3DHook.Interface
         {
             DrawOverlay?.Invoke(args);
         }
-
+        
         public void InitResourcesProxyHandler(InitResourcesEventArgs args)
         {
             InitResources?.Invoke(args);

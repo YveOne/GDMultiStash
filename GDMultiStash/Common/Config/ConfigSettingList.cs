@@ -24,8 +24,8 @@ namespace GDMultiStash.Common.Config
         [XmlElement("GamePath")] public string GamePath = "";
 
         //[XmlIgnore] public int ShowExpansion = 0;
-        [XmlElement("ShowSoftcore")] public bool ShowSoftcore = false;
-        [XmlElement("ShowHardcore")] public bool ShowHardcore = false;
+        [XmlElement("ShowSoftcoreState")] public int ShowSoftcoreState = -1;
+        [XmlElement("ShowHardcoreState")] public int ShowHardcoreState = -1;
 
         [XmlElement("MaxBackups")] public int MaxBackups = 10;
 
@@ -33,6 +33,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("OverlayScale")] public int OverlayScale = 100;
         [XmlElement("OverlayTransparency")] public int OverlayTransparency = 90;
         [XmlElement("OverlayStashesCount")] public int OverlayStashesCount = 20;
+        [XmlElement("OverlayShowWorkload")] public bool OverlayShowWorkload = true;
 
         [XmlElement("ConfirmClosing")] public bool ConfirmClosing = true;
         [XmlElement("CloseWithGrimDawn")] public bool CloseWithGrimDawn = true;
@@ -62,8 +63,8 @@ namespace GDMultiStash.Common.Config
                 Language = Language,
                 GamePath = GamePath,
 
-                ShowSoftcore = ShowSoftcore,
-                ShowHardcore = ShowHardcore,
+                ShowSoftcoreState = ShowSoftcoreState,
+                ShowHardcoreState = ShowHardcoreState,
 
                 MaxBackups = MaxBackups,
 
@@ -71,6 +72,7 @@ namespace GDMultiStash.Common.Config
                 OverlayScale = OverlayScale,
                 OverlayTransparency = OverlayTransparency,
                 OverlayStashesCount = OverlayStashesCount,
+                OverlayShowWorkload = OverlayShowWorkload,
 
                 ConfirmClosing = ConfirmClosing,
                 CloseWithGrimDawn = CloseWithGrimDawn,
@@ -101,8 +103,8 @@ namespace GDMultiStash.Common.Config
             Language = s.Language;
             GamePath = s.GamePath;
 
-            ShowSoftcore = s.ShowSoftcore;
-            ShowHardcore = s.ShowHardcore;
+            ShowSoftcoreState = s.ShowSoftcoreState;
+            ShowHardcoreState = s.ShowHardcoreState;
 
             MaxBackups = s.MaxBackups;
 
@@ -110,6 +112,7 @@ namespace GDMultiStash.Common.Config
             OverlayScale = s.OverlayScale;
             OverlayTransparency = s.OverlayTransparency;
             OverlayStashesCount = s.OverlayStashesCount;
+            OverlayShowWorkload = s.OverlayShowWorkload;
 
             ConfirmClosing = s.ConfirmClosing;
             CloseWithGrimDawn = s.CloseWithGrimDawn;

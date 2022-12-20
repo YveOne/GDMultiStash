@@ -18,47 +18,14 @@ using System.Windows.Forms;
 
 using BrightIdeasSoftware;
 
-namespace GDMultiStash.Controls
+namespace GDMultiStash.Forms.Controls
 {
-    internal class ExObjectListView : ObjectListView
+    internal class OLVGroupFeatures : OLVCatchScrolling
     {
         // https://stackoverflow.com/questions/32700669/c-sharp-change-color-of-groups-in-objectlistview
 
-        public Color GroupHeadingBackColor { get; set; }
 
-        public Color GroupHeadingForeColor { get; set; }
-
-        public Color GroupHeadingCountForeColor { get; set; }
-
-        public Font GroupHeadingFont { get; set; }
-
-        public Font GroupHeadingCountFont { get; set; }
-
-        public Color SeparatorColor { get; set; }
-
-
-
-        public const int LVCDI_ITEM = 0x0;
-        public const int LVCDI_GROUP = 0x1;
-        public const int LVCDI_ITEMSLIST = 0x2;
-
-        public const int LVM_FIRST = 0x1000;
-        public const int LVM_GETGROUPRECT = (LVM_FIRST + 98);
-        public const int LVM_ENABLEGROUPVIEW = (LVM_FIRST + 157);
-        public const int LVM_SETGROUPINFO = (LVM_FIRST + 147);
-        public const int LVM_GETGROUPINFO = (LVM_FIRST + 149);
-        public const int LVM_REMOVEGROUP = (LVM_FIRST + 150);
-        public const int LVM_MOVEGROUP = (LVM_FIRST + 151);
-        public const int LVM_GETGROUPCOUNT = (LVM_FIRST + 152);
-        public const int LVM_GETGROUPINFOBYINDEX = (LVM_FIRST + 153);
-        public const int LVM_MOVEITEMTOGROUP = (LVM_FIRST + 154);
-
-        private const int WM_LBUTTONDOWN = 0x0201;
-        private const int WM_LBUTTONUP = 0x0202;
-        private const int WM_LBUTTONDBLCLK = 0x0203;
-
-        private const int WM_RBUTTONDOWN = 0x0204;
-        private const int WM_RBUTTONUP = 0x0205;
+        #region Structs
 
         [StructLayout(LayoutKind.Sequential)]
         public struct NMHDR
@@ -150,7 +117,6 @@ namespace GDMultiStash.Controls
             public uint cchSubsetTitle;
         }
 
-
         [Flags]
         public enum CDRF : int
         {
@@ -179,6 +145,32 @@ namespace GDMultiStash.Controls
             CDDS_ITEMPOSTERASE = (CDDS.CDDS_ITEM | CDDS.CDDS_POSTERASE),
             CDDS_SUBITEM = 0x20000
         }
+
+        #endregion
+
+        #region Constants
+
+        public const int LVCDI_ITEM = 0x0;
+        public const int LVCDI_GROUP = 0x1;
+        public const int LVCDI_ITEMSLIST = 0x2;
+
+        public const int LVM_FIRST = 0x1000;
+        public const int LVM_GETGROUPRECT = (LVM_FIRST + 98);
+        public const int LVM_ENABLEGROUPVIEW = (LVM_FIRST + 157);
+        public const int LVM_SETGROUPINFO = (LVM_FIRST + 147);
+        public const int LVM_GETGROUPINFO = (LVM_FIRST + 149);
+        public const int LVM_REMOVEGROUP = (LVM_FIRST + 150);
+        public const int LVM_MOVEGROUP = (LVM_FIRST + 151);
+        public const int LVM_GETGROUPCOUNT = (LVM_FIRST + 152);
+        public const int LVM_GETGROUPINFOBYINDEX = (LVM_FIRST + 153);
+        public const int LVM_MOVEITEMTOGROUP = (LVM_FIRST + 154);
+
+        private const int WM_LBUTTONDOWN = 0x0201;
+        private const int WM_LBUTTONUP = 0x0202;
+        private const int WM_LBUTTONDBLCLK = 0x0203;
+
+        private const int WM_RBUTTONDOWN = 0x0204;
+        private const int WM_RBUTTONUP = 0x0205;
 
         public const int LVGF_NONE = 0x0;
         public const int LVGF_HEADER = 0x1;
@@ -219,6 +211,10 @@ namespace GDMultiStash.Controls
         public const int LVGGR_LABEL = 2;  // Label only
         public const int LVGGR_SUBSETLINK = 3;  // subset link only
 
+        #endregion
+
+        #region Native
+
         [DllImport("User32.dll", EntryPoint = "SendMessageW", SetLastError = true)]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, ref IntPtr lParam);
 
@@ -228,7 +224,28 @@ namespace GDMultiStash.Controls
         [DllImport("User32.dll", EntryPoint = "SendMessageW", SetLastError = true)]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, ref RECT lParam);
 
-        public ExObjectListView() : base()
+        #endregion
+
+        public Color GroupHeadingBackColor { get; set; }
+
+        public Color GroupHeadingForeColor { get; set; }
+
+        public Color GroupHeadingCountForeColor { get; set; }
+
+        public Font GroupHeadingFont { get; set; }
+
+        public Font GroupHeadingCountFont { get; set; }
+
+        public Color SeparatorColor { get; set; }
+
+
+
+
+
+
+
+
+        public OLVGroupFeatures() : base()
         {
             GroupHeadingFont = this.Font;
             GroupHeadingCountFont = this.Font;
@@ -238,12 +255,16 @@ namespace GDMultiStash.Controls
             SeparatorColor = Color.Black;
 
 
-            LongClickTimer = new System.Timers.Timer(800);
-            LongClickTimer.AutoReset = false;
-            LongClickTimer.Elapsed += delegate {
-                //MessageBox.Show("left button long click");
-            };
+
+
+
+            //LongClickTimer = new System.Timers.Timer(800);
+            //LongClickTimer.AutoReset = false;
+            //LongClickTimer.Elapsed += delegate {
+            //  MessageBox.Show("left button long click");
+            //};
         }
+
 
         /*
         public int SetGroupInfo(IntPtr hWnd, int nGroupID, uint nSate)
@@ -284,11 +305,24 @@ namespace GDMultiStash.Controls
         }
 
         //private DateTime leftPressStart = DateTime.Now;
-        private System.Timers.Timer LongClickTimer;
+        //private System.Timers.Timer LongClickTimer;
+
+        // fixing bug: collapsing group activates cell edit mode
+        // send dblclick message on btn up, instead of btn down
+        private bool debugDblClick = false;
 
 
         protected override void WndProc(ref Message m)
         {
+
+
+
+
+
+
+
+
+
             Point clickedPoint = new Point(Native.LOWORD(m.LParam), Native.HIWORD(m.LParam));
             OLVGroup clickedGroup = null;
 
@@ -306,9 +340,7 @@ namespace GDMultiStash.Controls
             {
                 if (clickedGroup != null)
                 {
-                    base.WndProc(ref m);
-                    GroupExpandingCollapsingEventArgs args = new GroupExpandingCollapsingEventArgs(clickedGroup);
-                    GroupExpandingCollapsing2?.Invoke(this, args);
+                    debugDblClick = true;
                     return;
                 }
             }
@@ -325,6 +357,15 @@ namespace GDMultiStash.Controls
             {
                 if (clickedGroup != null)
                 {
+                    if (debugDblClick)
+                    {
+                        debugDblClick = false;
+                        m.Msg = WM_LBUTTONDBLCLK;
+                        base.WndProc(ref m);
+                        GroupExpandingCollapsingEventArgs args = new GroupExpandingCollapsingEventArgs(clickedGroup);
+                        GroupExpandingCollapsing2?.Invoke(this, args);
+                        return;
+                    }
                     //LongClickTimer.Stop();
                     //return;
                 }
@@ -499,8 +540,6 @@ namespace GDMultiStash.Controls
         private const int NM_CUSTOMDRAW = NM_FIRST - 12;
         private const int WM_REFLECT = 0x2000;
         private const int WM_NOFITY = 0x4E;
-
-
 
 
 

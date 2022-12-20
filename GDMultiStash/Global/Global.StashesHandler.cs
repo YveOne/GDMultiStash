@@ -68,7 +68,7 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (Common.TransferFile.ValidateFile(src, out Common.TransferFile transfer))
             {
-                if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, true))
+                if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, out bool changed))
                 {
                     stash.SetTransferFile(transfer);
                     return true;
@@ -133,7 +133,7 @@ namespace GDMultiStash.GlobalHandlers
             if (Common.TransferFile.ValidateFile(src, out Common.TransferFile transfer))
             {
                 StashObject stash = new StashObject(Global.Configuration.CreateStash(name, expansion, mode));
-                if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, true))
+                if (Global.FileSystem.ImportStashTransferFile(stash.ID, src, out bool changed))
                 {
                     stash.SetTransferFile(transfer);
                     _stashes.Add(stash.ID, stash);
@@ -150,7 +150,7 @@ namespace GDMultiStash.GlobalHandlers
 
 
 
-        public bool ImportStash(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        public bool ImportStash(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode, bool ignoreLock = false)
         {
             string externalFile = GrimDawn.GetTransferFilePath(exp, mode);
             Console.WriteLine($"Importing Stash #{stashID}");
@@ -159,23 +159,26 @@ namespace GDMultiStash.GlobalHandlers
             Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID)}");
             Console.WriteLine($"  game: {externalFile}");
             StashObject stash = GetStash(stashID);
-            if (stash.Locked)
+            if (stash.Locked && !ignoreLock)
             {
                 Console.WriteLine($"  LOCKED !!!");
                 return true;
             }
-            if (Global.FileSystem.ImportStashTransferFile(stashID, externalFile))
+            if (Global.FileSystem.ImportStashTransferFile(stashID, externalFile, out bool changed))
             {
-                _stashes[stashID].LoadTransferFile();
-                Global.Runtime.NotifyStashesImported(_stashes[stashID]);
+                if (changed)
+                {
+                    _stashes[stashID].LoadTransferFile();
+                    Global.Runtime.NotifyStashesImported(_stashes[stashID]);
+                }
                 return true;
             }
             return false;
         }
 
-        public bool ImportStash(int stashID)
+        public bool ImportStash(int stashID, bool ignoreLock = false)
         {
-            return ImportStash(stashID, Global.Runtime.CurrentExpansion, Global.Runtime.CurrentMode);
+            return ImportStash(stashID, Global.Runtime.CurrentExpansion, Global.Runtime.CurrentMode, ignoreLock);
         }
 
         public void ExportStash(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode)

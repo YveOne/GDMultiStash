@@ -41,6 +41,7 @@ namespace GDMultiStash.Common.Overlay
                 int useWidth = (int)(TotalWidth / TotalScale);
                 int useHeight = (int)(TotalHeight / TotalScale);
 
+                ParentViewport.OverlayResources.DeleteResource(_imageElement.Resource);
                 ParentViewport.OverlayResources.AsyncCreateTextImageResource(_text, _font, useWidth, useHeight, _color, _alignment)
                     .ResourceCreated += delegate (object sender, ResourceHandler.ResourceCreatedEventArgs args) {
                         _imageElement.Resource = args.Resource;

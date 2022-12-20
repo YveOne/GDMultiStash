@@ -161,6 +161,22 @@ namespace GDMultiStash.Forms
         {
             InitializeStashesListView();
 
+
+            Controls.PseudoScrollBarPanel scrollCover = new Controls.PseudoScrollBarPanel(stashes_listView)
+            {
+                BackColor = listViewBackColor,
+                BarColor = scrollBarColor,
+                BarWidth = SystemInformation.VerticalScrollBarWidth - 5
+            };
+
+
+            stashes_showExpansionComboBox.BorderColor = formBackColor;
+            stashes_showExpansionComboBox.ButtonColor = passiveForeColor;
+            stashes_showExpansionComboBox.BackColor = listViewBackColor;
+            stashes_showExpansionComboBox.ForeColor = interactiveForeColor;
+            stashes_showExpansionComboBox.BackColorHighlight = interactiveForeColor;
+            stashes_showExpansionComboBox.ForeColorHighlight = listViewBackColor;
+
             stashes_listViewBorderPanel.BackColor = listViewBackColor;
             stashes_listViewBorderPanel.Padding = listViewBorderPadding;
 
@@ -230,12 +246,12 @@ namespace GDMultiStash.Forms
 
                 stashes_shownExpansion = GrimDawnLib.GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath);
                 stashes_showExpansionComboBox.SelectedIndex = (int)stashes_shownExpansion;
-                stashes_showSoftCoreCheckbox.Checked = Global.Configuration.Settings.ShowSoftcore;
-                stashes_showHardCoreCheckbox.Checked = Global.Configuration.Settings.ShowHardcore;
+                stashes_showSoftCoreCheckbox.CheckState = Global.Configuration.IntToCheckState(Global.Configuration.Settings.ShowSoftcoreState);
+                stashes_showHardCoreCheckbox.CheckState = Global.Configuration.IntToCheckState(Global.Configuration.Settings.ShowHardcoreState);
 
                 stashes_showExpansionComboBox.SelectionChangeCommitted += Stashes_ShowExpansionComboBox_SelectionChangeCommitted;
-                stashes_showSoftCoreCheckbox.CheckedChanged += Stashes_ShowSoftCoreComboBox_CheckedChanged;
-                stashes_showHardCoreCheckbox.CheckedChanged += Stashes_ShowHardCoreComboBox_CheckedChanged;
+                stashes_showSoftCoreCheckbox.CheckStateChanged += Stashes_ShowSoftCoreCheckbox_CheckStateChanged;
+                stashes_showHardCoreCheckbox.CheckStateChanged += Stashes_ShowHardCoreCheckbox_CheckStateChanged;
 
                 stashes_listView.CellRightClick += Stashes_ListView_CellRightClick;
                 stashes_listView.ColumnRightClick += Stashes_ListView_ColumnRightClick;
@@ -357,6 +373,8 @@ namespace GDMultiStash.Forms
                 item.Selected = false;
                 stashes_listView.RefreshItem(item);
             }
+            stashes_listView.CancelCellEdit();
+            titlePanel.Focus();
         }
 
         private void Stashes_ReloadColumns()
@@ -381,8 +399,8 @@ namespace GDMultiStash.Forms
 
             stashes_listView.ClearObjects();
 
-            bool _sc = Global.Configuration.Settings.ShowSoftcore;
-            bool _hc = Global.Configuration.Settings.ShowHardcore;
+            int _sc = Global.Configuration.Settings.ShowSoftcoreState;
+            int _hc = Global.Configuration.Settings.ShowHardcoreState;
             int displayCount = 0;
             int totalCount = 0;
 
@@ -390,7 +408,7 @@ namespace GDMultiStash.Forms
                 if (stashes_shownExpansion == stash.Expansion)
                 {
                     totalCount += 1;
-                    if ((!_sc && !_hc) || (_sc == stash.SC && _hc == stash.HC))
+                    if (!(stash.SC && _sc == 0 || !stash.SC && _sc == 1 || stash.HC && _hc == 0 || !stash.HC && _hc == 1))
                     {
                         displayCount += 1;
                         return true;
@@ -444,6 +462,7 @@ namespace GDMultiStash.Forms
         {
             StashGroupObject stashGroup = (StashGroupObject)args.Group.Key;
             stashGroup.Collapsed = args.Group.Collapsed;
+            //stashes_listView.CancelCellEdit();
             Global.Configuration.Save();
         }
 
@@ -833,9 +852,9 @@ namespace GDMultiStash.Forms
             Global.Configuration.Save();
             Global.Runtime.NotifyStashesOrderChanged();
             //Stashes_ReloadList(); // its not neccessary to reload WHOLE list
-            bool _sc = Global.Configuration.Settings.ShowSoftcore;
-            bool _hc = Global.Configuration.Settings.ShowHardcore;
-            if ((!_sc && !_hc) || (_sc == stash.SC && _hc == stash.HC))
+            int _sc = Global.Configuration.Settings.ShowSoftcoreState;
+            int _hc = Global.Configuration.Settings.ShowHardcoreState;
+            if (!(stash.SC && _sc == 0 || !stash.SC && _sc == 1 || stash.HC && _hc == 0 || !stash.HC && _hc == 1))
             {
             } 
             else
@@ -898,26 +917,23 @@ namespace GDMultiStash.Forms
             Stashes_ReloadList();
         }
 
-        private void Stashes_ShowSoftCoreComboBox_CheckedChanged(object sender, EventArgs e)
+        private void Stashes_ShowSoftCoreCheckbox_CheckStateChanged(object sender, EventArgs e)
         {
-            Global.Configuration.Settings.ShowSoftcore = stashes_showSoftCoreCheckbox.Checked;
+            Global.Configuration.Settings.ShowSoftcoreState = Global.Configuration.CheckStateToInt(stashes_showSoftCoreCheckbox.CheckState);
             Global.Configuration.Save();
             Stashes_ReloadList();
         }
 
-        private void Stashes_ShowHardCoreComboBox_CheckedChanged(object sender, EventArgs e)
+        private void Stashes_ShowHardCoreCheckbox_CheckStateChanged(object sender, EventArgs e)
         {
-            Global.Configuration.Settings.ShowHardcore = stashes_showHardCoreCheckbox.Checked;
+            Global.Configuration.Settings.ShowHardcoreState = Global.Configuration.CheckStateToInt(stashes_showHardCoreCheckbox.CheckState);
             Global.Configuration.Save();
             Stashes_ReloadList();
         }
 
         private void Stashes_CreateStashButton_Click(object sender, EventArgs e)
         {
-            GrimDawnLib.GrimDawnGameMode mode = GrimDawnLib.GrimDawnGameMode.None;
-            if (stashes_showSoftCoreCheckbox.Checked) mode |= GrimDawnLib.GrimDawnGameMode.SC;
-            if (stashes_showHardCoreCheckbox.Checked) mode |= GrimDawnLib.GrimDawnGameMode.HC;
-            Global.Windows.ShowCreateStashDialog(stashes_shownExpansion, mode);
+            Global.Windows.ShowCreateStashDialog(stashes_shownExpansion);
         }
 
         #endregion

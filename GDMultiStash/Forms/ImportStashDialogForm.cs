@@ -97,8 +97,8 @@ namespace GDMultiStash.Forms
             nameTextBox.Text = Path.GetFileNameWithoutExtension(srcFile);
             expansionTextBox.Text = GrimDawn.GetExpansionName(exp);
 
-            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcore;
-            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcore;
+            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState == 1;
+            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState == 1;
 
             DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;

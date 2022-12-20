@@ -21,6 +21,7 @@ namespace GDMultiStash.Overlay
         private readonly Dictionary<int, StashListChild> _stashId2Item;
 
         private bool _loadItems = false;
+        private bool _updateAppearance = false;
 
         public override Color DebugColor => Color.FromArgb(128, 255, 0, 255);
 
@@ -66,6 +67,10 @@ namespace GDMultiStash.Overlay
                 MouseCheckChildren = true;
                 Alpha = 1f;
             };
+            _updateAppearance = true; // update on startup
+            Global.Configuration.AppearanceChanged += delegate {
+                _updateAppearance = true;
+            };
             MouseWheel += delegate (object sender, MouseWheelEventArgs e)
             {
                 ScrollHandler.ScrollPositionY -= e.Delta < 0 ? -1 : 1;
@@ -103,6 +108,12 @@ namespace GDMultiStash.Overlay
                 if (_stashId2Item.ContainsKey(activeStashID))
                     _stashId2Item[activeStashID].Active = true;
             }
+            if (_updateAppearance)
+            {
+                _updateAppearance = false;
+                foreach(var item in ScrollItems)
+                    item.ShowWorkload = Global.Configuration.Settings.OverlayShowWorkload;
+            }
         }
 
         public void ChangeActiveStash(int oldID, int newID)
@@ -126,6 +137,7 @@ namespace GDMultiStash.Overlay
             item.Color = stash.GetDisplayColor();
             item.Font = stash.GetDisplayFont();
             item.Visible = true;
+            item.ShowWorkload = Global.Configuration.Settings.OverlayShowWorkload;
             item.UpdateUsageIndicator();
             _stashId2Item.Add(stash.ID, item);
             AddScrollItem(item);

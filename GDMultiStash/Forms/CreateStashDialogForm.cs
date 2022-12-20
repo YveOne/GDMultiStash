@@ -55,10 +55,10 @@ namespace GDMultiStash.Forms
             nameTextBox.Focus();
         }
 
-        public DialogResult ShowDialog(IWin32Window owner, GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        public DialogResult ShowDialog(IWin32Window owner, GrimDawnGameExpansion exp)
         {
-            scCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.SC);
-            hcCheckBox.Checked = mode.HasFlag(GrimDawnGameMode.HC);
+            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState == 1;
+            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState == 1;
             expansionComboBox.SelectedIndex = (int)exp;
             base.ShowDialog(owner);
             return DialogResult.OK;

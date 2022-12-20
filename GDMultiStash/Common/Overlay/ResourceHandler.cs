@@ -14,17 +14,21 @@ namespace GDMultiStash.Common.Overlay
         private const int _maxSendQueuedRessources = 20;
         private const int _maxCreateRessources = 20;
 
-        private readonly Dictionary<string, D3DHook.Hook.Common.IImageResource> _resourceCacheByKey;
-        private readonly Dictionary<int, D3DHook.Hook.Common.IResource> _resourcesCacheByUID;
-        private readonly List<D3DHook.Hook.Common.IResource> _resourcesQueueToBeSend;
+
+
+
+
+        private readonly List<D3DHook.Hook.Common.ImageResource> _unusedResources;
+        private readonly Dictionary<int, D3DHook.Hook.Common.Resource> _resourcesCacheByUID;
+        private readonly List<D3DHook.Hook.Common.Resource> _resourcesQueueToBeSend;
         private readonly List<ICreating> _resourcesCreatingQueue;
 
         public ResourceHandler()
         {
-            _resourceCacheByKey = new Dictionary<string, D3DHook.Hook.Common.IImageResource>();
-            _resourcesQueueToBeSend = new List<D3DHook.Hook.Common.IResource>();
-            _resourcesCacheByUID = new Dictionary<int, D3DHook.Hook.Common.IResource>();
+            _resourcesQueueToBeSend = new List<D3DHook.Hook.Common.Resource>();
+            _resourcesCacheByUID = new Dictionary<int, D3DHook.Hook.Common.Resource>();
             _resourcesCreatingQueue = new List<ICreating>();
+            _unusedResources = new List<D3DHook.Hook.Common.ImageResource>();
         }
 
         public void LoadQueuedResourcesFromCache()
@@ -33,29 +37,24 @@ namespace GDMultiStash.Common.Overlay
             _resourcesQueueToBeSend.AddRange(_resourcesCacheByUID.Values);
         }
 
-        public bool CreateAndGetResources(out List<D3DHook.Hook.Common.IResource> list)
+        public void DeleteResource(D3DHook.Hook.Common.IImageResource res)
         {
-            // create resources
+            if (res == null) return;
+            if (!_unusedResources.Contains(res))
+            {
+                if (_resourcesCacheByUID[res.UID] is D3DHook.Hook.Common.ImageResource img)
+                {
+                    _unusedResources.Add(img);
+                    //_resourcesQueueToBeSend.Remove(img);
+                }
+            }
+        }
+
+        public bool CreateAndGetNewResources(out List<D3DHook.Hook.Common.IResource> list)
+        {
             _resourcesCreatingQueue.RemoveAndGetRange(0, _maxCreateRessources)
                 .ForEach(c => {
-                    D3DHook.Hook.Common.IImageResource res;
-                    if (c.Key == null)
-                    {
-                        res = c.Create(this);
-                    }
-                    else
-                    {
-                        if (_resourceCacheByKey.ContainsKey(c.Key))
-                        {
-                            res = _resourceCacheByKey[c.Key];
-                        }
-                        else
-                        {
-                            res = c.Create(this);
-                            _resourceCacheByKey[c.Key] = res;
-                        }
-                    }
-                    c.Callback(this, res);
+                    c.Callback(this, c.Create(this));
                 });
 
             // get resources
@@ -90,7 +89,6 @@ namespace GDMultiStash.Common.Overlay
         private interface ICreating
         {
             CreatedCallbackInvokeDelegate Callback { get; }
-            string Key { get; }
             D3DHook.Hook.Common.IImageResource Create(ResourceHandler rh);
         }
 
@@ -99,7 +97,6 @@ namespace GDMultiStash.Common.Overlay
             private Image _image;
             private ImageFormat _format;
             public CreatedCallbackInvokeDelegate Callback { get; private set; } = null;
-            public string Key { get; private set; } = null;
             public ImageCreating(CreatedCallbackInvokeDelegate cb, Image image, ImageFormat format)
             {
                 _image = image;
@@ -123,9 +120,19 @@ namespace GDMultiStash.Common.Overlay
 
         public D3DHook.Hook.Common.IImageResource CreateImageResource(Image image, ImageFormat format)
         {
-            D3DHook.Hook.Common.ImageResource res = new D3DHook.Hook.Common.ImageResource(new Bitmap(image), format);
+            D3DHook.Hook.Common.ImageResource res;
+            if (_unusedResources.Count > 0)
+            {
+                res = _unusedResources[0];
+                _unusedResources.RemoveAt(0);
+                res.SetImage(image, format);
+            }
+            else
+            {
+                res = new D3DHook.Hook.Common.ImageResource(new Bitmap(image), format);
+                _resourcesCacheByUID.Add(res.UID, res);
+            }
             _resourcesQueueToBeSend.Add(res);
-            _resourcesCacheByUID.Add(res.UID, res);
             return res;
         }
 
@@ -147,14 +154,10 @@ namespace GDMultiStash.Common.Overlay
         {
             private Color _color;
             public CreatedCallbackInvokeDelegate Callback { get; private set; } = null;
-            public string Key { get; private set; } = null;
             public ColorCreating(CreatedCallbackInvokeDelegate cb, Color color)
             {
                 _color = color;
                 Callback = cb;
-                Key = string.Format("Color;{0}",
-                    color.ToString()
-                );
             }
 
             public D3DHook.Hook.Common.IImageResource Create(ResourceHandler rh)
@@ -182,10 +185,7 @@ namespace GDMultiStash.Common.Overlay
                         g.FillRectangle(brush, 0, 0, bmp.Width, bmp.Height);
                     }
                 }
-                D3DHook.Hook.Common.ImageResource res = new D3DHook.Hook.Common.ImageResource(bmp, ImageFormat.Png);
-                _resourcesQueueToBeSend.Add(res);
-                _resourcesCacheByUID.Add(res.UID, res);
-                return res;
+                return CreateImageResource(bmp, ImageFormat.Png);
             }
         }
 
@@ -202,7 +202,6 @@ namespace GDMultiStash.Common.Overlay
             private Color _color;
             private StringAlignment _align;
             public CreatedCallbackInvokeDelegate Callback { get; private set; } = null;
-            public string Key { get; private set; } = null;
             public TextCreating(CreatedCallbackInvokeDelegate cb, string text, Font font, int width, int height, Color color, StringAlignment align)
             {
                 _text = text;
@@ -212,16 +211,6 @@ namespace GDMultiStash.Common.Overlay
                 _color = color;
                 _align = align;
                 Callback = cb;
-                Key = string.Format("Text;{0};{1};{2};{3};{4};{5};{6};{7}",
-                    font.Name,
-                    font.Bold ? 1 : 0,
-                    font.Italic ? 1 : 0,
-                    text,
-                    width,
-                    height,
-                    color.ToString(),
-                    align.ToString()
-                );
             }
 
             public D3DHook.Hook.Common.IImageResource Create(ResourceHandler rh)

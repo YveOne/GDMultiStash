@@ -206,7 +206,7 @@ namespace GDMultiStash.Services
                     }
                     else
                     {
-                        if (_viewport.OverlayResources.CreateAndGetResources(out List<D3DHook.Hook.Common.IResource> res))
+                        if (_viewport.OverlayResources.CreateAndGetNewResources(out List<D3DHook.Hook.Common.IResource> res))
                         {
                             _captureProcess.CaptureInterface.InitializeResources(res);
                         }

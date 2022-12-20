@@ -25,6 +25,8 @@ namespace GDMultiStash
 
         public GDMSContext()
         {
+            //new Test();
+
             Global.FileSystem.CreateDirectories();
             Global.Configuration.Load();
 

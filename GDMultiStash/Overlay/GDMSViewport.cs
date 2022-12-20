@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-using GDMultiStash.Overlay;
+using GDMultiStash.Common.Overlay;
+using GDMultiStash.Common.Overlay.Animations;
 
 using GDMultiStash.Properties;
 
@@ -15,6 +16,7 @@ namespace GDMultiStash.Overlay
     internal class GDMSViewport : Common.Overlay.Viewport
     {
 
+        private readonly ImageElement _startUpLogo;
         private readonly OverlayWindow _mainWindow;
 
         public GDMSViewport()
@@ -94,6 +96,45 @@ namespace GDMultiStash.Overlay
             _mainWindow = new OverlayWindow();
             AddChild(_mainWindow);
 
+
+
+
+            _startUpLogo = new ImageElement()
+            {
+                AnchorPoint = Anchor.TopLeft,
+                X = 10,
+                Y = 20,
+                Width = 115,
+                Height = 40,
+                Alpha = 1,
+                Visible = true,
+                Resource = OverlayResources.CreateImageResource(Resources.title, ImageFormat.Png),
+            };
+            AddChild(_startUpLogo);
+            {
+                AnimationValue logoFading = new AnimationValue()
+                {
+                    Easer = Easing.ExpOut(),
+                    Min = 1f,
+                    Max = 0f,
+                };
+                Animator animator = Animator.Create(2000);
+                animator.Delay = 2000;
+                animator.AnimationAnimate += delegate (object sender, AnimatorAnimateEventArgs args) {
+                    _startUpLogo.Alpha = logoFading.Convert(args.Value);
+                };
+                animator.AnimationEnd += delegate {
+                    _startUpLogo.Visible = false;
+                };
+                animator.Value = 1;
+            }
+
+
+
+
+
+
+
             _mainWindow.StateChanged += delegate (OverlayWindow.States state)
             {
                 switch(state)
@@ -115,9 +156,11 @@ namespace GDMultiStash.Overlay
 
         public override List<D3DHook.Hook.Common.IOverlayElement> GetImagesRecursive()
         {
-            if (_mainWindow.State == OverlayWindow.States.Hidden)
-                return null;
-            return base.GetImagesRecursive();
+            List<D3DHook.Hook.Common.IOverlayElement> l = new List<D3DHook.Hook.Common.IOverlayElement>();
+            l.AddRange(_startUpLogo.GetImagesRecursive());
+            if (_mainWindow.State != OverlayWindow.States.Hidden)
+                l.AddRange(base.GetImagesRecursive());
+            return l;
         }
 
         public void ShowMainWindow()

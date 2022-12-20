@@ -87,11 +87,11 @@ namespace GDMultiStash.GlobalHandlers
             AboutWindow.ShowDialog(DefaultDialogOwner);
         }
 
-        public void ShowCreateStashDialog(GrimDawnLib.GrimDawnGameExpansion exp, GrimDawnLib.GrimDawnGameMode mode)
+        public void ShowCreateStashDialog(GrimDawnLib.GrimDawnGameExpansion exp)
         {
             if (CreateStashWindow.Visible) return;
             CreateStashWindow.StartPosition = DefaultStartPosition;
-            CreateStashWindow.ShowDialog(DefaultDialogOwner, exp, mode);
+            CreateStashWindow.ShowDialog(DefaultDialogOwner, exp);
         }
 
         public void ShowCreateStashGroupDialog()

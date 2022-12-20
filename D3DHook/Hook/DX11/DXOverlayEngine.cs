@@ -12,7 +12,8 @@ namespace D3DHook.Hook.DX11
     internal class DXOverlayEngine: Component
     {
         public List<IOverlay> Overlays { get; set; }
-        public List<IResource> Resources { get; set; }
+        //public List<IResource> Resources { get; set; }
+        public Dictionary<int, IResource> Resources { get; set; }
         public bool DeferredContext
         {
             get
@@ -34,7 +35,8 @@ namespace D3DHook.Hook.DX11
         public DXOverlayEngine()
         {
             Overlays = new List<IOverlay>();
-            Resources = new List<IResource>();
+            //Resources = new List<IResource>();
+            Resources = new Dictionary<int, IResource>();
         }
 
         private void EnsureInitiliased()
@@ -110,13 +112,15 @@ namespace D3DHook.Hook.DX11
 
             Begin();
 
-            foreach (var res in Resources)
+            
+            foreach (var res in Resources.Values)
             {
                 if (res is ImageResource imageResource)
                 {
                     GetImageForImageResource(imageResource);
                 }
             }
+            
 
             foreach (var overlay in Overlays)
             {
@@ -184,18 +188,23 @@ namespace D3DHook.Hook.DX11
         {
             _imageCache.TryGetValue(img.ResourceUID, out DXImage result);
             return result;
+            //return _imageCache[img.ResourceUID]; // DONT DO THIS!
         }
 
-        DXImage GetImageForImageResource(ImageResource img)
+        DXImage GetImageForImageResource(ImageResource res)
         {
-            if (!_imageCache.TryGetValue(img.UID, out DXImage result))
+            if (res.ReCreate)
             {
-                System.Drawing.Bitmap bmp = img.Bitmap;
+                _imageCache.Remove(res.UID);
+            }
+            if (!_imageCache.TryGetValue(res.UID, out DXImage result))
+            {
+                System.Drawing.Bitmap bmp = res.Bitmap;
                 if (bmp == null) return result;
                 result = ToDispose(new DXImage(_device, _deviceContext));
                 result.Initialise(bmp);
                 bmp.Dispose();
-                _imageCache[img.UID] = result;
+                _imageCache[res.UID] = result;
             }
             return result;
         }

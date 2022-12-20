@@ -11,7 +11,7 @@ namespace GDMultiStash.Forms.Dragging
 {
     internal class StashesDragHandler : BaseDragHandler<StashObject>
     {
-        public new Controls.ExObjectListView ListView => (Controls.ExObjectListView)base.ListView;
+        public new Controls.OLVGroupFeatures ListView => (Controls.OLVGroupFeatures)base.ListView;
         public new StashesDragSource DragSource => (StashesDragSource)base.DragSource;
         public new StashesDropSink DropSink => (StashesDropSink)base.DropSink;
 

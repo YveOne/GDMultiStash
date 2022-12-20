@@ -104,11 +104,11 @@
     <Compile Include="Common\Objects\StashGroupObject.cs" />
     <Compile Include="Common\Objects\StashObject.cs" />
     <Compile Include="Console.cs" />
-    <Compile Include="Controls\ExComboBox.cs">
+    <Compile Include="Forms\Controls\ExComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Controls\ExComboBoxItem.cs" />
-    <Compile Include="Controls\ExObjectListView.cs">
+    <Compile Include="Forms\Controls\ExComboBoxItem.cs" />
+    <Compile Include="Forms\Controls\OLVGroupFeatures.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Extensions.cs" />
@@ -118,7 +118,19 @@
     <Compile Include="Forms\ChangelogDialogForm.Designer.cs">
       <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TransparentControls.cs">
+    <Compile Include="Forms\Controls\FlatComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\MyCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\OLVCatchScrolling.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\PseudoScrollBarPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\TransparentControls.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\CreateStashGroupDialogForm.cs">
@@ -236,6 +248,7 @@
     <Compile Include="GrimDawnLib\GrimDawn.Steam.cs" />
     <Compile Include="Services\Service.cs" />
     <Compile Include="Services\GDWindowHookService.cs" />
+    <Compile Include="Test.cs" />
     <Compile Include="Utils\AssemblyInfo.cs" />
     <Compile Include="Utils\FontLoader.cs" />
     <Compile Include="Utils\FileUtils.cs" />

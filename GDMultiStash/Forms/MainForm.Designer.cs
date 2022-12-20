@@ -45,20 +45,20 @@
             this.groups_menuStrip = new System.Windows.Forms.MenuStrip();
             this.groups_createStashGroupButton = new System.Windows.Forms.ToolStripMenuItem();
             this.groups_listViewBorderPanel = new System.Windows.Forms.Panel();
-            this.groups_listView = new BrightIdeasSoftware.ObjectListView();
+            this.groups_listView = new Controls.OLVCatchScrolling();
             this.stashes_pagePanel = new System.Windows.Forms.Panel();
             this.stashes_shownItemsCountLabel = new System.Windows.Forms.Label();
             this.stashes_menuFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.stashes_showExpansionComboBox = new System.Windows.Forms.ComboBox();
-            this.stashes_showSoftCoreCheckbox = new System.Windows.Forms.CheckBox();
-            this.stashes_showHardCoreCheckbox = new System.Windows.Forms.CheckBox();
+            this.stashes_showExpansionComboBox = new GDMultiStash.Forms.Controls.FlatComboBox();
+            this.stashes_showSoftCoreCheckbox = new GDMultiStash.Forms.Controls.MyCheckBox();
+            this.stashes_showHardCoreCheckbox = new GDMultiStash.Forms.Controls.MyCheckBox();
             this.stashes_listViewBorderPanel = new System.Windows.Forms.Panel();
-            this.stashes_listView = new GDMultiStash.Controls.ExObjectListView();
+            this.stashes_listView = new GDMultiStash.Forms.Controls.OLVGroupFeatures();
             this.formPaddingPanel = new System.Windows.Forms.Panel();
             this.groupsPageButton = new System.Windows.Forms.Button();
             this.stashesPageButton = new System.Windows.Forms.Button();
-            this.titlePanel = new GDMultiStash.Controls.TransparentPanel();
-            this.formBackgroundPanel = new GDMultiStash.Controls.TransparentPanel();
+            this.titlePanel = new GDMultiStash.Forms.Controls.TransparentPanel();
+            this.formBackgroundPanel = new GDMultiStash.Forms.Controls.TransparentPanel();
             this.captionCloseButton = new System.Windows.Forms.Button();
             this.captionMinimizeButton = new System.Windows.Forms.Button();
             this.captionTrayButton = new System.Windows.Forms.Button();
@@ -234,11 +234,11 @@
             this.groups_menuStrip.TabIndex = 2;
             this.groups_menuStrip.Text = "bottomMenuStrip";
             // 
-            // groups_createGroupButton
+            // groups_createStashGroupButton
             // 
             this.groups_createStashGroupButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groups_createStashGroupButton.Margin = new System.Windows.Forms.Padding(10, 2, 0, 0);
-            this.groups_createStashGroupButton.Name = "groups_createGroupButton";
+            this.groups_createStashGroupButton.Name = "groups_createStashGroupButton";
             this.groups_createStashGroupButton.Size = new System.Drawing.Size(109, 24);
             this.groups_createStashGroupButton.Text = "Create Group";
             this.groups_createStashGroupButton.Click += new System.EventHandler(this.Groups_CreateStashGroupButton_Click);
@@ -317,13 +317,14 @@
             // 
             // stashes_showExpansionComboBox
             // 
+            this.stashes_showExpansionComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.stashes_showExpansionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.stashes_showExpansionComboBox.DropDownWidth = 200;
             this.stashes_showExpansionComboBox.FormattingEnabled = true;
             this.stashes_showExpansionComboBox.Location = new System.Drawing.Point(0, 0);
             this.stashes_showExpansionComboBox.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
             this.stashes_showExpansionComboBox.Name = "stashes_showExpansionComboBox";
-            this.stashes_showExpansionComboBox.Size = new System.Drawing.Size(212, 24);
+            this.stashes_showExpansionComboBox.Size = new System.Drawing.Size(212, 23);
             this.stashes_showExpansionComboBox.TabIndex = 22;
             // 
             // stashes_showSoftCoreCheckbox
@@ -334,6 +335,7 @@
             this.stashes_showSoftCoreCheckbox.Name = "stashes_showSoftCoreCheckbox";
             this.stashes_showSoftCoreCheckbox.Size = new System.Drawing.Size(15, 14);
             this.stashes_showSoftCoreCheckbox.TabIndex = 23;
+            this.stashes_showSoftCoreCheckbox.ThreeState = true;
             this.stashes_showSoftCoreCheckbox.UseVisualStyleBackColor = true;
             // 
             // stashes_showHardCoreCheckbox
@@ -344,6 +346,7 @@
             this.stashes_showHardCoreCheckbox.Name = "stashes_showHardCoreCheckbox";
             this.stashes_showHardCoreCheckbox.Size = new System.Drawing.Size(15, 14);
             this.stashes_showHardCoreCheckbox.TabIndex = 24;
+            this.stashes_showHardCoreCheckbox.ThreeState = true;
             this.stashes_showHardCoreCheckbox.UseVisualStyleBackColor = true;
             // 
             // stashes_listViewBorderPanel
@@ -561,16 +564,16 @@
         private System.Windows.Forms.ToolStripMenuItem captionAboutButton;
         private System.Windows.Forms.MenuStrip stashes_menuStrip;
         private System.Windows.Forms.Panel pagesPaddingPanel;
-        private Controls.ExObjectListView stashes_listView;
+        private Controls.OLVGroupFeatures stashes_listView;
         private System.Windows.Forms.ToolStripMenuItem stashes_createStashButton;
-        private System.Windows.Forms.ComboBox stashes_showExpansionComboBox;
-        private System.Windows.Forms.CheckBox stashes_showSoftCoreCheckbox;
-        private System.Windows.Forms.CheckBox stashes_showHardCoreCheckbox;
+        private Controls.FlatComboBox stashes_showExpansionComboBox;
+        private Controls.MyCheckBox stashes_showSoftCoreCheckbox;
+        private Controls.MyCheckBox stashes_showHardCoreCheckbox;
         private System.Windows.Forms.ToolStripMenuItem captionChangelogButton;
         private System.Windows.Forms.ToolStripMenuItem captionImportButton;
         private System.Windows.Forms.Panel formPaddingPanel;
-        private GDMultiStash.Controls.TransparentPanel titlePanel;
-        private GDMultiStash.Controls.TransparentPanel formBackgroundPanel;
+        private GDMultiStash.Forms.Controls.TransparentPanel titlePanel;
+        private GDMultiStash.Forms.Controls.TransparentPanel formBackgroundPanel;
         private System.Windows.Forms.ToolStripMenuItem captionImportTransferFilesButton;
         private System.Windows.Forms.ToolStripMenuItem captionExportButton;
         private System.Windows.Forms.ToolStripMenuItem captionExportTransferFilesButton;
@@ -588,6 +591,6 @@
         private System.Windows.Forms.MenuStrip groups_menuStrip;
         private System.Windows.Forms.ToolStripMenuItem groups_createStashGroupButton;
         private System.Windows.Forms.Panel groups_listViewBorderPanel;
-        private BrightIdeasSoftware.ObjectListView groups_listView;
+        private Controls.OLVCatchScrolling groups_listView;
     }
 }

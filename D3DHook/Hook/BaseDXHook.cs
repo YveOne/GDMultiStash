@@ -24,7 +24,8 @@ namespace D3DHook.Hook
             Interface = ssInterface;
             Timer = new Stopwatch();
             Timer.Start();
-            Resources = new List<Common.IResource>();
+            //Resources = new List<Common.IResource>();
+            Resources = new Dictionary<int, Common.IResource>();
 
             Interface.DrawOverlay += InterfaceEventProxy.DrawOverlayProxyHandler;
             InterfaceEventProxy.DrawOverlay += InterfaceEventProxy_DrawOverlay;
@@ -32,7 +33,7 @@ namespace D3DHook.Hook
             Interface.InitResources += InterfaceEventProxy.InitResourcesProxyHandler;
             InterfaceEventProxy.InitResources += InterfaceEventProxy_InitResources;
         }
-
+        
         ~BaseDXHook()
         {
             Dispose(false);
@@ -49,7 +50,10 @@ namespace D3DHook.Hook
         private void InterfaceEventProxy_InitResources(InitResourcesEventArgs args)
         {
             if (args.Resources != null)
-                Resources.AddRange(args.Resources);
+            {
+                foreach (var r in args.Resources)
+                    Resources[r.UID] = r;
+            }
             IsResourcesUpdatePending = true;
         }
 
@@ -60,7 +64,8 @@ namespace D3DHook.Hook
 
 
         protected List<Common.IOverlay> Overlays { get; set; }
-        protected List<Common.IResource> Resources { get; set; }
+        //protected List<Common.IResource> Resources { get; set; }
+        protected Dictionary<int, Common.IResource> Resources { get; set; }
 
         protected bool IsOverlayUpdatePending { get; set; }
         protected bool IsResourcesUpdatePending { get; set; }

@@ -58,8 +58,9 @@ namespace GDMultiStash.GlobalHandlers
                 .WriteToFile(GetStashTransferFile(stashID));
         }
 
-        public bool ImportStashTransferFile(int stashID, string srcFile, bool forceBackup = false)
+        public bool ImportStashTransferFile(int stashID, string srcFile, out bool fileChanged)
         {
+            fileChanged = false;
             if (!File.Exists(srcFile)) return false;
             string destFile = GetStashTransferFile(stashID);
             if (File.Exists(destFile))
@@ -67,7 +68,8 @@ namespace GDMultiStash.GlobalHandlers
                 string srcHash = Utils.FileUtils.GetFileHash(srcFile);
                 string destHash = Utils.FileUtils.GetFileHash(destFile);
                 if (srcHash == null || destHash == null) return false; // file locked
-                if (srcHash != destHash || forceBackup) BackupStashTransferFile(stashID);
+                fileChanged = srcHash != destHash;
+                if (fileChanged) BackupStashTransferFile(stashID);
                 File.Delete(destFile);
             }
             File.Copy(srcFile, destFile);
@@ -146,7 +148,7 @@ namespace GDMultiStash.GlobalHandlers
         {
             Console.WriteLine("Restoring stash: {0} -> {1}", stashID.ToString(), srcFile);
             File.Move(srcFile, srcFile + ".tmp");
-            if (ImportStashTransferFile(stashID, srcFile + ".tmp", true))
+            if (ImportStashTransferFile(stashID, srcFile + ".tmp", out bool changed))
             {
                 File.Delete(srcFile + ".tmp");
                 return true;
