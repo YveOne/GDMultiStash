@@ -1,3 +1,6 @@
+v1.31.1
+- Order of stashes gets corrupted when dragging a group in stashes page - fixed
+
 v1.31
 - Added a logo on game start up to indicate that GDMS is running
 - Bugfix: Collapsing a group nomore activates edit mode for stash name

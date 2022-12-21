@@ -7,13 +7,14 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 
 using GDMultiStash.Common.Objects;
+using GDMultiStash.Common.Objects.Sorting;
 
 namespace GDMultiStash.Forms.Dragging
 {
     internal class StashesDragSource : BaseDragSource<StashObject>
     {
 
-        public StashesDragSource() : base()
+        public StashesDragSource() : base(new StashesSortComparer())
         {
         }
 
@@ -34,6 +35,10 @@ namespace GDMultiStash.Forms.Dragging
 
             if (draggingCount == 0)
                 return null; // cancel when only dragging dummy
+
+
+
+
 
             return base.StartDrag(olv, button, item);
         }

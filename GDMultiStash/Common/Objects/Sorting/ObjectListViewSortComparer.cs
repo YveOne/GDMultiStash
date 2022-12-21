@@ -6,32 +6,18 @@ using BrightIdeasSoftware;
 namespace GDMultiStash.Common.Objects.Sorting
 {
 
-    internal class ObjectListViewSortComparer<T> : ObjectSortComparer<OLVListItem, T>
+    internal class ObjectListViewSortComparer<T> : UniversalComparer<OLVListItem>
     {
-        public ObjectListViewSortComparer() : base()
-        {
-        }
+        private readonly IComparer<T> comparer;
 
-        public ObjectListViewSortComparer(CompareDelegate comp) : base(comp)
+        public ObjectListViewSortComparer(IComparer<T> comparer) : base()
         {
-        }
-
-        public ObjectListViewSortComparer(IComparer<T> comp) : base(comp)
-        {
-        }
-
-        public ObjectListViewSortComparer(IComparer comp) : base(comp)
-        {
-        }
-
-        public override int Compare(object x, object y)
-        {
-            return Compare((OLVListItem)x, (OLVListItem)y);
+            this.comparer = comparer;
         }
 
         public override int Compare(OLVListItem x, OLVListItem y)
         {
-            return Compare((T)x.RowObject, (T)y.RowObject);
+            return this.comparer.Compare((T)x.RowObject, (T)y.RowObject);
         }
     }
 

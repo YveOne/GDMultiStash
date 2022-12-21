@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 
 using GDMultiStash.Common.Objects;
+using GDMultiStash.Common.Objects.Sorting;
 
 namespace GDMultiStash.Forms.Dragging
 {
@@ -13,7 +14,7 @@ namespace GDMultiStash.Forms.Dragging
     internal class GroupsDragSource : BaseDragSource<StashGroupObject>
     {
 
-        public GroupsDragSource() : base()
+        public GroupsDragSource() : base(new GroupsSortComparer())
         {
         }
 

@@ -90,7 +90,7 @@
     <Compile Include="Common\Config\V5\Config.cs" />
     <Compile Include="Common\Objects\Sorting\GroupsSortComparer.cs" />
     <Compile Include="Common\Objects\Sorting\ObjectListViewSortComparer.cs" />
-    <Compile Include="Common\Objects\Sorting\ObjectSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\UniversalComparer.cs" />
     <Compile Include="Common\Objects\Sorting\StashesSortComparer.cs" />
     <Compile Include="Common\Overlay\Animations\AnimationValue.cs" />
     <Compile Include="Common\Overlay\Animations\Animator.cs" />

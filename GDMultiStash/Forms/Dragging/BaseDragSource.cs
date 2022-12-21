@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
+using GDMultiStash.Common.Objects;
+using GDMultiStash.Common.Objects.Sorting;
 
 using BrightIdeasSoftware;
 
@@ -15,6 +19,12 @@ namespace GDMultiStash.Forms.Dragging
 
         public IList<T> Items => _items.AsReadOnly();
         private readonly List<T> _items = new List<T>();
+        private IComparer<T> _comparer;
+
+        public BaseDragSource(IComparer<T> comparer)
+        {
+            _comparer = comparer;
+        }
 
         protected virtual void AddItem(T item)
         {
@@ -23,6 +33,7 @@ namespace GDMultiStash.Forms.Dragging
 
         public override object StartDrag(ObjectListView olv, MouseButtons button, OLVListItem item)
         {
+            _items.Sort(_comparer);
             DragStart?.Invoke(this, EventArgs.Empty);
             return (DataObject)base.StartDrag(olv, button, item);
         }
