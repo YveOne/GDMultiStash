@@ -70,10 +70,12 @@ namespace GDMultiStash.Common.Objects
                 float posCen = 0.5f;
                 float posMax = 0.9f;
 
+                int barWidth = (int)(42f / _transferFile.TabsUsage.Count + 0.5f);
+
                 _usageIndicator = new Bitmap(6 * 5 + 5 * 2, 10, PixelFormat.Format32bppArgb);
                 using (Graphics g = Graphics.FromImage(_usageIndicator))
                 {
-                    for (int i = 0; i < 6; i += 1)
+                    for (int i = 0; i < _transferFile.TabsUsage.Count; i += 1)
                     {
                         float p = _transferFile.TabsUsage[i];
                         Color c;
@@ -111,7 +113,7 @@ namespace GDMultiStash.Common.Objects
                         }
                         using (var brush = new SolidBrush(c))
                         {
-                            g.FillRectangle(brush, i * (5 + 2), 0, 5, _usageIndicator.Height);
+                            g.FillRectangle(brush, i * barWidth, 0, barWidth-2, _usageIndicator.Height);
                         }
                     }
                 }

@@ -22,7 +22,7 @@ namespace GDMultiStash.Common
 				IsExpansion1 = false,
 				Width = 8,
 				Height = 16,
-				MaxTabs = 1,
+				MaxTabs = 4,
 			} },
 			{ GrimDawnGameExpansion.AshesOfMalmouth, new StashDataDefaults {
 				IsExpansion1 = true,
@@ -40,7 +40,7 @@ namespace GDMultiStash.Common
 
 		private readonly GDIALib.Parser.Stash.Stash stash;
 		private float _usageTotal = 0f;
-		private List<float> _usagePages = new List<float>() { 0,0,0,0,0,0 };
+		private List<float> _usagePages = new List<float>();
 
 		public TransferFile()
 		{
@@ -132,15 +132,14 @@ namespace GDMultiStash.Common
 			long spacePerTab = stash.Width * stash.Height;
 			long spacePerStash = stash.Tabs.Count * spacePerTab;
 			long usedTotal = 0;
-			int index = 0;
+			_usagePages.Clear();
 			foreach (GDIALib.Parser.Stash.StashTab tab in stash.Tabs)
 			{
 				int usedPage = 0;
 				foreach (GDIALib.Parser.Stash.Item item in tab.Items)
 					usedPage += Global.Database.GetItemSize(item.BaseRecord);
 				usedTotal += usedPage;
-				_usagePages[index] = (float)usedPage / (float)spacePerTab;
-				index += 1;
+				_usagePages.Add((float)usedPage / (float)spacePerTab);
 			}
 			_usageTotal = (float)usedTotal / (float)spacePerStash;
 		}

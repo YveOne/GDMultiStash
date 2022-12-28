@@ -57,8 +57,8 @@ namespace GDMultiStash.Forms
 
         public DialogResult ShowDialog(IWin32Window owner, GrimDawnGameExpansion exp)
         {
-            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState == 1;
-            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState == 1;
+            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState != 0;
+            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState != 0;
             expansionComboBox.SelectedIndex = (int)exp;
             base.ShowDialog(owner);
             return DialogResult.OK;

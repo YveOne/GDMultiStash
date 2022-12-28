@@ -1,3 +1,7 @@
+v1.32.1
+- Changed default stash tabs count from 1 to 4 for base game
+- Capacity indicator is now showing the correct amount of stash tabs
+
 v1.32
 - You can now import transfer files without extensions
   The correct expansion will be identified by stash data
