@@ -456,7 +456,7 @@ namespace GDMultiStash.GlobalHandlers
 
         public Common.Config.ConfigStash CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
         {
-            Console.WriteLine(string.Format(@"Adding Config Stash: {0} (expansion: {1}, mode: {2})", name, expansion.ToString(), mode.ToString()));
+            Console.WriteLine($"Adding Config Stash: {name} (expansion: {expansion}, mode: {mode})");
 
             _config.Stashes.LastID += 1;
             Common.Config.ConfigStash stash = new Common.Config.ConfigStash
@@ -472,6 +472,27 @@ namespace GDMultiStash.GlobalHandlers
 
             Console.WriteLine("- id: " + stash.ID);
             Global.FileSystem.CreateStashDirectory(stash.ID);
+            return stash;
+        }
+
+        public Common.Config.ConfigStash CreateStashCopy(int stashID)
+        {
+            Common.Config.ConfigStash toCopy = GetStashByID(stashID);
+            Console.WriteLine($"Copying Config Stash: #{stashID} {toCopy.Name}");
+
+            _config.Stashes.LastID += 1;
+            Common.Config.ConfigStash stash = new Common.Config.ConfigStash
+            {
+                Name = toCopy.Name,
+                ID = _config.Stashes.LastID,
+                Order = _config.Stashes.LastID,
+                Expansion = toCopy.Expansion,
+                SC = toCopy.SC,
+                HC = toCopy.HC,
+            };
+            Stashes.Add(stash);
+            Console.WriteLine("- id: " + stash.ID);
+            Global.FileSystem.CopyStashDirectory(stashID, stash.ID);
             return stash;
         }
 

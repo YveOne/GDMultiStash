@@ -1,3 +1,11 @@
+v1.32
+- You can now import transfer files without extensions
+  The correct expansion will be identified by stash data
+- Added warning message if cloud sync is enabled in GD options
+- Import form can now be submitted by enter key too
+- Added group select to import window
+- Added context option to copy stashes from one expansion to higher one
+
 v1.31.1
 - Order of stashes gets corrupted when dragging a group in stashes page - fixed
 

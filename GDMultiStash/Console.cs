@@ -1,4 +1,6 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
+using System.Linq;
 
 namespace GDMultiStash
 {
@@ -7,23 +9,36 @@ namespace GDMultiStash
 
         public static void WriteLine(object text, params object[] args)
         {
-            string t = System.DateTime.Now.ToString("HH:mm:ss.fff");
+            string t = DateTime.Now.ToString("HH:mm:ss.fff");
             string s = $"[{t}] " + string.Format(text.ToString(), args);
             System.Console.WriteLine(s);
         }
 
-        public static void Alert(string msg, MessageBoxIcon icon = MessageBoxIcon.None)
+        public static DialogResult Alert(string msg, MessageBoxButtons btn = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None)
         {
+            string msg2 = string.Join(Environment.NewLine, msg.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)
+                .ToList()
+                .Select((s, i) => (i == 0 ? "" : "    ") + s.Trim()));
             if (icon == MessageBoxIcon.None)
-                WriteLine($"{msg}");
+                WriteLine($"[MessageBox] {msg2}");
             else
-                WriteLine($"[{icon}] {msg}");
-            MessageBox.Show(msg, icon == MessageBoxIcon.None ? "" : $"{icon}", MessageBoxButtons.OK, icon);
+                WriteLine($"[MessageBox] [{icon}] {msg2}");
+            return MessageBox.Show(msg, icon == MessageBoxIcon.None ? "" : $"{icon}", btn, icon);
+        }
+
+        public static bool Confirm(string msg, MessageBoxIcon icon = MessageBoxIcon.Question)
+        {
+            return Alert(msg, MessageBoxButtons.OKCancel, icon) == DialogResult.OK;
         }
 
         public static void Warning(string msg)
         {
-            Alert(msg, MessageBoxIcon.Warning);
+            Alert(msg, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        public static void Error(string msg)
+        {
+            Alert(msg, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
     }

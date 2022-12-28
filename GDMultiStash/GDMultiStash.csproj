@@ -88,6 +88,7 @@
     <Compile Include="Common\Config\V5\ConfigStash.cs" />
     <Compile Include="Common\Config\V5\ConfigStashList.cs" />
     <Compile Include="Common\Config\V5\Config.cs" />
+    <Compile Include="Common\Objects\IBaseObject.cs" />
     <Compile Include="Common\Objects\Sorting\GroupsSortComparer.cs" />
     <Compile Include="Common\Objects\Sorting\ObjectListViewSortComparer.cs" />
     <Compile Include="Common\Objects\Sorting\UniversalComparer.cs" />

@@ -6,7 +6,7 @@ using GDMultiStash.Common.Config;
 
 namespace GDMultiStash.Common.Objects
 {
-    internal class StashGroupObject
+    internal class StashGroupObject : IBaseObject
     {
 
         private readonly ConfigStashGroup _configStashGroup;

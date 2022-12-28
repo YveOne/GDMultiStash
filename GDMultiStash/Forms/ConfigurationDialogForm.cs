@@ -359,7 +359,7 @@ namespace GDMultiStash.Forms
             link.SetWorkingDirectory(Application.StartupPath);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             link.SaveTo(Path.Combine(desktopPath, "GDMultiStash.lnk"));
-            MessageBox.Show(Global.L.ShortcutCreatedMessage());
+            Console.Alert(Global.L.ShortcutCreatedMessage());
         }
 
         private void CleanupBackupsButton_Click(object sender, EventArgs e)

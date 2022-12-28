@@ -326,7 +326,6 @@ namespace GDMultiStash.Forms
             // stashes
             stashes_columnID.Text = L.IdColumn();
             stashes_columnName.Text = L.NameColumn();
-            stashes_columnUsage.Text = L.UsageColumn();
             stashes_columnLastChange.Text = L.LastChangeColumn();
             stashes_columnSC.Text = L.SoftcoreColumn();
             stashes_columnHC.Text = L.HardcoreColumn();

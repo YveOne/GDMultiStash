@@ -20,6 +20,8 @@ msg_stash_is_active = Dieser Stash ist gerade aktiv
 msg_stash_is_main = Dies ist ein Hauptstash
 msg_cannot_delete_stash_group = Gruppe "{0}" kann nicht gelöscht werden:\n{1}
 msg_stash_group_is_main = Dies ist eine Hauptgruppe
+msg_disable_cloud_sync = Warnung: Cloud Sync ist aktiviert!\nUm GDMS zu benutzt muss es in den GD Optionen deaktiviert werden!
+msg_confirm_delete_old_stashes = Alte Stashes löschen?\nDies kann nicht rückgängig gemacht werden!
 
 // buttons
 btn_file = Datei
@@ -50,11 +52,11 @@ btn_create_group = Gruppe erstellen
 btn_overwrite = Überschreiben
 btn_stashes = Stashes
 btn_groups = Gruppen
+btn_copy_to_expansion = In Erweiterung kopieren
 
 // listview columns
 lvc_id = ID
 lvc_name = Name
-lvc_usage = Voll
 lvc_last_change = Letzte Änderung
 lvc_softcore = SC
 lvc_hardcore = HC

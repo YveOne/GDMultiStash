@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace GDMultiStash.GlobalHandlers
 {
@@ -27,7 +25,7 @@ namespace GDMultiStash.GlobalHandlers
             {
                 return ParseDictionary(Text);
             }
-            private static Dictionary<string, string> ParseDictionary(string lines)
+            public static Dictionary<string, string> ParseDictionary(string lines)
             {
                 Dictionary<string, string> dict = new Dictionary<string, string>();
                 foreach (string line in lines.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
@@ -103,6 +101,8 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter StashIsMainMessage => _.Get("msg_stash_is_main");
             public _Core.StringGetter CannotDeleteStashGroupMessage => _.Get("msg_cannot_delete_stash_group");
             public _Core.StringGetter StashGroupIsMainMessage => _.Get("msg_stash_group_is_main");
+            public _Core.StringGetter DisableCloudSyncMessage => _.Get("msg_disable_cloud_sync");
+            public _Core.StringGetter ConfirmDeleteOldStashesMessage => _.Get("msg_confirm_delete_old_stashes");
 
 
             
@@ -138,9 +138,10 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter OverwriteButton => _.Get("btn_overwrite");
             public _Core.StringGetter StashesButton => _.Get("btn_stashes");
             public _Core.StringGetter GroupsButton => _.Get("btn_groups");
+            public _Core.StringGetter CopyToExpansionButton => _.Get("btn_copy_to_expansion");
 
 
-
+            
 
 
             public _Core.StringGetter NoBackupsLabel => _.Get("lbl_no_backups");
@@ -177,7 +178,6 @@ namespace GDMultiStash.GlobalHandlers
 
             public _Core.StringGetter IdColumn => _.Get("lvc_id");
             public _Core.StringGetter NameColumn => _.Get("lvc_name");
-            public _Core.StringGetter UsageColumn => _.Get("lvc_usage");
             public _Core.StringGetter LastChangeColumn => _.Get("lvc_last_change");
             public _Core.StringGetter SoftcoreColumn => _.Get("lvc_softcore");
             public _Core.StringGetter HardcoreColumn => _.Get("lvc_hardcore");

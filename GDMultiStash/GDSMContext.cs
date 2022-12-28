@@ -101,6 +101,20 @@ namespace GDMultiStash
 
             Global.Configuration.UpdateAndCleanup();
 
+            // warn user if cloud saving is enabled in gd settings
+            {
+                var f = Path.Combine(GrimDawn.DocumentsSettingsPath, "options.txt");
+                if (File.Exists(f))
+                {
+                    var l = File.ReadAllText(f);
+                    var d = GlobalHandlers.LocalizationHandler.Language.ParseDictionary(l);
+                    if (d["cloudSaving"] == "true")
+                    {
+                        Console.Warning(Global.L.DisableCloudSyncMessage());
+                    }
+                }
+            }
+            
             Global.Database.LoadItemSizes(Properties.Resources.itemsizes);
             Console.WriteLine($"GD Game Path: {Global.Configuration.Settings.GamePath}");
             Console.WriteLine($"GD Game Expansion: {GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath)}");

@@ -35,7 +35,7 @@ namespace GDMultiStash.Overlay
             Global.Runtime.ActiveGroupChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveGroupChangedEventArgs e) {
                 ChangeActiveGroup(e.OldID, e.NewID);
             };
-            Global.Runtime.StashGroupsOrderChanged += delegate { _loadItems = true; };
+            Global.Runtime.StashGroupsRebuild += delegate { _loadItems = true; };
             Global.Runtime.ActiveExpansionChanged += delegate { _loadItems = true; };
             Global.Runtime.ActiveModeChanged += delegate { _loadItems = true; };
             Global.Runtime.StashGroupsAdded += delegate { _loadItems = true; };
@@ -47,7 +47,7 @@ namespace GDMultiStash.Overlay
             };
             // yes we need to load items too when stashes changed!
             // because an empty group could become not empty
-            Global.Runtime.StashesOrderChanged += delegate { _loadItems = true; };
+            Global.Runtime.StashesRebuild += delegate { _loadItems = true; };
             Global.Runtime.StashesAdded += delegate { _loadItems = true; };
             Global.Runtime.StashesRemoved += delegate { _loadItems = true; };
             /*

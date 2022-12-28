@@ -36,7 +36,7 @@ namespace GDMultiStash.Overlay
             Global.Runtime.ActiveModeChanged += delegate { _loadItems = true; };
             Global.Runtime.ActiveExpansionChanged += delegate { _loadItems = true; };
             Global.Runtime.ActiveGroupChanged += delegate { _loadItems = true; };
-            Global.Runtime.StashesOrderChanged += delegate { _loadItems = true; };
+            Global.Runtime.StashesRebuild += delegate { _loadItems = true; };
             Global.Runtime.StashesAdded += delegate { _loadItems = true; };
             Global.Runtime.StashesRemoved += delegate { _loadItems = true; };
             Global.Runtime.StashesUpdated += delegate (object sender, GlobalHandlers.RuntimeHandler.ListChangedEventArgs<StashObject> e)

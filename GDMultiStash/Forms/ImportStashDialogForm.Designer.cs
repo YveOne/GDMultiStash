@@ -37,6 +37,8 @@
             this.hcCheckBox = new System.Windows.Forms.CheckBox();
             this.expansionLabel = new System.Windows.Forms.Label();
             this.expansionTextBox = new System.Windows.Forms.TextBox();
+            this.groupComboBox = new System.Windows.Forms.ComboBox();
+            this.groupLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // stashFileTextBox
@@ -63,9 +65,9 @@
             // stashNameLabel
             // 
             this.stashNameLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.stashNameLabel.Location = new System.Drawing.Point(195, 55);
+            this.stashNameLabel.Location = new System.Drawing.Point(198, 55);
             this.stashNameLabel.Name = "stashNameLabel";
-            this.stashNameLabel.Size = new System.Drawing.Size(103, 13);
+            this.stashNameLabel.Size = new System.Drawing.Size(66, 13);
             this.stashNameLabel.TabIndex = 10;
             this.stashNameLabel.Text = "Name:";
             this.stashNameLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -73,9 +75,9 @@
             // nameTextBox
             // 
             this.nameTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.nameTextBox.Location = new System.Drawing.Point(304, 52);
+            this.nameTextBox.Location = new System.Drawing.Point(270, 52);
             this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(190, 20);
+            this.nameTextBox.Size = new System.Drawing.Size(224, 20);
             this.nameTextBox.TabIndex = 11;
             // 
             // okButton
@@ -131,11 +133,32 @@
             this.expansionTextBox.TabIndex = 19;
             this.expansionTextBox.TabStop = false;
             // 
+            // groupComboBox
+            // 
+            this.groupComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.groupComboBox.FormattingEnabled = true;
+            this.groupComboBox.Location = new System.Drawing.Point(270, 79);
+            this.groupComboBox.Name = "groupComboBox";
+            this.groupComboBox.Size = new System.Drawing.Size(224, 21);
+            this.groupComboBox.TabIndex = 27;
+            // 
+            // groupLabel
+            // 
+            this.groupLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupLabel.Location = new System.Drawing.Point(201, 82);
+            this.groupLabel.Name = "groupLabel";
+            this.groupLabel.Size = new System.Drawing.Size(63, 13);
+            this.groupLabel.TabIndex = 26;
+            this.groupLabel.Text = "Group:";
+            this.groupLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
             // ImportDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 117);
+            this.ClientSize = new System.Drawing.Size(584, 149);
+            this.Controls.Add(this.groupComboBox);
+            this.Controls.Add(this.groupLabel);
             this.Controls.Add(this.expansionTextBox);
             this.Controls.Add(this.expansionLabel);
             this.Controls.Add(this.hcCheckBox);
@@ -167,5 +190,7 @@
         private System.Windows.Forms.CheckBox hcCheckBox;
         private System.Windows.Forms.Label expansionLabel;
         private System.Windows.Forms.TextBox expansionTextBox;
+        private System.Windows.Forms.ComboBox groupComboBox;
+        private System.Windows.Forms.Label groupLabel;
     }
 }

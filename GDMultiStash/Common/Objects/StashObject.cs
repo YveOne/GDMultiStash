@@ -17,7 +17,7 @@ namespace GDMultiStash.Common.Objects
         public new string UsageText => "";
     }
 
-    internal class StashObject
+    internal class StashObject : IBaseObject
     {
 
         private readonly ConfigStash _configStash;
@@ -46,6 +46,10 @@ namespace GDMultiStash.Common.Objects
             {
                 _transferFile.LoadUsage();
 
+                int rZero = 0;
+                int gZero = 255;
+                int bZero = 0;
+
                 int rMin = 0;
                 int gMin = 255;
                 int bMin = 0;
@@ -58,6 +62,10 @@ namespace GDMultiStash.Common.Objects
                 int gMax = 0;
                 int bMax = 0;
 
+                int rFull = 100; // 0
+                int gFull = 0;
+                int bFull = 0;
+
                 float posMin = 0.1f;
                 float posCen = 0.5f;
                 float posMax = 0.9f;
@@ -69,7 +77,11 @@ namespace GDMultiStash.Common.Objects
                     {
                         float p = _transferFile.TabsUsage[i];
                         Color c;
-                        if (p <= posMin)
+                        if (p == 0)
+                        {
+                            c = Color.FromArgb(rZero, gZero, bZero);
+                        }
+                        else if (p <= posMin)
                         {
                             c = Color.FromArgb(rMin, gMin, bMin);
                         }
@@ -91,7 +103,11 @@ namespace GDMultiStash.Common.Objects
                         }
                         else
                         {
-                            c = Color.FromArgb(rMax, gMax, bMax);
+                            p = (p - posMax) / (1 - posMax);
+                            c = Color.FromArgb(
+                                (int)((rFull - rMax) * p) + rMax,
+                                (int)((gFull - gMax) * p) + gMax,
+                                (int)((bFull - bMax) * p) + bMax);
                         }
                         using (var brush = new SolidBrush(c))
                         {
@@ -140,7 +156,11 @@ namespace GDMultiStash.Common.Objects
 
         public Image UsageIndicator => _usageIndicator;
 
-        public GrimDawnLib.GrimDawnGameExpansion Expansion => (GrimDawnLib.GrimDawnGameExpansion)_configStash.Expansion;
+        public GrimDawnLib.GrimDawnGameExpansion Expansion
+        {
+            get => (GrimDawnLib.GrimDawnGameExpansion)_configStash.Expansion;
+            set { _configStash.Expansion = (int)value; }
+        }
 
         public string Name
         {

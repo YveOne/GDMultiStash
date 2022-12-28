@@ -74,7 +74,7 @@ namespace GDMultiStash.Forms.Dragging
             if (changedStashGroup)
             {
                 OverStashGroup = targetStashGroup;
-                Console.WriteLine($"----------- CHANGED OverStashGroup: {OverStashGroup.ID}");
+                //Console.WriteLine($"----------- CHANGED OverStashGroup: {OverStashGroup.ID}");
             }
 
             int targetIndex = 0;

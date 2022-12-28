@@ -251,7 +251,7 @@ namespace GDMultiStash.Forms
         {
             Groups_UnselectAll();
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashGroupsOrderChanged();
+            Global.Runtime.NotifyStashGroupsRebuild();
         }
 
         private void Groups_ListView_CellRightClick(object sender, CellRightClickEventArgs args)
@@ -290,17 +290,7 @@ namespace GDMultiStash.Forms
             menu.Items.Add(Global.L.DeleteButton(), null, delegate (object s, EventArgs e) {
                 if (Global.Configuration.Settings.ConfirmStashDelete && MessageBox.Show(Global.L.ConfirmDeleteStashGroupsMessage(), "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK) return;
 
-                List<StashGroupObject> deletedItems = new List<StashGroupObject>();
-                foreach (StashGroupObject toDelete in selectedItems)
-                {
-                    if (Global.Configuration.IsMainStashGroupID(toDelete.ID))
-                    {
-                        MessageBox.Show(Global.L.CannotDeleteStashGroupMessage(toDelete.Name, Global.L.StashGroupIsMainMessage()), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        continue;
-                    }
-                    Global.Stashes.DeleteStashGroup(toDelete.ID);
-                    deletedItems.Add(toDelete);
-                }
+                List<StashGroupObject> deletedItems = Global.Stashes.DeleteStashGroups(selectedItems);
                 Global.Configuration.Save();
                 Global.Runtime.NotifyStashGroupsRemoved(deletedItems);
             });

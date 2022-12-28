@@ -23,19 +23,10 @@ namespace GDMultiStash.Forms.Dragging
 
         protected override void OnDragEnd(object sender, EventArgs args)
         {
+            base.OnDragEnd(sender, args);
             if (DropSink.OverIndex != -1)
             {
-                List<int> orders = new List<int>();
-                foreach (StashGroupObject group in DropSink.OrderedList)
-                {
-                    orders.Add(group.Order);
-                }
-                orders.Sort();
-                foreach (StashGroupObject group in DropSink.OrderedList)
-                {
-                    group.Order = orders[0];
-                    orders.RemoveAt(0);
-                }
+                Global.Stashes.UpdateOrder(DropSink.OrderedList);
             }
             DropSink.Reset();
         }

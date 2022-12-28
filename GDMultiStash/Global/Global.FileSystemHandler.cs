@@ -39,6 +39,21 @@ namespace GDMultiStash.GlobalHandlers
             if (!Directory.Exists(stashDir)) Directory.CreateDirectory(stashDir);
         }
 
+        public void CopyStashDirectory(int id1, int id2)
+        {
+            string dir1 = GetStashDirectory(id1);
+            string dir2 = GetStashDirectory(id2);
+            if (!Directory.Exists(dir1)) return;
+            if (Directory.Exists(dir2)) return;
+            CreateStashDirectory(id2);
+            var src = new DirectoryInfo(dir1);
+            var dest = new DirectoryInfo(dir2);
+            foreach (FileInfo file in src.GetFiles())
+            {
+                file.CopyTo(Path.Combine(dir2, file.Name));
+            }
+        }
+
         public void DeleteStashDirectory(int stashID)
         {
             string stashDir = GetStashDirectory(stashID);

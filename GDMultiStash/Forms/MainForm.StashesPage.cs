@@ -72,16 +72,9 @@ namespace GDMultiStash.Forms
             FillsFreeSpace = true,
             CellEditUseWholeCell = true,
         };
-        /*
         private readonly OLVColumn stashes_columnUsage = new DefaultOLVColumn()
         {
-            AspectName = "UsageText",
-            Width = 45,
-            TextAlign = HorizontalAlignment.Right,
-        };
-        */
-        private readonly OLVColumn stashes_columnUsage = new DefaultOLVColumn()
-        {
+            Text = "%",
             ImageAspectName = "UsageIndicator",
             Width = 50,
             TextAlign = HorizontalAlignment.Center,
@@ -306,7 +299,7 @@ namespace GDMultiStash.Forms
                 Global.Runtime.StashesUpdated += delegate (object sender, GlobalHandlers.RuntimeHandler.ListChangedEventArgs<StashObject> args) {
                     Stashes_UpdateObjects(args.List);
                 };
-                Global.Runtime.StashGroupsOrderChanged += delegate { Stashes_ReloadList(); };
+                Global.Runtime.StashGroupsRebuild += delegate { Stashes_ReloadList(); };
                 Global.Runtime.StashGroupsUpdated += delegate { Stashes_ReloadList(); }; // dont know how to trigger group header update
                 Global.Runtime.StashGroupsAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListChangedEventArgs<StashGroupObject> args) {
                     Stashes_ReloadGroupDummies();
@@ -783,7 +776,7 @@ namespace GDMultiStash.Forms
             {
                 menu.Items.Add(Global.L.OverwriteButton(), null, delegate (object s, EventArgs e) {
                     OLVListItem item = (OLVListItem)stashes_listView.SelectedItems[0];
-                    DialogResult result = GrimDawnLib.GrimDawn.ShowSelectTransferFilesDialog(out string[] files, false);
+                    DialogResult result = GrimDawnLib.GrimDawn.ShowSelectTransferFilesDialog(out string[] files, false, true);
                     if (result == DialogResult.OK)
                     {
                         if (Global.Stashes.ImportOverwriteStash(files[0], stash))
@@ -796,7 +789,30 @@ namespace GDMultiStash.Forms
             }
 
 
+            if (stashes_shownExpansion != GrimDawnLib.GrimDawn.LatestExpansion)
+            {
+                menu.Items.Add(Global.L.CopyToExpansionButton());
+                ToolStripMenuItem btn = menu.Items[menu.Items.Count - 1] as ToolStripMenuItem;
+                for (int i = (int)stashes_shownExpansion + 1; i <= (int)GrimDawnLib.GrimDawn.LatestExpansion; i += 1)
+                {
+                    GrimDawnLib.GrimDawnGameExpansion exp = (GrimDawnLib.GrimDawnGameExpansion)i;
+                    btn.DropDownItems.Add(GrimDawnLib.GrimDawn.GetExpansionName(exp), null, delegate (object s, EventArgs e) {
 
+                        foreach (var st in selectedItems)
+                        {
+                            StashObject copied = Global.Stashes.CreateStashCopy(st);
+                            copied.Expansion = exp;
+                        }
+                        if (Console.Confirm(Global.L.ConfirmDeleteOldStashesMessage()))
+                        {
+                            Global.Stashes.DeleteStashes(selectedItems);
+                        }
+                        Global.Configuration.Save();
+                        Stashes_ReloadList();
+                        Global.Runtime.NotifyStashesRebuild();
+                    });
+                }
+            }
 
 
 
@@ -805,24 +821,9 @@ namespace GDMultiStash.Forms
             menu.Items.Add(new ToolStripSeparator());
 
             menu.Items.Add(Global.L.DeleteButton(), null, delegate (object s, EventArgs e) {
-                if (Global.Configuration.Settings.ConfirmStashDelete && MessageBox.Show(Global.L.ConfirmDeleteStashesMessage(), "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK) return;
+                if (Global.Configuration.Settings.ConfirmStashDelete && !Console.Confirm(Global.L.ConfirmDeleteStashesMessage())) return;
 
-                List<StashObject> deletedItems = new List<StashObject>();
-                foreach (StashObject toDelete in selectedItems)
-                {
-                    if (Global.Configuration.IsMainStashID(toDelete.ID))
-                    {
-                        MessageBox.Show(Global.L.CannotDeleteStashMessage(toDelete.Name, Global.L.StashIsMainMessage()), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        continue;
-                    }
-                    if (Global.Configuration.IsCurrentStashID(toDelete.ID))
-                    {
-                        MessageBox.Show(Global.L.CannotDeleteStashMessage(toDelete.Name, Global.L.StashIsActiveMessage()), "", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        continue;
-                    }
-                    Global.Stashes.DeleteStash(toDelete.ID);
-                    deletedItems.Add(toDelete);
-                }
+                List<StashObject> deletedItems = Global.Stashes.DeleteStashes(selectedItems);
                 Global.Configuration.Save();
                 Global.Runtime.NotifyStashesRemoved(deletedItems);
             });
@@ -850,8 +851,7 @@ namespace GDMultiStash.Forms
                     break;
             }
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashesOrderChanged();
-            //Stashes_ReloadList(); // its not neccessary to reload WHOLE list
+            Global.Runtime.NotifyStashesRebuild(); // todo: maybe add a better event for this?
             int _sc = Global.Configuration.Settings.ShowSoftcoreState;
             int _hc = Global.Configuration.Settings.ShowHardcoreState;
             if (!(stash.SC && _sc == 0 || !stash.SC && _sc == 1 || stash.HC && _hc == 0 || !stash.HC && _hc == 1))
@@ -908,7 +908,7 @@ namespace GDMultiStash.Forms
             Stashes_UnselectAll();
             Groups_RefreshAllObjects();
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashesOrderChanged();
+            Global.Runtime.NotifyStashesRebuild();
         }
 
         private void Stashes_ShowExpansionComboBox_SelectionChangeCommitted(object sender, EventArgs e)

@@ -14,6 +14,7 @@ namespace GrimDawnLib
         None = 0,
         SC = 1,
         HC = 2,
+        Both = 3,
     }
 
     public enum GrimDawnGameExpansion
@@ -34,9 +35,9 @@ namespace GrimDawnLib
     public static partial class GrimDawn
     {
 
-        public static readonly string DocumentsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Grim Dawn");
-        public static readonly string DocumentsSavePath = Path.Combine(DocumentsPath, "save");
-        public static readonly string DocumentsSettingsPath = Path.Combine(DocumentsPath, "Settings");
+        public static string DocumentsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Grim Dawn");
+        public static string DocumentsSavePath => Path.Combine(DocumentsPath, "save");
+        public static string DocumentsSettingsPath => Path.Combine(DocumentsPath, "Settings");
 
         private static readonly Dictionary<GrimDawnGameExpansion, string> GameExpansionNames = new Dictionary<GrimDawnGameExpansion, string>
             {
@@ -70,6 +71,8 @@ namespace GrimDawnLib
                 { GrimDawnGameMode.SC, "t" },
                 { GrimDawnGameMode.HC, "h" },
             };
+
+        public static GrimDawnGameExpansion LatestExpansion = GrimDawnGameExpansion.ForgottenGods;
 
         public static GrimDawnGameExpansion[] GetExpansionList()
         {
@@ -188,13 +191,13 @@ namespace GrimDawnLib
             return File.GetLastWriteTime(GetTransferFilePath(expansion, mode));
         }
 
-        public static System.Windows.Forms.DialogResult ShowSelectTransferFilesDialog(out string[] files, bool multiselect = false)
+        public static System.Windows.Forms.DialogResult ShowSelectTransferFilesDialog(out string[] files, bool multiselect, bool allExtensions)
         {
             string filter = string.Join(";", GetAllTransferExtensions().Select(ext => "*" + ext));
             files = new string[0];
             using (var dialog = new System.Windows.Forms.OpenFileDialog()
             {
-                Filter = "transfer|" + filter,
+                Filter = $"transfer|{filter}" + (allExtensions ? "|*|*.*": ""),
                 Multiselect = multiselect,
             })
             {

@@ -50,5 +50,14 @@ namespace GDMultiStash.Forms
             Utils.Funcs.OpenUrl("https://github.com/justinstenning/Direct3DHook");
         }
 
+        private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Utils.Funcs.OpenUrl("https://forums.crateentertainment.com/t/tool-gd-multistash/");
+        }
+
+        private void linkLabel4_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Utils.Funcs.OpenUrl("https://github.com/YveOne/GDMultiStash");
+        }
     }
 }

@@ -23,6 +23,35 @@ namespace GDMultiStash.GlobalHandlers
             _stashGroups = new Dictionary<int, StashGroupObject>();
         }
 
+        #region Base
+
+        private void UpdateOrder(IList<IBaseObject> list)
+        {
+            List<int> orders = new List<int>();
+            foreach (IBaseObject item in list)
+            {
+                orders.Add(item.Order);
+            }
+            orders.Sort();
+            foreach (IBaseObject item in list)
+            {
+                item.Order = orders[0];
+                orders.RemoveAt(0);
+            }
+        }
+
+        public void UpdateOrder(List<StashObject> list)
+        {
+            UpdateOrder(list.ConvertAll(i => (IBaseObject)i));
+        }
+
+        public void UpdateOrder(List<StashGroupObject> list)
+        {
+            UpdateOrder(list.ConvertAll(i => (IBaseObject)i));
+        }
+
+        #endregion
+
         #region Stashes
 
         public void LoadStashes()
@@ -96,6 +125,27 @@ namespace GDMultiStash.GlobalHandlers
             Global.Configuration.DeleteStash(stashID);
         }
 
+        public List<StashObject> DeleteStashes(IEnumerable<StashObject> list)
+        {
+            List<StashObject> deletedItems = new List<StashObject>();
+            foreach (StashObject toDelete in list)
+            {
+                if (Global.Configuration.IsMainStashID(toDelete.ID))
+                {
+                    Console.Warning(Global.L.CannotDeleteStashMessage(toDelete.Name, Global.L.StashIsMainMessage()));
+                    continue;
+                }
+                if (Global.Configuration.IsCurrentStashID(toDelete.ID))
+                {
+                    Console.Warning(Global.L.CannotDeleteStashMessage(toDelete.Name, Global.L.StashIsActiveMessage()));
+                    continue;
+                }
+                DeleteStash(toDelete.ID);
+                deletedItems.Add(toDelete);
+            }
+            return deletedItems;
+        }
+
         public void CleanupBackups()
         {
             int deletedFiles = 0;
@@ -103,7 +153,7 @@ namespace GDMultiStash.GlobalHandlers
             {
                 deletedFiles += Global.FileSystem.BackupCleanupStashTransferFile(stash.ID);
             }
-            System.Windows.Forms.MessageBox.Show(Global.L.BackupsCleanedUpMessage(deletedFiles));
+            Console.Alert(Global.L.BackupsCleanedUpMessage(deletedFiles));
         }
 
         public string[] GetBackupFiles(int stashID)
@@ -147,7 +197,17 @@ namespace GDMultiStash.GlobalHandlers
             return null;
         }
 
-
+        public StashObject CreateStashCopy(StashObject toCopy)
+        {
+            GrimDawnGameMode mode = GrimDawnGameMode.None;
+            if (toCopy.SC) mode |= GrimDawnGameMode.SC;
+            if (toCopy.HC) mode |= GrimDawnGameMode.HC;
+            Common.Config.ConfigStash cfgStash = Global.Configuration.CreateStashCopy(toCopy.ID);
+            StashObject copied = new StashObject(cfgStash);
+            copied.LoadTransferFile();
+            _stashes.Add(copied.ID, copied);
+            return copied;
+        }
 
 
         public bool ImportStash(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode, bool ignoreLock = false)
@@ -268,10 +328,24 @@ namespace GDMultiStash.GlobalHandlers
             foreach(StashObject stash in _stashes.Values)
                 if (stash.GroupID == groupID)
                     stash.GroupID = 0;
-            Global.Runtime.NotifyStashesOrderChanged();
+            Global.Runtime.NotifyStashesRebuild();
         }
 
-
+        public List<StashGroupObject> DeleteStashGroups(IEnumerable<StashGroupObject> list)
+        {
+            List<StashGroupObject> deletedItems = new List<StashGroupObject>();
+            foreach (StashGroupObject toDelete in list)
+            {
+                if (Global.Configuration.IsMainStashGroupID(toDelete.ID))
+                {
+                    Console.Warning(Global.L.CannotDeleteStashGroupMessage(toDelete.Name, Global.L.StashGroupIsMainMessage()));
+                    continue;
+                }
+                DeleteStashGroup(toDelete.ID);
+                deletedItems.Add(toDelete);
+            }
+            return deletedItems;
+        }
 
 
 

@@ -287,7 +287,7 @@ namespace GDMultiStash.GlobalHandlers
             }
         }
 
-        public event EventHandler<EventArgs> StashesOrderChanged;
+        public event EventHandler<EventArgs> StashesRebuild;
         public event EventHandler<ListChangedEventArgs<StashObject>> StashesAdded;
         public event EventHandler<ListChangedEventArgs<StashObject>> StashesRemoved;
         public event EventHandler<ListChangedEventArgs<StashObject>> StashesRestored;
@@ -295,9 +295,9 @@ namespace GDMultiStash.GlobalHandlers
         public event EventHandler<ListChangedEventArgs<StashObject>> StashesImported;
         public event EventHandler<ListChangedEventArgs<StashObject>> StashesExported;
 
-        public void NotifyStashesOrderChanged()
+        public void NotifyStashesRebuild()
         {
-            StashesOrderChanged?.Invoke(null, EventArgs.Empty);
+            StashesRebuild?.Invoke(null, EventArgs.Empty);
         }
 
         public void NotifyStashesAdded(StashObject stash)
@@ -367,14 +367,14 @@ namespace GDMultiStash.GlobalHandlers
 
 
 
-        public event EventHandler<EventArgs> StashGroupsOrderChanged;
+        public event EventHandler<EventArgs> StashGroupsRebuild;
         public event EventHandler<ListChangedEventArgs<StashGroupObject>> StashGroupsAdded;
         public event EventHandler<ListChangedEventArgs<StashGroupObject>> StashGroupsRemoved;
         public event EventHandler<ListChangedEventArgs<StashGroupObject>> StashGroupsUpdated;
 
-        public void NotifyStashGroupsOrderChanged()
+        public void NotifyStashGroupsRebuild()
         {
-            StashGroupsOrderChanged?.Invoke(null, EventArgs.Empty);
+            StashGroupsRebuild?.Invoke(null, EventArgs.Empty);
         }
 
         public void NotifyStashGroupsUpdated(StashGroupObject group)
