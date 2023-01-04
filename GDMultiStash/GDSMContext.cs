@@ -115,7 +115,7 @@ namespace GDMultiStash
                 }
             }
             
-            Global.Database.LoadItemSizes(Properties.Resources.itemsizes);
+            Global.Database.LoadItemInfos(Properties.Resources.iteminfos);
             Console.WriteLine($"GD Game Path: {Global.Configuration.Settings.GamePath}");
             Console.WriteLine($"GD Game Expansion: {GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath)}");
             Global.Stashes.LoadStashes();
@@ -234,6 +234,7 @@ namespace GDMultiStash
             if (Global.Runtime.StashOpened)
             {
                 _viewport.ShowMainWindow();
+                //_mouseHook.UnHook(); // used to refresh hook if something happened in background
                 _mouseHook.SetHook();
             }
             else
@@ -295,8 +296,7 @@ namespace GDMultiStash
         {
             Console.WriteLine("Grim Dawn window lost focus");
             Global.Runtime.GameWindowFocused = false;
-            if (Global.Runtime.StashOpened)
-                _mouseHook.UnHook();
+            _mouseHook.UnHook();
         }
 
         private void GDWindowHook_WindowDestroyed(object sender, EventArgs e)

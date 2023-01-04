@@ -37,6 +37,8 @@
             this.scCheckBox = new System.Windows.Forms.CheckBox();
             this.groupLabel = new System.Windows.Forms.Label();
             this.groupComboBox = new System.Windows.Forms.ComboBox();
+            this.tabsLabel = new System.Windows.Forms.Label();
+            this.tabsComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // nameLabel
@@ -122,11 +124,31 @@
             this.groupComboBox.Size = new System.Drawing.Size(224, 21);
             this.groupComboBox.TabIndex = 25;
             // 
+            // tabsLabel
+            // 
+            this.tabsLabel.AutoSize = true;
+            this.tabsLabel.Location = new System.Drawing.Point(244, 88);
+            this.tabsLabel.Name = "tabsLabel";
+            this.tabsLabel.Size = new System.Drawing.Size(34, 13);
+            this.tabsLabel.TabIndex = 26;
+            this.tabsLabel.Text = "Tabs:";
+            // 
+            // tabsComboBox
+            // 
+            this.tabsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tabsComboBox.FormattingEnabled = true;
+            this.tabsComboBox.Location = new System.Drawing.Point(242, 104);
+            this.tabsComboBox.Name = "tabsComboBox";
+            this.tabsComboBox.Size = new System.Drawing.Size(79, 21);
+            this.tabsComboBox.TabIndex = 27;
+            // 
             // CreateStashDialogForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(333, 157);
+            this.Controls.Add(this.tabsComboBox);
+            this.Controls.Add(this.tabsLabel);
             this.Controls.Add(this.groupComboBox);
             this.Controls.Add(this.groupLabel);
             this.Controls.Add(this.hcCheckBox);
@@ -157,5 +179,7 @@
         private System.Windows.Forms.CheckBox scCheckBox;
         private System.Windows.Forms.Label groupLabel;
         private System.Windows.Forms.ComboBox groupComboBox;
+        private System.Windows.Forms.Label tabsLabel;
+        private System.Windows.Forms.ComboBox tabsComboBox;
     }
 }

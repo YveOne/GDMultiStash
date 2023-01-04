@@ -35,7 +35,7 @@ public static partial class Native
 
             public override int SetHook()
             {
-                return SetHook(WH.MOUSE_LL, IntPtr.Zero);
+                return base.SetHook(WH.MOUSE_LL, IntPtr.Zero);
             }
 
             public override void UnHook()

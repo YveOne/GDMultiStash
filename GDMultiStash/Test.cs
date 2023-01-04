@@ -43,9 +43,8 @@ namespace GDMultiStash
                         string file = Path.Combine(dir, id.ToString(), "transfer.gsh");
                         if (transfer.ReadFromFile(file))
                         {
-                            transfer.LoadUsage();
-                            if (transfer.TotalUsage != 0)
-                                Console.WriteLine($"------------ {id} {name}");
+                            //if (transfer.TotalUsage != 0)
+                                //Console.WriteLine($"------------ {id} {name}");
 
 
 

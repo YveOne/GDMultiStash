@@ -62,7 +62,7 @@ namespace GDMultiStash.Common.Overlay
 
         private List<Element> Children { get; } = new List<Element>();
 
-        public void AddChild(Element child)
+        public virtual void AddChild(Element child)
         {
             // check if child is already in children list
             //if (Children.FindIndex(e => e.ID == child.ID) != -1)
@@ -75,14 +75,14 @@ namespace GDMultiStash.Common.Overlay
                 child.ViewportConnected(ParentViewport);
         }
 
-        public void RemoveChild(Element child, bool destroy = true)
+        public virtual void RemoveChild(Element child, bool destroy = true)
         {
             if (destroy) child.Destroy();
             Children.Remove(child);
             Redraw(true);
         }
 
-        public void ClearChildren()
+        public virtual void ClearChildren()
         {
             foreach (Element child in Children)
                 child.Destroy();

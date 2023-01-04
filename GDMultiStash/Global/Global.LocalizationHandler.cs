@@ -103,10 +103,11 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter StashGroupIsMainMessage => _.Get("msg_stash_group_is_main");
             public _Core.StringGetter DisableCloudSyncMessage => _.Get("msg_disable_cloud_sync");
             public _Core.StringGetter ConfirmDeleteOldStashesMessage => _.Get("msg_confirm_delete_old_stashes");
+            public _Core.StringGetter ConfirmDeleteStashTabMessage => _.Get("msg_confirm_delete_stash_tab");
+
 
 
             
-
 
 
 
@@ -139,12 +140,18 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter StashesButton => _.Get("btn_stashes");
             public _Core.StringGetter GroupsButton => _.Get("btn_groups");
             public _Core.StringGetter CopyToExpansionButton => _.Get("btn_copy_to_expansion");
+            public _Core.StringGetter EditTabsButton => _.Get("btn_edit_tabs");
+            public _Core.StringGetter TabInfoButton => _.Get("btn_tab_info");
+            public _Core.StringGetter AddTabButton => _.Get("btn_add_tab");
+            public _Core.StringGetter MoveToButton => _.Get("btn_move_to");
+            public _Core.StringGetter MoveUpButton => _.Get("btn_move_up");
+            public _Core.StringGetter MoveDownButton => _.Get("btn_move_down");
+            public _Core.StringGetter EmptyButton => _.Get("btn_empty");
 
 
-            
 
 
-            public _Core.StringGetter NoBackupsLabel => _.Get("lbl_no_backups");
+
             public _Core.StringGetter ShownStashesLabel => _.Get("lbl_shown_stashes");
             public _Core.StringGetter LanguageLabel => _.Get("lbl_language");
             public _Core.StringGetter GamePathLabel => _.Get("lbl_game_path");
@@ -170,9 +177,10 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter StashNameLabel => _.Get("lbl_stash_name");
             public _Core.StringGetter GroupLabel => _.Get("lbl_group");
             public _Core.StringGetter NameLabel => _.Get("lbl_name");
+            public _Core.StringGetter TabsLabel => _.Get("lbl_tabs");
 
 
-
+            
 
 
 

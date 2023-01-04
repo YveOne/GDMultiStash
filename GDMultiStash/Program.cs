@@ -14,7 +14,7 @@ namespace GDMultiStash
         [STAThread]
         static void Main()
         {
-            Native.AttachConsole(Native.ATTACH_PARRENT);
+            Console.CreateConsole();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new GDMSContext());
@@ -27,6 +27,7 @@ namespace GDMultiStash
             if (Quitting) return;
             Quitting = true;
             new System.Threading.Thread(new System.Threading.ThreadStart(() => {
+                Console.DestroyConsole();
                 Global.Windows.CloseMainWindow();
                 Application.Exit();
             })).Start();

@@ -65,11 +65,11 @@ namespace GDMultiStash.GlobalHandlers
             return Path.Combine(GetStashDirectory(stashID), "transfer" + (backupIndex > 0 ? backupIndex.ToString() : ""));
         }
 
-        public void CreateStashTransferFile(int stashID, GrimDawnLib.GrimDawnGameExpansion expansion)
+        public void CreateStashTransferFile(int stashID, GrimDawnLib.GrimDawnGameExpansion expansion, int tabsCount = -1)
         {
             CreateStashDirectory(stashID);
             Common.TransferFile
-                .CreateForExpansion(expansion)
+                .CreateForExpansion(expansion, tabsCount)
                 .WriteToFile(GetStashTransferFile(stashID));
         }
 

@@ -54,9 +54,17 @@ namespace ConsoleApp1
             }
         }
 
+        struct ItemInfo
+        {
+            public Size Size;
+            public int Level;
+        }
 
-
-
+        struct RecordInfo
+        {
+            public string bitmap;
+            public string levelRequirement;
+        }
 
 
         static void Main(string[] args)
@@ -98,55 +106,55 @@ namespace ConsoleApp1
                         if (arcFile.ToLower().EndsWith("Sound.arc")) continue;
                         if (arcFile.ToLower().EndsWith("Fonts.arc")) continue;
 
-
-
                         RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + arcFile + "\" -extract \"" + CWD + "\"");
                     }
                 }
             }
 
-            Regex bitmapPattern = new Regex("^([a-z]*bitmap[a-z]*),([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            Dictionary<string, Regex> regex = new Dictionary<string, Regex>();
+            regex["bitmap"] = new Regex(@"^[a-z]*bitmap[a-z]*,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            regex["levelRequirement"] = new Regex(@"^levelRequirement,(\d+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+            regex["itemLevel"] = new Regex(@"^itemLevel,(\d+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
+
             int cwdLen = CWD.Length + 1;
 
-
-
-
-
-
-
-
-            Dictionary<string, string> record2bitmap = new Dictionary<string, string>();
+            Dictionary<string, RecordInfo> recordInfos = new Dictionary<string, RecordInfo>();
+            Dictionary<string, bool> textureFilesList = new Dictionary<string, bool>();
             Dictionary<string, Size> bitmapSizes = new Dictionary<string, Size>();
-            SortedDictionary<string, Size> itemSizes = new SortedDictionary<string, Size>();
-            Dictionary<string, bool> boolTexFiles = new Dictionary<string, bool>();
-
-
-
-
+            SortedDictionary<string, ItemInfo> itemInfos = new SortedDictionary<string, ItemInfo>();
 
             Console.WriteLine("Reading records...");
             foreach (string dbrFile in Directory.GetFiles(CWD + "\\records", "*.dbr", SearchOption.AllDirectories))
             {
-                string record = dbrFile.Substring(cwdLen, dbrFile.Length - cwdLen - 4).Replace("\\", "/"); //Path.GetFileNameWithoutExtension(r);
+                string record = dbrFile.Substring(cwdLen, dbrFile.Length - cwdLen - 4).Replace("\\", "/");
                 Console.WriteLine(record);
-                Match m = bitmapPattern.Match(File.ReadAllText(dbrFile));
-                if (m.Success)
+
+                string dbrText = File.ReadAllText(dbrFile);
+
+                Dictionary<string, Match> m = new Dictionary<string, Match>();
+                foreach (var kvp in regex)
+                    m[kvp.Key] = kvp.Value.Match(dbrText);
+
+                if (!m["bitmap"].Success) continue;
+                if (!m["bitmap"].Groups[1].Value.EndsWith(".tex")) continue;
+
+                RecordInfo recordInfo = new RecordInfo()
                 {
-                    string keyName = m.Groups[1].Value;
-                    string bitmapFile = m.Groups[2].Value;
-                    if (!bitmapFile.EndsWith(".tex")) continue;
-                    record2bitmap[record] = bitmapFile;
-                    boolTexFiles[bitmapFile] = true;
-                }
+                    bitmap = m["bitmap"].Groups[1].Value,
+                    levelRequirement = m["levelRequirement"].Success
+                    ? m["levelRequirement"].Groups[1].Value
+                    : m["itemLevel"].Success
+                    ? m["itemLevel"].Groups[1].Value
+                    : "0",
+                };
+
+                recordInfos[record] = recordInfo;
+                textureFilesList[recordInfo.bitmap] = true;
             }
             Console.WriteLine("... Done");
 
-
-
-
-
             Console.WriteLine("Reading sizes...");
-            foreach(string texRecord in boolTexFiles.Keys)
+            foreach (string texRecord in textureFilesList.Keys)
             {
                 string texFile = string.Format("{0}\\{1}", CWD, texRecord);
                 if (!File.Exists(texFile)) continue;
@@ -183,26 +191,40 @@ namespace ConsoleApp1
 
 
 
+
+
+
+
+
             Console.WriteLine("...");
-            foreach (KeyValuePair<string,string> kvp in record2bitmap)
+            foreach (KeyValuePair<string, RecordInfo> kvp in recordInfos)
             {
-                if (!bitmapSizes.ContainsKey(kvp.Value)) continue;
-                Size isize = bitmapSizes[kvp.Value];
-                itemSizes[kvp.Key] = isize;
-                Console.WriteLine(string.Format("{0} = {1} / {2}", kvp.Key, isize.Width, isize.Height));
+                string record = kvp.Key;
+                if (!bitmapSizes.TryGetValue(kvp.Value.bitmap, out Size size)) continue;
+                ItemInfo iteminfo = new ItemInfo() {
+                    Size = size,
+                    Level = int.Parse(kvp.Value.levelRequirement),
+                };
+                itemInfos[record] = iteminfo;
+                Console.WriteLine($"{record} = size:{iteminfo.Size.Width}/{iteminfo.Size.Height} level:{iteminfo.Level}");
             }
 
 
 
 
-            string listFile = Environment.CurrentDirectory + "\\itemsizes.txt";
+
+
+
+
+            string listFile = Environment.CurrentDirectory + "\\iteminfos.txt";
             if (File.Exists(listFile)) File.Delete(listFile);
             File.WriteAllText(listFile, "");
             using (StreamWriter sw = File.AppendText(listFile))
             {
-                foreach (KeyValuePair<string, Size> kvp in itemSizes)
+                sw.WriteLine($"//record:width:height:level");
+                foreach (KeyValuePair<string, ItemInfo> kvp in itemInfos)
                 {
-                    sw.WriteLine(String.Format("{0}:{1}:{2}", kvp.Key, kvp.Value.Width, kvp.Value.Height));
+                    sw.WriteLine($"{kvp.Key}:{kvp.Value.Size.Width}:{kvp.Value.Size.Height}:{kvp.Value.Level}");
                 }
             }
 

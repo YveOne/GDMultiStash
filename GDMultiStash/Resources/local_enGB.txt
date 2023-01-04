@@ -22,6 +22,7 @@ msg_cannot_delete_stash_group = Group "{0}" can not be deleted:\n{1}
 msg_stash_group_is_main = This is a main group
 msg_disable_cloud_sync = Warning: Cloud Sync is enabled!\nTo use GDMS you need to disable it in GD options!
 msg_confirm_delete_old_stashes = Delete old stashes?\nThis cannot be undone!
+msg_confirm_delete_stash_tab = Delete this tab?\nThis cannot be undone!
 
 // buttons
 btn_file = File
@@ -53,6 +54,13 @@ btn_overwrite = Overwrite
 btn_stashes = Stashes
 btn_groups = Groups
 btn_copy_to_expansion = Copy to expansion
+btn_edit_tabs = Edit tabs
+btn_tab_info = Tab {0}: {1} items
+btn_add_tab = +
+btn_move_to = Move to
+btn_move_up = ▲ Move up
+btn_move_down = ▼ Move down
+btn_empty = (empty)
 
 // listview columns
 lvc_id = ID
@@ -62,13 +70,12 @@ lvc_softcore = SC
 lvc_hardcore = HC
 
 // labels
-lbl_no_backups = (No Backups)
 lbl_shown_stashes = {0}/{1} stashes
 lbl_language = Language:
 lbl_game_path = Game Path:
 lbl_close_with_game = Close together with GD
-lbl_confirm_closing = Confirm closing window when GD still running
-lbl_confirm_deleting = Confirm deleting of stashes/groups
+lbl_confirm_closing = Ask before exiting if GD is still running
+lbl_confirm_deleting = Ask before deleting
 lbl_game_start_options = Game Start Options
 lbl_game_start_command = Command:
 lbl_game_start_arguments = Arguments:
@@ -88,6 +95,7 @@ lbl_transfer_file = Transfer file:
 lbl_stash_name = Stash name:
 lbl_group = Group:
 lbl_name = Name:
+lbl_tabs = Tabs:
 
 // default colors
 color_default = Default

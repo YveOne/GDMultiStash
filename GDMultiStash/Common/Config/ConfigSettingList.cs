@@ -37,7 +37,7 @@ namespace GDMultiStash.Common.Config
 
         [XmlElement("ConfirmClosing")] public bool ConfirmClosing = true;
         [XmlElement("CloseWithGrimDawn")] public bool CloseWithGrimDawn = true;
-        [XmlElement("ConfirmStashDelete")] public bool ConfirmStashDelete = true;
+        [XmlElement("ConfirmStashDelete")] public bool ConfirmStashDelete = true; // TODO: rename, this is used for ALL deletions
         [XmlElement("AutoBackToMain")] public bool AutoBackToMain = true;
         [XmlElement("SaveOverwritesLocked")] public bool SaveOverwritesLocked = false;
 

@@ -191,12 +191,15 @@ public static partial class Native
 
     #region Console
 
+    public const UInt32 STD_OUTPUT_HANDLE = 0xFFFFFFF5;
+    public const UInt32 STD_ERROR_HANDLE = 0xFFFFFFF4;
+
     [DllImport("kernel32.dll",
         EntryPoint = "AllocConsole",
         SetLastError = true,
         CharSet = CharSet.Auto,
         CallingConvention = CallingConvention.StdCall)]
-    private static extern int AllocConsole();
+    public static extern int AllocConsole();
 
     [DllImport("kernel32.dll",
         EntryPoint = "AttachConsole",
@@ -231,6 +234,10 @@ public static partial class Native
 
     [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
     public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
     [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
     public static extern IntPtr GetForegroundWindow();

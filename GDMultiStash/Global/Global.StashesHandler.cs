@@ -110,10 +110,10 @@ namespace GDMultiStash.GlobalHandlers
             return false;
         }
 
-        public StashObject CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
+        public StashObject CreateStash(string name, GrimDawnGameExpansion expansion, GrimDawnGameMode mode, int tabsCount = -1)
         {
             StashObject stash = new StashObject(Global.Configuration.CreateStash(name, expansion, mode));
-            Global.FileSystem.CreateStashTransferFile(stash.ID, expansion);
+            Global.FileSystem.CreateStashTransferFile(stash.ID, expansion, tabsCount);
             stash.LoadTransferFile();
             _stashes.Add(stash.ID, stash);
             return stash;

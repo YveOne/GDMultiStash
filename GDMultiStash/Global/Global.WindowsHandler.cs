@@ -50,7 +50,7 @@ namespace GDMultiStash.GlobalHandlers
                     MainWindow.Close();
                 });
             }
-            catch (Exception _ignore)
+            catch (Exception)
             {
             }
         }
@@ -59,11 +59,11 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (MainWindow.Visible) return;
 
-            EventHandler shownHandler = null;
-            shownHandler = delegate {
+            void shownHandler(object sender, EventArgs e)
+            {
                 MainWindow.Shown -= shownHandler;
-                if (onShow != null) onShow();
-            };
+                onShow?.Invoke();
+            }
 
             MainWindow.Shown += shownHandler;
             MainWindow.TopMost = false;

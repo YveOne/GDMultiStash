@@ -13,145 +13,78 @@ namespace GDMultiStash.Forms
 {
     internal partial class MainForm : BaseForm
     {
+        public Main.DecorationCollection Decorations { get; } = new Main.DecorationCollection();
+        public Main.StashesPage StashesPage { get; }
+        public Main.StashGroupsPage StashGroupsPage { get; }
 
-        #region constants
+        public EventHandler<EventArgs> SpaceClick;
 
-        private const int WindowCaptionDragHeight = 60;
-        private const int WindowResizeBorderSize = 8;
+        private readonly NotifyIcon trayIcon;
 
-        private const int listViewColumnsHeight = 30;
-        private const int listViewColumnsFontHeight = 11;
-        private const int listViewRowHeight = 25;
-        private const int listViewGroupHeaderHeight = 25;
-        private const int listViewGroupSpaceBetween = 5;
+        #region pages
 
-        private readonly Padding formPadding = new Padding(20, 20, 20, 20);
-        private readonly Padding pagesPadding = new Padding(5, 5, 5, 5);
-        private readonly Padding listViewBorderPadding = new Padding(5, 5, 5, 5);
-
-        private readonly Color formBackColor = Color.FromArgb(28, 28, 28);
-
-        private readonly Color interactiveForeColor = Color.FromArgb(200, 200, 200);
-        private readonly Color interactiveForeColorHighlight = Color.FromArgb(250, 250, 250);
-        private readonly Color passiveForeColor = Color.FromArgb(120, 120, 120);
-
-        private readonly Color captionButtonBackColor = Color.FromArgb(28, 28, 28);
-        private readonly Color captionButtonBackColorHover = Color.FromArgb(50, 50, 50);
-        private readonly Color captionButtonBackColorPressed = Color.FromArgb(70, 70, 70);
-
-        private readonly Color pageButtonBackColor = Color.FromArgb(35, 35, 35);
-        private readonly Color pageButtonBackColorActive = Color.FromArgb(45, 45, 45);
-        private readonly Color pagePanelBackColor = Color.FromArgb(45, 45, 45);
-
-        private readonly Color toolStripBackColor = Color.FromArgb(45, 45, 45);
-        private readonly Color toolStripButtonBackColor = Color.FromArgb(45, 45, 45);
-        private readonly Color toolStripButtonBackColorHover = Color.FromArgb(45, 45, 45);
-
-        private readonly Color listViewBackColor = Color.FromArgb(37, 37, 37);
-        private readonly Color listViewItemBackColor = Color.FromArgb(50, 50, 50);
-        private readonly Color listViewCellBorderColor = Color.FromArgb(37, 37, 37);
-        private readonly Color listViewGroupHeaderBackColor = Color.FromArgb(60, 60, 60);
-        private readonly Color listViewGroupHeaderCountForeColor = Color.FromArgb(180, 180, 180);
-        private readonly Color listViewGroupHeaderForeColor = Color.FromArgb(245, 245, 245);
-        private readonly Color listViewGroupHeaderSeparatorColor = Color.FromArgb(50, 50, 50);
-
-        private readonly Color scrollBarColor = Color.FromArgb(100, 100, 100);
-
-        #endregion
-
-        #region classes
-
-        private class ToolStripRenderer : ToolStripProfessionalRenderer
+        class PageHolder
         {
-            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            public Main.Page Page { get; }
+            public Button Button { get; }
+
+            public PageHolder(Main.Page page, Button button)
             {
-                if (e.Item.OwnerItem == null)
-                {
-                    // first level buttons
-                    Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
-                    e.Graphics.FillRectangle(new SolidBrush(e.Item.BackColor), rc);
-                    return;
-                }
-                //if (!e.Item.Selected) base.OnRenderMenuItemBackground(e);
-                base.OnRenderMenuItemBackground(e);
+                Page = page;
+                Button = button;
             }
         }
 
-        private class DefaultOLVColumn : OLVColumn
+        private int currentPageIndex = -1;
+        //private readonly EventHandler<EventArgs> PageChanged;
+        private readonly List<PageHolder> pages = new List<PageHolder>();
+
+        private void InitPage(Main.Page page, Button button)
         {
-            public DefaultOLVColumn() : base()
-            {
-                Searchable = false;
-                Groupable = false;
-                Sortable = false;
-                IsEditable = false;
-                CheckBoxes = false;
-            }
-            public new int Width
-            {
-                get => base.Width;
-                set
-                {
-                    base.Width = value;
-                    base.MaximumWidth = value;
-                    base.MinimumWidth = value;
-                }
-            }
+            button.FlatStyle = FlatStyle.Flat;
+            button.FlatAppearance.BorderSize = 0;
+            button.FlatAppearance.MouseDownBackColor = Constants.PageButtonBackColorActive;
+            button.FlatAppearance.MouseOverBackColor = Constants.PageButtonBackColorActive;
+            button.BackColor = Constants.PageButtonBackColor;
+            button.ForeColor = Constants.InteractiveForeColor;
+
+            page.BackColor = Constants.PageBackColor;
+            page.Dock = DockStyle.Fill;
+            page.Visible = false;
+
+            int pageIndex = pages.Count;
+            pages.Add(new PageHolder(page, button));
+            pagesPaddingPanel.Controls.Add(page);
+
+            button.MouseEnter += delegate { button.ForeColor = Constants.InteractiveForeColorHighlight; };
+            button.MouseLeave += delegate { if (pageIndex != currentPageIndex) button.ForeColor = Constants.InteractiveForeColor; };
+            button.Click += delegate { ShowPage(pageIndex); };
+            button.GotFocus += delegate { ClearFocus(); };
         }
 
-        //used to debug the border not positioned correctly
-        private class CellBorderDecorationEx : CellBorderDecoration
+        private void ShowPage(int pageIndex)
         {
-            private int w;
-            public CellBorderDecorationEx(int w, Color col)
+            if (currentPageIndex != -1)
             {
-                this.w = w;
-                BorderPen = new Pen(col);
-                FillBrush = null;
-                BoundsPadding = new Size(0, 0);
-                CornerRounding = 0;
+                pages[currentPageIndex].Button.BackColor = Constants.PageButtonBackColor;
+                pages[currentPageIndex].Button.ForeColor = Constants.InteractiveForeColor;
+                pages[currentPageIndex].Page.Visible = false;
             }
-            protected override Rectangle CalculateBounds()
-            {
-                Rectangle r = base.CellBounds;
-                r.X -= 1;
-                r.Y -= 1;
-                r.Width += w;
-                r.Height += 1;
-                return r;
-            }
-        }
-
-        private class RowBorderDecorationEx : RowBorderDecoration
-        {
-            private int w;
-            public RowBorderDecorationEx(int w, Color col)
-            {
-                this.w = w;
-                BorderPen = new Pen(col);
-                FillBrush = null;
-                BoundsPadding = new Size(0, 0);
-                CornerRounding = 0;
-            }
-            protected override Rectangle CalculateBounds()
-            {
-                Rectangle r = base.CellBounds;
-                r.X -= 1;
-                r.Y = r.Y - 2 + r.Height;
-                r.Width += w;
-                r.Height = 1;
-                return r;
-            }
+            currentPageIndex = pageIndex;
+            pages[currentPageIndex].Button.BackColor = Constants.PageButtonBackColorActive;
+            pages[currentPageIndex].Button.ForeColor = Constants.InteractiveForeColorHighlight;
+            pages[currentPageIndex].Page.Visible = true;
+            //PageChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion
 
         #region WndProc 
 
-        Rectangle BorderTop { get { return new Rectangle(0, 0, ClientSize.Width, WindowResizeBorderSize); } }
-        Rectangle BorderLeft { get { return new Rectangle(0, 0, WindowResizeBorderSize, ClientSize.Height); } }
-        Rectangle BorderBottom { get { return new Rectangle(0, ClientSize.Height - WindowResizeBorderSize, ClientSize.Width, WindowResizeBorderSize); } }
-        Rectangle BorderRight { get { return new Rectangle(ClientSize.Width - WindowResizeBorderSize, 0, WindowResizeBorderSize, ClientSize.Height); } }
+        Rectangle BorderTop { get { return new Rectangle(0, 0, ClientSize.Width, Constants.WindowResizeBorderSize); } }
+        Rectangle BorderLeft { get { return new Rectangle(0, 0, Constants.WindowResizeBorderSize, ClientSize.Height); } }
+        Rectangle BorderBottom { get { return new Rectangle(0, ClientSize.Height - Constants.WindowResizeBorderSize, ClientSize.Width, Constants.WindowResizeBorderSize); } }
+        Rectangle BorderRight { get { return new Rectangle(ClientSize.Width - Constants.WindowResizeBorderSize, 0, Constants.WindowResizeBorderSize, ClientSize.Height); } }
 
         protected override CreateParams CreateParams
         {
@@ -195,7 +128,7 @@ namespace GDMultiStash.Forms
                 else if (rHit) m.Result = (IntPtr)Native.HT.RIGHT;
                 else if (lHit) m.Result = (IntPtr)Native.HT.LEFT;
                 else if (tHit) m.Result = (IntPtr)Native.HT.TOP;
-                else if (cursor.Y < WindowCaptionDragHeight)
+                else if (cursor.Y < Constants.WindowCaptionDragHeight)
                 {
                     m.Result = (IntPtr)Native.HT.CAPTION;
                     return;
@@ -207,32 +140,11 @@ namespace GDMultiStash.Forms
 
         #endregion
 
-        private delegate Image ButtonImageGetter();
-        private event EventHandler SpaceClick;
+        #region buttons
 
-        private readonly NotifyIcon trayIcon;
+        public delegate Image ButtonImageGetter();
 
-        private readonly CellBorderDecorationEx cellBorderFirstDecoration;
-        private readonly CellBorderDecorationEx cellBorderDecoration;
-        private readonly RowBorderDecorationEx rowBorderFirstDecoration;
-        private readonly RowBorderDecorationEx rowBorderDecoration;
-
-        private readonly ImageDecoration lockDecoration;
-
-        private readonly ImageDecoration chkHideDecoration;
-        private readonly ImageDecoration chkBackDecoration;
-        private readonly ImageDecoration chkBackHoverDecoration;
-        private readonly ImageDecoration chkTickDecoration;
-        private readonly ImageDecoration chkTickDisabledDecoration;
-        private readonly ImageDecoration chkCrossDecoration;
-        private readonly ImageDecoration chkCrossDisabledDecoration;
-
-        private int currentPageIndex = -1;
-        private readonly EventHandler<EventArgs> PageChanged;
-        private readonly List<Button> pageButtons = new List<Button>();
-        private readonly List<Panel> pagePanels = new List<Panel>();
-
-        private void InitializeButton(Button button,
+        public void InitializeButton(Button button,
             Color backColor, Color backColorHover, Color backColorPressed,
             Color foreColor, Color foreColorHover,
             ButtonImageGetter imageNormal,
@@ -249,10 +161,10 @@ namespace GDMultiStash.Forms
             button.MouseEnter += delegate { button.ForeColor = foreColorHover; button.Image = imageHover(); };
             button.MouseLeave += delegate { button.ForeColor = foreColor; button.Image = imageNormal(); };
             button.Click += delegate { onClick(); };
-            button.GotFocus += delegate { titlePanel.Focus(); }; // unfocus, hide ugly border
+            button.GotFocus += delegate { ClearFocus(); }; // unfocus, hide ugly border
         }
 
-        private void InitializeToolStripButton(ToolStripMenuItem item,
+        public void InitializeToolStripButton(ToolStripMenuItem item,
             Color backColor, Color backColorHover,
             Color foreColor, Color foreColorHover)
         {
@@ -266,78 +178,7 @@ namespace GDMultiStash.Forms
             item.ForeColor = foreColor;
         }
 
-        private void ShowPage(int pageIndex)
-        {
-            if (currentPageIndex != -1)
-            {
-                pageButtons[currentPageIndex].BackColor = pageButtonBackColor;
-                pageButtons[currentPageIndex].ForeColor = interactiveForeColor;
-                pagePanels[currentPageIndex].Visible = false;
-            }
-            currentPageIndex = pageIndex;
-            pageButtons[currentPageIndex].BackColor = pageButtonBackColorActive;
-            pageButtons[currentPageIndex].ForeColor = interactiveForeColorHighlight;
-            pagePanels[currentPageIndex].Visible = true;
-            PageChanged?.Invoke(this, EventArgs.Empty);
-        }
-
-        private void InitializePage(Button button, Panel page)
-        {
-            button.FlatStyle = FlatStyle.Flat;
-            button.FlatAppearance.BorderSize = 0;
-            button.FlatAppearance.MouseDownBackColor = pageButtonBackColorActive;
-            button.FlatAppearance.MouseOverBackColor = pageButtonBackColorActive;
-            button.BackColor = pageButtonBackColor;
-            button.ForeColor = interactiveForeColor;
-
-            page.BackColor = pagePanelBackColor;
-            page.Dock = DockStyle.Fill;
-            page.Visible = false;
-
-            int pageIndex = pageButtons.Count;
-            pageButtons.Add(button);
-            pagePanels.Add(page);
-
-            button.MouseEnter += delegate { button.ForeColor = interactiveForeColorHighlight; };
-            button.MouseLeave += delegate { if (pageIndex != currentPageIndex) button.ForeColor = interactiveForeColor; };
-            button.Click += delegate { ShowPage(pageIndex); };
-            button.GotFocus += delegate { titlePanel.Focus(); }; // unfocus, hide ugly border
-        }
-
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
-        {
-            Text = Global.AppName;
-
-            stashesPageButton.Text = L.StashesButton();
-            groupsPageButton.Text = L.GroupsButton();
-
-            // form
-            captionGameButton.Text = L.StartGameButton();
-            captionFileButton.Text = L.FileButton();
-            captionHelpButton.Text = L.HelpButton();
-            captionImportButton.Text = L.ImportButton();
-            captionImportTransferFilesButton.Text = L.TransferFilesButton();
-            captionExportButton.Text = L.ExportButton();
-            captionExportTransferFilesButton.Text = L.TransferFilesButton();
-            captionSettingsButton.Text = L.SettingsButton();
-            captionChangelogButton.Text = L.ChangelogButton();
-            captionAboutButton.Text = L.AboutButton();
-
-            // stashes
-            stashes_columnID.Text = L.IdColumn();
-            stashes_columnName.Text = L.NameColumn();
-            stashes_columnLastChange.Text = L.LastChangeColumn();
-            stashes_columnSC.Text = L.SoftcoreColumn();
-            stashes_columnHC.Text = L.HardcoreColumn();
-            stashes_createStashButton.Text = L.CreateStashButton();
-            stashes_showSoftCoreCheckbox.Text = stashes_columnSC.Text;
-            stashes_showHardCoreCheckbox.Text = stashes_columnHC.Text;
-
-            // groups
-            groups_createStashGroupButton.Text = L.CreateGroupButton();
-            groups_columnID.Text = L.IdColumn();
-            groups_columnName.Text = L.NameColumn();
-        }
+        #endregion
 
         public MainForm() : base()
         {
@@ -351,8 +192,8 @@ namespace GDMultiStash.Forms
             #region Init Buttons
 
             InitializeButton(captionGameButton,
-                captionButtonBackColor, Color.FromArgb(0, 102, 77), Color.FromArgb(0, 135, 102),
-                interactiveForeColor, Color.FromArgb(255, 255, 255),
+                Constants.CaptionButtonBackColor, Color.FromArgb(0, 102, 77), Color.FromArgb(0, 135, 102),
+                Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight,
                 delegate { return null; },
                 delegate { return null; },
                 delegate {
@@ -368,124 +209,57 @@ namespace GDMultiStash.Forms
                 );
 
             InitializeButton(captionTrayButton,
-                captionButtonBackColor, captionButtonBackColorHover, captionButtonBackColorPressed,
-                interactiveForeColor, interactiveForeColorHighlight,
+                Constants.CaptionButtonBackColor, Constants.CaptionButtonBackColorHover, Constants.CaptionButtonBackColorPressed,
+                Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight,
                 delegate { return Properties.Resources.buttonTrayGray; },
                 delegate { return Properties.Resources.buttonTrayWhite; },
                 delegate { Hide(); }
                 );
 
             InitializeButton(captionMinimizeButton,
-                captionButtonBackColor, captionButtonBackColorHover, captionButtonBackColorPressed,
-                interactiveForeColor, interactiveForeColorHighlight,
+                Constants.CaptionButtonBackColor, Constants.CaptionButtonBackColorHover, Constants.CaptionButtonBackColorPressed,
+                Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight,
                 delegate { return Properties.Resources.buttonMinimizeGray; },
                 delegate { return Properties.Resources.buttonMinimizeWhite; },
                 delegate { WindowState = FormWindowState.Minimized; }
                 );
 
             InitializeButton(captionCloseButton,
-                captionButtonBackColor, Color.FromArgb(150, 32, 5), Color.FromArgb(207, 49, 12),
-                interactiveForeColor, Color.FromArgb(255, 255, 255),
+                Constants.CaptionButtonBackColor, Color.FromArgb(150, 32, 5), Color.FromArgb(207, 49, 12),
+                Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight,
                 delegate { return Properties.Resources.buttonCloseGray; },
                 delegate { return Properties.Resources.buttonCloseWhite; },
                 delegate { Close(); }
                 );
 
             InitializeToolStripButton(captionFileButton,
-                captionButtonBackColor, captionButtonBackColorHover,
-                interactiveForeColor, interactiveForeColorHighlight
+                Constants.CaptionButtonBackColor, Constants.CaptionButtonBackColorHover,
+                Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight
                 );
 
             InitializeToolStripButton(captionHelpButton,
-                captionButtonBackColor, captionButtonBackColorHover,
-                interactiveForeColor, interactiveForeColorHighlight
+                Constants.CaptionButtonBackColor, Constants.CaptionButtonBackColorHover,
+                Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight
                 );
 
-            captionMenuStrip.Renderer = new ToolStripRenderer();
+            captionMenuStrip.Renderer = new Controls.FlatToolStripRenderer();
 
             #endregion
 
-            #region Init Decos
-
-            cellBorderFirstDecoration = new CellBorderDecorationEx(-1, listViewCellBorderColor);
-            cellBorderDecoration = new CellBorderDecorationEx(0, listViewCellBorderColor);
-            rowBorderFirstDecoration = new RowBorderDecorationEx(-1, listViewCellBorderColor);
-            rowBorderDecoration = new RowBorderDecorationEx(0, listViewCellBorderColor);
-
-            using (Bitmap bmp = new Bitmap(15, 15, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-            using (Graphics gfx = Graphics.FromImage(bmp))
-            using (SolidBrush brush = new SolidBrush(listViewItemBackColor))
-            {
-                gfx.FillRectangle(brush, 0, 0, 15, 15);
-                chkHideDecoration = new ImageDecoration(new Bitmap(bmp), ContentAlignment.MiddleCenter)
-                {
-                    Transparency = 255,
-                    Offset = new Size(-1, -1),
-                    ShrinkToWidth = false,
-                };
-            }
-            chkBackDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxBack, new Size(15, 15)), ContentAlignment.MiddleCenter)
-            {
-                Transparency = 255,
-                Offset = new Size(-1, -1),
-                ShrinkToWidth = false,
-            };
-            chkBackHoverDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxBackHover, new Size(15, 15)), ContentAlignment.MiddleCenter)
-            {
-                Transparency = 255,
-                Offset = new Size(-1, -1),
-                ShrinkToWidth = false,
-            };
-            chkTickDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxTick, new Size(21, 21)), ContentAlignment.MiddleCenter)
-            {
-                Transparency = 255,
-                Offset = new Size(-1, -1),
-                ShrinkToWidth = false,
-            };
-            chkTickDisabledDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxTickDisabled, new Size(21, 21)), ContentAlignment.MiddleCenter)
-            {
-                Transparency = 255,
-                Offset = new Size(-1, -1),
-                ShrinkToWidth = false,
-            };
-            chkCrossDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxCross, new Size(21, 21)), ContentAlignment.MiddleCenter)
-            {
-                Transparency = 255,
-                Offset = new Size(-1, -1),
-                ShrinkToWidth = false,
-            };
-            chkCrossDisabledDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxCrossDisabled, new Size(21, 21)), ContentAlignment.MiddleCenter)
-            {
-                Transparency = 255,
-                Offset = new Size(-1, -1),
-                ShrinkToWidth = false,
-            };
-
-
-
-
-            lockDecoration = new ImageDecoration(new Bitmap(Properties.Resources.lockedWhite, new Size(15, 15)), ContentAlignment.MiddleRight)
-            {
-                Transparency = 180,
-                Offset = new Size(-5, 0),
-            };
-
-            #endregion
-
-            BackColor = formBackColor;
-            formBackgroundPanel.BackColor = formBackColor;
+            BackColor = Constants.FormBackColor;
+            formBackgroundPanel.BackColor = Constants.FormBackColor;
             BackgroundImage = Properties.Resources.border;
             BackgroundImageLayout = ImageLayout.Stretch;
             titlePanel.BackgroundImage = Properties.Resources.title;
             titlePanel.BackgroundImageLayout = ImageLayout.Zoom;
 
-            formPaddingPanel.BackColor = formBackColor;
-            formPaddingPanel.Padding = formPadding;
+            formPaddingPanel.BackColor = Constants.FormBackColor;
+            formPaddingPanel.Padding = Constants.FormPadding;
 
-            pagesPaddingPanel.BackColor = pagePanelBackColor;
-            pagesPaddingPanel.Padding = pagesPadding;
+            pagesPaddingPanel.BackColor = Constants.PageBackColor;
+            pagesPaddingPanel.Padding = Constants.PagesPadding;
 
-            captionMenuStrip.BackColor = formBackColor;
+            captionMenuStrip.BackColor = Constants.FormBackColor;
 
             trayIcon = new NotifyIcon()
             {
@@ -499,7 +273,7 @@ namespace GDMultiStash.Forms
             };
             trayIcon.DoubleClick += delegate { Show(); };
 
-            AllowDrop = true; // used to drag transfer files into the window
+            AllowDrop = false; // used to drag transfer files into the window
 
             // unselect items by clicking on empty space
             EventHandler spaceClickhandler = new EventHandler((sender, e) => SpaceClick?.Invoke(sender, e));
@@ -507,26 +281,53 @@ namespace GDMultiStash.Forms
             formPaddingPanel.Click += spaceClickhandler;
             pagesPaddingPanel.Click += spaceClickhandler;
 
-            InitializeStashesPage();
-            InitializePage(stashesPageButton, stashes_pagePanel);
+            StashesPage = new Main.StashesPage(this);
+            InitPage(StashesPage, stashesPageButton);
 
-            InitializeGroupsPage();
-            InitializePage(groupsPageButton, groups_pagePanel);
+            StashGroupsPage = new Main.StashGroupsPage(this);
+            InitPage(StashGroupsPage, stashGroupsPageButton);
 
             ShowPage(0);
+
+            Load += delegate {
+                // only after cfg has been initialized!
+                Width = Global.Configuration.Settings.WindowWidth;
+                Height = Global.Configuration.Settings.WindowHeight;
+                ResizeEnd += MainForm_ResizeEnd;
+                FormClosed += MainForm_FormClosed;
+                FormClosing += MainForm_FormClosing;
+            };
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
-            Width = Global.Configuration.Settings.WindowWidth;
-            Height = Global.Configuration.Settings.WindowHeight;
-            // following events only after cfg has been initialized!
-            ResizeEnd += MainForm_ResizeEnd;
-            FormClosed += MainForm_FormClosed;
-            FormClosing += MainForm_FormClosing;
+            Text = Global.AppName;
+
+            // form
+            captionGameButton.Text = L.StartGameButton();
+            captionFileButton.Text = L.FileButton();
+            captionHelpButton.Text = L.HelpButton();
+            captionImportButton.Text = L.ImportButton();
+            captionImportTransferFilesButton.Text = L.TransferFilesButton();
+            captionExportButton.Text = L.ExportButton();
+            captionExportTransferFilesButton.Text = L.TransferFilesButton();
+            captionSettingsButton.Text = L.SettingsButton();
+            captionChangelogButton.Text = L.ChangelogButton();
+            captionAboutButton.Text = L.AboutButton();
+
+            // pages
+            StashesPage.Localize();
+            stashesPageButton.Text = L.StashesButton();
+            StashGroupsPage.Localize();
+            stashGroupsPageButton.Text = L.GroupsButton();
         }
 
-        #region methods
+        #region public methods
+
+        public void ClearFocus()
+        {
+            titlePanel.Focus();
+        }
 
         public new void Show()
         {
@@ -613,9 +414,6 @@ namespace GDMultiStash.Forms
                     zipFile.SaveTo(dialog.FileName);
                 }
             }
-
-
-
         }
 
         #endregion

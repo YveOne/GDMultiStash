@@ -311,19 +311,20 @@ namespace GDMultiStash.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die records/creatures/npcs/npcgear/npc_child_girl_hair01:2:2
-        ///records/creatures/npcs/npcgear/npc_child_girl_hair02:2:2
-        ///records/creatures/npcs/npcgear/npc_child_girl_hair03:2:2
-        ///records/creatures/npcs/npcgear/npc_child_girl_hat01:2:2
-        ///records/creatures/npcs/npcgear/npc_feet_blacklegion01:2:2
-        ///records/creatures/npcs/npcgear/npc_feet_blacklegion02:2:2
-        ///records/creatures/npcs/npcgear/npc_feet_exile01:2:2
-        ///records/creatures/npcs/npcgear/npc_feet_necromancer01:2:2
-        ///records/creatures/npcs/npcgear/npc_feet_necromancer [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die //record:width:height:level
+        ///records/creatures/npcs/npcgear/npc_child_girl_hair01:2:2:1
+        ///records/creatures/npcs/npcgear/npc_child_girl_hair02:2:2:1
+        ///records/creatures/npcs/npcgear/npc_child_girl_hair03:2:2:1
+        ///records/creatures/npcs/npcgear/npc_child_girl_hat01:2:2:1
+        ///records/creatures/npcs/npcgear/npc_feet_blacklegion01:2:2:16
+        ///records/creatures/npcs/npcgear/npc_feet_blacklegion02:2:2:16
+        ///records/creatures/npcs/npcgear/npc_feet_exile01:2:2:32
+        ///records/creatures/npcs/npcgear/npc_feet_necromancer01:2:2:16
+        ///re [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
-        internal static string itemsizes {
+        internal static string iteminfos {
             get {
-                return ResourceManager.GetString("itemsizes", resourceCulture);
+                return ResourceManager.GetString("iteminfos", resourceCulture);
             }
         }
         

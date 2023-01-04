@@ -414,7 +414,7 @@ namespace GDMultiStash.GlobalHandlers
             else
             {
                 Console.WriteLine($"- export to: {filePath}");
-                Global.FileSystem.CreateStashTransferFile(stash.ID, expansion);
+                Global.FileSystem.CreateStashTransferFile(stash.ID, expansion, 1);
                 Global.FileSystem.ExportStashTransferFile(stash.ID, filePath);
             }
             return stash.ID;

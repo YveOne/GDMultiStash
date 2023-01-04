@@ -47,17 +47,7 @@ namespace GDMultiStash.Overlay
             Global.Runtime.StashesImported += delegate (object sender, GlobalHandlers.RuntimeHandler.ListChangedEventArgs<StashObject> e)
             {
                 foreach (StashObject stash in e.List)
-                {
-                    // we need to check if key is in list
-                    // because when the user changed group ingame
-                    // and switched to another stash
-                    // the stash of previous shown group will be imported
-                    // and that will also trigger this event
-                    if (_stashId2Item.ContainsKey(stash.ID))
-                    {
-                        _stashId2Item[stash.ID].UpdateUsageIndicator();
-                    }
-                }
+                    UpdateStashItem(stash);
             };
             Global.Runtime.StashReopenStart += delegate {
                 MouseCheckChildren = false;
@@ -134,8 +124,8 @@ namespace GDMultiStash.Overlay
             item.Text = stash.Name;
             item.Order = stash.Order;
             item.Locked = stash.Locked;
-            item.Color = stash.GetDisplayColor();
-            item.Font = stash.GetDisplayFont();
+            item.Color = stash.DisplayColor;
+            item.Font = stash.DisplayFont;
             item.Visible = true;
             item.ShowWorkload = Global.Configuration.Settings.OverlayShowWorkload;
             item.UpdateUsageIndicator();
@@ -148,8 +138,9 @@ namespace GDMultiStash.Overlay
             if (!_stashId2Item.ContainsKey(stash.ID)) return;
             StashListChild item = _stashId2Item[stash.ID];
             item.Text = stash.Name;
-            item.Color = stash.GetDisplayColor();
+            item.Color = stash.DisplayColor;
             item.Locked = stash.Locked;
+            item.UpdateUsageIndicator();
         }
 
     }

@@ -1,3 +1,18 @@
+v1.33.1
+- Scrollbars in main window getting updated correctly now
+- Fixed text flickering in group select button
+- 'Auto back to main' now also changes back to main stash group
+- Now a stash backup will be created before deleting a stash tab
+- Debug console is now showing correct unicode chars (eg chinese)
+
+v1.33
+- Added context options to edit stash tabs:
+  - Add & delete tabs
+  - move tabs to other stash in same group
+  - move tabs up/down
+- Confirm dialog won't be shown when deleting empty stashes/tabs
+- Added select for tabs count to create-stash-window
+
 v1.32.1
 - Changed default stash tabs count from 1 to 4 for base game
 - Capacity indicator is now showing the correct amount of stash tabs

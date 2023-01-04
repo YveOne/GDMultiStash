@@ -56,7 +56,6 @@ namespace GDMultiStash.Forms.Controls
 
         const int GWL_STYLE = -16;
         const int WS_VSCROLL = 0x00200000;
-        private const UInt32 LVM_SCROLL = 0x1014;
         private const UInt32 WM_VSCROLL = 0x0115;
         private const UInt32 WM_NCCALCSIZE = 0x83;
 
@@ -128,6 +127,11 @@ namespace GDMultiStash.Forms.Controls
         }
 
 
+        private bool shown = false;
+
+        private const UInt32 LVM_FIRST = 0x1000;
+        private const UInt32 LVM_SCROLL = LVM_FIRST + 20;
+        private const UInt32 WM_PAINT = 0xF;
 
 
         protected override void WndProc(ref Message m)
@@ -147,10 +151,16 @@ namespace GDMultiStash.Forms.Controls
             else if (m.Msg == WM_NCCALCSIZE)
             {
                 int style = (int)GetWindowLong(this.Handle, GWL_STYLE);
-                NCCalcSize?.Invoke(this, new NCCalcSizeArgs((style & WS_VSCROLL) == WS_VSCROLL));
+                shown = (style & WS_VSCROLL) == WS_VSCROLL;
+                NCCalcSize?.Invoke(this, new NCCalcSizeArgs(shown));
             }
-
+            else if (m.Msg == WM_PAINT)
+            {
+                NCCalcSize?.Invoke(this, new NCCalcSizeArgs(shown));
+            }
             
+
+
 
             base.WndProc(ref m);
 

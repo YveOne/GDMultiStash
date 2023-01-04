@@ -37,6 +37,10 @@ namespace GDMultiStash.Forms
                 if (e.KeyCode == Keys.Enter)
                     okButton.PerformClick();
             };
+
+            expansionComboBox.SelectionChangeCommitted += delegate {
+                UpdateTabsComboBox();
+            };
         }
 
         protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
@@ -45,7 +49,19 @@ namespace GDMultiStash.Forms
             nameLabel.Text = L.NameLabel();
             expansionLabel.Text = L.ExpansionLabel();
             groupLabel.Text = L.GroupLabel();
+            tabsLabel.Text = L.TabsLabel();
             okButton.Text = L.CreateButton();
+        }
+
+        private void UpdateTabsComboBox()
+        {
+            tabsComboBox.Items.Clear();
+            GrimDawnGameExpansion exp = (GrimDawnGameExpansion)expansionComboBox.SelectedIndex;
+            for(var i=1; i<=Common.TransferFile.GetMaxTabsForExpansion(exp); i+=1)
+            {
+                tabsComboBox.Items.Add(i);
+            }
+            tabsComboBox.SelectedIndex = tabsComboBox.Items.Count - 1;
         }
 
         private void AddStashDialogForm_Shown(object sender, EventArgs e)
@@ -60,6 +76,7 @@ namespace GDMultiStash.Forms
             scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState != 0;
             hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState != 0;
             expansionComboBox.SelectedIndex = (int)exp;
+            UpdateTabsComboBox();
             base.ShowDialog(owner);
             return DialogResult.OK;
         }
@@ -70,7 +87,8 @@ namespace GDMultiStash.Forms
             GrimDawnGameMode mode = GrimDawnGameMode.None;
             if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
             if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
-            StashObject stash = Global.Stashes.CreateStash(nameTextBox.Text, exp, mode);
+            int tabsCount = tabsComboBox.SelectedIndex + 1;
+            StashObject stash = Global.Stashes.CreateStash(nameTextBox.Text, exp, mode, tabsCount);
             stash.GroupID = ((StashGroupObject)groupComboBox.SelectedItem).ID;
             Global.Configuration.Save();
             Global.Runtime.NotifyStashesAdded(stash);

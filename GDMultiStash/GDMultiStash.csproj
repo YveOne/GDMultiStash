@@ -105,14 +105,22 @@
     <Compile Include="Common\Objects\StashGroupObject.cs" />
     <Compile Include="Common\Objects\StashObject.cs" />
     <Compile Include="Console.cs" />
-    <Compile Include="Forms\Controls\ExComboBox.cs">
+    <Compile Include="Constants.cs" />
+    <Compile Include="Forms\Controls\DefaultOLVColumn.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\Controls\ExComboBoxItem.cs" />
+    <Compile Include="Forms\Controls\FlatToolStripRenderer.cs" />
     <Compile Include="Forms\Controls\OLVGroupFeatures.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="Forms\Main\DecorationCollection.cs" />
+    <Compile Include="Forms\Main\StashGroupsPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\StashGroupsPage.Designer.cs">
+      <DependentUpon>StashGroupsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Forms\ChangelogDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -140,18 +148,24 @@
     <Compile Include="Forms\CreateStashGroupDialogForm.Designer.cs">
       <DependentUpon>CreateStashGroupDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainForm.GroupsPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MainForm.StashesPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Forms\Dragging\BaseDragHandler.cs" />
     <Compile Include="Forms\Dragging\BaseDragSource.cs" />
     <Compile Include="Forms\Dragging\BaseDropSink.cs" />
     <Compile Include="Forms\Dragging\GroupsDragHandler.cs" />
     <Compile Include="Forms\Dragging\GroupsDragSource.cs" />
     <Compile Include="Forms\Dragging\GroupsDropSink.cs" />
+    <Compile Include="Forms\Main\Page.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\Page.Designer.cs">
+      <DependentUpon>Page.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main\StashesPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\StashesPage.Designer.cs">
+      <DependentUpon>StashesPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ProgressDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -292,6 +306,15 @@
     <EmbeddedResource Include="Forms\ConfigurationDialogForm.resx">
       <DependentUpon>ConfigurationDialogForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\Page.resx">
+      <DependentUpon>Page.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\StashesPage.resx">
+      <DependentUpon>StashesPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\StashGroupsPage.resx">
+      <DependentUpon>StashGroupsPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ProgressDialogForm.resx">
       <DependentUpon>ProgressDialogForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -395,6 +418,7 @@
     <None Include="Resources\CheckBoxBackHover.png" />
     <None Include="Resources\CheckBoxTick.png" />
     <None Include="Resources\CheckBoxCross.png" />
+    <None Include="Resources\iteminfos.txt" />
     <Content Include="Resources\itemsizes.txt" />
   </ItemGroup>
   <ItemGroup>

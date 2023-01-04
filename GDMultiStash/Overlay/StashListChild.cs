@@ -22,7 +22,7 @@ namespace GDMultiStash.Overlay
 
         public StashListChild() : base()
         {
-            TextWidth -= 60;
+            TextWidth -= 85;
             _lockSign = new ImageElement()
             {
                 Resource = StaticResources.LockSignResource,

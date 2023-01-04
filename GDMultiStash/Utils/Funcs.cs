@@ -39,10 +39,5 @@ namespace Utils
             return System.IO.Path.Combine(System.IO.Path.GetTempPath(), Guid.NewGuid().ToString());
         }
 
-
-
-
-
-
     }
 }

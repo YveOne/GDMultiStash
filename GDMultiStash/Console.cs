@@ -1,17 +1,38 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.Linq;
+using System.Text;
+using System.IO;
+using System.Runtime.InteropServices;
 
 namespace GDMultiStash
 {
     internal class Console
     {
 
+        private static TextWriter writer = null;
+
+        public static void CreateConsole()
+        {
+            Native.AttachConsole(Native.ATTACH_PARRENT);
+
+            writer = new StreamWriter(System.Console.OpenStandardOutput(), Encoding.Unicode)
+            { AutoFlush = true };
+            System.Console.SetOut(writer);
+        }
+
+        public static void DestroyConsole()
+        {
+            if (writer == null) return;
+            writer.Close();
+            writer = null;
+        }
+
         public static void WriteLine(object text, params object[] args)
         {
             string t = DateTime.Now.ToString("HH:mm:ss.fff");
             string s = $"[{t}] " + string.Format(text.ToString(), args);
-            System.Console.WriteLine(s);
+            writer.WriteLine(s);
         }
 
         public static DialogResult Alert(string msg, MessageBoxButtons btn = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None)

@@ -63,6 +63,7 @@ namespace GDMultiStash.GlobalHandlers
 
                         int mainStashID = Global.Configuration.GetMainStashID(CurrentExpansion, CurrentMode);
                         Global.Stashes.SwitchToStash(mainStashID);
+                        Global.Runtime.ActiveGroupID = 0;
                     }
                     else
                     {
