@@ -3,8 +3,51 @@ using System.Collections.Generic;
 
 namespace GDIALib.Parser.Stash
 {
-    public class Item : IComparable<Item>
+    [Serializable]
+    public class Item
     {
+
+        private static readonly Dictionary<uint, uint> uint2pos = new Dictionary<uint, uint>() {
+            {0, 0},
+            {1065353216, 1},
+            {1073741824, 2},
+            {1077936128, 3},
+            {1082130432, 4},
+            {1084227584, 5},
+            {1086324736, 6},
+            {1088421888, 7},
+            {1090519040, 8},
+            {1091567616, 9},
+            {1092616192, 10},
+            {1093664768, 11},
+            {1094713344, 12},
+            {1095761920, 13},
+            {1096810496, 14},
+            {1097859072, 15},
+            {1098907648, 16},
+            {1099431936, 17},
+        };
+
+        private static readonly Dictionary<uint, uint> pos2uint = new Dictionary<uint, uint>() {
+            {0, 0},
+            {1, 1065353216},
+            {2, 1073741824},
+            {3, 1077936128},
+            {4, 1082130432},
+            {5, 1084227584},
+            {6, 1086324736},
+            {7, 1088421888},
+            {8, 1090519040},
+            {9, 1091567616},
+            {10, 1092616192},
+            {11, 1093664768},
+            {12, 1094713344},
+            {13, 1095761920},
+            {14, 1096810496},
+            {15, 1097859072},
+            {16, 1098907648},
+            {17, 1099431936},
+        };
 
         public override string ToString()
         {
@@ -33,7 +76,8 @@ namespace GDIALib.Parser.Stash
 
         public string EnchantmentRecord = "";
 
-        public uint UNKNOWN = 0u;
+        public uint UNKNOWN_uint = 0u;
+        public byte UNKNOWN_byte = 0;
 
         public uint EnchantmentSeed = 0u;
 
@@ -41,13 +85,19 @@ namespace GDIALib.Parser.Stash
 
         public uint StackCount = 1u;
 
-        public uint XOffset = 0;
+        private uint _x = 0;
+        private uint _y = 0;
 
-        public uint YOffset = 0;
+        public uint X {
+            get => uint2pos[_x];
+            set => _x = pos2uint[value];
+        }
 
-        // Default values chosen to minimize overlap while still allowing 16 items into the tab
-        public int Height = 4;
-        public int Width = 2;
+        public uint Y
+        {
+            get => uint2pos[_y];
+            set => _y = pos2uint[value];
+        }
 
         public Item()
         {
@@ -72,10 +122,11 @@ namespace GDIALib.Parser.Stash
                 || !pCrypto.ReadCryptoString(out this.TransmuteRecord) || !pCrypto.ReadCryptoUInt(out this.Seed)
                 || !pCrypto.ReadCryptoString(out this.MateriaRecord) || !pCrypto.ReadCryptoString(out this.RelicCompletionBonusRecord)
                 || !pCrypto.ReadCryptoUInt(out this.RelicSeed) || !pCrypto.ReadCryptoString(out this.EnchantmentRecord)
-                || !pCrypto.ReadCryptoUInt(out this.UNKNOWN) || !pCrypto.ReadCryptoUInt(out this.EnchantmentSeed)
+                || !pCrypto.ReadCryptoUInt(out this.UNKNOWN_uint) || !pCrypto.ReadCryptoUInt(out this.EnchantmentSeed)
                 || !pCrypto.ReadCryptoUInt(out this.MateriaCombines) || !pCrypto.ReadCryptoUInt(out this.StackCount);
 
-            flag = flag || !pCrypto.ReadCryptoUInt(out this.XOffset) || !pCrypto.ReadCryptoUInt(out this.YOffset);
+            flag = flag || !pCrypto.ReadCryptoUInt(out _x) || !pCrypto.ReadCryptoUInt(out _y);
+
             return !flag;
         }
 
@@ -91,59 +142,13 @@ namespace GDIALib.Parser.Stash
             pBuffer.WriteString(this.RelicCompletionBonusRecord);
             pBuffer.WriteUInt(this.RelicSeed);
             pBuffer.WriteString(this.EnchantmentRecord);
-            pBuffer.WriteUInt(this.UNKNOWN);
+            pBuffer.WriteUInt(this.UNKNOWN_uint);
             pBuffer.WriteUInt(this.EnchantmentSeed);
             pBuffer.WriteUInt(this.MateriaCombines);
             pBuffer.WriteUInt(this.StackCount);
-            pBuffer.WriteUInt(this.XOffset);
-            pBuffer.WriteUInt(this.YOffset);
+            pBuffer.WriteUInt(this._x);
+            pBuffer.WriteUInt(this._y);
         }
 
-        public int CompareTo(Item other)
-        {
-            return (Height * Width) - (other.Height * other.Width);
-        }
-
-
-        public override bool Equals(Object obj)
-        {
-            Item that = obj as Item;
-            if (that == null)
-                return base.Equals(obj);
-
-            if (!Equals(this.BaseRecord, that.BaseRecord)) return false;
-            if (!Equals(this.PrefixRecord, that.PrefixRecord)) return false;
-            if (!Equals(this.SuffixRecord, that.SuffixRecord)) return false;
-            if (!Equals(this.ModifierRecord, that.ModifierRecord)) return false;
-            if (!Equals(this.TransmuteRecord, that.TransmuteRecord)) return false;
-            if (!Equals(this.Seed, that.Seed)) return false;
-            if (!Equals(this.MateriaRecord, that.MateriaRecord)) return false;
-            if (!Equals(this.RelicCompletionBonusRecord, that.RelicCompletionBonusRecord)) return false;
-            if (!Equals(this.RelicSeed, that.RelicSeed)) return false;
-            if (!Equals(this.EnchantmentRecord, that.EnchantmentRecord)) return false;
-            if (!Equals(this.EnchantmentSeed, that.EnchantmentSeed)) return false;
-            if (!Equals(this.MateriaCombines, that.MateriaCombines)) return false;
-
-            return true;
-        }
-
-        public override int GetHashCode()
-        {
-            var hashCode = -2107434431;
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(BaseRecord);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(PrefixRecord);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(SuffixRecord);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(ModifierRecord);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(TransmuteRecord);
-            hashCode = hashCode * -1521134295 + Seed.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(MateriaRecord);
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(RelicCompletionBonusRecord);
-            hashCode = hashCode * -1521134295 + RelicSeed.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(EnchantmentRecord);
-            hashCode = hashCode * -1521134295 + EnchantmentSeed.GetHashCode();
-            hashCode = hashCode * -1521134295 + MateriaCombines.GetHashCode();
-            hashCode = hashCode * -1521134295 + StackCount.GetHashCode();
-            return hashCode;
-        }
     }
 }

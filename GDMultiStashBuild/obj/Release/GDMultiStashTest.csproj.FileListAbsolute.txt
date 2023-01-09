@@ -1,0 +1,6 @@
+C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\_bin\GDMultiStashTest.exe
+C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashTest\obj\Release\GDMultiStashTest.csproj.SuggestedBindingRedirects.cache
+C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashTest\obj\Release\GDMultiStashTest.csproj.CoreCompileInputs.cache
+C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashTest\obj\Release\GDMultiStashTest.exe
+C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashTest\obj\Release\GDMultiStashTest.g.resources
+C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashTest\obj\Release\GDMultiStashTest.csproj.AssemblyReference.cache

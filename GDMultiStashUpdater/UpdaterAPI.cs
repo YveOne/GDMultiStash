@@ -39,9 +39,6 @@ namespace GDMultiStashUpdater
 
         internal static void RunUpdate()
         {
-
-
-
             Console.WriteLine("Welcome to GDMultiStash Updater <3");
             Console.WriteLine("Getting data...");
             LatestReleaseData data = GetUpdateData();
@@ -76,11 +73,6 @@ namespace GDMultiStashUpdater
                 }
 
             }
-
-
-
-
-
 
             Console.WriteLine("Extracting...");
             using (FileStream zipToOpen = new FileStream(releaseFilename, FileMode.Open))

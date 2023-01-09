@@ -1,3 +1,12 @@
+v1.34
+- Changed startup behavior: GDMS will check itself if any dll is missing
+- Added option to delete only empty stashes to context menu
+- Removed file GDMultiStash.debug.bat; Added file GDMultiStashDebug.exe
+- Fixed: Language always gets reset to local after restarting GDMS
+- New Feature: Automaticly sort items by level, type, class or quality
+- New feature: Added tabs editor to view, add, remove and drag&drop stash tabs
+- New feature: Auto fill stashes with items with random seeds
+
 v1.33.1
 - Scrollbars in main window getting updated correctly now
 - Fixed text flickering in group select button

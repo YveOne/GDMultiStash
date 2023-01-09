@@ -1,14 +1,17 @@
 **/.vs/
 /_bin/*
-/_misc/tool to get itemsizes/bin/
-/_misc/tool to get itemsizes/obj/
+/_misc/tool to get iteminfos/bin/
+/_misc/tool to get iteminfos/obj/
 /D3DHook/obj/
 /GDIAHook/GDIAHook/x64/*
 /GDIALib/bin/
 /GDIALib/obj/
+/GDMultiStashApp/Connected Services/
+/GDMultiStashApp/obj/
+GDMultiStashDebug/obj/
+GDMultiStashStarter/obj/
+GDMultiStashTest/obj/
 /GDMultiStashUpdater/bin/
 /GDMultiStashUpdater/obj/
-/GDMultiStash/Connected Services/
-/GDMultiStash/obj/
 /packages/
 /x64
