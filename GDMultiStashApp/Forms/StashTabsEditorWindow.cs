@@ -26,7 +26,6 @@ namespace GDMultiStash.Forms
 
             backgroundPanel.BackColor = Constants.FormBackColor;
             tabsListPanel.BackColor = Constants.FormBackColor;
-            TopMost = true;
 
             stashObject = stash;
             maxTabs = GrimDawnLib.GrimDawn.Stashes.GetStashInfoForExpansion(stash.Expansion).MaxTabs;

@@ -61,7 +61,13 @@ namespace GDMultiStash.GlobalHandlers
                         Console.WriteLine("Runtime: TransferStashSaved - Config.AutoBackToMain");
                         // we dont need to use reopen because stash is closed
 
-                        SwitchToMainStash();
+                        int mainStashID = Global.Configuration.GetMainStashID(CurrentExpansion, CurrentMode);
+                        if (mainStashID != _activeStashID)
+                        {
+                            Global.Stashes.SwitchToStash(mainStashID);
+                            ReloadOpenedStash(_activeStashID);
+                        }
+                        Global.Runtime.ActiveGroupID = 0; // 0 is alwas main group
                     }
                     else
                     {
@@ -583,15 +589,6 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (stashID == _activeStashID) return;
             ReopenStashAction(() => Global.Stashes.SwitchToStash(stashID));
-        }
-
-        public void SwitchToMainStash()
-        {
-            int mainStashID = Global.Configuration.GetMainStashID(CurrentExpansion, CurrentMode);
-            if (mainStashID == _activeStashID) return;
-            ReloadOpenedStash(_activeStashID);
-            Global.Stashes.SwitchToStash(mainStashID);
-            Global.Runtime.ActiveGroupID = 0; // 0 is alwas main group
         }
 
         public void SaveCurrentStash()

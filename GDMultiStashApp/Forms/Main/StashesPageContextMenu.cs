@@ -99,18 +99,18 @@ namespace GDMultiStash.Forms.Main
                 Items.Add(T(clickedStash.Locked
                     ? Global.L.UnlockButton()
                     : Global.L.LockButton()
-                ), Properties.Resources.lockedBlack, delegate {
+                ), Properties.Resources.LockBlackIcon, delegate {
                     clickedStash.Locked = !clickedStash.Locked;
                     Global.Runtime.NotifyStashesInfoChanged(clickedStash);
                 });
             }
             else
             {
-                Items.Add(T(Global.L.LockButton()), Properties.Resources.lockedBlack, delegate {
+                Items.Add(T(Global.L.LockButton()), Properties.Resources.LockBlackIcon, delegate {
                     foreach (StashObject selStash in selectedStashes) selStash.Locked = true;
                     Global.Runtime.NotifyStashesInfoChanged(selectedStashes);
                 });
-                Items.Add(T(Global.L.UnlockButton()), Properties.Resources.lockedBlack, delegate {
+                Items.Add(T(Global.L.UnlockButton()), Properties.Resources.LockBlackIcon, delegate {
                     foreach (StashObject selStash in selectedStashes) selStash.Locked = false;
                     Global.Runtime.NotifyStashesInfoChanged(selectedStashes);
                 });
@@ -574,7 +574,7 @@ namespace GDMultiStash.Forms.Main
             }
 
             // create new group for new stashes
-            var group = Global.Stashes.CreateStashGroup($"{handler.GroupText} ({DateTime.Now})");
+            var group = Global.Stashes.CreateStashGroup(handler.GroupText, true);
             var stashWidth = clickedStash.Width; // all selected stashes should have same width and hight
             var stashHeight = clickedStash.Height;
             var addedStashes = new List<StashObject>();
@@ -699,7 +699,6 @@ namespace GDMultiStash.Forms.Main
                 if (Global.Configuration.Settings.ConfirmStashDelete
                 && !Console.Confirm(Global.L.ConfirmDeleteStashesMessage()))
                     return;
-
                 List<StashObject> deletedItems = Global.Stashes.DeleteStashes(selectedStashes);
                 Global.Configuration.Save();
                 Global.Runtime.NotifyStashesRemoved(deletedItems);

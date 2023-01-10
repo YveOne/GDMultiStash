@@ -326,11 +326,11 @@ namespace GDMultiStash.Forms
         {
             base.OnLoad(e);
             // fix: objectlistview is causing huge lags when form is in background
-            Plexiglass.DockingPlexiglass plexi = new Plexiglass.DockingPlexiglass(this)
+            new Plexiglass.DockingPlexiglass(formPaddingPanel)
             {
                 Color = Constants.FormBackColor,
-                Opacity = 0.66,
-                Margin = new Padding(1, 1, 1, 1)
+                Opacity = 0.50,
+                Margin = new Padding(0, 0, 0, 0)
             };
             // only after cfg has been initialized!
             Width = Global.Configuration.Settings.WindowWidth;
@@ -388,6 +388,64 @@ namespace GDMultiStash.Forms
         private void ImportTransferFilesButton_Click(object sender, EventArgs e)
         {
             Global.Windows.ShowImportDialog();
+        }
+
+        private void ImportGDSCButton_Click(object sender, EventArgs e)
+        {
+            using (var dialog = new OpenFileDialog()
+            {
+                Filter = $"gd_conf|gd_conf.xml",
+                Multiselect = false,
+            })
+            {
+                DialogResult result = dialog.ShowDialog();
+                if (result != DialogResult.OK) return;
+
+                var importedStashes = new List<StashObject>();
+                string stashesPath = System.IO.Path.Combine(new System.IO.FileInfo(dialog.FileName).Directory.FullName, "Stashes");
+
+                var reItem = new System.Text.RegularExpressions.Regex(@"<item\s+([^>]+)>");
+                var reID = new System.Text.RegularExpressions.Regex(@"id=""(\d+)""", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                var reName = new System.Text.RegularExpressions.Regex(@"name=""([^""]+)""");
+                var reColor = new System.Text.RegularExpressions.Regex(@"tcolor=""0x([a-f0-9]{6})""");
+                var matches = reItem.Matches(System.IO.File.ReadAllText(dialog.FileName));
+                foreach (System.Text.RegularExpressions.Match match in matches)
+                {
+                    var inner = match.Groups[1].Value;
+                    var mID = reID.Match(inner);
+                    var mName = reName.Match(inner);
+                    var mColor = reColor.Match(inner);
+                    if (!mID.Success) continue;
+                    if (!mName.Success) continue;
+
+                    var stashID = mID.Groups[1].Value;
+                    string stashFile = System.IO.Directory.GetFiles(System.IO.Path.Combine(stashesPath, stashID))
+                        .FirstOrDefault(name => true);
+                    if (stashFile == null) continue;
+
+                    if (!TransferFile.FromFile(stashFile, out TransferFile transferFile)) continue;
+                    if (transferFile.Expansion == GrimDawnLib.GrimDawnGameExpansion.Unknown) continue;
+                    if (transferFile.TotalUsage == 0) continue; // no items inside
+
+                    var stashName = System.Web.HttpUtility.HtmlDecode(mName.Groups[1].Value.Trim());
+                    StashObject stash = Global.Stashes.CreateImportStash(stashFile, stashName, transferFile.Expansion, GrimDawnLib.GrimDawnGameMode.Both);
+                    if (stash == null) continue;
+                    importedStashes.Add(stash);
+
+                    if (mColor.Success)
+                        stash.TextColor = $"#{mColor.Groups[1].Value}";
+                }
+
+                if (importedStashes.Count != 0)
+                {
+                    var group = Global.Stashes.CreateStashGroup("GDSC", true);
+                    foreach(var s in importedStashes)
+                        s.GroupID = group.ID;
+                    Global.Configuration.Save();
+                    Global.Runtime.NotifyStashesAdded(importedStashes);
+                    Global.Runtime.NotifyStashGroupsAdded(group);
+                }
+            }
         }
 
         private void TopMenuExportTransferFilesButton_Click(object sender, EventArgs e)

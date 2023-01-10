@@ -46,13 +46,22 @@ namespace GDMultiStash.Forms.Main
         public readonly OLVColumn columnActive = new DefaultOLVColumn()
         {
             Text = "",
-            Width = 30,
+            Width = 50,
             AspectGetter = delegate (object row) {
                 if (row is StashDummyObject) return "";
 
                 StashObject stash = (StashObject)row;
-                if (stash.ID == Global.Runtime.ActiveStashID) return ">>>";
-                return "";
+                bool isCurrent = Global.Configuration.IsCurrentStashID(stash.ID);
+                if (!isCurrent) return "";
+
+                List<string> modes = new List<string>();
+                if (Global.Configuration.IsCurrentStashID(stash.ID, stash.Expansion, GrimDawnLib.GrimDawnGameMode.SC))
+                    modes.Add("sc");
+                if (Global.Configuration.IsCurrentStashID(stash.ID, stash.Expansion, GrimDawnLib.GrimDawnGameMode.HC))
+                    modes.Add("hc");
+
+                return string.Join(" ", modes);
+
             },
             TextAlign = HorizontalAlignment.Center,
         };
@@ -84,14 +93,14 @@ namespace GDMultiStash.Forms.Main
 
         public readonly OLVColumn columnLastChange = new DefaultOLVColumn()
         {
-            Width = 130,
+            Width = 150,
             AspectGetter = delegate (object row) {
                 if (row is StashDummyObject) return "";
 
                 StashObject stash = (StashObject)row;
                 return stash.TransferFileLoaded ? stash.LastWriteTime.ToString() : " File Not Found";
             },
-            TextAlign = HorizontalAlignment.Right,
+            TextAlign = HorizontalAlignment.Center,
         };
 
         public readonly OLVColumn columnSC = new DefaultOLVColumn()
@@ -516,20 +525,15 @@ namespace GDMultiStash.Forms.Main
         {
             if (e.Model is StashDummyObject) return;
 
-            if (e.ColumnIndex == columnName.Index)
+            if (e.ColumnIndex == columnActive.Index)
             {
                 StashObject stash = (StashObject)e.Model;
-                bool isMain = Global.Configuration.IsMainStashID(stash.ID);
-                bool isDragging = dragHandler.IsDraggingStash(stash);
-                bool isSelected = e.Item.Selected;
                 bool isActive = Global.Runtime.ActiveStashID == stash.ID;
-                bool isLocked = stash.Locked;
-
-                FontStyle fontStyle = FontStyle.Regular;
-                if (isMain) fontStyle |= FontStyle.Italic;
-                if (isActive) fontStyle |= FontStyle.Bold;
-
-                e.SubItem.Font = new Font(e.Item.Font, fontStyle);
+                Color stashColor = stash.DisplayColor;
+                if (!isActive)
+                {
+                    e.SubItem.ForeColor = Color.FromArgb(stashColor.R / 2, stashColor.G / 2, stashColor.B / 2);
+                }
             }
         }
 
@@ -549,6 +553,9 @@ namespace GDMultiStash.Forms.Main
                 return;
             }
 
+
+
+
             for (var i = 0; i < e.Item.SubItems.Count; i += 1)
                 ((OLVListSubItem)e.Item.SubItems[i]).Decoration = i == 0
                     ? Main.Decorations.CellBorderFirstDecoration
@@ -560,15 +567,28 @@ namespace GDMultiStash.Forms.Main
             bool isSelected = e.Item.Selected;
             bool isActive = Global.Runtime.ActiveStashID == stash.ID;
             bool isLocked = stash.Locked;
+            Color stashColor = stash.DisplayColor;
 
             subItem = e.Item.GetSubItem(columnName.Index);
             if (subItem != null)
             {
                 if (isLocked)
+                    subItem.Decorations.Add(Main.Decorations.LockIconDecoration);
+                if (isMain)
+                    subItem.Decorations.Add(Main.Decorations.HomeIconDecoration);
+                var i = 0;
+                foreach (var deco in subItem.Decorations)
                 {
-                    subItem.Decorations.Add(Main.Decorations.LockDecoration);
+                    if (deco is ImageDecoration imgDeco)
+                    {
+                        imgDeco.Offset = new Size(i * -16 + -5, 0);
+                        i += 1;
+                    }
                 }
             }
+
+            
+
 
             subItem = e.Item.GetSubItem(columnSC.Index);
             if (subItem != null)
@@ -631,13 +651,9 @@ namespace GDMultiStash.Forms.Main
             else
             {
                 e.Item.BackColor = Constants.ListViewItemBackColor;
-                e.Item.ForeColor = stash.DisplayColor;
                 if (stash.TransferFileLoaded)
                 {
-                    if (isMain)
-                    {
-                        //e.Item.ForeColor = Color.Gray;
-                    }
+                    e.Item.ForeColor = stashColor;
                 }
                 else
                 {

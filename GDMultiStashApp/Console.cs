@@ -33,8 +33,19 @@ namespace GDMultiStash
         public static void WriteLine(object text, params object[] args)
         {
             if (writer == null) return;
+            var regex = new Regex(@"\{(\d+)\}");
             string t = DateTime.Now.ToString("HH:mm:ss.fff");
-            string s = $"[{t}] " + string.Format(text.ToString(), args);
+            string s = $"[{t}] " + regex.Replace(text.ToString(), m => {
+                if (int.TryParse(m.Groups[1].Value, out int i))
+                {
+                    var o = args.ElementAtOrDefault(i);
+                    if (o != null)
+                    {
+                        return $"{o}";
+                    }
+                }
+                return m.Value;
+            });
             System.Console.WriteLine(s);
         }
 

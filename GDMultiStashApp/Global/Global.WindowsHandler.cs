@@ -151,7 +151,8 @@ namespace GDMultiStash.GlobalHandlers
             }
             var win = new StashTabsEditorWindow(stash);
             win.FormClosed += delegate { StashTabsEditorWindows.Remove(stash.ID); };
-            win.Owner = (Form)DefaultDialogOwner;
+            win.TopMost = false;
+            //win.Owner = (Form)DefaultDialogOwner;
             StashTabsEditorWindows.Add(stash.ID, win);
             win.Show();
         }

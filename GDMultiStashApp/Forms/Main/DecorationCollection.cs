@@ -60,7 +60,8 @@ namespace GDMultiStash.Forms.Main
         public RowBorderDecoration RowBorderFirstDecoration { get; }
         public RowBorderDecoration RowBorderDecoration { get; }
 
-        public ImageDecoration LockDecoration { get; }
+        public ImageDecoration LockIconDecoration { get; }
+        public ImageDecoration HomeIconDecoration { get; }
 
         public ImageDecoration CheckBoxHideDecoration { get; }
         public ImageDecoration CheckBoxBackDecoration { get; }
@@ -82,7 +83,7 @@ namespace GDMultiStash.Forms.Main
             using (Graphics gfx = Graphics.FromImage(bmp))
             using (SolidBrush brush = new SolidBrush(Constants.ListViewItemBackColor))
             {
-                gfx.FillRectangle(brush, 0, 0, 15, 15);
+                gfx.FillRectangle(brush, 0, 0, bmp.Width, bmp.Height);
                 CheckBoxHideDecoration = new ImageDecoration(new Bitmap(bmp), ContentAlignment.MiddleCenter)
                 {
                     Transparency = 255,
@@ -91,12 +92,17 @@ namespace GDMultiStash.Forms.Main
                 };
             }
 
-            LockDecoration = new ImageDecoration(new Bitmap(Properties.Resources.lockedWhite, new Size(15, 15)), ContentAlignment.MiddleRight)
+            LockIconDecoration = new ImageDecoration(new Bitmap(Properties.Resources.LockWhiteIcon, new Size(15, 15)), ContentAlignment.MiddleRight)
             {
                 Transparency = 180,
                 Offset = new Size(-5, 0),
             };
-
+            HomeIconDecoration = new ImageDecoration(new Bitmap(Properties.Resources.HomeIcon, new Size(15, 15)), ContentAlignment.MiddleRight)
+            {
+                Transparency = 180,
+                Offset = new Size(-5, 0),
+            };
+            
             CheckBoxBackDecoration = new ImageDecoration(new Bitmap(Properties.Resources.CheckBoxBack, new Size(15, 15)), ContentAlignment.MiddleCenter)
             {
                 Transparency = 255,

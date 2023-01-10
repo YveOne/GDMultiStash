@@ -1,3 +1,9 @@
+v1.35
+- Moved plexiglass from whole window to inner client area
+- Plexiglass will no more show up in Alt+Tab
+- Added home button to overlay window
+- Fixed crash caused by color value out of range inside StashObject.CreateUsageIndicator()
+
 v1.34
 - Changed startup behavior: GDMS will check itself if any dll is missing
 - Added option to delete only empty stashes to context menu

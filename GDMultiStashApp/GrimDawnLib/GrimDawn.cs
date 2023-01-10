@@ -149,7 +149,7 @@ namespace GrimDawnLib
             };
         }
 
-        public static GrimDawnGameEnvironment GetEnvironmentByFilename(string fileName)
+        public static GrimDawnGameEnvironment GetEnvironmentByPath(string fileName)
         {
             return GetEnvironmentByExtension(Path.GetExtension(fileName));
         }

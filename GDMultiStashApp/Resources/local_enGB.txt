@@ -127,6 +127,7 @@ main_stash_name_2hc = Main (HC, FG)
 default_stash_name = New Stash
 default_stash_group_name = New Group
 
+group_imported = Imported
 group_name_sort_by_level = Sort by level
 group_name_sort_by_type = Sort by type
 group_name_sort_by_class = Sort by class

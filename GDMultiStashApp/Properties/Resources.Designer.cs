@@ -361,6 +361,26 @@ namespace GDMultiStash.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HomeButtonIcon {
+            get {
+                object obj = ResourceManager.GetObject("HomeButtonIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap HomeIcon {
+            get {
+                object obj = ResourceManager.GetObject("HomeIcon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Icon ähnlich wie (Symbol).
         /// </summary>
         internal static System.Drawing.Icon icon32 {
@@ -579,9 +599,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap lockedBlack {
+        internal static System.Drawing.Bitmap LockBlackIcon {
             get {
-                object obj = ResourceManager.GetObject("lockedBlack", resourceCulture);
+                object obj = ResourceManager.GetObject("LockBlackIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -589,9 +609,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap lockedWhite {
+        internal static System.Drawing.Bitmap LockWhiteIcon {
             get {
-                object obj = ResourceManager.GetObject("lockedWhite", resourceCulture);
+                object obj = ResourceManager.GetObject("LockWhiteIcon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -8,11 +8,6 @@ namespace GDMultiStash.Common
 {
 	internal class TransferFile
 	{
-
-
-
-
-
 		private readonly GDIALib.Parser.Stash.Stash stash;
 		private float _usageTotal = 0f;
 		private List<float> _usagePages = new List<float>();
@@ -86,18 +81,20 @@ namespace GDMultiStash.Common
 			bool success = stash.Read(crypto);
 			if (success)
             {
-				LoadUsage();
 				if (stash.Width == 8) Expansion = GrimDawnGameExpansion.BaseGame;
 				else if (stash.IsExpansion1) Expansion = GrimDawnGameExpansion.AshesOfMalmouth;
 				else Expansion = GrimDawnGameExpansion.ForgottenGods;
+				LoadUsage();
+				return true;
 			}
-			return success;
+			return false;
 		}
 
 		public void LoadUsage()
         {
 			_usageTotal = 0f;
-			long spacePerTab = stash.Width * stash.Height;
+			var expInfo = GrimDawn.Stashes.GetStashInfoForExpansion(Expansion);
+			long spacePerTab = expInfo.Width * expInfo.Height;
 			long spacePerStash = stash.Tabs.Count * spacePerTab;
 			long usedTotal = 0;
 			_usagePages.Clear();
@@ -124,13 +121,11 @@ namespace GDMultiStash.Common
 		{
             return ValidateFile(filePath, out _);
 		}
-
 		public static GrimDawnGameExpansion GetExpansionByFile(string filePath)
 		{
 			if (!ValidateFile(filePath, out TransferFile f)) return GrimDawnGameExpansion.Unknown;
 			return f.Expansion;
 		}
-
 	}
 
 }

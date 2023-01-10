@@ -37,6 +37,7 @@ namespace GDMultiStash.Common.Objects
         public void SetTransferFile(TransferFile transfer)
         {
             _transferFile = transfer;
+            LoadTransferFile();
         }
 
         public bool LoadTransferFile()
@@ -103,25 +104,28 @@ namespace GDMultiStash.Common.Objects
                     {
                         p = (p - posMin) / (posCen - posMin);
                         c = Color.FromArgb(
-                            (int)((rCen - rMin) * p) + rMin,
-                            (int)((gCen - gMin) * p) + gMin,
-                            (int)((bCen - bMin) * p) + bMin);
+                            Math.Max(0, Math.Min(255, (int)((rCen - rMin) * p) + rMin)),
+                            Math.Max(0, Math.Min(255, (int)((gCen - gMin) * p) + gMin)),
+                            Math.Max(0, Math.Min(255, (int)((bCen - bMin) * p) + bMin))
+                        );
                     }
                     else if (p <= posMax)
                     {
                         p = (p - posCen) / (posMax - posCen);
                         c = Color.FromArgb(
-                            (int)((rMax - rCen) * p) + rCen,
-                            (int)((gMax - gCen) * p) + gCen,
-                            (int)((bMax - bCen) * p) + bCen);
+                            Math.Max(0, Math.Min(255, (int)((rMax - rCen) * p) + rCen)),
+                            Math.Max(0, Math.Min(255, (int)((gMax - gCen) * p) + gCen)),
+                            Math.Max(0, Math.Min(255, (int)((bMax - bCen) * p) + bCen))
+                        );
                     }
                     else
                     {
                         p = (p - posMax) / (1 - posMax);
                         c = Color.FromArgb(
-                            (int)((rFull - rMax) * p) + rMax,
-                            (int)((gFull - gMax) * p) + gMax,
-                            (int)((bFull - bMax) * p) + bMax);
+                            Math.Max(0, Math.Min(255, (int)((rFull - rMax) * p) + rMax)),
+                            Math.Max(0, Math.Min(255, (int)((gFull - gMax) * p) + gMax)),
+                            Math.Max(0, Math.Min(255, (int)((bFull - bMax) * p) + bMax))
+                        );
                     }
                     using (var brush = new SolidBrush(c))
                     {

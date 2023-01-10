@@ -228,12 +228,14 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter StashSortByClassName => _.Get("stash_name_sort_by_class");
             public _Core.StringGetter StashSortByQualityName => _.Get("stash_name_sort_by_quality");
             public _Core.StringGetter StashSortByNoneName => _.Get("stash_name_sort_by_none");
-            
+
             #endregion
 
             #region group names
-
+            
             public _Core.StringGetter MainGroupName => _.Get("main_group_name");
+
+            public _Core.StringGetter ImportedGroupName => _.Get("group_imported");
 
             public _Core.StringGetter GroupSortByLevelName => _.Get("group_name_sort_by_level");
             public _Core.StringGetter GroupSortByTypeName => _.Get("group_name_sort_by_type");

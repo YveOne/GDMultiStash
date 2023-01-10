@@ -515,11 +515,19 @@ namespace GDMultiStash.GlobalHandlers
 
         public bool IsMainStashID(int stashID)
         {
-            foreach(Common.Config.ConfigExpansion cexp in Expansions)
+            foreach (Common.Config.ConfigExpansion cexp in Expansions)
             {
                 if (cexp.SC.MainID == stashID) return true;
                 if (cexp.HC.MainID == stashID) return true;
             }
+            return false;
+        }
+        
+        public bool IsMainStashID(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        {
+            Common.Config.ConfigExpansion cexp = Expansions[(int)exp];
+            if (mode.HasFlag(GrimDawnGameMode.SC) && cexp.SC.MainID == stashID) return true;
+            if (mode.HasFlag(GrimDawnGameMode.HC) && cexp.HC.MainID == stashID) return true;
             return false;
         }
 
@@ -530,6 +538,14 @@ namespace GDMultiStash.GlobalHandlers
                 if (cexp.SC.CurrentID == stashID) return true;
                 if (cexp.HC.CurrentID == stashID) return true;
             }
+            return false;
+        }
+
+        public bool IsCurrentStashID(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        {
+            Common.Config.ConfigExpansion cexp = Expansions[(int)exp];
+            if (mode.HasFlag(GrimDawnGameMode.SC) && cexp.SC.CurrentID == stashID) return true;
+            if (mode.HasFlag(GrimDawnGameMode.HC) && cexp.HC.CurrentID == stashID) return true;
             return false;
         }
 

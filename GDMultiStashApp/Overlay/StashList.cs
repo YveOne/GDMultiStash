@@ -61,14 +61,6 @@ namespace GDMultiStash.Overlay
                     UpdateStashItemContent(stash);
                 }
             };
-            Global.Runtime.StashReopenStart += delegate {
-                MouseCheckChildren = false;
-                Alpha = 0.33f;
-            };
-            Global.Runtime.StashReopenEnd += delegate {
-                MouseCheckChildren = true;
-                Alpha = 1f;
-            };
             _updateAppearance = true; // update on startup
             Global.Configuration.AppearanceChanged += delegate {
                 _updateAppearance = true;

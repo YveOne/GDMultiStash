@@ -15,13 +15,29 @@ namespace GDMultiStash.Forms.Plexiglass
         {
             public PlexiForm()
             {
-                this.FormBorderStyle = FormBorderStyle.None;
+                this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
                 this.ControlBox = false;
                 this.ShowInTaskbar = false;
+                this.ShowIcon = false;
                 this.StartPosition = FormStartPosition.Manual;
                 this.AutoScaleMode = AutoScaleMode.None;
+                this.Padding = Padding.Empty;
             }
-
+            
+            protected override CreateParams CreateParams
+            {
+                // i am using this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+                // to hide this form from alt+tab
+                // and the following is to remove border+titlebar 
+                get
+                {
+                    int WS_CAPTION = 0x00C00000;
+                    CreateParams result = base.CreateParams;
+                    result.Style &= ~WS_CAPTION;
+                    return result;
+                }
+            }
+            
             protected override void OnLoad(EventArgs e)
             {
                 if (this.Owner != null && Environment.OSVersion.Version.Major >= 6)

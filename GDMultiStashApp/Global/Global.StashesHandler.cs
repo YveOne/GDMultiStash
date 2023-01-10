@@ -317,8 +317,9 @@ namespace GDMultiStash.GlobalHandlers
             return l.ToArray();
         }
 
-        public StashGroupObject CreateStashGroup(string name)
+        public StashGroupObject CreateStashGroup(string name, bool withDateString = false)
         {
+            if (withDateString) name = $"{name} ({DateTime.Now})";
             StashGroupObject group = new StashGroupObject(Global.Configuration.CreateStashGroup(name));
             _stashGroups.Add(group.ID, group);
             return group;

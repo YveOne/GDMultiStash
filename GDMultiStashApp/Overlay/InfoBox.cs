@@ -96,17 +96,9 @@ namespace GDMultiStash.Overlay
             Global.Configuration.LanguageChanged += delegate {
                 UpdateButtonText();
             };
-
-            Global.Runtime.StashReopenStart += delegate {
-                MouseCheckChildren = false;
-                Alpha = 0.33f;
+            Global.Runtime.StashesInfoChanged += delegate {
+                UpdateInfoText(); // maybe name changed
             };
-
-            Global.Runtime.StashReopenEnd += delegate {
-                MouseCheckChildren = true;
-                Alpha = 1.0f;
-            };
-
         }
 
         private void UpdateButtonText()

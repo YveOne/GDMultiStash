@@ -67,6 +67,8 @@ namespace GDMultiStash.Overlay
             Controls.GroupSelectButton._DropDownArrowResource = OverlayResources.CreateImageResource(Resources.ButtonDropDownArrow, ImageFormat.Png);
             Controls.GroupSelectButton._DropUpArrowResource = OverlayResources.CreateImageResource(Resources.ButtonDropUpArrow, ImageFormat.Png);
 
+            Controls.HomeButton._HomeIconResource = OverlayResources.CreateImageResource(Resources.HomeButtonIcon, ImageFormat.Png);
+
             OverlayWindow._BackgroundResource = OverlayResources.CreateImageResource(Resources.windowBackground, ImageFormat.Jpeg);
             OverlayWindow._OverShadowResource = OverlayResources.CreateColorImageResource(Color.FromArgb(0, 0, 0));
             OverlayWindow._GroupListBackgroundResource = OverlayResources.CreateColorImageResource(Color.FromArgb(28, 25, 22));
@@ -77,7 +79,7 @@ namespace GDMultiStash.Overlay
 
             StaticResources.RadioButton0Resource = OverlayResources.CreateImageResource(Resources.radio0, ImageFormat.Png);
             StaticResources.RadioButton1Resource = OverlayResources.CreateImageResource(Resources.radio1, ImageFormat.Png);
-            StaticResources.LockSignResource = OverlayResources.CreateImageResource(Resources.lockedWhite, ImageFormat.Png);
+            StaticResources.LockSignResource = OverlayResources.CreateImageResource(Resources.LockWhiteIcon, ImageFormat.Png);
 
             Controls.InfoBoxReloadButton._UpResource = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallUp, ImageFormat.Png);
             Controls.InfoBoxReloadButton._DownResource = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallDown, ImageFormat.Png);

@@ -44,6 +44,7 @@ namespace GDMultiStash.Overlay
         private readonly InfoBox _infoWindow;
         private readonly StashList _stashList;
         private readonly VerticalScrollBar _stashListScrollBar;
+        private readonly HomeButton _homeButton;
         private readonly GroupSelectButton _groupSelectButton;
         private readonly ImageElement _overShadow;
         private readonly GroupList _groupList;
@@ -103,12 +104,19 @@ namespace GDMultiStash.Overlay
                 Alpha = 0,
                 Resource = _OverShadowResource,
             };
-            _groupSelectButton = new GroupSelectButton()
+            _homeButton = new HomeButton()
             {
                 X = 4,
                 Y = 6,
+                Width = 50,
+                Height = 41,
+            };
+            _groupSelectButton = new GroupSelectButton()
+            {
+                X = _homeButton.X + _homeButton.Width + 2,
+                Y = 6,
                 WidthToParent = true,
-                Width = -10,
+                Width = -(_homeButton.X + _homeButton.Width + 4) - 4,
                 Height = 41,
             };
             _groupListBackground = new ImageElement()
@@ -196,6 +204,8 @@ namespace GDMultiStash.Overlay
             AddChild(_stashList);
             AddChild(_stashListScrollBar);
             AddChild(_infoWindow);
+            AddChild(_homeButton);
+
             AddChild(_overShadow);
 
             AddChild(_groupSelectButton);
@@ -342,12 +352,14 @@ namespace GDMultiStash.Overlay
                     _stashList.EventsEnabled = false;
                     _stashListScrollBar.EventsEnabled = false;
                     _infoWindow.EventsEnabled = false;
+                    _homeButton.EventsEnabled = false;
                 };
                 _groupSelectButton.DropDownClosed += delegate {
                     animator.Value = 0;
                     _stashList.EventsEnabled = true;
                     _stashListScrollBar.EventsEnabled = true;
                     _infoWindow.EventsEnabled = true;
+                    _homeButton.EventsEnabled = true;
                 };
             }
 
@@ -380,6 +392,23 @@ namespace GDMultiStash.Overlay
             Global.Runtime.ActiveGroupChanged += delegate {
                 _groupSelectButton.CloseDropDown();
             };
+
+            Global.Runtime.StashReopenStart += delegate {
+                MouseCheckChildren = false;
+                _infoWindow.Alpha = 0.70f;
+                _stashList.Alpha = 0.70f;
+                _homeButton.Alpha = 0.80f;
+                _groupSelectButton.Alpha = 0.80f;
+            };
+
+            Global.Runtime.StashReopenEnd += delegate {
+                MouseCheckChildren = true;
+                _infoWindow.Alpha = 1.0f;
+                _stashList.Alpha = 1.0f;
+                _homeButton.Alpha = 1.0f;
+                _groupSelectButton.Alpha = 1.0f;
+            };
+
         }
 
         private void FadeInFast()

@@ -52,6 +52,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -135,6 +136,12 @@
     </Compile>
     <Compile Include="Forms\StashTabsEditorWindow.Designer.cs">
       <DependentUpon>StashTabsEditorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Overlay\Controls\HomeButton.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Forms\ChangelogDialogForm.cs">
@@ -270,11 +277,6 @@
     <Compile Include="GrimDawnLib\GrimDawn.Keybindings.cs" />
     <Compile Include="Native\Native.Keyboard.cs" />
     <Compile Include="Overlay\GDMSViewport.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\GDOverlayService.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.Steam.cs" />
     <Compile Include="Services\Service.cs" />
@@ -360,6 +362,13 @@
     <Resource Include="app.config" CopyToOutputDirectory="Never" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\LockBlackIcon.png" />
+    <None Include="Resources\LockWhiteIcon.png" />
+    <None Include="Resources\HomeButtonIcon.png" />
+    <None Include="Resources\HomeIcon.png" />
+    <None Include="Resources\ButtonTinyOver.png" />
+    <None Include="Resources\ButtonTinyUp.png" />
+    <None Include="Resources\ButtonTinyDown.png" />
     <None Include="Resources\caravanWindow8x16add.jpg" />
     <None Include="Resources\caravanWindow10x18hover.png" />
     <None Include="Resources\caravanWindow8x16hover.png" />
@@ -397,8 +406,6 @@
     <None Include="Resources\windowBorderTop.png" />
     <None Include="Resources\windowBackground.jpg" />
     <None Include="Resources\title.png" />
-    <None Include="Resources\lockedWhite.png" />
-    <None Include="Resources\lockedBlack.png" />
     <None Include="Resources\ReloadButtonSmallUp.png" />
     <None Include="Resources\ReloadButtonSmallOver.png" />
     <None Include="Resources\ReloadButtonSmallDown.png" />
