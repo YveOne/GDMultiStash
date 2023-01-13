@@ -39,6 +39,25 @@
   <PropertyGroup>
     <ApplicationIcon>icon64.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>..\_bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -90,18 +109,12 @@
     <PostBuildEvent>del "$(TargetDir)GDMultiStash.bin" 2&gt;nul
 move "$(TargetDir)GDMultiStashApp.exe" "$(TargetDir)GDMultiStash.bin" 2&gt;nul</PostBuildEvent>
   </PropertyGroup>
-  
-<ItemGroup>
+  <ItemGroup>
     <None Include="$(MSBuildProjectDirectory)\Properties\_buildforcer">
-        <Visible>true</Visible>
+      <Visible>true</Visible>
     </None>
-</ItemGroup>
-<Target Name="ForceNextBuild"
-        AfterTargets="PrepareForRun"
-        Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
-
-    <Touch Files="$(MSBuildProjectDirectory)\Properties\_buildforcer"
-           AlwaysCreate="true"/>
-</Target>
-
+  </ItemGroup>
+  <Target Name="ForceNextBuild" AfterTargets="PrepareForRun" Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+    <Touch Files="$(MSBuildProjectDirectory)\Properties\_buildforcer" AlwaysCreate="true" />
+  </Target>
 </Project>

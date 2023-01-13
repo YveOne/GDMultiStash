@@ -1,5 +1,6 @@
 v1.36.2
 - Fixed: Auto back to main is not working
+- Program is now running correctly in 64bit mode
 
 v1.36.1
 - Changed method to catch game beeing minimized
