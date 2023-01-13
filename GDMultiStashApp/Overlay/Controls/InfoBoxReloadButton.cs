@@ -12,19 +12,12 @@ namespace GDMultiStash.Overlay.Controls
 {
     public class InfoBoxReloadButton : ButtonElement
     {
-
-        public static Font _Font;
-        public static D3DHook.Hook.Common.IImageResource _UpResource;
-        public static D3DHook.Hook.Common.IImageResource _DownResource;
-        public static D3DHook.Hook.Common.IImageResource _OverResource;
-
-        protected override D3DHook.Hook.Common.IImageResource UpResource => _UpResource;
-        protected override D3DHook.Hook.Common.IImageResource DownResource => _DownResource;
-        protected override D3DHook.Hook.Common.IImageResource OverResource => _OverResource;
+        protected override D3DHook.Hook.Common.IImageResource UpResource => StaticResources.ReloadButtonSmallUp;
+        protected override D3DHook.Hook.Common.IImageResource DownResource => StaticResources.ReloadButtonSmallDown;
+        protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ReloadButtonSmallOver;
 
         public InfoBoxReloadButton()
         {
-            Font = _Font;
             Width = 27;
             Height = 22;
             Color = Color.FromArgb(255, 209, 191, 153);

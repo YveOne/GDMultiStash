@@ -15,10 +15,6 @@ namespace GDMultiStash.Overlay
     internal class OverlayWindow : Element
     {
 
-        public static D3DHook.Hook.Common.IImageResource _BackgroundResource;
-        public static D3DHook.Hook.Common.IImageResource _OverShadowResource;
-        public static D3DHook.Hook.Common.IImageResource _GroupListBackgroundResource;
-
         public enum States
         {
             Hidden = 0,
@@ -102,7 +98,7 @@ namespace GDMultiStash.Overlay
                 HeightToParent = true,
                 Visible = false,
                 Alpha = 0,
-                Resource = _OverShadowResource,
+                Resource = StaticResources.WindowOverShadow,
             };
             _homeButton = new HomeButton()
             {
@@ -125,7 +121,7 @@ namespace GDMultiStash.Overlay
                 Y = _groupSelectButton.Y + _groupSelectButton.Height,
                 WidthToParent = true,
                 Width = _groupSelectButton.Width - 10 -10,
-                Resource = _GroupListBackgroundResource,
+                Resource = StaticResources.GroupListBackground,
                 Visible = false,
             };
             _groupList = new GroupList()
@@ -148,7 +144,7 @@ namespace GDMultiStash.Overlay
             AddChild(new ImageElement()
             {
                 DebugColor = Color.FromArgb(128, 0, 0, 0),
-                Resource = _BackgroundResource,
+                Resource = StaticResources.WindowBackground,
                 AnchorPoint = Anchor.TopRight,
                 Width = 600,
                 HeightToParent = true,
@@ -316,6 +312,7 @@ namespace GDMultiStash.Overlay
                     case States.Hiding:
                         State = States.Hidden;
                         _groupSelectButton.CloseDropDown();
+                        _fadeAnimator.Reset();
                         break;
                 }
             };

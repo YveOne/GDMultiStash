@@ -25,7 +25,8 @@ internal class Console
     public static void LogToFile(string logFile)
     {
         if (File.Exists(logFile)) File.Delete(logFile);
-        writer = new StreamWriter(new FileStream(logFile, FileMode.OpenOrCreate), Encoding.UTF8);
+        writer = new StreamWriter(new FileStream(logFile, FileMode.OpenOrCreate), Encoding.UTF8)
+        { AutoFlush = true, };
     }
 
     public static void DestroyConsole()

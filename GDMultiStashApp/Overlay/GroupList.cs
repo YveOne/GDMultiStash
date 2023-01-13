@@ -14,8 +14,6 @@ namespace GDMultiStash.Overlay
 {
     internal class GroupList : ListBoxElement<GroupListChild, StashGroupObject>
     {
-        public static Font _Font;
-
         public override float ItemHeight => 26;
         public override float ItemMargin => 2;
 
@@ -127,7 +125,7 @@ namespace GDMultiStash.Overlay
             item.Text = group.Name;
             item.Order = group.Order;
             item.Color = _itemTextColor;
-            item.Font = _Font;
+            item.Font = StaticResources.GroupListItemFont;
             item.Visible = true;
             _groupId2Item.Add(group.ID, item);
             AddScrollItem(item);

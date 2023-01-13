@@ -64,7 +64,8 @@ namespace GDMultiStash.Common.Overlay.Animations
             _durationTar = _duration * value;
             _durationPos = _durationTar;
             _curValue = _durationPos / _duration;
-            _delayed = 0f;
+            _delayed = _delay;
+            _running = false;
             OnAnimate(_curValue);
         }
 
@@ -81,7 +82,7 @@ namespace GDMultiStash.Common.Overlay.Animations
         public bool Animate(float elapsed)
         {
             float missing = _durationTar - _durationPos;
-            if ((int)(missing * 1000000) == 0) missing = 0;
+            if ((int)(missing * 100000) == 0) missing = 0;
             if (missing == 0)
             {
                 if (_running)

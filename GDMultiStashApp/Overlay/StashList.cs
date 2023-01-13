@@ -122,7 +122,7 @@ namespace GDMultiStash.Overlay
             item.Order = stash.Order;
             item.Locked = stash.Locked;
             item.Color = stash.DisplayColor;
-            item.Font = stash.DisplayFont;
+            item.Font = StaticResources.StashListItemFont;
             item.Visible = true;
             item.ShowWorkload = Global.Configuration.Settings.OverlayShowWorkload;
             item.UpdateUsageIndicator();

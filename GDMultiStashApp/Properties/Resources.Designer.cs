@@ -403,6 +403,16 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GDMSLogo {
+            get {
+                object obj = ResourceManager.GetObject("GDMSLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap HomeButtonIcon {
             get {
                 object obj = ResourceManager.GetObject("HomeButtonIcon", resourceCulture);
@@ -470,86 +480,6 @@ namespace GDMultiStash.Properties {
             get {
                 object obj = ResourceManager.GetObject("itemtextures", resourceCulture);
                 return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderB {
-            get {
-                object obj = ResourceManager.GetObject("listBorderB", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderBL {
-            get {
-                object obj = ResourceManager.GetObject("listBorderBL", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderBR {
-            get {
-                object obj = ResourceManager.GetObject("listBorderBR", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderL {
-            get {
-                object obj = ResourceManager.GetObject("listBorderL", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderR {
-            get {
-                object obj = ResourceManager.GetObject("listBorderR", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderT {
-            get {
-                object obj = ResourceManager.GetObject("listBorderT", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderTL {
-            get {
-                object obj = ResourceManager.GetObject("listBorderTL", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap listBorderTR {
-            get {
-                object obj = ResourceManager.GetObject("listBorderTR", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
             }
         }
         
@@ -659,16 +589,6 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap marble {
-            get {
-                object obj = ResourceManager.GetObject("marble", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap ReloadButtonSmallDown {
             get {
                 object obj = ResourceManager.GetObject("ReloadButtonSmallDown", resourceCulture);
@@ -699,9 +619,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap scrollareaBottom {
+        internal static System.Drawing.Bitmap ScrollAreaBottom {
             get {
-                object obj = ResourceManager.GetObject("scrollareaBottom", resourceCulture);
+                object obj = ResourceManager.GetObject("ScrollAreaBottom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -709,9 +629,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap scrollareaMiddle {
+        internal static System.Drawing.Bitmap ScrollAreaMiddle {
             get {
-                object obj = ResourceManager.GetObject("scrollareaMiddle", resourceCulture);
+                object obj = ResourceManager.GetObject("ScrollAreaMiddle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -719,9 +639,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap scrollareaTop {
+        internal static System.Drawing.Bitmap ScrollAreaTop {
             get {
-                object obj = ResourceManager.GetObject("scrollareaTop", resourceCulture);
+                object obj = ResourceManager.GetObject("ScrollAreaTop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -729,9 +649,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap scrollbar {
+        internal static System.Drawing.Bitmap ScrollBar {
             get {
-                object obj = ResourceManager.GetObject("scrollbar", resourceCulture);
+                object obj = ResourceManager.GetObject("ScrollBar", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -739,9 +659,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap scrollbar_bottom {
+        internal static System.Drawing.Bitmap ScrollBarBottom {
             get {
-                object obj = ResourceManager.GetObject("scrollbar_bottom", resourceCulture);
+                object obj = ResourceManager.GetObject("ScrollBarBottom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -749,9 +669,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap scrollbar_top {
+        internal static System.Drawing.Bitmap ScrollBarTop {
             get {
-                object obj = ResourceManager.GetObject("scrollbar_top", resourceCulture);
+                object obj = ResourceManager.GetObject("ScrollBarTop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -759,9 +679,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowBottom {
+        internal static System.Drawing.Bitmap ShadowBottom {
             get {
-                object obj = ResourceManager.GetObject("shadowBottom", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowBottom", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -769,9 +689,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowBottomLeft {
+        internal static System.Drawing.Bitmap ShadowBottomLeft {
             get {
-                object obj = ResourceManager.GetObject("shadowBottomLeft", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowBottomLeft", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -779,9 +699,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowBottomRight {
+        internal static System.Drawing.Bitmap ShadowBottomRight {
             get {
-                object obj = ResourceManager.GetObject("shadowBottomRight", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowBottomRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -789,9 +709,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowLeft {
+        internal static System.Drawing.Bitmap ShadowLeft {
             get {
-                object obj = ResourceManager.GetObject("shadowLeft", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowLeft", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -799,9 +719,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowMiddle {
+        internal static System.Drawing.Bitmap ShadowMiddle {
             get {
-                object obj = ResourceManager.GetObject("shadowMiddle", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowMiddle", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -809,9 +729,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowRight {
+        internal static System.Drawing.Bitmap ShadowRight {
             get {
-                object obj = ResourceManager.GetObject("shadowRight", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -819,9 +739,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowTop {
+        internal static System.Drawing.Bitmap ShadowTop {
             get {
-                object obj = ResourceManager.GetObject("shadowTop", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowTop", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -829,9 +749,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowTopLeft {
+        internal static System.Drawing.Bitmap ShadowTopLeft {
             get {
-                object obj = ResourceManager.GetObject("shadowTopLeft", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowTopLeft", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -839,9 +759,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap shadowTopRight {
+        internal static System.Drawing.Bitmap ShadowTopRight {
             get {
-                object obj = ResourceManager.GetObject("shadowTopRight", resourceCulture);
+                object obj = ResourceManager.GetObject("ShadowTopRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -858,9 +778,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap title {
+        internal static System.Drawing.Bitmap StashListBackground {
             get {
-                object obj = ResourceManager.GetObject("title", resourceCulture);
+                object obj = ResourceManager.GetObject("StashListBackground", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -868,9 +788,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap windowBackground {
+        internal static System.Drawing.Bitmap StashListBorderB {
             get {
-                object obj = ResourceManager.GetObject("windowBackground", resourceCulture);
+                object obj = ResourceManager.GetObject("StashListBorderB", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -878,9 +798,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap windowBorderBottom {
+        internal static System.Drawing.Bitmap StashListBorderBL {
             get {
-                object obj = ResourceManager.GetObject("windowBorderBottom", resourceCulture);
+                object obj = ResourceManager.GetObject("StashListBorderBL", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -888,9 +808,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap windowBorderBottomRight {
+        internal static System.Drawing.Bitmap StashListBorderBR {
             get {
-                object obj = ResourceManager.GetObject("windowBorderBottomRight", resourceCulture);
+                object obj = ResourceManager.GetObject("StashListBorderBR", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -898,9 +818,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap windowBorderRight {
+        internal static System.Drawing.Bitmap StashListBorderL {
             get {
-                object obj = ResourceManager.GetObject("windowBorderRight", resourceCulture);
+                object obj = ResourceManager.GetObject("StashListBorderL", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -908,9 +828,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap windowBorderTop {
+        internal static System.Drawing.Bitmap StashListBorderR {
             get {
-                object obj = ResourceManager.GetObject("windowBorderTop", resourceCulture);
+                object obj = ResourceManager.GetObject("StashListBorderR", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -918,9 +838,89 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap windowBorderTopRight {
+        internal static System.Drawing.Bitmap StashListBorderT {
             get {
-                object obj = ResourceManager.GetObject("windowBorderTopRight", resourceCulture);
+                object obj = ResourceManager.GetObject("StashListBorderT", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StashListBorderTL {
+            get {
+                object obj = ResourceManager.GetObject("StashListBorderTL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap StashListBorderTR {
+            get {
+                object obj = ResourceManager.GetObject("StashListBorderTR", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WindowBackground {
+            get {
+                object obj = ResourceManager.GetObject("WindowBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WindowBorderBottom {
+            get {
+                object obj = ResourceManager.GetObject("WindowBorderBottom", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WindowBorderBottomRight {
+            get {
+                object obj = ResourceManager.GetObject("WindowBorderBottomRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WindowBorderRight {
+            get {
+                object obj = ResourceManager.GetObject("WindowBorderRight", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WindowBorderTop {
+            get {
+                object obj = ResourceManager.GetObject("WindowBorderTop", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WindowBorderTopRight {
+            get {
+                object obj = ResourceManager.GetObject("WindowBorderTopRight", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

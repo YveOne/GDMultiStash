@@ -253,7 +253,7 @@ namespace GDMultiStash.Forms
             formBackgroundPanel.BackColor = Constants.FormBackColor;
             BackgroundImage = Properties.Resources.border;
             BackgroundImageLayout = ImageLayout.Stretch;
-            titlePanel.BackgroundImage = Properties.Resources.title;
+            titlePanel.BackgroundImage = Properties.Resources.GDMSLogo;
             titlePanel.BackgroundImageLayout = ImageLayout.Zoom;
 
             formPaddingPanel.BackColor = Constants.FormBackColor;

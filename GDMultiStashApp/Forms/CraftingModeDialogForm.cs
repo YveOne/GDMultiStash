@@ -125,7 +125,8 @@ namespace GDMultiStash.Forms
             {
                 case 0:
                     stash.AutoFill();
-                    Global.Ingame.InvokeStashesContentChanged(stash, false);
+                    stash.SaveTransferFile();
+                    stash.LoadTransferFile();
                     break;
             }
             Global.Ingame.InvokeStashesAdded(stash);

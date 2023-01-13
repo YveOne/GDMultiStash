@@ -151,14 +151,14 @@
   <data name="font_LinBiolinum_RI" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\font_LinBiolinum_RI.ttf;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="scrollbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\scrollbar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ScrollBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScrollBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="scrollbar_bottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\scrollbar_bottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ScrollBarBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScrollBarBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="scrollbar_top" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\scrollbar_top.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ScrollBarTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScrollBarTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ReloadButtonSmallDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ReloadButtonSmallDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -169,8 +169,8 @@
   <data name="ReloadButtonSmallUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ReloadButtonSmallUp.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="title" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="GDMSLogo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GDMSLogo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="border" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\border.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -193,86 +193,86 @@
   <data name="buttonTrayWhite" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\buttonTrayWhite.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowBottomLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowBottomLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowBottomLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowBottomLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowBottomRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowBottomRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowBottomRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowBottomRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowMiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowMiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowMiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowMiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowTopLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowTopLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowTopLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowTopLeft.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="shadowTopRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\shadowTopRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ShadowTopRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ShadowTopRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="windowBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\windowBackground.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="WindowBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowBackground.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="windowBorderBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\windowBorderBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="WindowBorderBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowBorderBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="windowBorderBottomRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\windowBorderBottomRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="WindowBorderBottomRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowBorderBottomRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="windowBorderRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\windowBorderRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="WindowBorderRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowBorderRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="windowBorderTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\windowBorderTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="WindowBorderTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowBorderTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="windowBorderTopRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\windowBorderTopRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="WindowBorderTopRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\WindowBorderTopRight.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderB" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderB.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderBL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderBL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderBL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderBL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderBR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderBR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderBR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderBR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderT" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderT" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderT.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderTL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderTL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderTL" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderTL.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listBorderTR" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\listBorderTR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBorderTR" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBorderTR.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="marble" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\marble.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="StashListBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\StashListBackground.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="scrollareaBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\scrollareaBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ScrollAreaBottom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScrollAreaBottom.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="scrollareaMiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\scrollareaMiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ScrollAreaMiddle" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScrollAreaMiddle.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="scrollareaTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\scrollareaTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="ScrollAreaTop" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ScrollAreaTop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="ButtonLargeDown" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ButtonLargeDown.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

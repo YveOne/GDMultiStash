@@ -1,3 +1,9 @@
+v1.36.2
+- Fixed: Auto back to main is not working
+
+v1.36.1
+- Changed method to catch game beeing minimized
+
 v1.36
 - Fixed a bug where stashes would be created with zero tabs
 - Added: File System Watcher to catch transfer file changes

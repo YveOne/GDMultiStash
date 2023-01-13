@@ -9,12 +9,6 @@ namespace GDMultiStash.Overlay.Controls
 
         private Common.Overlay.ImageElement _dropArrowImage;
 
-        public static D3DHook.Hook.Common.IImageResource _DropDownArrowResource;
-        public static D3DHook.Hook.Common.IImageResource _DropUpArrowResource;
-
-        protected D3DHook.Hook.Common.IImageResource DropDownArrowResource => _DropDownArrowResource;
-        protected D3DHook.Hook.Common.IImageResource DropUpArrowResource => _DropUpArrowResource;
-
         private bool _droppedDown = false;
 
         public EventHandler<EventArgs> DropDownOpened;
@@ -73,12 +67,12 @@ namespace GDMultiStash.Overlay.Controls
         {
             if (_droppedDown)
             {
-                _dropArrowImage.Resource = _DropUpArrowResource;
+                _dropArrowImage.Resource = StaticResources.ButtonDropUpArrow;
                 _dropArrowImage.Y = -2;
             }
             else
             {
-                _dropArrowImage.Resource = _DropDownArrowResource;
+                _dropArrowImage.Resource = StaticResources.ButtonDropDownArrow;
                 _dropArrowImage.Y = 2;
             }
         }

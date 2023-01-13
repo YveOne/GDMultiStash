@@ -24,29 +24,25 @@ namespace GDMultiStash.GlobalHandlers
             ActiveModeChanged += delegate { LoadActiveStashID(); };
             ActiveExpansionChanged += delegate { LoadActiveStashID(); };
 
-            TransferStashSaved += delegate
-            {
-                Console.WriteLine("Runtime: TransferStashSaved START!");
-                Console.WriteLine("    _stashReopening: " + StashIsReopening.ToString());
-                Console.WriteLine("    _stashOpened: " + _stashIsOpened.ToString());
-                Console.WriteLine("    _activeStashID: " + _activeStashID.ToString());
+            TransferFileSaved += delegate {
+                Console.WriteLine($"TransferFileChanged...");
+                Console.WriteLine($"- stash is reopening: {StashIsReopening}");
+                Console.WriteLine($"- stash is opened: {_stashIsOpened}");
+                Console.WriteLine($"- active Stash ID: {_activeStashID}");
                 if (!StashIsReopening && !_stashIsOpened)
                 {
                     int closedID = _activeStashID;
                     string externalFile = GrimDawn.GetTransferFilePath(_activeExpansion, _activeMode);
-                    try
+
+                    if (!Utils.Funcs.WaitFor(() => !Utils.FileUtils.FileIsLocked(externalFile), 500, 33))
                     {
-                        File.Open(externalFile, FileMode.Open).Close();
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("Runtime: TransferStashSaved - file locked");
+                        Console.WriteLine("- file locked");
                         return;
                     }
 
                     if (Global.Configuration.Settings.AutoBackToMain)
                     {
-                        Console.WriteLine("Runtime: TransferStashSaved - Config.AutoBackToMain");
+                        Console.WriteLine("- auto back to main");
 
                         int mainStashID = Global.Configuration.GetMainStashID(ActiveExpansion, ActiveMode);
                         Global.Stashes.SwitchToStash(mainStashID);
@@ -57,7 +53,13 @@ namespace GDMultiStash.GlobalHandlers
                         Global.Stashes.SwitchToStash(ActiveStashID);
                     }
                 }
-                Console.WriteLine("Runtime: TransferStashSaved END!");
+            };
+
+            TransferFileChanged += delegate (object sender, IngameHandler.TransferFileChangedEventArgs e) {
+                if (GameInitialized && !GameWindowFocused && StashIsOpened)
+                {
+                    _reloadOpenedStash = true;
+                }
             };
 
             ActiveGroupChanged += delegate (object sender, ActiveGroupChangedEventArgs e) {
@@ -93,11 +95,6 @@ namespace GDMultiStash.GlobalHandlers
 
             GameWindowConnected += delegate {
                 ActiveExpansion = GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath);
-            };
-
-            TransferFileChanged += delegate {
-                if (GameInitialized && !GameWindowFocused && StashIsOpened)
-                    _reloadOpenedStash = true;
             };
 
 
@@ -272,7 +269,7 @@ namespace GDMultiStash.GlobalHandlers
 
         public void SetGameWindowLocSize(Services.GDWindowHookService.LocationSize v)
         {
-            if (v.X == -32000)
+            if (v.Width == 0 || v.Height == 0)
             {
                 // minimized
                 GameWindowFocused = false;

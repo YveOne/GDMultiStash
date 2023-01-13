@@ -13,7 +13,7 @@ using GDMultiStash.Properties;
 
 namespace GDMultiStash.Overlay
 {
-    internal class GDMSViewport : Common.Overlay.Viewport
+    internal class GDMSViewport : Viewport
     {
 
         private readonly ImageElement _startUpLogo;
@@ -24,93 +24,83 @@ namespace GDMultiStash.Overlay
             MouseCheckNeedBaseHit = true;
             Debugging = false;
 
+            Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_R);
+            Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_RB);
+            Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_RI);
 
+            StaticResources.InfoBoxTitleFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Regular);
+            StaticResources.InfoBoxTextFont = Utils.FontLoader.GetFont("Linux Biolinum", 19, FontStyle.Regular);
+            StaticResources.SmallButtonFont = Utils.FontLoader.GetFont("Linux Biolinum", 15, FontStyle.Regular);
+            StaticResources.LargeButtonFont = Utils.FontLoader.GetFont("Linux Biolinum", 20, FontStyle.Regular);
+            StaticResources.GroupListItemFont = Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular);
+            StaticResources.StashListItemFont = Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular);
 
-
-
-
-
-            //todo: what about resources IDisposable?
-
-
-
-
-            Panels.BackgroundBorderPanel._T = OverlayResources.CreateImageResource(Resources.windowBorderTop, ImageFormat.Png);
-            Panels.BackgroundBorderPanel._TR = OverlayResources.CreateImageResource(Resources.windowBorderTopRight, ImageFormat.Png);
-            Panels.BackgroundBorderPanel._B = OverlayResources.CreateImageResource(Resources.windowBorderBottom, ImageFormat.Png);
-            Panels.BackgroundBorderPanel._BR = OverlayResources.CreateImageResource(Resources.windowBorderBottomRight, ImageFormat.Png);
-            Panels.BackgroundBorderPanel._R = OverlayResources.CreateImageResource( Resources.windowBorderRight, ImageFormat.Png);
-
-            Panels.BackgroundShadowPanel._TL = OverlayResources.CreateImageResource(Resources.shadowTopLeft, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._T = OverlayResources.CreateImageResource(Resources.shadowTop, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._TR = OverlayResources.CreateImageResource(Resources.shadowTopRight, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._L = OverlayResources.CreateImageResource(Resources.shadowLeft, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._M = OverlayResources.CreateImageResource(Resources.shadowMiddle, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._R = OverlayResources.CreateImageResource(Resources.shadowRight, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._BL = OverlayResources.CreateImageResource(Resources.shadowBottomLeft, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._B = OverlayResources.CreateImageResource(Resources.shadowBottom, ImageFormat.Png);
-            Panels.BackgroundShadowPanel._BR = OverlayResources.CreateImageResource(Resources.shadowBottomRight, ImageFormat.Png);
-
-            Panels.ListBorderPanel._TL = OverlayResources.CreateImageResource(Resources.listBorderTL, ImageFormat.Png);
-            Panels.ListBorderPanel._T = OverlayResources.CreateImageResource(Resources.listBorderT, ImageFormat.Png);
-            Panels.ListBorderPanel._TR = OverlayResources.CreateImageResource(Resources.listBorderTR, ImageFormat.Png);
-            Panels.ListBorderPanel._L = OverlayResources.CreateImageResource(Resources.listBorderL, ImageFormat.Png);
-            Panels.ListBorderPanel._M = OverlayResources.CreateImageResource(Resources.marble, ImageFormat.Jpeg);
-            Panels.ListBorderPanel._R = OverlayResources.CreateImageResource(Resources.listBorderR, ImageFormat.Png);
-            Panels.ListBorderPanel._BL = OverlayResources.CreateImageResource(Resources.listBorderBL, ImageFormat.Png);
-            Panels.ListBorderPanel._B = OverlayResources.CreateImageResource(Resources.listBorderB, ImageFormat.Png);
-            Panels.ListBorderPanel._BR = OverlayResources.CreateImageResource(Resources.listBorderBR, ImageFormat.Png);
-
-            Panels.ScrollBorderPanel._T = OverlayResources.CreateImageResource(Resources.scrollareaTop, ImageFormat.Png);
-            Panels.ScrollBorderPanel._M = OverlayResources.CreateImageResource(Resources.scrollareaMiddle, ImageFormat.Png);
-            Panels.ScrollBorderPanel._B = OverlayResources.CreateImageResource(Resources.scrollareaBottom, ImageFormat.Png);
-
-            Controls.Base.LargeButton._UpResource = OverlayResources.CreateImageResource(Resources.ButtonLargeUp, ImageFormat.Png);
-            Controls.Base.LargeButton._OverResource = OverlayResources.CreateImageResource(Resources.ButtonLargeOver, ImageFormat.Png);
-            Controls.Base.LargeButton._DownResource = OverlayResources.CreateImageResource(Resources.ButtonLargeDown, ImageFormat.Png);
-
-            Controls.Base.SmallButton._UpResource = OverlayResources.CreateImageResource(Resources.ButtonSmallUp, ImageFormat.Png);
-            Controls.Base.SmallButton._DownResource = OverlayResources.CreateImageResource(Resources.ButtonSmallDown, ImageFormat.Png);
-            Controls.Base.SmallButton._OverResource = OverlayResources.CreateImageResource(Resources.ButtonSmallOver, ImageFormat.Png);
-
-            Controls.GroupSelectButton._DropDownArrowResource = OverlayResources.CreateImageResource(Resources.ButtonDropDownArrow, ImageFormat.Png);
-            Controls.GroupSelectButton._DropUpArrowResource = OverlayResources.CreateImageResource(Resources.ButtonDropUpArrow, ImageFormat.Png);
-
-            Controls.HomeButton._HomeIconResource = OverlayResources.CreateImageResource(Resources.HomeButtonIcon, ImageFormat.Png);
-
-            OverlayWindow._BackgroundResource = OverlayResources.CreateImageResource(Resources.windowBackground, ImageFormat.Jpeg);
-            OverlayWindow._OverShadowResource = OverlayResources.CreateColorImageResource(Color.FromArgb(0, 0, 0));
-            OverlayWindow._GroupListBackgroundResource = OverlayResources.CreateColorImageResource(Color.FromArgb(28, 25, 22));
-
-            Controls.Base.VerticalScrollBar._ScrollBarResource = OverlayResources.CreateImageResource(Resources.scrollbar, ImageFormat.Png);
-            Controls.Base.VerticalScrollBar._ScrollBarTopResource = OverlayResources.CreateImageResource(Resources.scrollbar_top, ImageFormat.Png);
-            Controls.Base.VerticalScrollBar._ScrollBarBottomResource = OverlayResources.CreateImageResource(Resources.scrollbar_bottom, ImageFormat.Png);
+            StaticResources.GDMSLogo = OverlayResources.CreateImageResource(Resources.GDMSLogo, ImageFormat.Png);
 
             StaticResources.ButtonRoundUp = OverlayResources.CreateImageResource(Resources.ButtonRoundUp, ImageFormat.Png);
             StaticResources.ButtonRoundOver = OverlayResources.CreateImageResource(Resources.ButtonRoundOver, ImageFormat.Png);
             StaticResources.ButtonRoundDown = OverlayResources.CreateImageResource(Resources.ButtonRoundDown, ImageFormat.Png);
             StaticResources.ButtonRoundDownOver = OverlayResources.CreateImageResource(Resources.ButtonRoundDownOver, ImageFormat.Png);
+
             StaticResources.LockWhiteIcon = OverlayResources.CreateImageResource(Resources.LockWhiteIcon, ImageFormat.Png);
+            StaticResources.HomeButtonIcon = OverlayResources.CreateImageResource(Resources.HomeButtonIcon, ImageFormat.Png);
+            StaticResources.WindowBackground = OverlayResources.CreateImageResource(Resources.WindowBackground, ImageFormat.Jpeg);
+            StaticResources.WindowOverShadow = OverlayResources.CreateColorImageResource(Color.FromArgb(0, 0, 0));
+            StaticResources.GroupListBackground = OverlayResources.CreateColorImageResource(Color.FromArgb(28, 25, 22));
 
-            Controls.InfoBoxReloadButton._UpResource = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallUp, ImageFormat.Png);
-            Controls.InfoBoxReloadButton._DownResource = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallDown, ImageFormat.Png);
-            Controls.InfoBoxReloadButton._OverResource = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallOver, ImageFormat.Png);
+            StaticResources.WindowBorderTop = OverlayResources.CreateImageResource(Resources.WindowBorderTop, ImageFormat.Png);
+            StaticResources.WindowBorderTopRight = OverlayResources.CreateImageResource(Resources.WindowBorderTopRight, ImageFormat.Png);
+            StaticResources.WindowBorderBottom = OverlayResources.CreateImageResource(Resources.WindowBorderBottom, ImageFormat.Png);
+            StaticResources.WindowBorderBottomRight = OverlayResources.CreateImageResource(Resources.WindowBorderBottomRight, ImageFormat.Png);
+            StaticResources.WindowBorderRight = OverlayResources.CreateImageResource(Resources.WindowBorderRight, ImageFormat.Png);
 
-            Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_R);
-            Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_RB);
-            Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_RI);
+            StaticResources.ShadowTopLeft = OverlayResources.CreateImageResource(Resources.ShadowTopLeft, ImageFormat.Png);
+            StaticResources.ShadowTop = OverlayResources.CreateImageResource(Resources.ShadowTop, ImageFormat.Png);
+            StaticResources.ShadowTopRight = OverlayResources.CreateImageResource(Resources.ShadowTopRight, ImageFormat.Png);
+            StaticResources.ShadowLeft = OverlayResources.CreateImageResource(Resources.ShadowLeft, ImageFormat.Png);
+            StaticResources.ShadowMiddle = OverlayResources.CreateImageResource(Resources.ShadowMiddle, ImageFormat.Png);
+            StaticResources.ShadowRight = OverlayResources.CreateImageResource(Resources.ShadowRight, ImageFormat.Png);
+            StaticResources.ShadowBottomLeft = OverlayResources.CreateImageResource(Resources.ShadowBottomLeft, ImageFormat.Png);
+            StaticResources.ShadowBottom = OverlayResources.CreateImageResource(Resources.ShadowBottom, ImageFormat.Png);
+            StaticResources.ShadowBottomRight = OverlayResources.CreateImageResource(Resources.ShadowBottomRight, ImageFormat.Png);
 
-            InfoBox._TitleFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Regular);
-            InfoBox._TextFont = Utils.FontLoader.GetFont("Linux Biolinum", 19, FontStyle.Regular);
-            Controls.Base.SmallButton._Font = Utils.FontLoader.GetFont("Linux Biolinum", 15, FontStyle.Regular);
-            Controls.Base.LargeButton._Font = Utils.FontLoader.GetFont("Linux Biolinum", 20, FontStyle.Regular);
-            GroupList._Font = Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular);
+            StaticResources.StashListBorderTL = OverlayResources.CreateImageResource(Resources.StashListBorderTL, ImageFormat.Png);
+            StaticResources.StashListBorderT = OverlayResources.CreateImageResource(Resources.StashListBorderT, ImageFormat.Png);
+            StaticResources.StashListBorderTR = OverlayResources.CreateImageResource(Resources.StashListBorderTR, ImageFormat.Png);
+            StaticResources.StashListBorderL = OverlayResources.CreateImageResource(Resources.StashListBorderL, ImageFormat.Png);
+            StaticResources.StashListBackground = OverlayResources.CreateImageResource(Resources.StashListBackground, ImageFormat.Jpeg);
+            StaticResources.StashListBorderR = OverlayResources.CreateImageResource(Resources.StashListBorderR, ImageFormat.Png);
+            StaticResources.StashListBorderBL = OverlayResources.CreateImageResource(Resources.StashListBorderBL, ImageFormat.Png);
+            StaticResources.StashListBorderB = OverlayResources.CreateImageResource(Resources.StashListBorderB, ImageFormat.Png);
+            StaticResources.StashListBorderBR = OverlayResources.CreateImageResource(Resources.StashListBorderBR, ImageFormat.Png);
+
+            StaticResources.ScrollAreaTop = OverlayResources.CreateImageResource(Resources.ScrollAreaTop, ImageFormat.Png);
+            StaticResources.ScrollAreaMiddle = OverlayResources.CreateImageResource(Resources.ScrollAreaMiddle, ImageFormat.Png);
+            StaticResources.ScrollAreaBottom = OverlayResources.CreateImageResource(Resources.ScrollAreaBottom, ImageFormat.Png);
+
+            StaticResources.ButtonLargeUp = OverlayResources.CreateImageResource(Resources.ButtonLargeUp, ImageFormat.Png);
+            StaticResources.ButtonLargeOver = OverlayResources.CreateImageResource(Resources.ButtonLargeOver, ImageFormat.Png);
+            StaticResources.ButtonLargeDown = OverlayResources.CreateImageResource(Resources.ButtonLargeDown, ImageFormat.Png);
+
+            StaticResources.ButtonSmallUp = OverlayResources.CreateImageResource(Resources.ButtonSmallUp, ImageFormat.Png);
+            StaticResources.ButtonSmallOver = OverlayResources.CreateImageResource(Resources.ButtonSmallOver, ImageFormat.Png);
+            StaticResources.ButtonSmallDown = OverlayResources.CreateImageResource(Resources.ButtonSmallDown, ImageFormat.Png);
+
+            StaticResources.ButtonDropDownArrow = OverlayResources.CreateImageResource(Resources.ButtonDropDownArrow, ImageFormat.Png);
+            StaticResources.ButtonDropUpArrow = OverlayResources.CreateImageResource(Resources.ButtonDropUpArrow, ImageFormat.Png);
+
+            StaticResources.ScrollBar = OverlayResources.CreateImageResource(Resources.ScrollBar, ImageFormat.Png);
+            StaticResources.ScrollBarTop = OverlayResources.CreateImageResource(Resources.ScrollBarTop, ImageFormat.Png);
+            StaticResources.ScrollBarBottom = OverlayResources.CreateImageResource(Resources.ScrollBarBottom, ImageFormat.Png);
+
+            StaticResources.ReloadButtonSmallUp = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallUp, ImageFormat.Png);
+            StaticResources.ReloadButtonSmallDown = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallDown, ImageFormat.Png);
+            StaticResources.ReloadButtonSmallOver = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallOver, ImageFormat.Png);
+            
+
 
             _mainWindow = new OverlayWindow();
             AddChild(_mainWindow);
-
-
-
 
             _startUpLogo = new ImageElement()
             {
@@ -121,7 +111,7 @@ namespace GDMultiStash.Overlay
                 Height = 40,
                 Alpha = 1,
                 Visible = true,
-                Resource = OverlayResources.CreateImageResource(Resources.title, ImageFormat.Png),
+                Resource = StaticResources.GDMSLogo,
             };
             AddChild(_startUpLogo);
             {
@@ -138,6 +128,8 @@ namespace GDMultiStash.Overlay
                 };
                 animator.AnimationEnd += delegate {
                     _startUpLogo.Visible = false;
+                    _startUpLogo.Resource = null;
+                    OverlayResources.DeleteResource(StaticResources.GDMSLogo);
                 };
                 animator.Value = 1;
             }

@@ -17,7 +17,7 @@ namespace GDMultiStash.GlobalHandlers
         //public event EventHandler<EventArgs> StashStatusChanged;
         public event EventHandler<EventArgs> StashOpened;
         public event EventHandler<EventArgs> StashClosed;
-        public event EventHandler<EventArgs> TransferStashSaved;
+        public event EventHandler<EventArgs> TransferFileSaved;
 
         //public void InvokeStashStatusChanged()
         //    => StashStatusChanged?.Invoke(null, EventArgs.Empty);
@@ -32,7 +32,7 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (!_stashWasOpened) return;
             _stashWasOpened = false;
-            TransferStashSaved?.Invoke(null, EventArgs.Empty);
+            TransferFileSaved?.Invoke(null, EventArgs.Empty);
         }
 
         private bool _stashIsOpened = false;

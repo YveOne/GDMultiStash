@@ -15,18 +15,13 @@ namespace GDMultiStash.Overlay.Controls.Base
         public override float ScrollBarMinWidth => 9f;
         public override float ScrollBarMinHeight => 30f;
 
-        public static D3DHook.Hook.Common.IImageResource _ScrollBarResource;
-        public static D3DHook.Hook.Common.IImageResource _ScrollBarTopResource;
-        public static D3DHook.Hook.Common.IImageResource _ScrollBarBottomResource;
-
-
         public VerticalScrollBar() : base()
         {
             ScrollBar.AddChild(new ImageElement()
             {
                 DebugColor = System.Drawing.Color.FromArgb(128, 0, 255, 255),
 
-                Resource = _ScrollBarResource,
+                Resource = StaticResources.ScrollBar,
                 WidthToParent = true,
                 HeightToParent = true,
                 AnchorPoint = Anchor.TopLeft,
@@ -37,7 +32,7 @@ namespace GDMultiStash.Overlay.Controls.Base
             {
                 DebugColor = System.Drawing.Color.FromArgb(128, 0, 255, 255),
 
-                Resource = _ScrollBarTopResource,
+                Resource = StaticResources.ScrollBarTop,
                 WidthToParent = true,
                 HeightToParent = false,
                 Height = 10,
@@ -48,7 +43,7 @@ namespace GDMultiStash.Overlay.Controls.Base
             {
                 DebugColor = System.Drawing.Color.FromArgb(128, 0, 255, 255),
 
-                Resource = _ScrollBarBottomResource,
+                Resource = StaticResources.ScrollBarBottom,
                 WidthToParent = true,
                 HeightToParent = false,
                 Height = 10,

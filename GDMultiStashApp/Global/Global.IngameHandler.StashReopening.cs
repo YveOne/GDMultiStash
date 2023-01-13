@@ -35,21 +35,20 @@ namespace GDMultiStash.GlobalHandlers
 
             bool _transferStashSaved = false;
             void TransferStashSavedHandler(object sender, EventArgs e) => _transferStashSaved = true;
-            TransferStashSaved += TransferStashSavedHandler;
+            TransferFileSaved += TransferStashSavedHandler;
 
             Console.WriteLine("ReopenStashAction() - sending escape key");
             Native.Keyboard.SendKey(keyEscape);
 
             Console.WriteLine("ReopenStashAction() - waiting for stash beeing saved to file");
             bool closedSuccessfully = Utils.Funcs.WaitFor(() => !StashIsOpened && _transferStashSaved, 5000, 33);
-            TransferStashSaved -= TransferStashSavedHandler;
+            TransferFileSaved -= TransferStashSavedHandler;
             if (closedSuccessfully)
             {
                 Console.WriteLine("ReopenStashAction() - stash saved to file");
             }
             else
             {
-                TransferStashSaved -= TransferStashSavedHandler;
                 Console.WriteLine("ReopenStashAction() - failed closing stash - Aborting!");
                 return;
             }

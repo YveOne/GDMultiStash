@@ -156,8 +156,7 @@ namespace GDMultiStash.Common.Objects
             if (tab == null) return false;
             var maxTabs = (int)MaxTabsCount;
             if (_transferFile.Tabs.Count >= maxTabs) return false;
-            atIndex = Math.Max(atIndex, 0);
-            atIndex = Math.Min(atIndex, maxTabs - 1);
+            atIndex = atIndex.Clamp(0, maxTabs - 1);
             _transferFile.Tabs.Insert(atIndex, tab);
             CreateUsageIndicator();
             return true;
@@ -224,8 +223,6 @@ namespace GDMultiStash.Common.Objects
                 }
             }
         }
-
-        public Font DisplayFont => Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular);
 
         public IList<GDIALib.Parser.Stash.StashTab> Tabs => _transferFile.Tabs.AsReadOnly();
 

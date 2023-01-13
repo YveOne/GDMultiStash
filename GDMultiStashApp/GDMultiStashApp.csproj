@@ -120,6 +120,11 @@
     <Compile Include="Global\Global.IngameHandler.cs" />
     <Compile Include="Global\Global.IngameHandler.StashReopening.cs" />
     <Compile Include="Global\Global.IngameHandler.StashStatus.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Utils\Console.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Forms\Controls\DefaultOLVColumn.cs">
@@ -164,11 +169,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Overlay\Controls\HomeButton.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Forms\ChangelogDialogForm.cs">
       <SubType>Form</SubType>
@@ -404,42 +404,42 @@
     <None Include="Resources\itemaffixes.txt" />
     <None Include="Resources\caravanWindow10x18.jpg" />
     <None Include="Resources\caravanWindow8x16.jpg" />
-    <None Include="Resources\soundButtonOverTick.wav" />
-    <None Include="Resources\scrollareaTop.png" />
-    <None Include="Resources\scrollareaBottom.png" />
-    <None Include="Resources\scrollareaMiddle.png" />
-    <None Include="Resources\listBorderR.png" />
-    <None Include="Resources\listBorderL.png" />
-    <None Include="Resources\listBorderBR.png" />
-    <None Include="Resources\listBorderBL.png" />
-    <None Include="Resources\listBorderB.png" />
-    <None Include="Resources\listBorderTR.png" />
-    <None Include="Resources\listBorderTL.png" />
-    <None Include="Resources\listBorderT.png" />
-    <None Include="Resources\marble.jpg" />
-    <None Include="Resources\shadowRight.png" />
-    <None Include="Resources\shadowMiddle.png" />
-    <None Include="Resources\shadowLeft.png" />
-    <None Include="Resources\shadowBottomRight.png" />
-    <None Include="Resources\shadowBottomLeft.png" />
-    <None Include="Resources\shadowBottom.png" />
-    <None Include="Resources\shadowTopRight.png" />
-    <None Include="Resources\shadowTopLeft.png" />
-    <None Include="Resources\shadowTop.png" />
+    <None Include="Resources\SoundButtonOverTick.wav" />
+    <None Include="Resources\ScrollAreaTop.png" />
+    <None Include="Resources\ScrollAreaBottom.png" />
+    <None Include="Resources\ScrollAreaMiddle.png" />
+    <None Include="Resources\StashListBorderR.png" />
+    <None Include="Resources\StashListBorderL.png" />
+    <None Include="Resources\StashListBorderBR.png" />
+    <None Include="Resources\StashListBorderBL.png" />
+    <None Include="Resources\StashListBorderB.png" />
+    <None Include="Resources\StashListBorderTR.png" />
+    <None Include="Resources\StashListBorderTL.png" />
+    <None Include="Resources\StashListBorderT.png" />
+    <None Include="Resources\StashListBackground.jpg" />
+    <None Include="Resources\ShadowRight.png" />
+    <None Include="Resources\ShadowMiddle.png" />
+    <None Include="Resources\ShadowLeft.png" />
+    <None Include="Resources\ShadowBottomRight.png" />
+    <None Include="Resources\ShadowBottomLeft.png" />
+    <None Include="Resources\ShadowBottom.png" />
+    <None Include="Resources\ShadowTopRight.png" />
+    <None Include="Resources\ShadowTopLeft.png" />
+    <None Include="Resources\ShadowTop.png" />
     <None Include="Resources\itemtextures.zip" />
-    <None Include="Resources\windowBorderBottom.png" />
-    <None Include="Resources\windowBorderBottomRight.png" />
-    <None Include="Resources\windowBorderTopRight.png" />
-    <None Include="Resources\windowBorderRight.png" />
-    <None Include="Resources\windowBorderTop.png" />
-    <None Include="Resources\windowBackground.jpg" />
-    <None Include="Resources\title.png" />
+    <None Include="Resources\WindowBorderBottom.png" />
+    <None Include="Resources\WindowBorderBottomRight.png" />
+    <None Include="Resources\WindowBorderTopRight.png" />
+    <None Include="Resources\WindowBorderRight.png" />
+    <None Include="Resources\WindowBorderTop.png" />
+    <None Include="Resources\WindowBackground.jpg" />
+    <None Include="Resources\GDMSLogo.png" />
     <None Include="Resources\ReloadButtonSmallUp.png" />
     <None Include="Resources\ReloadButtonSmallOver.png" />
     <None Include="Resources\ReloadButtonSmallDown.png" />
-    <None Include="Resources\scrollbar_bottom.png" />
-    <None Include="Resources\scrollbar_top.png" />
-    <None Include="Resources\scrollbar.png" />
+    <None Include="Resources\ScrollBarBottom.png" />
+    <None Include="Resources\ScrollBarTop.png" />
+    <None Include="Resources\ScrollBar.png" />
     <None Include="Resources\font_LinBiolinum_RI.ttf" />
     <None Include="Resources\local_zhCN.txt" />
     <None Include="Resources\icon32.ico" />

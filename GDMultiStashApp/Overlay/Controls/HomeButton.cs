@@ -9,15 +9,13 @@ namespace GDMultiStash.Overlay.Controls
 
         private Common.Overlay.ImageElement _homeImage;
 
-        public static D3DHook.Hook.Common.IImageResource _HomeIconResource;
-
         public HomeButton() : base()
         {
             _homeImage = new Common.Overlay.ImageElement() {
                 AnchorPoint = Common.Overlay.Anchor.Center,
                 Width = 20,
                 Height = 20,
-                Resource = _HomeIconResource,
+                Resource = StaticResources.HomeButtonIcon,
             };
             AddChild(_homeImage);
             MouseClick += delegate {

@@ -16,9 +16,6 @@ namespace GDMultiStash.Overlay
     internal class InfoBox : Element
     {
 
-        public static Font _TitleFont = null;
-        public static Font _TextFont = null;
-
         private readonly TextElement _titleElement;
         private readonly TextElement _lastChangeIntern;
 
@@ -35,7 +32,7 @@ namespace GDMultiStash.Overlay
             {
                 WidthToParent = true,
                 Height = 25,
-                Font = _TitleFont,
+                Font = StaticResources.InfoBoxTitleFont,
                 Align = StringAlignment.Near,
                 Color = Color.FromArgb(255, 235, 222, 195),
                 AnchorPoint = Anchor.TopLeft,
@@ -48,7 +45,7 @@ namespace GDMultiStash.Overlay
             {
                 WidthToParent = true,
                 Height = 20,
-                Font = _TextFont,
+                Font = StaticResources.InfoBoxTextFont,
                 Align = StringAlignment.Near,
                 Color = Color.FromArgb(255, 235, 222, 195),
                 AnchorPoint = Anchor.TopLeft,
