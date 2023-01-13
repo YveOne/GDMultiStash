@@ -128,11 +128,11 @@ namespace GDMultiStash.Forms.Main
                 //stashes_listView.DragEnter += Stashes_Dragging_DragEnter;
                 //stashes_listView.DragDrop += Stashes_Dragging_DragDrop;
 
-                Global.Runtime.StashesAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshStashesObjects(args.Items); };
-                Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshStashesObjects(args.Items); };
-                Global.Runtime.StashGroupsAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) { groupsListView.AddObjects(args.Items); };
-                Global.Runtime.StashGroupsRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) { groupsListView.RemoveObjects(args.Items); };
-                Global.Runtime.StashesRebuild += delegate (object sender, EventArgs args) { RefreshAllObjects(); };
+                Global.Ingame.StashesAdded += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> args) { RefreshStashesObjects(args.Items); };
+                Global.Ingame.StashesRemoved += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> args) { RefreshStashesObjects(args.Items); };
+                Global.Ingame.StashGroupsAdded += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashGroupObject> args) { groupsListView.AddObjects(args.Items); };
+                Global.Ingame.StashGroupsRemoved += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashGroupObject> args) { groupsListView.RemoveObjects(args.Items); };
+                Global.Ingame.StashesRebuild += delegate (object sender, EventArgs args) { RefreshAllObjects(); };
 
                 ReloadColumns();
                 ReloadList();
@@ -253,7 +253,7 @@ namespace GDMultiStash.Forms.Main
         private void GroupsListView_CellEditFinished(object sender, CellEditEventArgs args)
         {
             StashGroupObject group = (StashGroupObject)args.RowObject;
-            if (args.Column == columnName) Global.Runtime.NotifyStashGroupsInfoChanged(group);
+            if (args.Column == columnName) Global.Ingame.InvokeStashGroupsInfoChanged(group);
             else return;
             Global.Configuration.Save();
             UnselectAll();
@@ -263,7 +263,7 @@ namespace GDMultiStash.Forms.Main
         {
             UnselectAll();
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashGroupsRebuild();
+            Global.Ingame.InvokeStashGroupsRebuild();
         }
 
         private void GroupsListView_CellRightClick(object sender, CellRightClickEventArgs args)

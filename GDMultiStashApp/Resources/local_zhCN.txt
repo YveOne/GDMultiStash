@@ -23,6 +23,7 @@ msg_stash_group_is_main = This is a main group
 msg_disable_cloud_sync = Warning: Cloud Sync is enabled!\nTo use GDMS you need to disable it in GD options!
 msg_confirm_delete_old_stashes = Delete old stashes?
 msg_confirm_delete_stash_tab = Delete this tab?
+msg_confirm_clear_stash_tab = Clear this tab?
 msg_confirm_delete_empty_groups = Delete empty groups?
 msg_confirm_delete_empty_stashes = Delete empty stashes?
 
@@ -69,6 +70,11 @@ btn_sort_by_none = None (unsorted)
 btn_auto_fill = Fill automatically
 btn_auto_fill_random_seeds = With random seeds
 btn_exit = Exit
+btn_clear = Clear
+btn_duplicate = Duplicate
+btn_crafting_mode = Crafting Mode
+btn_start = Start
+btn_finish = Finish
 
 // listview columns
 lvc_id = ID
@@ -105,6 +111,7 @@ lbl_stash_name = 存储名称：
 lbl_group = Group:
 lbl_name = Name:
 lbl_tabs = Tabs:
+lbl_select_first_stash_in_group = Automatically switch to first Stash in group
 
 // default colors
 color_default = 默认

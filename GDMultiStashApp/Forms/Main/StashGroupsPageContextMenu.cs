@@ -63,8 +63,8 @@ namespace GDMultiStash.Forms.Main
 
                 List<StashGroupObject> deletedItems = Global.Stashes.DeleteStashGroups(selectedGroups);
                 Global.Configuration.Save();
-                Global.Runtime.NotifyStashGroupsRemoved(deletedItems);
-                Global.Runtime.NotifyStashesRebuild();
+                Global.Ingame.InvokeStashGroupsRemoved(deletedItems);
+                Global.Ingame.InvokeStashesRebuild();
             });
         }
 

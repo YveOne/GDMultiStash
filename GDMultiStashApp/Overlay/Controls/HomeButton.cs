@@ -21,9 +21,9 @@ namespace GDMultiStash.Overlay.Controls
             };
             AddChild(_homeImage);
             MouseClick += delegate {
-                int mainStashID = Global.Configuration.GetMainStashID(Global.Runtime.CurrentExpansion, Global.Runtime.CurrentMode);
-                Global.Runtime.SwitchToStash(mainStashID);
-                Global.Runtime.ActiveGroupID = 0;
+                int mainStashID = Global.Configuration.GetMainStashID(Global.Ingame.ActiveExpansion, Global.Ingame.ActiveMode);
+                Global.Ingame.SwitchToStash(mainStashID);
+                Global.Ingame.ActiveGroupID = 0;
             };
         }
 

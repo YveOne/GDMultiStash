@@ -111,7 +111,7 @@ namespace GDMultiStash.Forms
 
             stashFileTextBox.Text = srcFile;
             nameTextBox.Text = Path.GetFileNameWithoutExtension(srcFile);
-            expansionTextBox.Text = GrimDawn.GetExpansionName(exp);
+            expansionTextBox.Text = GrimDawn.ExpansionNames[exp];
 
             scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState != 0;
             hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState != 0;
@@ -127,7 +127,6 @@ namespace GDMultiStash.Forms
             if (stash != null)
             {
                 stash.GroupID = ((StashGroupObject)groupComboBox.SelectedItem).ID;
-                Global.Runtime.ReloadOpenedStash(stash.ID);
                 _importedStashes.Add(stash);
             }
 

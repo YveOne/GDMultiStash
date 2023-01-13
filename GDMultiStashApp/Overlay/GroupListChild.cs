@@ -18,7 +18,7 @@ namespace GDMultiStash.Overlay
 
         public GroupListChild() : base()
         {
-            MouseClick += delegate { Global.Runtime.ActiveGroupID = Model.ID; };
+            MouseClick += delegate { Global.Ingame.ActiveGroupID = Model.ID; };
         }
 
     }

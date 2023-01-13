@@ -11,10 +11,12 @@ namespace GDMultiStash.Overlay
 
         // Todo: add other resources to this class
 
-        public static D3DHook.Hook.Common.IImageResource RadioButton0Resource;
-        public static D3DHook.Hook.Common.IImageResource RadioButton1Resource;
+        public static D3DHook.Hook.Common.IImageResource ButtonRoundUp;
+        public static D3DHook.Hook.Common.IImageResource ButtonRoundOver;
+        public static D3DHook.Hook.Common.IImageResource ButtonRoundDown;
+        public static D3DHook.Hook.Common.IImageResource ButtonRoundDownOver;
 
-        public static D3DHook.Hook.Common.IImageResource LockSignResource;
+        public static D3DHook.Hook.Common.IImageResource LockWhiteIcon;
 
 
 

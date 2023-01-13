@@ -25,7 +25,7 @@ namespace GDMultiStash.Overlay
             TextWidth -= 85;
             _lockSign = new ImageElement()
             {
-                Resource = StaticResources.LockSignResource,
+                Resource = StaticResources.LockWhiteIcon,
                 AnchorPoint = Anchor.Right,
                 X = -55,
                 Scale = 0.8f,
@@ -44,7 +44,7 @@ namespace GDMultiStash.Overlay
             AddChild(_lockSign);
             AddChild(_usageIndicator);
 
-            MouseClick += delegate { Global.Runtime.SwitchToStash(Model.ID); };
+            MouseClick += delegate { Global.Ingame.SwitchToStash(Model.ID); };
         }
 
         public bool Locked

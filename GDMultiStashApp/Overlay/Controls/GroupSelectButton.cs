@@ -37,12 +37,12 @@ namespace GDMultiStash.Overlay.Controls
 
 
 
-            Text = Global.Stashes.GetStashGroup(Global.Runtime.ActiveGroupID).Name;
-            Global.Runtime.ActiveGroupChanged += delegate {
-                Text = Global.Stashes.GetStashGroup(Global.Runtime.ActiveGroupID).Name;
+            Text = Global.Stashes.GetStashGroup(Global.Ingame.ActiveGroupID).Name;
+            Global.Ingame.ActiveGroupChanged += delegate {
+                Text = Global.Stashes.GetStashGroup(Global.Ingame.ActiveGroupID).Name;
             };
-            Global.Runtime.StashGroupsInfoChanged += delegate {
-                Text = Global.Stashes.GetStashGroup(Global.Runtime.ActiveGroupID).Name;
+            Global.Ingame.StashGroupsInfoChanged += delegate {
+                Text = Global.Stashes.GetStashGroup(Global.Ingame.ActiveGroupID).Name;
             };
 
         }

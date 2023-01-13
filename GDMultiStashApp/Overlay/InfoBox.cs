@@ -81,10 +81,10 @@ namespace GDMultiStash.Overlay
             };
             AddChild(_reloadButton);
 
-            Global.Runtime.ActiveStashChanged += delegate {
+            Global.Ingame.ActiveStashChanged += delegate {
                 UpdateInfoText();
             };
-            Global.Runtime.StashReopenEnd += delegate {
+            Global.Ingame.StashReopenEnd += delegate {
                 UpdateInfoText();
             };
 
@@ -96,7 +96,7 @@ namespace GDMultiStash.Overlay
             Global.Configuration.LanguageChanged += delegate {
                 UpdateButtonText();
             };
-            Global.Runtime.StashesInfoChanged += delegate {
+            Global.Ingame.StashesInfoChanged += delegate {
                 UpdateInfoText(); // maybe name changed
             };
         }
@@ -109,7 +109,7 @@ namespace GDMultiStash.Overlay
 
         private void UpdateInfoText()
         {
-            StashObject stash = Global.Stashes.GetStash(Global.Runtime.ActiveStashID);
+            StashObject stash = Global.Stashes.GetStash(Global.Ingame.ActiveStashID);
             if (stash == null) return; // something happend
             _titleElement.Text = stash.Name;
             _lastChangeIntern.Text = stash.LastWriteTime.ToString();
@@ -117,17 +117,17 @@ namespace GDMultiStash.Overlay
 
         private void CheatSaveButton_Click(object sender, EventArgs e)
         {
-            Global.Runtime.SaveCurrentStash();
+            Global.Ingame.SaveCurrentStash();
         }
 
         private void CheatLoadButton_Click(object sender, EventArgs e)
         {
-            Global.Runtime.LoadCurrentStash();
+            Global.Ingame.LoadCurrentStash();
         }
 
         private void ReloadButton_Click(object sender, EventArgs e)
         {
-            Global.Runtime.ReloadCurrentStash();
+            Global.Ingame.ReloadCurrentStash();
         }
 
 

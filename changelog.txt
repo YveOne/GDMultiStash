@@ -1,3 +1,23 @@
+v1.36
+- Fixed a bug where stashes would be created with zero tabs
+- Added: File System Watcher to catch transfer file changes
+- Added: Crafting Mode (File -> Import -> Crafting Mode)
+
+v1.35.3
+- Fixed several small bugs in runtime events system
+
+v1.35.2
+- Fixed: Plexiglass still shown when minimizing main window
+- Added: Debug log will be written to "log.txt" inside GDMS directory
+
+v1.35.1
+- Added "Clear" option to tabs editor context menu
+- Added "Duplicate" option to tabs editor context menu
+- AutoFill now works even if there are more than 1 item in a tab. It will always use the first found item as template.
+- Added new config option "Automatically select first stash in group" (activated by default)
+- Fixed: Stash locks not getting saved correctly
+- Fixed: Main stash not beeing saved correctly
+
 v1.35
 - Moved plexiglass from whole window to inner client area
 - Plexiglass will no more show up in Alt+Tab

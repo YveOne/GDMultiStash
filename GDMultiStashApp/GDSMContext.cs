@@ -158,7 +158,7 @@ namespace GDMultiStash
                 if (Global.Configuration.AppVersionUpdated)
                     Global.Windows.ShowChangelogWindow();
                 if (Global.Configuration.Settings.AutoStartGame)
-                    Global.Runtime.StartGame();
+                    Global.Windows.StartGame();
             });
         }
 
@@ -217,14 +217,14 @@ namespace GDMultiStash
             _gdWindowHookService.WindowDestroyed += GDWindowHook_WindowDestroyed;
             _gdWindowHookService.Start();
 
-            Global.Runtime.StashStatusChanged += Core_StashStatusChanged;
-            Global.Runtime.GameStarted += Core_GameStarted;
+            Global.Ingame.StashOpened += Ingame_StashOpened;
+            Global.Ingame.StashClosed += Ingame_StashClosed;
         }
 
         private void StopServices()
         {
-            Global.Runtime.StashStatusChanged -= Core_StashStatusChanged;
-            Global.Runtime.GameStarted -= Core_GameStarted;
+            Global.Ingame.StashOpened -= Ingame_StashOpened;
+            Global.Ingame.StashClosed -= Ingame_StashClosed;
 
             _gdWindowHookService.HookInstalled -= GDWindowHook_HookInstalled;
             _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
@@ -249,28 +249,17 @@ namespace GDMultiStash
             _servicesInstalled = false;
         }
 
-        private void Core_StashStatusChanged(object sender, EventArgs e)
+        private void Ingame_StashOpened(object sender, EventArgs e)
         {
-            if (Global.Runtime.StashOpened)
-            {
-                _viewport.ShowMainWindow();
-                //_mouseHook.UnHook(); // used to refresh hook if something happened in background
-                _mouseHook.SetHook();
-            }
-            else
-            {
-                _viewport.HideMainWindow();
-                _mouseHook.UnHook();
-            }
+            _viewport.ShowMainWindow();
+            //_mouseHook.UnHook(); // used to refresh hook if something happened in background
+            _mouseHook.SetHook();
         }
 
-        private void Core_GameStarted(object sender, EventArgs e)
+        private void Ingame_StashClosed(object sender, EventArgs e)
         {
-            new Thread(() => {
-                Thread.Sleep(5000);
-                if (Native.FindWindow("Grim Dawn", null) == IntPtr.Zero) return;
-                _gdWindowHookService.SetHasFocus(true);
-            }).Start();
+            _viewport.HideMainWindow();
+            _mouseHook.UnHook();
         }
 
         #region D3DHook Events
@@ -286,43 +275,34 @@ namespace GDMultiStash
 
         private void GDWindowHook_HookInstalled(object sender, EventArgs e)
         {
-            if (Global.Configuration.Settings.AutoStartGame)
-            {
-                Console.WriteLine("Setting GD to foreground");
-                IntPtr m_target = Native.FindWindow("Grim Dawn", null);
-                if (Native.IsIconic(m_target))
-                {
-                    Native.ShowWindowAsync(m_target, Native.SW_RESTORE);
-                }
-                Native.SetForegroundWindow(m_target);
-            }
+            Global.Ingame.GameWindowIsConnected = true;
         }
 
         private void GDWindowHook_MoveSize(object sender, EventArgs e)
         {
-            Global.Runtime.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
+            Global.Ingame.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
         }
 
         private void GDWindowHook_GotFocus(object sender, EventArgs e)
         {
             Console.WriteLine("Grim Dawn window got focus");
-            Global.Runtime.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
-            Global.Runtime.GameWindowFocused = true;
-            if (Global.Runtime.StashOpened)
+            Global.Ingame.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
+            if (Global.Ingame.StashIsOpened)
                 _mouseHook.SetHook();
         }
 
         private void GDWindowHook_LostFocus(object sender, EventArgs e)
         {
             Console.WriteLine("Grim Dawn window lost focus");
-            Global.Runtime.GameWindowFocused = false;
+            Global.Ingame.GameWindowFocused = false;
             _mouseHook.UnHook();
         }
 
         private void GDWindowHook_WindowDestroyed(object sender, EventArgs e)
         {
             Console.WriteLine("Grim Dawn window closed");
-            Global.Runtime.GameWindowFocused = false;
+            Global.Ingame.GameWindowFocused = false;
+            Global.Ingame.GameWindowIsConnected = false;
             if (Global.Configuration.Settings.CloseWithGrimDawn)
             {
                 Console.WriteLine("   Quitting...");
@@ -343,22 +323,22 @@ namespace GDMultiStash
 
         private void GDGameHook_StashStatusChanged(object sender, GDGameHookService.StashStatusChangedEventArgs e)
         {
-            Global.Runtime.StashOpened = e.Opened;
+            Global.Ingame.StashIsOpened = e.Opened;
         }
 
         private void GDGameHook_ModeStatusChanged(object sender, GDGameHookService.ModeChangedEventArgs e)
         {
-            Global.Runtime.CurrentMode = e.IsHardcore ? GrimDawnGameMode.HC : GrimDawnGameMode.SC;
+            Global.Ingame.ActiveMode = e.IsHardcore ? GrimDawnGameMode.HC : GrimDawnGameMode.SC;
         }
 
         private void GDGameHook_ExpansionStatusChanged(object sender, GDGameHookService.ExpansionChangedEventArgs e)
         {
-            Global.Runtime.CurrentExpansion = (GrimDawnGameExpansion)e.ExpansionID;
+            Global.Ingame.ActiveExpansion = (GrimDawnGameExpansion)e.ExpansionID;
         }
 
         private void GDGameHook_TransferStashSaved(object sender, EventArgs e)
         {
-            Global.Runtime.NotifyTransferStashSaved();
+            Global.Ingame.InvokeTransferStashSaved();
         }
 
         #endregion
@@ -368,8 +348,8 @@ namespace GDMultiStash
         private void MouseHook_MouseMove(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
-            if (!Global.Runtime.GameWindowFocused) return;
-            bool hit = _viewport.CheckMouseMove(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
+            if (!Global.Ingame.GameWindowFocused) return;
+            bool hit = _viewport.CheckMouseMove(e.X - (int)Global.Ingame.GameWindowLocation.X, e.Y - (int)Global.Ingame.GameWindowLocation.Y);
             if (hit)
             {
             }
@@ -378,8 +358,8 @@ namespace GDMultiStash
         private void MouseHook_MouseDown(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
-            if (!Global.Runtime.GameWindowFocused) return;
-            bool hit = _viewport.CheckMouseDown(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
+            if (!Global.Ingame.GameWindowFocused) return;
+            bool hit = _viewport.CheckMouseDown(e.X - (int)Global.Ingame.GameWindowLocation.X, e.Y - (int)Global.Ingame.GameWindowLocation.Y);
             if (hit)
             {
                 // this is handled inside overlay mainwindow
@@ -387,10 +367,10 @@ namespace GDMultiStash
         }
         private void MouseHook_MouseUp(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
-            Global.Runtime.EnableMovement();
+            Global.Ingame.EnableMovement();
             //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
-            if (!Global.Runtime.GameWindowFocused) return;
-            bool hit = _viewport.CheckMouseUp(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
+            if (!Global.Ingame.GameWindowFocused) return;
+            bool hit = _viewport.CheckMouseUp(e.X - (int)Global.Ingame.GameWindowLocation.X, e.Y - (int)Global.Ingame.GameWindowLocation.Y);
             if (hit)
             {
             }
@@ -405,8 +385,8 @@ namespace GDMultiStash
                 isBySys = false;
                 return;
             }
-            if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
-            bool hit = _viewport.OnMouseWheel(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y, e.Delta);
+            if (!Global.Ingame.GameWindowFocused || (!Global.Ingame.StashIsOpened && !Global.Ingame.StashIsReopening)) return;
+            bool hit = _viewport.OnMouseWheel(e.X - (int)Global.Ingame.GameWindowLocation.X, e.Y - (int)Global.Ingame.GameWindowLocation.Y, e.Delta);
             if (hit)
             {
             }

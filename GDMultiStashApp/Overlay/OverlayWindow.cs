@@ -249,7 +249,7 @@ namespace GDMultiStash.Overlay
                 _mouseOver = false;
             };
             MouseDown += (object sender, EventArgs e) => {
-                Global.Runtime.DisableMovement();
+                Global.Ingame.DisableMovement();
                 _mouseDown = true;
             };
             MouseWheel += (object sender, MouseWheelEventArgs e) => {
@@ -389,11 +389,11 @@ namespace GDMultiStash.Overlay
             Global.Configuration.AppearanceChanged += delegate {
                 _updateAppearance = true;
             };
-            Global.Runtime.ActiveGroupChanged += delegate {
+            Global.Ingame.ActiveGroupChanged += delegate {
                 _groupSelectButton.CloseDropDown();
             };
 
-            Global.Runtime.StashReopenStart += delegate {
+            Global.Ingame.StashReopenStart += delegate {
                 MouseCheckChildren = false;
                 _infoWindow.Alpha = 0.70f;
                 _stashList.Alpha = 0.70f;
@@ -401,7 +401,7 @@ namespace GDMultiStash.Overlay
                 _groupSelectButton.Alpha = 0.80f;
             };
 
-            Global.Runtime.StashReopenEnd += delegate {
+            Global.Ingame.StashReopenEnd += delegate {
                 MouseCheckChildren = true;
                 _infoWindow.Alpha = 1.0f;
                 _stashList.Alpha = 1.0f;
@@ -452,9 +452,9 @@ namespace GDMultiStash.Overlay
                 _groupListBackground.Height = _groupList.Height + 20;
 
                 _moveValue.Min = -TotalWidth - 5;
-                _moveAnimator.Reset(Global.Runtime.StashOpened ? 1f : 0f);
+                _moveAnimator.Reset(Global.Ingame.StashIsOpened ? 1f : 0f);
                 _fadeValue.Min = (float)(100 - Global.Configuration.Settings.OverlayTransparency) / 100f;
-                _fadeAnimator.Reset(Global.Runtime.StashOpened ? 1f : 0f);
+                _fadeAnimator.Reset(Global.Ingame.StashIsOpened ? 1f : 0f);
 
                 Redraw();
             }

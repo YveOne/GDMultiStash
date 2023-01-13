@@ -39,6 +39,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("CloseWithGrimDawn")] public bool CloseWithGrimDawn = true;
         [XmlElement("ConfirmStashDelete")] public bool ConfirmStashDelete = true; // TODO: rename, this is used for ALL deletions
         [XmlElement("AutoBackToMain")] public bool AutoBackToMain = true;
+        [XmlElement("AutoSelectFirstStashInGroup")] public bool AutoSelectFirstStashInGroup = true;
         [XmlElement("SaveOverwritesLocked")] public bool SaveOverwritesLocked = false;
 
         [XmlElement("AutoStartGame")] public bool AutoStartGame = false;
@@ -80,6 +81,7 @@ namespace GDMultiStash.Common.Config
                 CloseWithGrimDawn = CloseWithGrimDawn,
                 ConfirmStashDelete = ConfirmStashDelete,
                 AutoBackToMain = AutoBackToMain,
+                AutoSelectFirstStashInGroup = AutoSelectFirstStashInGroup,
                 SaveOverwritesLocked = SaveOverwritesLocked,
 
                 AutoStartGame = AutoStartGame,
@@ -121,6 +123,7 @@ namespace GDMultiStash.Common.Config
             CloseWithGrimDawn = s.CloseWithGrimDawn;
             ConfirmStashDelete = s.ConfirmStashDelete;
             AutoBackToMain = s.AutoBackToMain;
+            AutoSelectFirstStashInGroup = s.AutoSelectFirstStashInGroup;
             SaveOverwritesLocked = s.SaveOverwritesLocked;
 
             AutoStartGame = s.AutoStartGame;

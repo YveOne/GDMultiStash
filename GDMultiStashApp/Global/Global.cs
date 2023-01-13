@@ -16,10 +16,10 @@ namespace GDMultiStash
         public static GlobalHandlers.LocalizationHandler Localization { get; } = new GlobalHandlers.LocalizationHandler();
         public static GlobalHandlers.LocalizationHandler.StringsHolder L { get; } = Localization.Strings;
         public static GlobalHandlers.DatabaseHandler Database { get; } = new GlobalHandlers.DatabaseHandler();
-        public static GlobalHandlers.RuntimeHandler Runtime { get; } = new GlobalHandlers.RuntimeHandler();
         public static GlobalHandlers.StashesHandler Stashes { get; } = new GlobalHandlers.StashesHandler();
         public static GlobalHandlers.UpdateHandler Update { get; } = new GlobalHandlers.UpdateHandler();
         public static GlobalHandlers.WindowsHandler Windows { get; } = new GlobalHandlers.WindowsHandler();
         public static GlobalHandlers.SoundHandler Sounds { get; } = new GlobalHandlers.SoundHandler();
+        public static GlobalHandlers.IngameHandler Ingame { get; } = new GlobalHandlers.IngameHandler();
     }
 }

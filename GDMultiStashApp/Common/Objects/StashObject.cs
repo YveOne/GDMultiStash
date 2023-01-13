@@ -104,27 +104,27 @@ namespace GDMultiStash.Common.Objects
                     {
                         p = (p - posMin) / (posCen - posMin);
                         c = Color.FromArgb(
-                            Math.Max(0, Math.Min(255, (int)((rCen - rMin) * p) + rMin)),
-                            Math.Max(0, Math.Min(255, (int)((gCen - gMin) * p) + gMin)),
-                            Math.Max(0, Math.Min(255, (int)((bCen - bMin) * p) + bMin))
+                            ((int)((rCen - rMin) * p) + rMin).Clamp(0, 255),
+                            ((int)((gCen - gMin) * p) + gMin).Clamp(0, 255),
+                            ((int)((bCen - bMin) * p) + bMin).Clamp(0, 255)
                         );
                     }
                     else if (p <= posMax)
                     {
                         p = (p - posCen) / (posMax - posCen);
                         c = Color.FromArgb(
-                            Math.Max(0, Math.Min(255, (int)((rMax - rCen) * p) + rCen)),
-                            Math.Max(0, Math.Min(255, (int)((gMax - gCen) * p) + gCen)),
-                            Math.Max(0, Math.Min(255, (int)((bMax - bCen) * p) + bCen))
+                            ((int)((rMax - rCen) * p) + rCen).Clamp(0, 255),
+                            ((int)((gMax - gCen) * p) + gCen).Clamp(0, 255),
+                            ((int)((bMax - bCen) * p) + bCen).Clamp(0, 255)
                         );
                     }
                     else
                     {
                         p = (p - posMax) / (1 - posMax);
                         c = Color.FromArgb(
-                            Math.Max(0, Math.Min(255, (int)((rFull - rMax) * p) + rMax)),
-                            Math.Max(0, Math.Min(255, (int)((gFull - gMax) * p) + gMax)),
-                            Math.Max(0, Math.Min(255, (int)((bFull - bMax) * p) + bMax))
+                            ((int)((rFull - rMax) * p) + rMax).Clamp(0, 255),
+                            ((int)((gFull - gMax) * p) + gMax).Clamp(0, 255),
+                            ((int)((bFull - bMax) * p) + bMax).Clamp(0, 255)
                         );
                     }
                     using (var brush = new SolidBrush(c))
@@ -135,36 +135,43 @@ namespace GDMultiStash.Common.Objects
             }
         }
 
-        public GDIALib.Parser.Stash.StashTab RemoveTabAt(int index)
+        public bool RemoveTabAt(int index)
         {
-            GDIALib.Parser.Stash.StashTab tab = _transferFile.Tabs[index];
+            if (_transferFile.Tabs.Count == 1) return false;
+            if (!index.InRange(0, _transferFile.Tabs.Count-1)) return false;
             _transferFile.Tabs.RemoveAt(index);
-            return tab;
+            return true;
         }
 
         public bool RemoveTab(GDIALib.Parser.Stash.StashTab tab)
         {
             if (!_transferFile.Tabs.Contains(tab)) return false;
+            if (_transferFile.Tabs.Count == 1) return false;
             _transferFile.Tabs.Remove(tab);
             return true;
         }
 
-        public void AddTab(GDIALib.Parser.Stash.StashTab tab, int atIndex)
+        public bool AddTab(GDIALib.Parser.Stash.StashTab tab, int atIndex)
         {
-            if (tab == null) return;
+            if (tab == null) return false;
+            var maxTabs = (int)MaxTabsCount;
+            if (_transferFile.Tabs.Count >= maxTabs) return false;
+            atIndex = Math.Max(atIndex, 0);
+            atIndex = Math.Min(atIndex, maxTabs - 1);
             _transferFile.Tabs.Insert(atIndex, tab);
             CreateUsageIndicator();
+            return true;
         }
 
-        public void AddTab(GDIALib.Parser.Stash.StashTab tab)
+        public bool AddTab(GDIALib.Parser.Stash.StashTab tab)
         {
-            AddTab(tab, _transferFile.Tabs.Count);
+            return AddTab(tab, _transferFile.Tabs.Count);
         }
 
-        public void AddTab()
+        public bool AddTab()
         {
             var stashInfo = GrimDawnLib.GrimDawn.Stashes.GetStashInfoForExpansion(Expansion);
-            AddTab(new GDIALib.Parser.Stash.StashTab()
+            return AddTab(new GDIALib.Parser.Stash.StashTab()
             {
                 Width = stashInfo.Width,
                 Height = stashInfo.Height,
@@ -177,7 +184,7 @@ namespace GDMultiStash.Common.Objects
             var stashHeight = _transferFile.Height;
             foreach (var tab in _transferFile.Tabs)
             {
-                if (tab.Items.Count != 1) continue;
+                if (tab.Items.Count == 0) continue;
                 var item = tab.Items[0];
 
                 if (!Global.Database.GetItemRecordInfo(item.BaseRecord, out GlobalHandlers.DatabaseHandler.ItemRecordInfo itemInfo))

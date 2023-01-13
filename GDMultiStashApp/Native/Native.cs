@@ -273,6 +273,8 @@ public static partial class Native
     [DllImport("User32.Dll")]
     public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 
+    [DllImport("user32.dll")]
+    public static extern IntPtr GetActiveWindow();
 
 
 

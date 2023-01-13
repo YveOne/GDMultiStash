@@ -30,30 +30,23 @@ namespace GDMultiStash.Overlay
             _stashId2Item = new Dictionary<int, StashListChild>();
             _loadItems = true; // build list on startup
 
-            Global.Runtime.ActiveStashChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveStashChangedEventArgs e) {
+            Global.Ingame.ActiveStashChanged += delegate (object sender, GlobalHandlers.IngameHandler.ActiveStashChangedEventArgs e) {
                 ChangeActiveStash(e.OldID, e.NewID);
             };
-            Global.Runtime.ActiveModeChanged += delegate { _loadItems = true; };
-            Global.Runtime.ActiveExpansionChanged += delegate { _loadItems = true; };
-            Global.Runtime.ActiveGroupChanged += delegate { _loadItems = true; };
-            Global.Runtime.StashesRebuild += delegate { _loadItems = true; };
-            Global.Runtime.StashesAdded += delegate { _loadItems = true; };
-            Global.Runtime.StashesRemoved += delegate { _loadItems = true; };
-            Global.Runtime.StashesInfoChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> e)
+            Global.Ingame.ActiveModeChanged += delegate { _loadItems = true; };
+            Global.Ingame.ActiveExpansionChanged += delegate { _loadItems = true; };
+            Global.Ingame.ActiveGroupChanged += delegate { _loadItems = true; };
+            Global.Ingame.StashesRebuild += delegate { _loadItems = true; };
+            Global.Ingame.StashesAdded += delegate { _loadItems = true; };
+            Global.Ingame.StashesRemoved += delegate { _loadItems = true; };
+            Global.Ingame.StashesInfoChanged += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> e)
             {
                 foreach (StashObject stash in e.Items)
                 {
                     UpdateStashItemInfo(stash);
                 }
             };
-            Global.Runtime.StashesContentChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> e)
-            {
-                foreach (StashObject stash in e.Items)
-                {
-                    UpdateStashItemContent(stash);
-                }
-            };
-            Global.Runtime.StashesImported += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> e)
+            Global.Ingame.StashesContentChanged += delegate (object sender, GlobalHandlers.IngameHandler.StashesContentChangedEventArgs e)
             {
                 foreach (StashObject stash in e.Items)
                 {
@@ -83,10 +76,10 @@ namespace GDMultiStash.Overlay
                 _stashId2Item.Clear();
                 ClearScrollItems();
 
-                GrimDawnLib.GrimDawnGameMode mode = Global.Runtime.CurrentMode;
-                GrimDawnLib.GrimDawnGameExpansion exp = Global.Runtime.CurrentExpansion;
-                int activeGroupID = Global.Runtime.ActiveGroupID;
-                int activeStashID = Global.Runtime.ActiveStashID;
+                GrimDawnLib.GrimDawnGameMode mode = Global.Ingame.ActiveMode;
+                GrimDawnLib.GrimDawnGameExpansion exp = Global.Ingame.ActiveExpansion;
+                int activeGroupID = Global.Ingame.ActiveGroupID;
+                int activeStashID = Global.Ingame.ActiveStashID;
 
                 List<StashObject> stashes = Global.Stashes.GetAllStashes()
                     .Where(stash => stash.Expansion == exp && ((

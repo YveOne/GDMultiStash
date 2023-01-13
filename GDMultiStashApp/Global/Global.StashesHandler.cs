@@ -229,8 +229,8 @@ namespace GDMultiStash.GlobalHandlers
                 Console.WriteLine($"  Skipped (stash is locked)");
                 return true;
             }
-            var exp = Global.Runtime.CurrentExpansion;
-            var mode = Global.Runtime.CurrentMode;
+            var exp = Global.Ingame.ActiveExpansion;
+            var mode = Global.Ingame.ActiveMode;
             string externalFile = GrimDawn.GetTransferFilePath(exp, mode);
             Console.WriteLine($"Importing Stash #{stashID}");
             Console.WriteLine($"  exp : {exp}");
@@ -242,42 +242,43 @@ namespace GDMultiStash.GlobalHandlers
                 if (changed)
                 {
                     _stashes[stashID].LoadTransferFile();
-                    Global.Runtime.NotifyStashesImported(_stashes[stashID]);
+                    Global.Ingame.InvokeStashesContentChanged(_stashes[stashID], false);
                 }
                 return true;
             }
             return false;
         }
 
+        public void ExportStashTo(int stashID, GrimDawnGameEnvironment env)
+        {
+            string externalFile = GrimDawn.GetTransferFilePath(env.GameExpansion, env.GameMode);
+            Console.WriteLine($"Exporting Stash #{stashID}");
+            Console.WriteLine($"  exp : {env.GameExpansion}");
+            Console.WriteLine($"  mode: {env.GameMode}");
+            Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID)}");
+            Console.WriteLine($"  game: {externalFile}");
+            if (Global.FileSystem.ExportStashTransferFile(stashID, externalFile))
+            {
+            }
+            else
+            {
+                Console.WriteLine($"EXPORT FAILED");
+            }
+        }
+
         public void ExportStash(int stashID)
         {
             foreach (var env in Global.Configuration.GetStashEnvironments(stashID))
-            {
-                string externalFile = GrimDawn.GetTransferFilePath(env.Expansion, env.Mode);
-                Console.WriteLine($"Exporting Stash #{stashID}");
-                Console.WriteLine($"  exp : {env.Expansion}");
-                Console.WriteLine($"  mode: {env.Mode}");
-                Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID)}");
-                Console.WriteLine($"  game: {externalFile}");
-                if (Global.FileSystem.ExportStashTransferFile(stashID, externalFile))
-                {
-                }
-                else
-                {
-                    Console.WriteLine($"EXPORT FAILED");
-                }
-            }
-            Global.Runtime.NotifyStashesExported(_stashes[stashID]);
+                ExportStashTo(stashID, env);
         }
 
         public bool SwitchToStash(int toStashID)
         {
-            if (Global.Runtime.CurrentMode == GrimDawnGameMode.None) return false; // not loaded?
-            if (Global.Runtime.CurrentExpansion == GrimDawnGameExpansion.Unknown) return false; // not loaded?
+            if (!Global.Ingame.GameInitialized) return false;
 
             Console.WriteLine($"Switching to stash #{toStashID}");
-            if (!ImportStash(Global.Runtime.ActiveStashID)) return false;
-            Global.Runtime.ActiveStashID = toStashID;
+            if (!ImportStash(Global.Ingame.ActiveStashID)) return false;
+            Global.Ingame.ActiveStashID = toStashID;
             ExportStash(toStashID);
             Global.Configuration.Save();
             return true;
@@ -332,8 +333,8 @@ namespace GDMultiStash.GlobalHandlers
             foreach(StashObject stash in _stashes.Values)
                 if (stash.GroupID == groupID)
                     stash.GroupID = 0;
-            if (groupID == Global.Runtime.ActiveGroupID)
-                Global.Runtime.ActiveGroupID = 0;
+            if (groupID == Global.Ingame.ActiveGroupID)
+                Global.Ingame.ActiveGroupID = 0;
         }
 
         public List<StashGroupObject> DeleteStashGroups(IEnumerable<StashGroupObject> list)

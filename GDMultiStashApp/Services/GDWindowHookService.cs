@@ -55,7 +55,7 @@ namespace GDMultiStash.Services
             _target = new TargetForm();
             _timer = new System.Timers.Timer(1000);
             _timer.Elapsed += delegate {
-                _target.Invoke(new MethodInvoker(() => Hook()));
+                _target.Invoke(new Action(() => { Hook(); }));
             };
         }
 
@@ -107,10 +107,15 @@ namespace GDMultiStash.Services
             Console.WriteLine(" process: " + m_processId.ToString());
 
             HookInstalled?.Invoke(null, EventArgs.Empty);
-            if (Native.GetForegroundWindow() == m_target)
-            {
-                GotFocus?.Invoke(null, EventArgs.Empty);
-            }
+            //Console.WriteLine($"------- {m_target} {Native.GetForegroundWindow()}");
+            //if (Native.GetForegroundWindow() == m_target)
+            //    GotFocus?.Invoke(null, EventArgs.Empty);
+            hasFocus = true;
+            GotFocus?.Invoke(null, new EventArgs());
+            new System.Threading.Thread(() => {
+                System.Threading.Thread.Sleep(5000);
+                Native.SetForegroundWindow(m_target);
+            }).Start();
         }
 
         private void Unhook()

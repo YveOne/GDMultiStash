@@ -82,6 +82,7 @@ public static partial class Native
     public const int WM_MOUSEWHEEL = 0x020A;
     public const int WM_NCLBUTTONDBLCLK = 0x00A3;
 
+    public const int WM_ACTIVATE = 0x0006;
 
 
 }

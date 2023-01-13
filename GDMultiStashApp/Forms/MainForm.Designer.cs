@@ -32,6 +32,7 @@
             this.captionFileButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionImportButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionImportTransferFilesButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionImportGDSCButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionExportButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionExportTransferFilesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionSettingsButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,7 +49,7 @@
             this.captionMinimizeButton = new System.Windows.Forms.Button();
             this.captionTrayButton = new System.Windows.Forms.Button();
             this.captionGameButton = new System.Windows.Forms.Button();
-            this.captionImportGDSCButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionImportCraftingModeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionMenuStrip.SuspendLayout();
             this.formPaddingPanel.SuspendLayout();
             this.formBackgroundPanel.SuspendLayout();
@@ -58,6 +59,9 @@
             // 
             this.captionMenuStrip.BackColor = System.Drawing.Color.DimGray;
             this.captionMenuStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.captionMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionFileButton,
+            this.captionHelpButton});
             this.captionMenuStrip.Location = new System.Drawing.Point(130, 2);
             this.captionMenuStrip.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.captionMenuStrip.Name = "captionMenuStrip";
@@ -65,31 +69,29 @@
             this.captionMenuStrip.Size = new System.Drawing.Size(239, 30);
             this.captionMenuStrip.TabIndex = 0;
             this.captionMenuStrip.Text = "topMenuStrip";
-            this.captionMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.captionFileButton,
-            this.captionHelpButton});
             // 
             // captionFileButton
             // 
+            this.captionFileButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionImportButton,
+            this.captionExportButton,
+            this.captionSettingsButton});
             this.captionFileButton.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.captionFileButton.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.captionFileButton.Name = "captionFileButton";
             this.captionFileButton.Padding = new System.Windows.Forms.Padding(3);
             this.captionFileButton.Size = new System.Drawing.Size(42, 30);
             this.captionFileButton.Text = "File";
-            this.captionFileButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.captionImportButton,
-            this.captionExportButton,
-            this.captionSettingsButton});
             // 
             // captionImportButton
             // 
+            this.captionImportButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.captionImportTransferFilesButton,
+            this.captionImportGDSCButton,
+            this.captionImportCraftingModeButton});
             this.captionImportButton.Name = "captionImportButton";
             this.captionImportButton.Size = new System.Drawing.Size(180, 24);
             this.captionImportButton.Text = "Import";
-            this.captionImportButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.captionImportTransferFilesButton,
-            this.captionImportGDSCButton});
             // 
             // captionImportTransferFilesButton
             // 
@@ -97,6 +99,13 @@
             this.captionImportTransferFilesButton.Size = new System.Drawing.Size(212, 24);
             this.captionImportTransferFilesButton.Text = "Import Transfer Files";
             this.captionImportTransferFilesButton.Click += new System.EventHandler(this.ImportTransferFilesButton_Click);
+            // 
+            // captionImportGDSCButton
+            // 
+            this.captionImportGDSCButton.Name = "captionImportGDSCButton";
+            this.captionImportGDSCButton.Size = new System.Drawing.Size(212, 24);
+            this.captionImportGDSCButton.Text = "GD Stash Changer";
+            this.captionImportGDSCButton.Click += new System.EventHandler(this.ImportGDSCButton_Click);
             // 
             // captionExportButton
             // 
@@ -284,12 +293,12 @@
             this.captionGameButton.Text = "Groups";
             this.captionGameButton.UseVisualStyleBackColor = false;
             // 
-            // captionImportGDSCButton
+            // captionImportCraftingModeButton
             // 
-            this.captionImportGDSCButton.Name = "captionImportGDSCButton";
-            this.captionImportGDSCButton.Size = new System.Drawing.Size(212, 24);
-            this.captionImportGDSCButton.Text = "GD Stash Changer";
-            this.captionImportGDSCButton.Click += new System.EventHandler(this.ImportGDSCButton_Click);
+            this.captionImportCraftingModeButton.Name = "captionImportCraftingModeButton";
+            this.captionImportCraftingModeButton.Size = new System.Drawing.Size(212, 24);
+            this.captionImportCraftingModeButton.Text = "Crafting Mode";
+            this.captionImportCraftingModeButton.Click += new System.EventHandler(this.CaptionImportCraftingModeButton_Click);
             // 
             // MainForm
             // 
@@ -337,5 +346,6 @@
         private System.Windows.Forms.Button captionMinimizeButton;
         private System.Windows.Forms.Button captionCloseButton;
         private System.Windows.Forms.ToolStripMenuItem captionImportGDSCButton;
+        private System.Windows.Forms.ToolStripMenuItem captionImportCraftingModeButton;
     }
 }

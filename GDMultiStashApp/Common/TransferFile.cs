@@ -45,8 +45,8 @@ namespace GDMultiStash.Common
 			{
 				IsExpansion1 = def.IsExpansion1,
 			};
-			if (tabsCount < 0) tabsCount = 0;
-			if (tabsCount > def.MaxTabs) tabsCount = (int)def.MaxTabs;
+			if (tabsCount == -1) tabsCount = (int)def.MaxTabs;
+			tabsCount = tabsCount.Clamp(1, (int)def.MaxTabs);
 			for (int i = 1; i <= tabsCount; i += 1)
 			{
 				stash.Tabs.Add(new GDIALib.Parser.Stash.StashTab()
@@ -81,9 +81,9 @@ namespace GDMultiStash.Common
 			bool success = stash.Read(crypto);
 			if (success)
             {
-				if (stash.Width == 8) Expansion = GrimDawnGameExpansion.BaseGame;
-				else if (stash.IsExpansion1) Expansion = GrimDawnGameExpansion.AshesOfMalmouth;
-				else Expansion = GrimDawnGameExpansion.ForgottenGods;
+				if (stash.Width == 8) Expansion = GrimDawnGameExpansion.Vanilla;
+				else if (stash.IsExpansion1) Expansion = GrimDawnGameExpansion.AoM;
+				else Expansion = GrimDawnGameExpansion.FG;
 				LoadUsage();
 				return true;
 			}

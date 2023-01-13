@@ -101,12 +101,26 @@
     <Compile Include="Common\Overlay\Animations\AnimatorAnimateEventArgs.cs" />
     <Compile Include="Common\Overlay\Animations\AnimatorEventHandler.cs" />
     <Compile Include="Common\Overlay\ButtonElement.cs" />
+    <Compile Include="Common\Overlay\CheckableElement.cs" />
     <Compile Include="Common\Overlay\PanelElement.cs" />
     <Compile Include="Common\Overlay\ScrollManager.cs" />
     <Compile Include="Common\StashesZipFile.cs" />
     <Compile Include="Common\Objects\StashGroupObject.cs" />
     <Compile Include="Common\Objects\StashObject.cs" />
-    <Compile Include="Console.cs" />
+    <Compile Include="Forms\CraftingModeDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CraftingModeDialogForm.Designer.cs">
+      <DependentUpon>CraftingModeDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\Global.IngameHandler.ActiveExpansion.cs" />
+    <Compile Include="Global\Global.IngameHandler.ActiveGroup.cs" />
+    <Compile Include="Global\Global.IngameHandler.ActiveMode.cs" />
+    <Compile Include="Global\Global.IngameHandler.ActiveStash.cs" />
+    <Compile Include="Global\Global.IngameHandler.cs" />
+    <Compile Include="Global\Global.IngameHandler.StashReopening.cs" />
+    <Compile Include="Global\Global.IngameHandler.StashStatus.cs" />
+    <Compile Include="Utils\Console.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Forms\Controls\DefaultOLVColumn.cs">
       <SubType>Component</SubType>
@@ -136,6 +150,18 @@
     </Compile>
     <Compile Include="Forms\StashTabsEditorWindow.Designer.cs">
       <DependentUpon>StashTabsEditorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\DragImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\StashTabAddPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\StashTabBasePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\StashTabPanel.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Overlay\Controls\HomeButton.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -199,7 +225,6 @@
     <Compile Include="Global\Global.DatabaseHandler.cs" />
     <Compile Include="Global\Global.cs" />
     <Compile Include="Global\Global.LocalizationHandler.cs" />
-    <Compile Include="Global\Global.RuntimeHandler.cs" />
     <Compile Include="Global\Global.StashesHandler.cs" />
     <Compile Include="Global\Global.UpdateHandler.cs" />
     <Compile Include="Global\Global.WindowsHandler.cs" />
@@ -304,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangelogDialogForm.resx">
       <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CraftingModeDialogForm.resx">
+      <DependentUpon>CraftingModeDialogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateStashGroupDialogForm.resx">
       <DependentUpon>CreateStashGroupDialogForm.cs</DependentUpon>
@@ -414,8 +442,6 @@
     <None Include="Resources\scrollbar.png" />
     <None Include="Resources\font_LinBiolinum_RI.ttf" />
     <None Include="Resources\local_zhCN.txt" />
-    <None Include="Resources\radio0.png" />
-    <None Include="Resources\radio1.png" />
     <None Include="Resources\icon32.ico" />
     <Content Include="icon64.ico" />
     <None Include="Resources\border.png" />
@@ -428,6 +454,10 @@
     <None Include="Resources\ButtonLargeOver.png" />
     <None Include="Resources\ButtonDropDownArrow.png" />
     <None Include="Resources\ButtonDropUpArrow.png" />
+    <None Include="Resources\ButtonRoundDownOver.png" />
+    <None Include="Resources\ButtonRoundOver.png" />
+    <None Include="Resources\ButtonRoundUp.png" />
+    <None Include="Resources\ButtonRoundDown.png" />
     <Content Include="Resources\ButtonSmallDown.png" />
     <Content Include="Resources\ButtonSmallOver.png" />
     <Content Include="Resources\ButtonSmallUp.png" />

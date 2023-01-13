@@ -24,7 +24,16 @@ namespace GDMultiStash.Overlay
             MouseCheckNeedBaseHit = true;
             Debugging = false;
 
+
+
+
+
+
+
             //todo: what about resources IDisposable?
+
+
+
 
             Panels.BackgroundBorderPanel._T = OverlayResources.CreateImageResource(Resources.windowBorderTop, ImageFormat.Png);
             Panels.BackgroundBorderPanel._TR = OverlayResources.CreateImageResource(Resources.windowBorderTopRight, ImageFormat.Png);
@@ -56,7 +65,7 @@ namespace GDMultiStash.Overlay
             Panels.ScrollBorderPanel._M = OverlayResources.CreateImageResource(Resources.scrollareaMiddle, ImageFormat.Png);
             Panels.ScrollBorderPanel._B = OverlayResources.CreateImageResource(Resources.scrollareaBottom, ImageFormat.Png);
 
-            Controls.Base.LargeButton._UpResource = OverlayResources.CreateImageResource(Resources.buttonLargeUp, ImageFormat.Png);
+            Controls.Base.LargeButton._UpResource = OverlayResources.CreateImageResource(Resources.ButtonLargeUp, ImageFormat.Png);
             Controls.Base.LargeButton._OverResource = OverlayResources.CreateImageResource(Resources.ButtonLargeOver, ImageFormat.Png);
             Controls.Base.LargeButton._DownResource = OverlayResources.CreateImageResource(Resources.ButtonLargeDown, ImageFormat.Png);
 
@@ -77,9 +86,11 @@ namespace GDMultiStash.Overlay
             Controls.Base.VerticalScrollBar._ScrollBarTopResource = OverlayResources.CreateImageResource(Resources.scrollbar_top, ImageFormat.Png);
             Controls.Base.VerticalScrollBar._ScrollBarBottomResource = OverlayResources.CreateImageResource(Resources.scrollbar_bottom, ImageFormat.Png);
 
-            StaticResources.RadioButton0Resource = OverlayResources.CreateImageResource(Resources.radio0, ImageFormat.Png);
-            StaticResources.RadioButton1Resource = OverlayResources.CreateImageResource(Resources.radio1, ImageFormat.Png);
-            StaticResources.LockSignResource = OverlayResources.CreateImageResource(Resources.LockWhiteIcon, ImageFormat.Png);
+            StaticResources.ButtonRoundUp = OverlayResources.CreateImageResource(Resources.ButtonRoundUp, ImageFormat.Png);
+            StaticResources.ButtonRoundOver = OverlayResources.CreateImageResource(Resources.ButtonRoundOver, ImageFormat.Png);
+            StaticResources.ButtonRoundDown = OverlayResources.CreateImageResource(Resources.ButtonRoundDown, ImageFormat.Png);
+            StaticResources.ButtonRoundDownOver = OverlayResources.CreateImageResource(Resources.ButtonRoundDownOver, ImageFormat.Png);
+            StaticResources.LockWhiteIcon = OverlayResources.CreateImageResource(Resources.LockWhiteIcon, ImageFormat.Png);
 
             Controls.InfoBoxReloadButton._UpResource = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallUp, ImageFormat.Png);
             Controls.InfoBoxReloadButton._DownResource = OverlayResources.CreateImageResource(Resources.ReloadButtonSmallDown, ImageFormat.Png);
@@ -148,8 +159,8 @@ namespace GDMultiStash.Overlay
                 }
             };
 
-            Global.Runtime.GameWindowSizeChanged += delegate {
-                Size s = Global.Runtime.GameWindowSize;
+            Global.Ingame.GameWindowSizeChanged += delegate {
+                Size s = Global.Ingame.GameWindowSize;
                 Width = s.Width;
                 Height = s.Height;
             };

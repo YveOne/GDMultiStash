@@ -41,12 +41,11 @@ namespace GDMultiStash.Common.Overlay
             }
         }
 
+        private bool _isMouseOver = false;
 
-        public bool MouseOver => _mouseOver;
-        private bool _mouseOver = false;
+        public bool IsMouseOver => _isMouseOver;
 
         public bool MouseCheckChildren { get; set; } = true;
-
         public bool MouseCheckNeedBaseHit { get; set; } = false;
 
         public bool EventsEnabled = true;
@@ -57,12 +56,12 @@ namespace GDMultiStash.Common.Overlay
             if (!EventsEnabled) return false;
             bool hit = CheckHitRect(x, y);
             bool _wasOver = false;
-            if (_mouseOver)
+            if (_isMouseOver)
             {
                 if (!hit)
                 {
                     _wasOver = true;
-                    _mouseOver = false;
+                    _isMouseOver = false;
                     MouseLeave?.Invoke(this, EventArgs.Empty);
                 }
             }
@@ -70,7 +69,7 @@ namespace GDMultiStash.Common.Overlay
             {
                 if (hit)
                 {
-                    _mouseOver = true;
+                    _isMouseOver = true;
                     MouseEnter?.Invoke(this, EventArgs.Empty);
                 }
             }

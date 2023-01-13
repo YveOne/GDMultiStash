@@ -13,6 +13,8 @@ namespace GDMultiStash.Forms
 {
     internal partial class MainForm : BaseForm
     {
+        private Plexiglass.DockingPlexiglass _plexiglass = null;
+
         public Main.DecorationCollection Decorations { get; } = new Main.DecorationCollection();
         public Main.StashesPage StashesPage { get; }
         public Main.StashGroupsPage StashGroupsPage { get; }
@@ -188,6 +190,7 @@ namespace GDMultiStash.Forms
             Icon = Properties.Resources.icon32;
             FormBorderStyle = FormBorderStyle.None;
             SetStyle(ControlStyles.ResizeRedraw, true);
+            TopMost = false;
 
             #region Init Buttons
 
@@ -197,12 +200,12 @@ namespace GDMultiStash.Forms
                 delegate { return null; },
                 delegate { return null; },
                 delegate {
-                    switch (Global.Runtime.StartGame())
+                    switch (Global.Windows.StartGame())
                     {
-                        case GlobalHandlers.RuntimeHandler.GameStartResult.AlreadyRunning:
-                            MessageBox.Show(Global.L.GameAlreadyRunningMessage(), "", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        case GlobalHandlers.WindowsHandler.GameStartResult.AlreadyRunning:
+                            Console.Warning(Global.L.GameAlreadyRunningMessage());
                             break;
-                        case GlobalHandlers.RuntimeHandler.GameStartResult.Success:
+                        case GlobalHandlers.WindowsHandler.GameStartResult.Success:
                             break;
                     }
                 }
@@ -213,7 +216,7 @@ namespace GDMultiStash.Forms
                 Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight,
                 delegate { return Properties.Resources.buttonTrayGray; },
                 delegate { return Properties.Resources.buttonTrayWhite; },
-                delegate { Hide(); }
+                delegate { CloseToTray(); }
                 );
 
             InitializeButton(captionMinimizeButton,
@@ -293,6 +296,7 @@ namespace GDMultiStash.Forms
             captionSettingsButton.Text = L.SettingsButton();
             captionChangelogButton.Text = L.ChangelogButton();
             captionAboutButton.Text = L.AboutButton();
+            captionImportCraftingModeButton.Text = L.CraftingModeButton();
 
             // pages
             StashesPage.Localize();
@@ -308,14 +312,10 @@ namespace GDMultiStash.Forms
             titlePanel.Focus();
         }
 
-        public new void Show()
+        public void CloseToTray()
         {
-            base.Show();
-        }
-
-        public new void Hide()
-        {
-            base.Hide();
+            Hide();
+            _plexiglass.Hide();
         }
 
         #endregion
@@ -326,7 +326,7 @@ namespace GDMultiStash.Forms
         {
             base.OnLoad(e);
             // fix: objectlistview is causing huge lags when form is in background
-            new Plexiglass.DockingPlexiglass(formPaddingPanel)
+            _plexiglass = new Plexiglass.DockingPlexiglass(formPaddingPanel)
             {
                 Color = Constants.FormBackColor,
                 Opacity = 0.50,
@@ -442,10 +442,15 @@ namespace GDMultiStash.Forms
                     foreach(var s in importedStashes)
                         s.GroupID = group.ID;
                     Global.Configuration.Save();
-                    Global.Runtime.NotifyStashesAdded(importedStashes);
-                    Global.Runtime.NotifyStashGroupsAdded(group);
+                    Global.Ingame.InvokeStashesAdded(importedStashes);
+                    Global.Ingame.InvokeStashGroupsAdded(group);
                 }
             }
+        }
+
+        private void CaptionImportCraftingModeButton_Click(object sender, EventArgs e)
+        {
+            Global.Windows.ShowCraftingModeDialog();
         }
 
         private void TopMenuExportTransferFilesButton_Click(object sender, EventArgs e)

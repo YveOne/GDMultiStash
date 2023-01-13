@@ -66,7 +66,7 @@ namespace GDIALib.GDHook
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker)delegate { CustomWndProc(bt); });
+                Invoke(new Action(() => { CustomWndProc(bt); }));
                 return;
             }
             MessageType type = (MessageType)bt.Type;
@@ -91,7 +91,7 @@ namespace GDIALib.GDHook
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker)delegate { InjectorCallback(sender, e); });
+                Invoke(new Action(() => { InjectorCallback(sender, e); }));
             }
             else
             {

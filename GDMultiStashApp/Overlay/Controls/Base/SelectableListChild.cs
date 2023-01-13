@@ -10,10 +10,21 @@ using GDMultiStash.Common.Overlay;
 
 namespace GDMultiStash.Overlay.Controls.Base
 {
+    internal class RadioButton : CheckableElement
+    {
+        public override Color DebugColor => Color.FromArgb(255, 0, 0);
+
+        protected override D3DHook.Hook.Common.IImageResource UpResource => StaticResources.ButtonRoundUp;
+        protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ButtonRoundOver;
+        protected override D3DHook.Hook.Common.IImageResource CheckedUpResource => StaticResources.ButtonRoundDown;
+        protected override D3DHook.Hook.Common.IImageResource CheckedOverResource => StaticResources.ButtonRoundDownOver;
+
+    }
+
     internal class SelectableListChild<T> : ListBoxItemElement<T>
     {
         private readonly TextElement _textElement;
-        private readonly ImageElement _radioButton;
+        private readonly RadioButton _radioButton;
 
         private readonly int _textMarginLeft = 30;
 
@@ -33,19 +44,19 @@ namespace GDMultiStash.Overlay.Controls.Base
                 Width = -_textMarginLeft,
                 HeightToParent = true,
             };
-            _radioButton = new ImageElement()
+            _radioButton = new RadioButton()
             {
-                Resource = StaticResources.RadioButton0Resource,
                 AnchorPoint = Anchor.Left,
                 X = 10,
-                Y = -2,
-                Scale = 0.8f,
-                AutoSize = true,
+                Y = -1,
+                Width = 20,
+                Height = 16,
             };
 
             AddChild(_textElement);
             AddChild(_radioButton);
 
+            MouseCheckChildren = false;
             Alpha = _alphaInactive;
             MouseEnter += delegate { Alpha = _alphaActive; };
             MouseLeave += delegate { if (!_active) Alpha = _alphaInactive; };
@@ -93,7 +104,7 @@ namespace GDMultiStash.Overlay.Controls.Base
             set
             {
                 _active = value;
-                _radioButton.Resource = value ? StaticResources.RadioButton1Resource : StaticResources.RadioButton0Resource;
+                _radioButton.Checked = value;
                 Alpha = value ? _alphaActive : _alphaInactive;
             }
         }

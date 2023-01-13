@@ -22,9 +22,9 @@ namespace GDMultiStash.Common
             string transferName = $"#{stash.ID} {stashName}";
             string expKey = stash.Expansion.ToString();
             string transferExt;
-            transferExt = GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnGameMode.SC);
+            transferExt = GrimDawn.GetTransferFileExtension(stash.Expansion, GrimDawnGameMode.SC);
             AddFile($"{expKey}/SoftCore/{transferName}{transferExt}", stash.FilePath);
-            transferExt = GrimDawn.GetTransferExtension(stash.Expansion, GrimDawnGameMode.HC);
+            transferExt = GrimDawn.GetTransferFileExtension(stash.Expansion, GrimDawnGameMode.HC);
             AddFile($"{expKey}/HardCore/{transferName}{transferExt}", stash.FilePath);
         }
     }

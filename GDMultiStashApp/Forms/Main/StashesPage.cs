@@ -216,9 +216,9 @@ namespace GDMultiStash.Forms.Main
             stashesListView.SpaceBetweenGroups = Constants.ListViewGroupSpaceBetween;
             stashesListView.AlwaysGroupByColumn = columnStashGroup;
 
-            showExpansionComboBox.Items.AddRange(GrimDawnLib.GrimDawn.GetExpansionList()
+            showExpansionComboBox.Items.AddRange(GrimDawnLib.GrimDawn.ExpansionList
                 .Where(exp => exp != GrimDawnLib.GrimDawnGameExpansion.Unknown)
-                .Select(exp => GrimDawnLib.GrimDawn.GetExpansionName(exp)).ToArray());
+                .Select(exp => GrimDawnLib.GrimDawn.ExpansionNames[exp]).ToArray());
 
 
             Main.SpaceClick += delegate { UnselectAll(); };
@@ -289,43 +289,40 @@ namespace GDMultiStash.Forms.Main
                 stashesListView.DragEnter += StashesListView_DragEnter;
                 stashesListView.DragDrop += StashesListView_DragDrop;
 
-                Global.Runtime.ActiveStashChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveStashChangedEventArgs e) {
-                    stashesListView.Invoke((MethodInvoker)delegate {
+                Global.Ingame.ActiveStashChanged += delegate (object sender, GlobalHandlers.IngameHandler.ActiveStashChangedEventArgs e) {
+                    stashesListView.Invoke(new Action(() => {
                         foreach (OLVListItem item in stashesListView.Items)
                         {
                             StashObject stash = (StashObject)item.RowObject;
                             if (stash.ID == e.OldID || stash.ID == e.NewID)
                                 stashesListView.RefreshItem(item);
                         }
-                    });
+                    }));
                 };
 
-                Global.Runtime.ActiveModeChanged += delegate { ReloadList(); };
-                Global.Runtime.StashesAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) {
+                Global.Ingame.ActiveModeChanged += delegate { ReloadList(); };
+                Global.Ingame.StashesAdded += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> args) {
                     int scrollY = stashesListView.LowLevelScrollPosition.Y;
                     stashesListView.AddObjects(args.Items);
                     stashesListView.LowLevelScroll(0, scrollY);
                     stashesListView.EnsureModelVisible(args.Items[0]);
                 };
-                Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { stashesListView.RemoveObjects(args.Items); };
-                Global.Runtime.StashesInfoChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) {
+                Global.Ingame.StashesRemoved += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> args) { stashesListView.RemoveObjects(args.Items); };
+                Global.Ingame.StashesInfoChanged += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> args) {
                     RefreshObjects(args.Items);
                 };
-                Global.Runtime.StashesContentChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) {
+                Global.Ingame.StashesContentChanged += delegate (object sender, GlobalHandlers.IngameHandler.StashesContentChangedEventArgs args) {
                     RefreshObjects(args.Items);
                 };
-                Global.Runtime.StashGroupsRebuild += delegate { ReloadList(); };
-                Global.Runtime.StashGroupsInfoChanged += delegate { ReloadList(); }; // dont know how to trigger group header update
-                Global.Runtime.StashGroupsAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) {
+                Global.Ingame.StashGroupsRebuild += delegate { ReloadList(); };
+                Global.Ingame.StashGroupsInfoChanged += delegate { ReloadList(); }; // dont know how to trigger group header update
+                Global.Ingame.StashGroupsAdded += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashGroupObject> args) {
                     ReloadGroupDummies();
                 };
-                Global.Runtime.StashGroupsRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) {
+                Global.Ingame.StashGroupsRemoved += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashGroupObject> args) {
                     ReloadGroupDummies();
                 };
-                Global.Runtime.StashesImported += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) {
-                    RefreshObjects(args.Items);
-                };
-                Global.Runtime.ActiveExpansionChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveExpansionChangedEventArgs args) {
+                Global.Ingame.ActiveExpansionChanged += delegate (object sender, GlobalHandlers.IngameHandler.ActiveExpansionChangedEventArgs args) {
                     showExpansionComboBox.SelectedIndex = (int)args.Expansion;
                     ShowExpansionComboBox_SelectionChangeCommitted(sender, EventArgs.Empty);
                 };
@@ -528,7 +525,7 @@ namespace GDMultiStash.Forms.Main
             if (e.ColumnIndex == columnActive.Index)
             {
                 StashObject stash = (StashObject)e.Model;
-                bool isActive = Global.Runtime.ActiveStashID == stash.ID;
+                bool isActive = Global.Ingame.ActiveStashID == stash.ID;
                 Color stashColor = stash.DisplayColor;
                 if (!isActive)
                 {
@@ -565,7 +562,7 @@ namespace GDMultiStash.Forms.Main
             bool isMain = Global.Configuration.IsMainStashID(stash.ID);
             bool isDragging = dragHandler.IsDraggingStash(stash);
             bool isSelected = e.Item.Selected;
-            bool isActive = Global.Runtime.ActiveStashID == stash.ID;
+            bool isActive = Global.Ingame.ActiveStashID == stash.ID;
             bool isLocked = stash.Locked;
             Color stashColor = stash.DisplayColor;
 
@@ -748,7 +745,7 @@ namespace GDMultiStash.Forms.Main
                     break;
             }
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashesRebuild(); // todo: maybe add a better event for this?
+            Global.Ingame.InvokeStashesRebuild(); // todo: maybe add a better event for this?
             int _sc = Global.Configuration.Settings.ShowSoftcoreState;
             int _hc = Global.Configuration.Settings.ShowHardcoreState;
             if (!(stash.SC && _sc == 0 || !stash.SC && _sc == 1 || stash.HC && _hc == 0 || !stash.HC && _hc == 1))
@@ -760,9 +757,9 @@ namespace GDMultiStash.Forms.Main
                 // so the user can see the checkbox icon changing
                 new System.Threading.Thread(() => {
                     System.Threading.Thread.Sleep(100);
-                    Invoke((MethodInvoker)delegate {
+                    Invoke(new Action(() => {
                         stashesListView.RemoveObject(stash);
-                    });
+                    }));
                 }).Start();
             }
         }
@@ -778,7 +775,7 @@ namespace GDMultiStash.Forms.Main
             if (args.RowObject is StashDummyObject) return;
 
             StashObject stash = (StashObject)args.RowObject;
-            if (args.Column == columnName) Global.Runtime.NotifyStashesInfoChanged(stash);
+            if (args.Column == columnName) Global.Ingame.InvokeStashesInfoChanged(stash);
             else return;
             Global.Configuration.Save();
             UnselectAll();
@@ -807,7 +804,7 @@ namespace GDMultiStash.Forms.Main
         {
             UnselectAll();
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashesRebuild();
+            Global.Ingame.InvokeStashesRebuild();
         }
 
         private void ShowExpansionComboBox_SelectionChangeCommitted(object sender, EventArgs e)

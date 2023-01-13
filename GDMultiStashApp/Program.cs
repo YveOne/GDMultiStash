@@ -19,6 +19,7 @@ namespace GDMultiStash
         static void Main()
         {
             Console.CreateConsole();
+            Console.LogToFile(System.IO.Path.Combine(Application.StartupPath, "log.txt"));
 
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);

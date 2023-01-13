@@ -64,6 +64,7 @@ namespace GDMultiStash.Forms
             confirmStashDeleteCheckBox.Checked = _settings.ConfirmStashDelete;
             gameAutoStartCheckBox.Checked = _settings.AutoStartGame;
             autoBackToMainCheckBox.Checked = _settings.AutoBackToMain;
+            selectFirstStashInGroupCheckBox.Checked = _settings.AutoSelectFirstStashInGroup;
             checkVersionCheckBox.Checked = _settings.CheckForNewVersion;
             saveOverLockedCheckBox.Checked = _settings.SaveOverwritesLocked;
             overlayShowWorkloadCheckBox.Checked = _settings.OverlayShowWorkload;
@@ -340,6 +341,12 @@ namespace GDMultiStash.Forms
         private void AutoBackToMainCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _settings.AutoBackToMain = autoBackToMainCheckBox.Checked;
+            applyButton.Enabled = true;
+        }
+
+        private void SelectFirstStashInGroupCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _settings.AutoSelectFirstStashInGroup = selectFirstStashInGroupCheckBox.Checked;
             applyButton.Enabled = true;
         }
 

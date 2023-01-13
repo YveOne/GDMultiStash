@@ -22,7 +22,7 @@ namespace GDMultiStash.Forms.Main
         private readonly IEnumerable<StashObject> selectedStashes;
         private readonly int selectedStashesCount;
 
-        private bool LastWasSeparator => Items.Count == 0 ? false : Items[Items.Count-1].GetType() == typeof(ToolStripSeparator);
+        private bool LastWasSeparator => Items.Count != 0 && Items[Items.Count-1].GetType() == typeof(ToolStripSeparator);
 
         public StashesPageContextMenu(StashesPage page, CellRightClickEventArgs args)
         {
@@ -68,7 +68,7 @@ namespace GDMultiStash.Forms.Main
                     foreach (StashObject st in selectedStashes)
                         st.TextColor = col.Value;
                     Global.Configuration.Save();
-                    Global.Runtime.NotifyStashesInfoChanged(selectedStashes);
+                    Global.Ingame.InvokeStashesInfoChanged(selectedStashes);
                 })
                 {
                     BackColor = Color.FromArgb(0, 0, 0)
@@ -101,18 +101,21 @@ namespace GDMultiStash.Forms.Main
                     : Global.L.LockButton()
                 ), Properties.Resources.LockBlackIcon, delegate {
                     clickedStash.Locked = !clickedStash.Locked;
-                    Global.Runtime.NotifyStashesInfoChanged(clickedStash);
+                    Global.Configuration.Save();
+                    Global.Ingame.InvokeStashesInfoChanged(clickedStash);
                 });
             }
             else
             {
                 Items.Add(T(Global.L.LockButton()), Properties.Resources.LockBlackIcon, delegate {
                     foreach (StashObject selStash in selectedStashes) selStash.Locked = true;
-                    Global.Runtime.NotifyStashesInfoChanged(selectedStashes);
+                    Global.Configuration.Save();
+                    Global.Ingame.InvokeStashesInfoChanged(selectedStashes);
                 });
                 Items.Add(T(Global.L.UnlockButton()), Properties.Resources.LockBlackIcon, delegate {
                     foreach (StashObject selStash in selectedStashes) selStash.Locked = false;
-                    Global.Runtime.NotifyStashesInfoChanged(selectedStashes);
+                    Global.Configuration.Save();
+                    Global.Ingame.InvokeStashesInfoChanged(selectedStashes);
                 });
             }
         }
@@ -143,8 +146,7 @@ namespace GDMultiStash.Forms.Main
                         restoreButton.DropDownItems.Add(T(itemText), null, delegate (object s, EventArgs e) {
                             Global.Stashes.RestoreTransferFile(clickedStash.ID, file);
                             clickedStash.LoadTransferFile();
-                            Global.Runtime.ReloadOpenedStash(clickedStash.ID);
-                            Global.Runtime.NotifyStashesContentChanged(clickedStash);
+                            Global.Ingame.InvokeStashesContentChanged(clickedStash, true);
                         });
                     }
                     else
@@ -170,7 +172,7 @@ namespace GDMultiStash.Forms.Main
                 {
                     if (Global.Stashes.ImportOverwriteStash(files[0], clickedStash))
                     {
-                        Global.Runtime.NotifyStashesContentChanged(clickedStash);
+                        Global.Ingame.InvokeStashesContentChanged(clickedStash, true);
                     }
                 }
             });
@@ -213,7 +215,7 @@ namespace GDMultiStash.Forms.Main
             for (int i = (int)page.ShownExpansion + 1; i <= (int)GrimDawnLib.GrimDawn.LatestExpansion; i += 1)
             {
                 GrimDawnLib.GrimDawnGameExpansion exp = (GrimDawnLib.GrimDawnGameExpansion)i;
-                copyToExpButton.DropDownItems.Add(T(GrimDawnLib.GrimDawn.GetExpansionName(exp)), null, delegate {
+                copyToExpButton.DropDownItems.Add(T(GrimDawnLib.GrimDawn.ExpansionNames[exp]), null, delegate {
 
                     var addedStashes = new List<StashObject>();
                     var removedStashes = new List<StashObject>();
@@ -228,9 +230,9 @@ namespace GDMultiStash.Forms.Main
                         removedStashes = Global.Stashes.DeleteStashes(selectedStashes);
                     }
                     Global.Configuration.Save();
-                    Global.Runtime.NotifyStashesRebuild();
-                    Global.Runtime.NotifyStashesRemoved(removedStashes);
-                    Global.Runtime.NotifyStashesAdded(addedStashes);
+                    Global.Ingame.InvokeStashesRebuild();
+                    Global.Ingame.InvokeStashesRemoved(removedStashes);
+                    Global.Ingame.InvokeStashesAdded(addedStashes);
                 });
             }
         }
@@ -246,7 +248,7 @@ namespace GDMultiStash.Forms.Main
                     s.AutoFill();
                     s.SaveTransferFile();
                     s.LoadTransferFile();
-                    Global.Runtime.NotifyStashesContentChanged(s);
+                    Global.Ingame.InvokeStashesContentChanged(s, true);
                 }
             });
         }
@@ -570,7 +572,7 @@ namespace GDMultiStash.Forms.Main
                 parentGroups[stash.GroupID] = true;
                 stash.SaveTransferFile();
                 stash.LoadTransferFile();
-                Global.Runtime.NotifyStashesContentChanged(stash);
+                Global.Ingame.InvokeStashesContentChanged(stash, true);
             }
 
             // create new group for new stashes
@@ -640,7 +642,7 @@ namespace GDMultiStash.Forms.Main
             if (Console.Question(Global.L.ConfirmDeleteEmptyStashesMessage()))
             {
                 var deletedStashes = Global.Stashes.DeleteStashes(selectedStashes, true);
-                Global.Runtime.NotifyStashesRemoved(deletedStashes);
+                Global.Ingame.InvokeStashesRemoved(deletedStashes);
                 var emptyGroups = parentGroups.Keys
                     .Where(grpId => Global.Stashes.GetStashesForGroup(grpId).Length == 0)
                     .Select(grpId => Global.Stashes.GetStashGroup(grpId))
@@ -650,22 +652,16 @@ namespace GDMultiStash.Forms.Main
                     if (Console.Question(Global.L.ConfirmDeleteEmptyGroupsMessage()))
                     {
                         var deletedGroups = Global.Stashes.DeleteStashGroups(emptyGroups);
-                        Global.Runtime.NotifyStashGroupsRemoved(deletedGroups);
-                        Global.Runtime.NotifyStashesRebuild();
+                        Global.Ingame.InvokeStashGroupsRemoved(deletedGroups);
+                        Global.Ingame.InvokeStashesRebuild();
                     }
-                }
-                // maybe there was a stash that could not be deleted (maybe its active)
-                foreach (var notDeletedStash in selectedStashes.Where(s => !deletedStashes.Contains(s)))
-                {
-                    Global.Runtime.ReloadOpenedStash(notDeletedStash.ID);
                 }
             }
 
-
             // done
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashGroupsAdded(group);
-            Global.Runtime.NotifyStashesAdded(addedStashes);
+            Global.Ingame.InvokeStashGroupsAdded(group);
+            Global.Ingame.InvokeStashesAdded(addedStashes);
         }
 
         #endregion
@@ -701,12 +697,12 @@ namespace GDMultiStash.Forms.Main
                     return;
                 List<StashObject> deletedItems = Global.Stashes.DeleteStashes(selectedStashes);
                 Global.Configuration.Save();
-                Global.Runtime.NotifyStashesRemoved(deletedItems);
+                Global.Ingame.InvokeStashesRemoved(deletedItems);
             });
             deleteButton.DropDownItems.Add(T(Global.L.DeleteEmptyStashesButton()), null, delegate {
                 List<StashObject> deletedItems = Global.Stashes.DeleteStashes(selectedStashes, true);
                 Global.Configuration.Save();
-                Global.Runtime.NotifyStashesRemoved(deletedItems);
+                Global.Ingame.InvokeStashesRemoved(deletedItems);
             });
         }
 

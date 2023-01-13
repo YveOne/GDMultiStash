@@ -26,18 +26,18 @@ namespace GDMultiStash.Forms
             }
             public void SetProgress()
             {
-                Form.Invoke((MethodInvoker)delegate {
+                Form.Invoke(new Action(() => { 
                     Form.progressBar1.Minimum = 0;
                     Form.progressBar1.Maximum = 100;
                     Form.progressBar1.Value = 50;
-                });
+                }));
             }
             public void Close(bool force = false)
             {
-                Form.Invoke((MethodInvoker)delegate {
+                Form.Invoke(new Action(() => {
                     if (force) Form.ForceClose();
                     else Form.Close();
-                });
+                }));
             }
         }
 

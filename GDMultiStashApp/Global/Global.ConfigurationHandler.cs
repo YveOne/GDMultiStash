@@ -83,8 +83,8 @@ namespace GDMultiStash.GlobalHandlers
                             configNew.Expansions.Items.Clear();
                             configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
                             {
-                                ID = (int)GrimDawnGameExpansion.BaseGame,
-                                Name = GrimDawn.GetExpansionName(GrimDawnGameExpansion.BaseGame),
+                                ID = (int)GrimDawnGameExpansion.Vanilla,
+                                Name = GrimDawn.ExpansionNames[GrimDawnGameExpansion.Vanilla],
                                 SC = new Common.Config.ConfigExpansionMode()
                                 {
                                     MainID = configOld.Settings.Main0SCID,
@@ -98,8 +98,8 @@ namespace GDMultiStash.GlobalHandlers
                             });
                             configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
                             {
-                                ID = (int)GrimDawnGameExpansion.AshesOfMalmouth,
-                                Name = GrimDawn.GetExpansionName(GrimDawnGameExpansion.AshesOfMalmouth),
+                                ID = (int)GrimDawnGameExpansion.AoM,
+                                Name = GrimDawn.ExpansionNames[GrimDawnGameExpansion.AoM],
                                 SC = new Common.Config.ConfigExpansionMode()
                                 {
                                     MainID = configOld.Settings.Main1SCID,
@@ -113,8 +113,8 @@ namespace GDMultiStash.GlobalHandlers
                             });
                             configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
                             {
-                                ID = (int)GrimDawnGameExpansion.ForgottenGods,
-                                Name = GrimDawn.GetExpansionName(GrimDawnGameExpansion.ForgottenGods),
+                                ID = (int)GrimDawnGameExpansion.FG,
+                                Name = GrimDawn.ExpansionNames[GrimDawnGameExpansion.FG],
                                 SC = new Common.Config.ConfigExpansionMode()
                                 {
                                     MainID = configOld.Settings.Main2SCID,
@@ -254,7 +254,7 @@ namespace GDMultiStash.GlobalHandlers
                 }
             }
 
-            foreach(GrimDawnGameExpansion exp in GrimDawn.GetExpansionList())
+            foreach(GrimDawnGameExpansion exp in GrimDawn.ExpansionList)
             {
                 if (exp == GrimDawnGameExpansion.Unknown) continue;
                 Common.Config.ConfigExpansion cfgExp = _config.Expansions.Items.Find(ex => { return ex.ID == (int)exp; });
@@ -266,7 +266,7 @@ namespace GDMultiStash.GlobalHandlers
                 else
                 {
                     // update the name in the comment
-                    cfgExp.NameCommentValue = GrimDawn.GetExpansionName(exp);
+                    cfgExp.NameCommentValue = GrimDawn.ExpansionNames[exp];
                 }
             }
             _config.Expansions.Items.Sort((x, y) => x.ID.CompareTo(y.ID));
@@ -337,7 +337,7 @@ namespace GDMultiStash.GlobalHandlers
             _config.Expansions.Items.Add(new Common.Config.ConfigExpansion()
             {
                 ID = (int)exp,
-                NameCommentValue = GrimDawn.GetExpansionName(exp),
+                NameCommentValue = GrimDawn.ExpansionNames[exp],
             });
 
             int index = _config.Expansions.Items.Count - 1;
@@ -439,9 +439,19 @@ namespace GDMultiStash.GlobalHandlers
             return GetExpansionMode(exp, mode).CurrentID;
         }
 
+        public int GetCurrentStashID(GrimDawnGameEnvironment env)
+        {
+            return GetCurrentStashID(env.GameExpansion, env.GameMode);
+        }
+
         public void SetCurrentStashID(GrimDawnGameExpansion exp, GrimDawnGameMode mode, int stashID)
         {
             GetExpansionMode(exp, mode).CurrentID = stashID;
+        }
+
+        public void SetCurrentStashID(GrimDawnGameEnvironment env, int stashID)
+        {
+            SetCurrentStashID(env.GameExpansion, env.GameMode, stashID);
         }
 
         public Common.Config.ConfigStash GetStashByID(int stashID)
@@ -555,17 +565,9 @@ namespace GDMultiStash.GlobalHandlers
             foreach (var cfgExp in Expansions)
             {
                 if (stashId == cfgExp.SC.CurrentID)
-                    l.Add(new GrimDawnGameEnvironment()
-                    {
-                        Expansion = (GrimDawnGameExpansion)cfgExp.ID,
-                        Mode = GrimDawnGameMode.SC
-                    });
+                    l.Add(new GrimDawnGameEnvironment((GrimDawnGameExpansion)cfgExp.ID, GrimDawnGameMode.SC));
                 if (stashId == cfgExp.HC.CurrentID)
-                    l.Add(new GrimDawnGameEnvironment()
-                    {
-                        Expansion = (GrimDawnGameExpansion)cfgExp.ID,
-                        Mode = GrimDawnGameMode.HC
-                    });
+                    l.Add(new GrimDawnGameEnvironment((GrimDawnGameExpansion)cfgExp.ID, GrimDawnGameMode.HC));
             }
             return l.ToArray();
         }

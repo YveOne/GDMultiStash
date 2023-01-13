@@ -51,7 +51,7 @@ namespace GDMultiStash.Forms
         {
             StashGroupObject group = Global.Stashes.CreateStashGroup(nameTextBox.Text);
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashGroupsAdded(group);
+            Global.Ingame.InvokeStashGroupsAdded(group);
             nameTextBox.SelectAll();
             nameTextBox.Focus();
         }

@@ -23,6 +23,7 @@ msg_stash_group_is_main = Dies ist eine Hauptgruppe
 msg_disable_cloud_sync = Warnung: Cloud Sync ist aktiviert!\nUm GDMS zu benutzt muss es in den GD Optionen deaktiviert werden!
 msg_confirm_delete_old_stashes = Alte Stashes löschen?
 msg_confirm_delete_stash_tab = Diesen Tab löschen?
+msg_confirm_clear_stash_tab = Diesen Tab leeren?
 msg_confirm_delete_empty_groups = Leere Gruppen löschen?
 msg_confirm_delete_empty_stashes = Leere Stashes löschen?
 
@@ -69,6 +70,11 @@ btn_sort_by_none = Nichts (unsortiert)
 btn_auto_fill = Automatisch befüllen
 btn_auto_fill_random_seeds = Mit zufälligen Seeds
 btn_exit = Beenden
+btn_clear = Leeren
+btn_duplicate = Duplizieren
+btn_crafting_mode = Crafting-Modus
+btn_start = Start
+btn_finish = Fertig
 
 // listview columns
 lvc_id = ID
@@ -105,6 +111,7 @@ lbl_stash_name = Stash Name:
 lbl_group = Gruppe:
 lbl_name = Name:
 lbl_tabs = Tabs:
+lbl_select_first_stash_in_group = Automatisch zum ersten Stash in der Gruppe wechseln
 
 // default colors
 color_default = Standard

@@ -16,6 +16,7 @@ namespace GDMultiStash.GlobalHandlers
         private CreateStashDialogForm CreateStashWindow { get; }
         private CreateStashGroupDialogForm CreateStashGroupWindow { get; }
         private ImportDialogForm ImportWindow { get; }
+        private CraftingModeDialogForm CraftingModeWindow { get; }
         private ChangelogDialogForm ChangelogWindow { get; }
         private ProgressDialogForm ProgressDialog { get; }
         private Dictionary<int, StashTabsEditorWindow> StashTabsEditorWindows { get; }
@@ -28,6 +29,7 @@ namespace GDMultiStash.GlobalHandlers
             CreateStashWindow = new CreateStashDialogForm();
             CreateStashGroupWindow = new CreateStashGroupDialogForm();
             ImportWindow = new ImportDialogForm();
+            CraftingModeWindow = new CraftingModeDialogForm();
             MainWindow = new MainForm();
             ChangelogWindow = new ChangelogDialogForm();
             ProgressDialog = new ProgressDialogForm();
@@ -42,6 +44,7 @@ namespace GDMultiStash.GlobalHandlers
             CreateStashWindow.Localize();
             CreateStashGroupWindow.Localize();
             ImportWindow.Localize();
+            CraftingModeWindow.Localize();
             MainWindow.Localize();
             ChangelogWindow.Localize();
             ProgressDialog.Localize();
@@ -53,9 +56,9 @@ namespace GDMultiStash.GlobalHandlers
         {
             try
             {
-                MainWindow.Invoke((MethodInvoker)delegate {
+                MainWindow.Invoke(new Action(() => {
                     MainWindow.Close();
-                });
+                }));
             }
             catch (Exception)
             {
@@ -66,18 +69,15 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (MainWindow.Visible)
             {
-                MainWindow.Focus();
+                Native.SetForegroundWindow(MainWindow.Handle);
                 return;
             }
-
             void shownHandler(object sender, EventArgs e)
             {
                 MainWindow.Shown -= shownHandler;
                 onShow?.Invoke();
             }
-
             MainWindow.Shown += shownHandler;
-            MainWindow.TopMost = false;
             MainWindow.Show();
         }
 
@@ -119,7 +119,7 @@ namespace GDMultiStash.GlobalHandlers
             if (ImportWindow.ShowDialog(DefaultDialogOwner, out StashObject[] stashes) == DialogResult.OK)
             {
                 Global.Configuration.Save();
-                Global.Runtime.NotifyStashesAdded(stashes);
+                Global.Ingame.InvokeStashesAdded(stashes);
             }
         }
 
@@ -130,9 +130,22 @@ namespace GDMultiStash.GlobalHandlers
             if (ImportWindow.ShowDialog(DefaultDialogOwner, files, out StashObject[] stashes) == DialogResult.OK)
             {
                 Global.Configuration.Save();
-                Global.Runtime.NotifyStashesAdded(stashes);
+                Global.Ingame.InvokeStashesAdded(stashes);
             }
         }
+
+        public void ShowCraftingModeDialog()
+        {
+            if (CraftingModeWindow.Visible) return;
+            CraftingModeWindow.StartPosition = DefaultStartPosition;
+            CraftingModeWindow.ShowDialog(DefaultDialogOwner);
+        }
+
+
+        
+
+            
+
 
         public void ShowChangelogWindow()
         {
@@ -140,7 +153,6 @@ namespace GDMultiStash.GlobalHandlers
             ChangelogWindow.StartPosition = DefaultStartPosition;
             ChangelogWindow.ShowDialog(DefaultDialogOwner);
         }
-
 
         public void ShowStashTabsEditorWindow(StashObject stash)
         {
@@ -157,10 +169,44 @@ namespace GDMultiStash.GlobalHandlers
             win.Show();
         }
 
+        public enum GameStartResult
+        {
+            Disabled = 0,
+            AlreadyRunning = 1,
+            Success = 2,
+            Error = 3,
+        }
 
+        public GameStartResult StartGame()
+        {
+            if (Native.FindWindow("Grim Dawn", null) != IntPtr.Zero) return GameStartResult.AlreadyRunning;
 
-
-
+            Console.WriteLine($"Starting Grim Dawn:");
+            Console.WriteLine($"- Command: {Global.Configuration.Settings.StartGameCommand}");
+            Console.WriteLine($"- Arguments: {Global.Configuration.Settings.StartGameArguments}");
+            Console.WriteLine($"- WorkingDir: {Global.Configuration.Settings.GamePath}");
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo
+            {
+                WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden,
+                FileName = Global.Configuration.Settings.StartGameCommand,
+                Arguments = Global.Configuration.Settings.StartGameArguments,
+                WorkingDirectory = System.IO.File.Exists(Global.Configuration.Settings.StartGameCommand)
+                    ? System.IO.Path.GetDirectoryName(Global.Configuration.Settings.StartGameCommand)
+                    : Global.Configuration.Settings.GamePath
+            };
+            process.StartInfo = startInfo;
+            try
+            {
+                process.Start();
+                return GameStartResult.Success;
+            }
+            catch (Exception ex)
+            {
+                Console.Error(ex.Message);
+                return GameStartResult.Error;
+            }
+        }
 
     }
 }

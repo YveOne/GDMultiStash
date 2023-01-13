@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace GrimDawnLib
 {
@@ -20,16 +21,30 @@ namespace GrimDawnLib
     public enum GrimDawnGameExpansion
     {
         Unknown = -1,
-        BaseGame = 0,
-        AshesOfMalmouth = 1,
-        ForgottenGods = 2,
+        Vanilla = 0,
+        AoM = 1,
+        FG = 2,
     }
 
     public class GrimDawnGameEnvironment
     {
-        // using class because it can be null
-        public GrimDawnGameExpansion Expansion;
-        public GrimDawnGameMode Mode;
+        public GrimDawnGameExpansion GameExpansion { get; private set; }
+        public GrimDawnGameMode GameMode { get; private set; }
+        public string TransferFileName { get; private set; }
+        public string TransferFilePath { get; private set; }
+        public string TransferFileExtension { get; private set; }
+        public GrimDawnGameEnvironment(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        {
+            GameExpansion = exp;
+            GameMode = mode;
+            TransferFilePath = GrimDawn.GetTransferFilePath(exp, mode);
+            TransferFileName = Path.GetFileName(TransferFilePath);
+            TransferFileExtension = Path.GetExtension(TransferFilePath);
+        }
+        public override string ToString()
+        {
+            return $"{GameMode} {GameExpansion} ({TransferFileExtension})";
+        }
     }
 
     public static partial class GrimDawn
@@ -39,25 +54,18 @@ namespace GrimDawnLib
         public static string DocumentsSavePath => Path.Combine(DocumentsPath, "save");
         public static string DocumentsSettingsPath => Path.Combine(DocumentsPath, "Settings");
 
-        private static readonly Dictionary<GrimDawnGameExpansion, string> GameExpansionNames = new Dictionary<GrimDawnGameExpansion, string>
-            {
-                { GrimDawnGameExpansion.BaseGame, "Grim Dawn" },
-                { GrimDawnGameExpansion.AshesOfMalmouth, "Grim Dawn: Ashes of Malmouth" },
-                { GrimDawnGameExpansion.ForgottenGods, "Grim Dawn: Forgotten Gods" },
-            };
-
         private static readonly Dictionary<string, GrimDawnGameExpansion> extension2expansion = new Dictionary<string, GrimDawnGameExpansion>
             {
-                { "bs", GrimDawnGameExpansion.BaseGame },
-                { "cs", GrimDawnGameExpansion.AshesOfMalmouth },
-                { "gs", GrimDawnGameExpansion.ForgottenGods },
+                { "bs", GrimDawnGameExpansion.Vanilla },
+                { "cs", GrimDawnGameExpansion.AoM },
+                { "gs", GrimDawnGameExpansion.FG },
             };
 
         private static readonly Dictionary<GrimDawnGameExpansion, string> expansion2extension = new Dictionary<GrimDawnGameExpansion, string>
             {
-                { GrimDawnGameExpansion.BaseGame, "bs" },
-                { GrimDawnGameExpansion.AshesOfMalmouth, "cs" },
-                { GrimDawnGameExpansion.ForgottenGods, "gs" },
+                { GrimDawnGameExpansion.Vanilla, "bs" },
+                { GrimDawnGameExpansion.AoM, "cs" },
+                { GrimDawnGameExpansion.FG, "gs" },
             };
 
         private static readonly Dictionary<string, GrimDawnGameMode> extension2mode = new Dictionary<string, GrimDawnGameMode>
@@ -72,35 +80,48 @@ namespace GrimDawnLib
                 { GrimDawnGameMode.HC, "h" },
             };
 
-        public static GrimDawnGameExpansion LatestExpansion = GrimDawnGameExpansion.ForgottenGods;
+        public static GrimDawnGameExpansion LatestExpansion => GrimDawnGameExpansion.FG;
 
-        public static GrimDawnGameExpansion[] GetExpansionList()
+        public static readonly IReadOnlyDictionary<GrimDawnGameExpansion, string> ExpansionNames = new Dictionary<GrimDawnGameExpansion, string>
+            {
+                { GrimDawnGameExpansion.Vanilla, "Grim Dawn" },
+                { GrimDawnGameExpansion.AoM, "Grim Dawn: Ashes of Malmouth" },
+                { GrimDawnGameExpansion.FG, "Grim Dawn: Forgotten Gods" },
+            };
+
+        public static readonly IReadOnlyList<GrimDawnGameExpansion> ExpansionList = new List<GrimDawnGameExpansion>
+            {
+                GrimDawnGameExpansion.Vanilla,
+                GrimDawnGameExpansion.AoM,
+                GrimDawnGameExpansion.FG,
+            };
+
+        public static readonly IReadOnlyList<GrimDawnGameEnvironment> GameEnvironmentList = new List<GrimDawnGameEnvironment>
+            {
+                new GrimDawnGameEnvironment(GrimDawnGameExpansion.Vanilla, GrimDawnGameMode.SC),
+                new GrimDawnGameEnvironment(GrimDawnGameExpansion.Vanilla, GrimDawnGameMode.HC),
+                new GrimDawnGameEnvironment(GrimDawnGameExpansion.AoM, GrimDawnGameMode.SC),
+                new GrimDawnGameEnvironment(GrimDawnGameExpansion.AoM, GrimDawnGameMode.HC),
+                new GrimDawnGameEnvironment(GrimDawnGameExpansion.FG, GrimDawnGameMode.SC),
+                new GrimDawnGameEnvironment(GrimDawnGameExpansion.FG, GrimDawnGameMode.HC),
+            };
+
+        public static string GetTransferFileExtension(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
-            return GameExpansionNames.Keys.ToArray();
+            return $".{expansion2extension[exp]}{mode2extension[mode]}";
         }
 
-        public static string GetTransferExtension(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
+        public static string GetTransferFilePath(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
-            string m = mode2extension.ContainsKey(mode) ? mode2extension[mode] : "";
-            return $".{expansion2extension[exp]}{m}";
-        }
-
-        public static string GetTransferFile(GrimDawnGameExpansion exp, GrimDawnGameMode mode)
-        {
-            return Path.Combine(DocumentsSavePath, "transfer" + GetTransferExtension(exp, mode));
-        }
-
-        public static string GetExpansionName(GrimDawnGameExpansion exp)
-        {
-            return (exp != GrimDawnGameExpansion.Unknown) ? GameExpansionNames[exp] : "???";
+            return Path.Combine(DocumentsSavePath, "transfer" + GetTransferFileExtension(exp, mode));
         }
 
         public static GrimDawnGameExpansion GetInstalledExpansionFromPath(string gamePath)
         {
             if (!Directory.Exists(gamePath)) return GrimDawnGameExpansion.Unknown;
-            if (Directory.Exists(Path.Combine(gamePath, "gdx2"))) return GrimDawnGameExpansion.ForgottenGods;
-            if (Directory.Exists(Path.Combine(gamePath, "gdx1"))) return GrimDawnGameExpansion.AshesOfMalmouth;
-            return GrimDawnGameExpansion.BaseGame;
+            if (Directory.Exists(Path.Combine(gamePath, "gdx2"))) return GrimDawnGameExpansion.FG;
+            if (Directory.Exists(Path.Combine(gamePath, "gdx1"))) return GrimDawnGameExpansion.AoM;
+            return GrimDawnGameExpansion.Vanilla;
         }
 
         public static bool ValidGamePath(string gamePath)
@@ -117,87 +138,13 @@ namespace GrimDawnLib
             return Directory.Exists(DocumentsPath);
         }
 
-
-
-
-        public static GrimDawnGameEnvironment GetEnvironmentByExtension(string ext)
-        {
-            ext = ext.ToLower();
-            if (ext.Length != 4) return null;
-
-            string expKey = ext.Substring(1, 2);
-            string modeKey = ext.Substring(3, 1);
-
-            if (!extension2expansion.ContainsKey(expKey))
-            {
-                Console.WriteLine("Error in GetEnvironmentByExtension(\"{0}\")", ext);
-                Console.WriteLine("  unknown expansion");
-                return null;
-            }
-
-            if (!extension2mode.ContainsKey(modeKey))
-            {
-                Console.WriteLine("Error in GetEnvironmentByExtension(\"{0}\")", ext);
-                Console.WriteLine("  unknown mode");
-                return null;
-            }
-
-            return new GrimDawnGameEnvironment
-            {
-                Expansion = extension2expansion[expKey],
-                Mode = extension2mode[modeKey],
-            };
-        }
-
-        public static GrimDawnGameEnvironment GetEnvironmentByPath(string fileName)
-        {
-            return GetEnvironmentByExtension(Path.GetExtension(fileName));
-        }
-
-
-
-
-
-
-
-
-        public static string[] GetAllTransferExtensions()
-        {
-            return new string[] {
-                CreateTransferExtension(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.SC),
-                CreateTransferExtension(GrimDawnGameExpansion.BaseGame, GrimDawnGameMode.HC),
-                CreateTransferExtension(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.SC),
-                CreateTransferExtension(GrimDawnGameExpansion.AshesOfMalmouth, GrimDawnGameMode.HC),
-                CreateTransferExtension(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.SC),
-                CreateTransferExtension(GrimDawnGameExpansion.ForgottenGods, GrimDawnGameMode.HC),
-            };
-        }
-
-
-
-
-        public static string CreateTransferExtension(GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
-        {
-            return string.Format(".{0}{1}", expansion2extension[expansion], mode2extension[mode]);
-        }
-
-        public static string GetTransferFilePath(GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
-        {
-            return Path.Combine(DocumentsSavePath, "transfer" + CreateTransferExtension(expansion, mode));
-        }
-
-        public static DateTime GetLastWriteTime(GrimDawnGameExpansion expansion, GrimDawnGameMode mode)
-        {
-            return File.GetLastWriteTime(GetTransferFilePath(expansion, mode));
-        }
-
         public static System.Windows.Forms.DialogResult ShowSelectTransferFilesDialog(out string[] files, bool multiselect, bool allExtensions)
         {
-            string filter = string.Join(";", GetAllTransferExtensions().Select(ext => "*" + ext));
+            string filter = string.Join(";", GameEnvironmentList.Select(env => $"*{env.TransferFileExtension}"));
             files = new string[0];
             using (var dialog = new System.Windows.Forms.OpenFileDialog()
             {
-                Filter = $"transfer|{filter}" + (allExtensions ? "|*|*.*": ""),
+                Filter = $"transfer|{filter}" + (allExtensions ? "|*|*.*" : ""),
                 Multiselect = multiselect,
             })
             {
@@ -207,6 +154,44 @@ namespace GrimDawnLib
                 return result;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -222,19 +207,19 @@ namespace GrimDawnLib
             }
 
             private static readonly Dictionary<GrimDawnGameExpansion, StashFileValues> _stashFileValues = new Dictionary<GrimDawnGameExpansion, StashFileValues> {
-                { GrimDawnGameExpansion.BaseGame, new StashFileValues {
+                { GrimDawnGameExpansion.Vanilla, new StashFileValues {
                     IsExpansion1 = false,
                     Width = 8,
                     Height = 16,
                     MaxTabs = 4,
                 } },
-                { GrimDawnGameExpansion.AshesOfMalmouth, new StashFileValues {
+                { GrimDawnGameExpansion.AoM, new StashFileValues {
                     IsExpansion1 = true,
                     Width = 10,
                     Height = 18,
                     MaxTabs = 5,
                 } },
-                { GrimDawnGameExpansion.ForgottenGods, new StashFileValues {
+                { GrimDawnGameExpansion.FG, new StashFileValues {
                     IsExpansion1 = false,
                     Width = 10,
                     Height = 18,

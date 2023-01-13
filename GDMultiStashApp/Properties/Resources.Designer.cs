@@ -133,9 +133,9 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap buttonLargeUp {
+        internal static System.Drawing.Bitmap ButtonLargeUp {
             get {
-                object obj = ResourceManager.GetObject("buttonLargeUp", resourceCulture);
+                object obj = ResourceManager.GetObject("ButtonLargeUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,6 +156,46 @@ namespace GDMultiStash.Properties {
         internal static System.Drawing.Bitmap buttonMinimizeWhite {
             get {
                 object obj = ResourceManager.GetObject("buttonMinimizeWhite", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonRoundDown {
+            get {
+                object obj = ResourceManager.GetObject("ButtonRoundDown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonRoundDownOver {
+            get {
+                object obj = ResourceManager.GetObject("ButtonRoundDownOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonRoundOver {
+            get {
+                object obj = ResourceManager.GetObject("ButtonRoundOver", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ButtonRoundUp {
+            get {
+                object obj = ResourceManager.GetObject("ButtonRoundUp", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -622,26 +662,6 @@ namespace GDMultiStash.Properties {
         internal static System.Drawing.Bitmap marble {
             get {
                 object obj = ResourceManager.GetObject("marble", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap radio0 {
-            get {
-                object obj = ResourceManager.GetObject("radio0", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap radio1 {
-            get {
-                object obj = ResourceManager.GetObject("radio1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

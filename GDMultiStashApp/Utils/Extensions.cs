@@ -44,4 +44,18 @@ public static class Extensions
         }
     }
 
+    public static int Clamp(this int v, int min, int max)
+    {
+        return (v < min) ? min : (v > max) ? max : v;
+    }
+
+    public static bool InRange(this int v, int min, int max)
+    {
+        return v >= min && v <= max;
+    }
+
+
+
+
+
 }

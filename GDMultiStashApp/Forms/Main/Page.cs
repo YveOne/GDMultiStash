@@ -33,7 +33,7 @@ namespace GDMultiStash.Forms.Main
         {
             if (InvokeRequired)
             {
-                Invoke((MethodInvoker)delegate { Localize(); });
+                Invoke(new Action(() => { Localize(); }));
                 return;
             }
             Localize(Global.L);

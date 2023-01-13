@@ -104,6 +104,7 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter DisableCloudSyncMessage => _.Get("msg_disable_cloud_sync");
             public _Core.StringGetter ConfirmDeleteOldStashesMessage => _.Get("msg_confirm_delete_old_stashes");
             public _Core.StringGetter ConfirmDeleteStashTabMessage => _.Get("msg_confirm_delete_stash_tab");
+            public _Core.StringGetter ConfirmClearStashTabMessage => _.Get("msg_confirm_clear_stash_tab");
             public _Core.StringGetter ConfirmDeleteEmptyGroupsMessage => _.Get("msg_confirm_delete_empty_groups");
             public _Core.StringGetter ConfirmDeleteEmptyStashesMessage => _.Get("msg_confirm_delete_empty_stashes");
 
@@ -155,11 +156,17 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter AutoFillButton => _.Get("btn_auto_fill");
             public _Core.StringGetter AutoFillRandomSeedsButton => _.Get("btn_auto_fill_random_seeds");
             public _Core.StringGetter ExitButton => _.Get("btn_exit");
+            public _Core.StringGetter ClearButton => _.Get("btn_clear");
+            public _Core.StringGetter DuplicateButton => _.Get("btn_duplicate");
+            public _Core.StringGetter CraftingModeButton => _.Get("btn_crafting_mode");
+            public _Core.StringGetter StartButton => _.Get("btn_start");
+            public _Core.StringGetter FinishButton => _.Get("btn_finish");
 
 
 
 
-            
+
+
 
             public _Core.StringGetter ShownStashesLabel => _.Get("lbl_shown_stashes");
             public _Core.StringGetter ShownSelectedStashesLabel => _.Get("lbl_shown_stashes_selected");
@@ -188,6 +195,7 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter GroupLabel => _.Get("lbl_group");
             public _Core.StringGetter NameLabel => _.Get("lbl_name");
             public _Core.StringGetter TabsLabel => _.Get("lbl_tabs");
+            public _Core.StringGetter SelectFirstStashInGroupLabel => _.Get("lbl_select_first_stash_in_group");
 
 
             

@@ -22,9 +22,9 @@ namespace GDMultiStash.Forms
 
             expansionComboBox.DisplayMember = "Value";
             expansionComboBox.ValueMember = "Key";
-            expansionComboBox.DataSource = new BindingSource(GrimDawn.GetExpansionList()
+            expansionComboBox.DataSource = new BindingSource(GrimDawn.ExpansionList
                 .Where(exp => exp != GrimDawnGameExpansion.Unknown)
-                .Select(exp => GrimDawn.GetExpansionName(exp)), null);
+                .Select(exp => GrimDawn.ExpansionNames[exp]), null);
 
             Load += delegate {
                 groupComboBox.DisplayMember = "Name";
@@ -92,7 +92,7 @@ namespace GDMultiStash.Forms
             StashObject stash = Global.Stashes.CreateStash(nameTextBox.Text, exp, mode, tabsCount);
             stash.GroupID = ((StashGroupObject)groupComboBox.SelectedItem).ID;
             Global.Configuration.Save();
-            Global.Runtime.NotifyStashesAdded(stash);
+            Global.Ingame.InvokeStashesAdded(stash);
             nameTextBox.SelectAll();
             nameTextBox.Focus();
         }
