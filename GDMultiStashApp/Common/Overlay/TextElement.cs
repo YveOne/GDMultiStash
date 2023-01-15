@@ -10,17 +10,17 @@ namespace GDMultiStash.Common.Overlay
     public class TextElement : Element
     {
 
-        private Font _font = null;
+        private readonly FontHandler _fontHandler;
         private string _text = "";
         private Color _color = Color.Black;
         private bool _needRecreate = true;
         private StringAlignment _alignment = StringAlignment.Near;
-
         private ImageElement _imageElement = null;
         private int _zIndex = 0;
 
-        public TextElement()
+        public TextElement(FontHandler fontHandler)
         {
+            _fontHandler = fontHandler;
             _imageElement = new ImageElement()
             {
                 WidthToParent = true,
@@ -29,17 +29,27 @@ namespace GDMultiStash.Common.Overlay
             AddChild(_imageElement);
         }
 
-        public override void Draw(float ms)
+        private void FontHandler_FontChanged(object sender, EventArgs e)
         {
-            base.Draw(ms);
-            if (_needRecreate)
+            _needRecreate = true;
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+        }
+
+        protected override void OnDraw()
+        {
+            base.OnDraw();
+            if (_needRecreate && _fontHandler != null)
             {
-                if (_font == null) return;
                 if (TotalWidth <= 0 || TotalHeight <= 0) return;
+                var _font = _fontHandler.GetFont(TotalScale);
                 _needRecreate = false;
 
-                int useWidth = (int)(TotalWidth / TotalScale);
-                int useHeight = (int)(TotalHeight / TotalScale);
+                int useWidth = (int)(TotalWidth);
+                int useHeight = (int)(TotalHeight);
 
                 ParentViewport.OverlayResources.AsyncCreateTextImageResource(_text, _font, useWidth, useHeight, _color, _alignment)
                     .ResourceCreated += delegate (object sender, ResourceHandler.ResourceCreatedEventArgs args) {
@@ -49,21 +59,13 @@ namespace GDMultiStash.Common.Overlay
             }
         }
 
-        public override void End()
-        {
-            base.End();
-            if (ResetHeight || ResetScale || ResetWidth) _needRecreate = true;
-        }
 
-        public Font Font
+
+
+        protected override void OnDrawEnd()
         {
-            get { return _font; }
-            set
-            {
-                if (_font == value) return;
-                _font = value;
-                _needRecreate = true;
-            }
+            base.OnDrawEnd();
+            if (ResetHeight || ResetScale || ResetWidth) _needRecreate = true;
         }
 
         public Color Color

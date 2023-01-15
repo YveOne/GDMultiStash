@@ -1,3 +1,8 @@
+v1.36.3
+- Increased text readability of scaled overlay
+- Implemented custom transfer file watcher
+- Added config option: Save changes made by external tools (enabled by default)
+
 v1.36.2
 - Hotfixes! Thanks Dragon9112 for testing
 - Fixed: Auto back to main is not working

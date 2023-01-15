@@ -13,28 +13,29 @@ namespace GDMultiStash.GlobalHandlers
 {
     internal partial class IngameHandler
     {
-
         private Form _saveInvokeForm;
 
         public IngameHandler()
         {
 
-            bool _reloadOpenedStash = false;
-
-            ActiveModeChanged += delegate { LoadActiveStashID(); };
-            ActiveExpansionChanged += delegate { LoadActiveStashID(); };
+            bool _reopenIngameStash = false;
 
             TransferFileSaved += delegate {
-                Console.WriteLine($"TransferFileChanged...");
+                Console.WriteLine($"transfer file saved by game");
+
+                string externalFile = GrimDawn.GetTransferFilePath(_activeExpansion, _activeMode);
+                string externalFileName = Path.GetFileName(externalFile);
+                Global.FileSystem.Watcher.SkipNextFile(externalFileName);
+
+                Console.WriteLine($"- file: {externalFileName}");
                 Console.WriteLine($"- stash is reopening: {StashIsReopening}");
                 Console.WriteLine($"- stash is opened: {_stashIsOpened}");
                 Console.WriteLine($"- active Stash ID: {_activeStashID}");
                 if (!StashIsReopening && !_stashIsOpened)
                 {
                     int closedID = _activeStashID;
-                    string externalFile = GrimDawn.GetTransferFilePath(_activeExpansion, _activeMode);
 
-                    if (!Utils.Funcs.WaitFor(() => !Utils.FileUtils.FileIsLocked(externalFile), 500, 33))
+                    if (!Utils.Funcs.WaitFor(() => !Utils.FileUtils.FileIsLocked(externalFile), 2000, 33))
                     {
                         Console.WriteLine("- file locked");
                         return;
@@ -53,12 +54,33 @@ namespace GDMultiStash.GlobalHandlers
                         Global.Stashes.SwitchToStash(ActiveStashID);
                     }
                 }
+
             };
 
-            TransferFileChanged += delegate (object sender, IngameHandler.TransferFileChangedEventArgs e) {
-                if (GameInitialized && !GameWindowFocused && StashIsOpened)
+            Global.FileSystem.TransferFileChanged += delegate (object sender, FileSystemHandler.TransferFileChangedEventArgs e) {
+                Console.WriteLine($"transfer file changed by external");
+                Console.WriteLine($"- file: {e.FileName}");
+                var canReopen = GameInitialized && StashIsOpened;
+                var externalEnv = GrimDawn.GetEnvironmentByFilename(e.FileName);
+                var stashId = Global.Configuration.GetCurrentStashID(externalEnv);
+                if (Global.Configuration.Settings.SaveExternalChanges)
                 {
-                    _reloadOpenedStash = true;
+                    Console.WriteLine($"saving external changes...");
+                    Global.Stashes.ImportStash(stashId, externalEnv, true);
+                    // export again because of shared mode stashes (sc+hc)
+                    Global.Stashes.ExportStash(stashId);
+                }
+                if (canReopen && stashId == ActiveStashID)
+                {
+                    Console.WriteLine($"requesting reopening stash");
+                    if (GameWindowFocused)
+                    {
+                        ReloadCurrentStash();
+                    }
+                    else
+                    {
+                        _reopenIngameStash = true;
+                    }
                 }
             };
 
@@ -83,9 +105,9 @@ namespace GDMultiStash.GlobalHandlers
 
             GameWindowGotFocus += delegate
             {
-                if (_reloadOpenedStash)
+                if (_reopenIngameStash)
                 {
-                    _reloadOpenedStash = false;
+                    _reopenIngameStash = false;
                     new System.Threading.Thread(new System.Threading.ThreadStart(() => {
                         System.Threading.Thread.Sleep(500);
                         ReloadCurrentStash();
@@ -93,7 +115,10 @@ namespace GDMultiStash.GlobalHandlers
                 }
             };
 
+            ActiveModeChanged += delegate { LoadActiveStashID(); };
+            ActiveExpansionChanged += delegate { LoadActiveStashID(); };
             GameWindowConnected += delegate {
+                // automatically set active expansion to installed expansion
                 ActiveExpansion = GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath);
             };
 
@@ -111,60 +136,35 @@ namespace GDMultiStash.GlobalHandlers
 
 
 
-            StartFileSystemWatcher();
         }
 
-        private void SaveInvoke(Action a)
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        public void SaveInvoke(Action a)
         {
             _saveInvokeForm.Invoke(a);
         }
-
-        #region file system watcher
-
-        public class TransferFileChangedEventArgs : EventArgs
-        {
-            public string FilePath { get; private set; }
-            public bool IsActive { get; private set; }
-            public TransferFileChangedEventArgs(string filePath, bool isActive)
-            {
-                FilePath = filePath;
-                IsActive = isActive;
-            }
-        }
-
-        public EventHandler<TransferFileChangedEventArgs> TransferFileChanged;
-
-        public void InvokeTransferFileChanged(TransferFileChangedEventArgs e)
-            => SaveInvoke(() => TransferFileChanged?.Invoke(this, e));
-
-        private void StartFileSystemWatcher()
-        {
-            Dictionary<string, string> transferFilesHashes = new Dictionary<string, string>();
-            foreach (var s in GrimDawn.GameEnvironmentList.Select(env => $"transfer{env.TransferFileExtension}"))
-                transferFilesHashes.Add(s, Utils.FileUtils.GetFileHash(s));
-
-            var watcher = new FileSystemWatcher(GrimDawn.DocumentsSavePath);
-            watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size | NotifyFilters.CreationTime;
-            watcher.Changed += delegate (object sender, FileSystemEventArgs e)
-            {
-                string curHash = Utils.FileUtils.GetFileHash(e.FullPath);
-                if (!transferFilesHashes.TryGetValue(e.Name, out string lastHash)) return;
-                if (curHash == lastHash) return;
-                transferFilesHashes[e.Name] = curHash;
-
-                bool isActive = GameInitialized && GrimDawn.GetTransferFilePath(ActiveExpansion, ActiveMode) == e.FullPath;
-                InvokeTransferFileChanged(new TransferFileChangedEventArgs(e.FullPath, isActive));
-                if (isActive)
-                    Console.WriteLine($"FileWatcher: {e.FullPath} changed (active)");
-                else
-                    Console.WriteLine($"FileWatcher: {e.FullPath} changed");
-            };
-            watcher.Filter = "transfer.*";
-            watcher.IncludeSubdirectories = true;
-            watcher.EnableRaisingEvents = true;
-        }
-
-        #endregion
 
         #region Game Window
 
@@ -292,7 +292,7 @@ namespace GDMultiStash.GlobalHandlers
 
         public void InvokeCharacterMovementEnabled()
             => SaveInvoke(() => CharacterMovementEnabled?.Invoke(null, EventArgs.Empty));
-        public void invokeCharacterMovementDisabled()
+        public void InvokeCharacterMovementDisabled()
             => SaveInvoke(() => CharacterMovementDisabled?.Invoke(null, EventArgs.Empty));
 
         private bool _characterMovementDisabled = false;
@@ -312,7 +312,7 @@ namespace GDMultiStash.GlobalHandlers
             _characterMovementDisabled = true;
             ushort k = GrimDawn.Keybindings.GetKeyBinding(GrimDawnKey.StationaryAttack).Primary;
             Native.Keyboard.SendKeyDown(k);
-            invokeCharacterMovementDisabled();
+            InvokeCharacterMovementDisabled();
         }
 
         #endregion

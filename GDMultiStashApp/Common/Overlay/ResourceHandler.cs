@@ -233,15 +233,20 @@ namespace GDMultiStash.Common.Overlay
             {
                 using (Graphics g = Graphics.FromImage(bmp))
                 {
-                    //g.FillRectangle(new SolidBrush(Color.FromArgb(0, 255, 0, 0)), 0, 0, bmp.Width, bmp.Height);
-                    //g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias; // text is better readable without this...
-                    g.DrawString(text, font, new SolidBrush(color), new Rectangle(0, 0, bmp.Width, bmp.Height), new StringFormat()
+                    var textBounds = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                    var textFormat = new StringFormat()
                     {
                         Alignment = align,
                         LineAlignment = StringAlignment.Center,
                         Trimming = StringTrimming.None,
                         FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.NoClip,
-                    });
+                    };
+                    using (var brush = new SolidBrush(color))
+                    {
+                        //g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                        //g.DrawString(text, font, brush, textBounds, textFormat);
+                        g.DrawString(text, font, brush, textBounds, textFormat);
+                    }
                 }
                 return CreateImageResource(bmp, ImageFormat.Png);
             }

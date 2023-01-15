@@ -96,7 +96,7 @@ namespace GDMultiStash.Forms
 
             _selectedAutoFillMode = autoFillCheckBox.Checked ? autoFillComboBox.SelectedIndex : -1;
 
-            Global.Ingame.TransferFileChanged += TransferFileChanged;
+            Global.FileSystem.TransferFileChanged += TransferFileChanged;
         }
 
         private void StopCrafting()
@@ -106,12 +106,12 @@ namespace GDMultiStash.Forms
             autoFillComboBox.Enabled = true;
             ControlBox = true;
 
-            Global.Ingame.TransferFileChanged -= TransferFileChanged;
+            Global.FileSystem.TransferFileChanged -= TransferFileChanged;
 
             _originalTransferFile.WriteToFile(_selectedEnvironment.TransferFilePath);
         }
 
-        private void TransferFileChanged(object sender, IngameHandler.TransferFileChangedEventArgs e)
+        private void TransferFileChanged(object sender, FileSystemHandler.TransferFileChangedEventArgs e)
         {
             if (e.FilePath != _selectedEnvironment.TransferFilePath) return;
             if (_skipNextChange) {

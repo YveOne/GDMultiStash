@@ -66,9 +66,9 @@ namespace GDMultiStash.Overlay
             };
         }
 
-        public override void Begin()
+        protected override void OnDrawBegin()
         {
-            base.Begin();
+            base.OnDrawBegin();
             if (_loadItems)
             {
                 _loadItems = false;
@@ -117,15 +117,17 @@ namespace GDMultiStash.Overlay
 
         public void AddGroupItem(StashGroupObject group)
         {
+            /*
             GroupListChild item = GetCachedScrollItem();
             if (item == null)
                 item = new GroupListChild();
+            */
+            GroupListChild item = new GroupListChild();
             item.Model = group;
             item.Active = false;
             item.Text = group.Name;
             item.Order = group.Order;
             item.Color = _itemTextColor;
-            item.Font = StaticResources.GroupListItemFont;
             item.Visible = true;
             _groupId2Item.Add(group.ID, item);
             AddScrollItem(item);

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+using GrimDawnLib;
+
 namespace GDMultiStash.GlobalHandlers
 {
     internal class FileSystemHandler
@@ -20,7 +22,54 @@ namespace GDMultiStash.GlobalHandlers
             DataDirectory = Path.Combine(Application.StartupPath, "Data");
             StashesDirectory = Path.Combine(DataDirectory, "Stashes");
             ConfigFile = Path.Combine(DataDirectory, "Config.xml");
+
+            StartFileSystemWatcher();
         }
+
+
+
+
+
+
+
+        #region file system watcher
+
+        public class TransferFileChangedEventArgs : EventArgs
+        {
+            public string FileName { get; private set; }
+            public string FilePath { get; private set; }
+            public TransferFileChangedEventArgs(string filePath)
+            {
+                FilePath = filePath;
+                FileName = Path.GetFileName(filePath);
+            }
+        }
+
+        public void InvokeTransferFileChanged(TransferFileChangedEventArgs e)
+            => Global.Ingame.SaveInvoke(() => TransferFileChanged?.Invoke(this, e));
+
+        public EventHandler<TransferFileChangedEventArgs> TransferFileChanged;
+
+        public SimpleFileSystemWatcher Watcher { get; private set; }
+
+        private void StartFileSystemWatcher()
+        {
+            Watcher = new SimpleFileSystemWatcher(GrimDawn.DocumentsSavePath);
+            Watcher.AddFiles(GrimDawn.GameEnvironmentList.Select(env => $"transfer{env.TransferFileExtension}"));
+            Watcher.FileChanged += delegate (object sender, SimpleFileSystemWatcher.FileChangedEventArgs e)
+            {
+                InvokeTransferFileChanged(new TransferFileChangedEventArgs(e.FilePath));
+            };
+        }
+
+        #endregion
+
+
+
+
+
+
+
 
         public void CreateDirectories()
         {
@@ -91,14 +140,17 @@ namespace GDMultiStash.GlobalHandlers
             return true;
         }
 
-        public bool ExportStashTransferFile(int stashID, string destFile)
+        public bool ExportStashTransferFile(int stashID, string destFile, bool silent = true)
         {
             System.Threading.Thread.Sleep(100);
             string srcFile = GetStashTransferFile(stashID);
             if (!File.Exists(srcFile)) return false;
             string destDir = Path.GetDirectoryName(destFile);
             if (!Directory.Exists(destDir)) Directory.CreateDirectory(destDir);
-            File.Copy(srcFile, destFile, true);
+            if (silent) Watcher.SkipNextFile(Path.GetFileName(destFile));
+            //File.Copy(srcFile, destFile, true); // this WONT trigger simple file system watcher
+            //File.SetLastWriteTime(destFile, DateTime.Now); // this will throw error "file is in use"
+            File.WriteAllBytes(destFile, File.ReadAllBytes(srcFile)); // this will trigger simple file system watcher
             return true;
         }
 

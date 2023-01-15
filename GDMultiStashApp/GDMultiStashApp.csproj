@@ -123,6 +123,7 @@
     <Compile Include="Common\Overlay\Animations\AnimatorEventHandler.cs" />
     <Compile Include="Common\Overlay\ButtonElement.cs" />
     <Compile Include="Common\Overlay\CheckableElement.cs" />
+    <Compile Include="Common\Overlay\FontHandler.cs" />
     <Compile Include="Common\Overlay\PanelElement.cs" />
     <Compile Include="Common\Overlay\ScrollManager.cs" />
     <Compile Include="Common\StashesZipFile.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Global\Global.IngameHandler.cs" />
     <Compile Include="Global\Global.IngameHandler.StashReopening.cs" />
     <Compile Include="Global\Global.IngameHandler.StashStatus.cs" />
+    <Compile Include="Utils\SimpleFileSystemWatcher.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

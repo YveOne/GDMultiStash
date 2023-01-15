@@ -158,7 +158,31 @@ namespace GrimDawnLib
 
 
 
+        public static GrimDawnGameEnvironment GetEnvironmentByExtension(string ext)
+        {
+            ext = ext.ToLower();
+            if (ext.Length != 4) return null;
+            string expKey = ext.Substring(1, 2);
+            string modeKey = ext.Substring(3, 1);
+            if (!extension2expansion.ContainsKey(expKey))
+            {
+                Console.WriteLine("Error in GetEnvironmentByExtension(\"{0}\")", ext);
+                Console.WriteLine("  unknown expansion");
+                return null;
+            }
+            if (!extension2mode.ContainsKey(modeKey))
+            {
+                Console.WriteLine("Error in GetEnvironmentByExtension(\"{0}\")", ext);
+                Console.WriteLine("  unknown mode");
+                return null;
+            }
+            return new GrimDawnGameEnvironment(extension2expansion[expKey], extension2mode[modeKey]);
+        }
 
+        public static GrimDawnGameEnvironment GetEnvironmentByFilename(string fileName)
+        {
+            return GetEnvironmentByExtension(Path.GetExtension(fileName));
+        }
 
 
 

@@ -196,9 +196,13 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter NameLabel => _.Get("lbl_name");
             public _Core.StringGetter TabsLabel => _.Get("lbl_tabs");
             public _Core.StringGetter SelectFirstStashInGroupLabel => _.Get("lbl_select_first_stash_in_group");
+            public _Core.StringGetter OverlayWindowLabel => _.Get("lbl_overlay_window");
+            public _Core.StringGetter BehaviorLabel => _.Get("lbl_behavior");
+            public _Core.StringGetter SaveExternalChangesLabel => _.Get("lbl_save_external_changes");
 
 
-            
+
+
 
 
 

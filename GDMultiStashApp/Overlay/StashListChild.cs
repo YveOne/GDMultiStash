@@ -20,7 +20,7 @@ namespace GDMultiStash.Overlay
         private readonly ImageElement _usageIndicator;
         private bool _locked = false;
 
-        public StashListChild() : base()
+        public StashListChild() : base(StaticResources.StashListItemFontHandler)
         {
             TextWidth -= 85;
             _lockSign = new ImageElement()
@@ -77,9 +77,9 @@ namespace GDMultiStash.Overlay
                 };
         }
 
-        public override void ViewportConnected(Viewport parentViewport)
+        protected override void OnViewportConnected()
         {
-            base.ViewportConnected(parentViewport);
+            base.OnViewportConnected();
             UpdateUsageIndicator();
         }
 

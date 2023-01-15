@@ -60,7 +60,7 @@ namespace GDMultiStash.Common.Overlay
         private float _scaleTotal = 1f;
         private bool _scaleWithParent = true;
 
-        public float TotalScale => _scaleTotal;
+        public virtual float TotalScale => _scaleTotal;
 
         public bool ScaleWithParent
         {
@@ -92,7 +92,7 @@ namespace GDMultiStash.Common.Overlay
         private float _width = 0f;
         private float _widthTotal = 0f;
 
-        public float TotalWidth => _widthTotal;
+        public virtual float TotalWidth => _widthTotal;
 
         public virtual float Width
         {
@@ -118,7 +118,7 @@ namespace GDMultiStash.Common.Overlay
         private float _height = 0f;
         private float _heightTotal = 0f;
 
-        public float TotalHeight => _heightTotal;
+        public virtual float TotalHeight => _heightTotal;
 
         public virtual float Height
         {
@@ -176,7 +176,7 @@ namespace GDMultiStash.Common.Overlay
         private float _x = 0f;
         private float _xTotal = 0f;
 
-        public float TotalX => _xTotal;
+        public virtual float TotalX => _xTotal;
 
         public virtual float X
         {
@@ -230,7 +230,7 @@ namespace GDMultiStash.Common.Overlay
         private float _y = 0f;
         private float _yTotal = 0f;
 
-        public float TotalY => _yTotal;
+        public virtual float TotalY => _yTotal;
 
         public virtual float Y
         {

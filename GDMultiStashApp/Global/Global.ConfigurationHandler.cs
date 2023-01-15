@@ -200,7 +200,6 @@ namespace GDMultiStash.GlobalHandlers
         {
             string filePath = Global.FileSystem.ConfigFile;
             Console.WriteLine($"Loading config");
-            Console.WriteLine($"  Path: {filePath}");
             if (File.Exists(filePath))
             {
                 _config = LoadFromFile(filePath);

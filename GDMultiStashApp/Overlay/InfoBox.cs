@@ -28,11 +28,10 @@ namespace GDMultiStash.Overlay
         public InfoBox()
         {
 
-            _titleElement = new TextElement()
+            _titleElement = new TextElement(StaticResources.InfoBoxTitleFontHandler)
             {
                 WidthToParent = true,
                 Height = 25,
-                Font = StaticResources.InfoBoxTitleFont,
                 Align = StringAlignment.Near,
                 Color = Color.FromArgb(255, 235, 222, 195),
                 AnchorPoint = Anchor.TopLeft,
@@ -41,11 +40,10 @@ namespace GDMultiStash.Overlay
             };
             AddChild(_titleElement);
 
-            _lastChangeIntern = new TextElement()
+            _lastChangeIntern = new TextElement(StaticResources.InfoBoxTextFontHandler)
             {
                 WidthToParent = true,
                 Height = 20,
-                Font = StaticResources.InfoBoxTextFont,
                 Align = StringAlignment.Near,
                 Color = Color.FromArgb(255, 235, 222, 195),
                 AnchorPoint = Anchor.TopLeft,
@@ -54,7 +52,7 @@ namespace GDMultiStash.Overlay
             };
             AddChild(_lastChangeIntern);
 
-            _saveButton = new Controls.Base.SmallButton()
+            _saveButton = new SmallButton()
             {
                 X = 6,
                 Y = -5,
@@ -62,7 +60,7 @@ namespace GDMultiStash.Overlay
             };
             AddChild(_saveButton);
 
-            _loadButton = new Controls.Base.SmallButton()
+            _loadButton = new SmallButton()
             {
                 X = _saveButton.X + _saveButton.Width + 6,
                 Y = -5,

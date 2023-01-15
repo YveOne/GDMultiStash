@@ -11,9 +11,8 @@ namespace GDMultiStash.Overlay.Controls.Base
         protected override D3DHook.Hook.Common.IImageResource DownResource => StaticResources.ButtonLargeDown;
         protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ButtonLargeOver;
 
-        public LargeButton()
+        public LargeButton() : base(StaticResources.LargeButtonFontHandler)
         {
-            Font = StaticResources.LargeButtonFont;
             Width = 120;
             Height = 30;
             Color = Color.FromArgb(255, 209, 191, 153);

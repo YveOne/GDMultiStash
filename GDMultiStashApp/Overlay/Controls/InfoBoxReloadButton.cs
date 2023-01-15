@@ -16,10 +16,10 @@ namespace GDMultiStash.Overlay.Controls
         protected override D3DHook.Hook.Common.IImageResource DownResource => StaticResources.ReloadButtonSmallDown;
         protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ReloadButtonSmallOver;
 
-        public InfoBoxReloadButton()
+        public InfoBoxReloadButton() : base(null)
         {
-            Width = 27;
-            Height = 22;
+            Width = 31;
+            Height = 25;
             Color = Color.FromArgb(255, 209, 191, 153);
         }
 

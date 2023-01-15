@@ -112,6 +112,9 @@ lbl_group = Group:
 lbl_name = Name:
 lbl_tabs = Tabs:
 lbl_select_first_stash_in_group = Automatically switch to first Stash in group
+lbl_overlay_window = Overlay window
+lbl_behavior = Behavior
+lbl_save_external_changes = Save changes made by external tools
 
 // default colors
 color_default = 默认

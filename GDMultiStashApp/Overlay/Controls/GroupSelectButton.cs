@@ -77,19 +77,25 @@ namespace GDMultiStash.Overlay.Controls
             }
         }
 
-        public override void End()
+        private bool _updateWidth = false;
+
+        protected override void OnDraw()
         {
-            base.End();
-            if (ResetWidth)
+            base.OnDraw();
+            if (_updateWidth)
             {
+                _updateWidth = false;
                 TextX = TotalWidth / TotalScale * 0.08f;
                 TextWidth = TotalWidth / TotalScale * -0.16f - 20;
                 _dropArrowImage.X = TotalWidth / TotalScale * -0.066f;
-                base.End();
             }
         }
-        
-        
-        
+
+        protected override void OnDrawEnd()
+        {
+            base.OnDrawEnd();
+            if (ResetWidth) _updateWidth = true;
+        }
+
     }
 }

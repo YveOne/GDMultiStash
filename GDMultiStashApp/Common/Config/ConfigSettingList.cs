@@ -41,6 +41,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("AutoBackToMain")] public bool AutoBackToMain = true;
         [XmlElement("AutoSelectFirstStashInGroup")] public bool AutoSelectFirstStashInGroup = true;
         [XmlElement("SaveOverwritesLocked")] public bool SaveOverwritesLocked = false;
+        [XmlElement("SaveExternalChanges")] public bool SaveExternalChanges = true;
 
         [XmlElement("AutoStartGame")] public bool AutoStartGame = false;
         [XmlElement("StartGameCommand")] public string StartGameCommand = "";
@@ -83,6 +84,7 @@ namespace GDMultiStash.Common.Config
                 AutoBackToMain = AutoBackToMain,
                 AutoSelectFirstStashInGroup = AutoSelectFirstStashInGroup,
                 SaveOverwritesLocked = SaveOverwritesLocked,
+                SaveExternalChanges = SaveExternalChanges,
 
                 AutoStartGame = AutoStartGame,
                 StartGameCommand = StartGameCommand,
@@ -125,6 +127,7 @@ namespace GDMultiStash.Common.Config
             AutoBackToMain = s.AutoBackToMain;
             AutoSelectFirstStashInGroup = s.AutoSelectFirstStashInGroup;
             SaveOverwritesLocked = s.SaveOverwritesLocked;
+            SaveExternalChanges = s.SaveExternalChanges;
 
             AutoStartGame = s.AutoStartGame;
             StartGameCommand = s.StartGameCommand;

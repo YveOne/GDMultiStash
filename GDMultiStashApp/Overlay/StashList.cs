@@ -64,9 +64,9 @@ namespace GDMultiStash.Overlay
             };
         }
 
-        public override void Begin()
+        protected override void OnDrawBegin()
         {
-            base.Begin();
+            base.OnDrawBegin();
             if (_loadItems)
             {
                 _loadItems = false;
@@ -113,16 +113,18 @@ namespace GDMultiStash.Overlay
 
         public void AddStashItem(StashObject stash)
         {
+            /*
             StashListChild item = GetCachedScrollItem();
             if (item == null)
                 item = new StashListChild();
+            */
+            StashListChild item = new StashListChild();
             item.Model = stash;
             item.Active = false;
             item.Text = stash.Name;
             item.Order = stash.Order;
             item.Locked = stash.Locked;
             item.Color = stash.DisplayColor;
-            item.Font = StaticResources.StashListItemFont;
             item.Visible = true;
             item.ShowWorkload = Global.Configuration.Settings.OverlayShowWorkload;
             item.UpdateUsageIndicator();

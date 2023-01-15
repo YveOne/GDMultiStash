@@ -221,22 +221,26 @@ namespace GDMultiStash.GlobalHandlers
             return copied;
         }
 
-        public bool ImportStash(int stashID, bool ignoreLock = false)
+
+
+
+
+
+
+        public bool ImportStash(int stashID, GrimDawnGameEnvironment env, bool ignoreLock = false)
         {
+            Console.WriteLine($"Importing Stash #{stashID}");
             StashObject stash = GetStash(stashID);
             if (stash.Locked && !ignoreLock)
             {
-                Console.WriteLine($"  Skipped (stash is locked)");
+                Console.WriteLine($"- Skipped (stash is locked)");
                 return true;
             }
-            var exp = Global.Ingame.ActiveExpansion;
-            var mode = Global.Ingame.ActiveMode;
-            string externalFile = GrimDawn.GetTransferFilePath(exp, mode);
-            Console.WriteLine($"Importing Stash #{stashID}");
-            Console.WriteLine($"  exp : {exp}");
-            Console.WriteLine($"  mode: {mode}");
-            Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID)}");
-            Console.WriteLine($"  game: {externalFile}");
+            string externalFile = GrimDawn.GetTransferFilePath(env.GameExpansion, env.GameMode);
+            Console.WriteLine($"- exp : {env.GameExpansion}");
+            Console.WriteLine($"- mode: {env.GameMode}");
+            Console.WriteLine($"- gdms: {Global.FileSystem.GetStashTransferFile(stashID).Substring(Global.FileSystem.StashesDirectory.Length)}");
+            Console.WriteLine($"- game: {externalFile.Substring(GrimDawn.DocumentsPath.Length)}");
             if (Global.FileSystem.ImportStashTransferFile(stashID, externalFile, out bool changed))
             {
                 if (changed)
@@ -249,14 +253,20 @@ namespace GDMultiStash.GlobalHandlers
             return false;
         }
 
-        public void ExportStashTo(int stashID, GrimDawnGameEnvironment env)
+        public bool ImportStash(int stashID, bool ignoreLock = false)
+        {
+            var env = new GrimDawnGameEnvironment(Global.Ingame.ActiveExpansion, Global.Ingame.ActiveMode);
+            return ImportStash(stashID, env, ignoreLock);
+        }
+
+        public void ExportStash(int stashID, GrimDawnGameEnvironment env)
         {
             string externalFile = GrimDawn.GetTransferFilePath(env.GameExpansion, env.GameMode);
             Console.WriteLine($"Exporting Stash #{stashID}");
             Console.WriteLine($"  exp : {env.GameExpansion}");
             Console.WriteLine($"  mode: {env.GameMode}");
-            Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID)}");
-            Console.WriteLine($"  game: {externalFile}");
+            Console.WriteLine($"  gdms: {Global.FileSystem.GetStashTransferFile(stashID).Substring(Global.FileSystem.StashesDirectory.Length)}");
+            Console.WriteLine($"  game: {externalFile.Substring(GrimDawn.DocumentsPath.Length)}");
             if (Global.FileSystem.ExportStashTransferFile(stashID, externalFile))
             {
             }
@@ -269,7 +279,7 @@ namespace GDMultiStash.GlobalHandlers
         public void ExportStash(int stashID)
         {
             foreach (var env in Global.Configuration.GetStashEnvironments(stashID))
-                ExportStashTo(stashID, env);
+                ExportStash(stashID, env);
         }
 
         public bool SwitchToStash(int toStashID)

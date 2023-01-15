@@ -1,0 +1,536 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{06203914-376C-4E66-B44A-73D412B63962}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>GDMultiStash</RootNamespace>
+    <AssemblyName>GDMultiStashApp</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\_bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\_bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon64.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\_bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ObjectListView, Version=2.9.1.1072, Culture=neutral, PublicKeyToken=b1c5bf581481bcd4, processorArchitecture=MSIL">
+      <HintPath>..\packages\ObjectListView.Official.2.9.1\lib\net20\ObjectListView.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\Config\ConfigColor.cs" />
+    <Compile Include="Common\Config\ConfigColorList.cs" />
+    <Compile Include="Common\Config\ConfigExpansion.cs" />
+    <Compile Include="Common\Config\ConfigExpansionList.cs" />
+    <Compile Include="Common\Config\ConfigExpansionMode.cs" />
+    <Compile Include="Common\Config\V4\Config.cs" />
+    <Compile Include="Common\Config\V4\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\Config.cs" />
+    <Compile Include="Common\Config\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\ConfigStash.cs" />
+    <Compile Include="Common\Config\ConfigStashGroup.cs" />
+    <Compile Include="Common\Config\ConfigStashGroupList.cs" />
+    <Compile Include="Common\Config\ConfigStashList.cs" />
+    <Compile Include="Common\Config\ConfigBase.cs" />
+    <Compile Include="Common\Config\V4\ConfigStash.cs" />
+    <Compile Include="Common\Config\V4\ConfigStashList.cs" />
+    <Compile Include="Common\Config\V5\ConfigStashGroup.cs" />
+    <Compile Include="Common\Config\V5\ConfigStashGroupList.cs" />
+    <Compile Include="Common\Config\V5\ConfigColor.cs" />
+    <Compile Include="Common\Config\V5\ConfigColorList.cs" />
+    <Compile Include="Common\Config\V5\ConfigExpansion.cs" />
+    <Compile Include="Common\Config\V5\ConfigExpansionList.cs" />
+    <Compile Include="Common\Config\V5\ConfigSettingList.cs" />
+    <Compile Include="Common\Config\V5\ConfigStash.cs" />
+    <Compile Include="Common\Config\V5\ConfigStashList.cs" />
+    <Compile Include="Common\Config\V5\Config.cs" />
+    <Compile Include="Common\Objects\IBaseObject.cs" />
+    <Compile Include="Common\Objects\Sorting\GroupsSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\ObjectListViewSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\UniversalComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\StashesSortComparer.cs" />
+    <Compile Include="Common\Overlay\Animations\AnimationValue.cs" />
+    <Compile Include="Common\Overlay\Animations\Animator.cs" />
+    <Compile Include="Common\Overlay\Animations\Animator.Static.cs" />
+    <Compile Include="Common\Overlay\Animations\AnimatorAnimateEventArgs.cs" />
+    <Compile Include="Common\Overlay\Animations\AnimatorEventHandler.cs" />
+    <Compile Include="Common\Overlay\ButtonElement.cs" />
+    <Compile Include="Common\Overlay\CheckableElement.cs" />
+    <Compile Include="Common\Overlay\FontHandler.cs" />
+    <Compile Include="Common\Overlay\PanelElement.cs" />
+    <Compile Include="Common\Overlay\ScrollManager.cs" />
+    <Compile Include="Common\StashesZipFile.cs" />
+    <Compile Include="Common\Objects\StashGroupObject.cs" />
+    <Compile Include="Common\Objects\StashObject.cs" />
+    <Compile Include="Forms\CraftingModeDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CraftingModeDialogForm.Designer.cs">
+      <DependentUpon>CraftingModeDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\Global.IngameHandler.ActiveExpansion.cs" />
+    <Compile Include="Global\Global.IngameHandler.ActiveGroup.cs" />
+    <Compile Include="Global\Global.IngameHandler.ActiveMode.cs" />
+    <Compile Include="Global\Global.IngameHandler.ActiveStash.cs" />
+    <Compile Include="Global\Global.IngameHandler.cs" />
+    <Compile Include="Global\Global.IngameHandler.StashReopening.cs" />
+    <Compile Include="Global\Global.IngameHandler.StashStatus.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Console.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Forms\Controls\DefaultOLVColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\FlatToolStripRenderer.cs" />
+    <Compile Include="Forms\Controls\OLVGroupFeatures.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Plexiglass\DockingPlexiglass.cs" />
+    <Compile Include="Forms\Plexiglass\Plexiglass.cs" />
+    <Compile Include="Forms\Main\DecorationCollection.cs" />
+    <Compile Include="Forms\Main\StashGroupsPageContextMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\StashesPageContextMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\StashGroupsPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\StashGroupsPage.Designer.cs">
+      <DependentUpon>StashGroupsPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Plexiglass\ScreenPlexiglass.cs" />
+    <Compile Include="Forms\StashTabsEditorWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditorWindow.Designer.cs">
+      <DependentUpon>StashTabsEditorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\DragImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\StashTabAddPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\StashTabBasePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\StashTabsEditor\StashTabPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Overlay\Controls\HomeButton.cs" />
+    <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Forms\ChangelogDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ChangelogDialogForm.Designer.cs">
+      <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\FlatComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\MyCheckBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\OLVCatchScrolling.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\PseudoScrollBarPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\Controls\TransparentControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateStashGroupDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateStashGroupDialogForm.Designer.cs">
+      <DependentUpon>CreateStashGroupDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Dragging\BaseDragHandler.cs" />
+    <Compile Include="Forms\Dragging\BaseDragSource.cs" />
+    <Compile Include="Forms\Dragging\BaseDropSink.cs" />
+    <Compile Include="Forms\Dragging\GroupsDragHandler.cs" />
+    <Compile Include="Forms\Dragging\GroupsDragSource.cs" />
+    <Compile Include="Forms\Dragging\GroupsDropSink.cs" />
+    <Compile Include="Forms\Main\Page.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\Page.Designer.cs">
+      <DependentUpon>Page.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Main\StashesPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Main\StashesPage.Designer.cs">
+      <DependentUpon>StashesPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ProgressDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ProgressDialogForm.Designer.cs">
+      <DependentUpon>ProgressDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\Global.ConfigurationHandler.cs" />
+    <Compile Include="Global\Global.DatabaseHandler.cs" />
+    <Compile Include="Global\Global.cs" />
+    <Compile Include="Global\Global.LocalizationHandler.cs" />
+    <Compile Include="Global\Global.StashesHandler.cs" />
+    <Compile Include="Global\Global.UpdateHandler.cs" />
+    <Compile Include="Global\Global.WindowsHandler.cs" />
+    <Compile Include="Forms\Dragging\StashesDragHandler.cs" />
+    <Compile Include="Forms\Dragging\StashesDragSource.cs" />
+    <Compile Include="Forms\Dragging\StashesDropSink.cs" />
+    <Compile Include="Global\Global.FileSystemHandler.cs" />
+    <Compile Include="Global\SoundHandler.cs" />
+    <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
+    <Compile Include="Native\Native.Constants.cs" />
+    <Compile Include="Overlay\Controls\Base\LargeButton.cs" />
+    <Compile Include="Overlay\Controls\Base\SmallButton.cs" />
+    <Compile Include="Overlay\Controls\GroupSelectButton.cs" />
+    <Compile Include="Overlay\Controls\Base\SelectableListChild.cs" />
+    <Compile Include="Overlay\GroupList.cs" />
+    <Compile Include="Overlay\GroupListChild.cs" />
+    <Compile Include="Overlay\Controls\InfoBoxReloadButton.cs" />
+    <Compile Include="Overlay\InfoBox.cs" />
+    <Compile Include="Overlay\Panels\BackgroundBorderPanel.cs" />
+    <Compile Include="Overlay\Panels\BackgroundShadowPanel.cs" />
+    <Compile Include="Overlay\Panels\ListBorderPanel.cs" />
+    <Compile Include="Overlay\Panels\ScrollBorderPanel.cs" />
+    <Compile Include="Overlay\StaticResources.cs" />
+    <Compile Include="Overlay\Controls\Base\VerticalScrollBar.cs" />
+    <Compile Include="Overlay\StashList.cs" />
+    <Compile Include="Common\Overlay\Element.Anchors.cs" />
+    <Compile Include="Overlay\OverlayWindow.cs" />
+    <Compile Include="Overlay\StashListChild.cs" />
+    <Compile Include="Common\Overlay\Element.Mouse.cs" />
+    <Compile Include="Common\Overlay\ListBoxElement.cs" />
+    <Compile Include="Common\Overlay\ScrollBarElement.cs" />
+    <Compile Include="Common\Overlay\TextElement.cs" />
+    <Compile Include="Common\Overlay\Viewport.cs" />
+    <Compile Include="Common\Overlay\Element.cs" />
+    <Compile Include="Common\Overlay\Element.Properties.cs" />
+    <Compile Include="Common\Overlay\ImageElement.cs" />
+    <Compile Include="Common\Overlay\ResourceHandler.cs" />
+    <Compile Include="Common\TransferFile.cs" />
+    <Compile Include="Forms\AboutDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\AboutDialogForm.Designer.cs">
+      <DependentUpon>AboutDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\CreateStashDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CreateStashDialogForm.Designer.cs">
+      <DependentUpon>CreateStashDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImportStashDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ImportStashDialogForm.Designer.cs">
+      <DependentUpon>ImportStashDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConfigurationDialogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConfigurationDialogForm.Designer.cs">
+      <DependentUpon>ConfigurationDialogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GrimDawnLib\GrimDawn.Keybindings.cs" />
+    <Compile Include="Native\Native.Keyboard.cs" />
+    <Compile Include="Overlay\GDMSViewport.cs" />
+    <Compile Include="Services\GDOverlayService.cs" />
+    <Compile Include="GrimDawnLib\GrimDawn.Steam.cs" />
+    <Compile Include="Services\Service.cs" />
+    <Compile Include="Services\GDWindowHookService.cs" />
+    <Compile Include="Utils\AssemblyInfo.cs" />
+    <Compile Include="Utils\FontLoader.cs" />
+    <Compile Include="Utils\FileUtils.cs" />
+    <Compile Include="Common\Overlay\Animations\Easing.cs" />
+    <Compile Include="Native\Native.Mouse.Hook.cs" />
+    <Compile Include="Native\Native.Hook.cs" />
+    <Compile Include="Native\Native.Shortcut.cs" />
+    <Compile Include="Services\GDGameHookService.cs" />
+    <Compile Include="Utils\Funcs.cs" />
+    <Compile Include="Utils\XML\Utf8StringWriter.cs" />
+    <Compile Include="Utils\XML\XmlIO.cs" />
+    <Compile Include="Utils\XML\XmlWriterEE.cs" />
+    <Compile Include="GDSMContext.cs" />
+    <Compile Include="GrimDawnLib\GrimDawn.cs" />
+    <Compile Include="Native\Native.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ZipFileWriter.cs" />
+    <EmbeddedResource Include="Forms\AboutDialogForm.resx">
+      <DependentUpon>AboutDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ChangelogDialogForm.resx">
+      <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CraftingModeDialogForm.resx">
+      <DependentUpon>CraftingModeDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateStashGroupDialogForm.resx">
+      <DependentUpon>CreateStashGroupDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateStashDialogForm.resx">
+      <DependentUpon>CreateStashDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DialogForm.resx">
+      <DependentUpon>DialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ImportStashDialogForm.resx">
+      <DependentUpon>ImportStashDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConfigurationDialogForm.resx">
+      <DependentUpon>ConfigurationDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\Page.resx">
+      <DependentUpon>Page.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\StashesPage.resx">
+      <DependentUpon>StashesPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Main\StashGroupsPage.resx">
+      <DependentUpon>StashGroupsPage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ProgressDialogForm.resx">
+      <DependentUpon>ProgressDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StashTabsEditorWindow.resx">
+      <DependentUpon>StashTabsEditorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Native\Native.Utils.cs" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <None Include="Resources\font_LinBiolinum_R.ttf" />
+    <None Include="Resources\font_LinBiolinum_RB.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="app.config" />
+    <Resource Include="app.config" CopyToOutputDirectory="Never" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\LockBlackIcon.png" />
+    <None Include="Resources\LockWhiteIcon.png" />
+    <None Include="Resources\HomeButtonIcon.png" />
+    <None Include="Resources\HomeIcon.png" />
+    <None Include="Resources\ButtonTinyOver.png" />
+    <None Include="Resources\ButtonTinyUp.png" />
+    <None Include="Resources\ButtonTinyDown.png" />
+    <None Include="Resources\caravanWindow8x16add.jpg" />
+    <None Include="Resources\caravanWindow10x18hover.png" />
+    <None Include="Resources\caravanWindow8x16hover.png" />
+    <None Include="Resources\caravanWindow10x18add.jpg" />
+    <None Include="Resources\itemaffixes.txt" />
+    <None Include="Resources\caravanWindow10x18.jpg" />
+    <None Include="Resources\caravanWindow8x16.jpg" />
+    <None Include="Resources\SoundButtonOverTick.wav" />
+    <None Include="Resources\ScrollAreaTop.png" />
+    <None Include="Resources\ScrollAreaBottom.png" />
+    <None Include="Resources\ScrollAreaMiddle.png" />
+    <None Include="Resources\StashListBorderR.png" />
+    <None Include="Resources\StashListBorderL.png" />
+    <None Include="Resources\StashListBorderBR.png" />
+    <None Include="Resources\StashListBorderBL.png" />
+    <None Include="Resources\StashListBorderB.png" />
+    <None Include="Resources\StashListBorderTR.png" />
+    <None Include="Resources\StashListBorderTL.png" />
+    <None Include="Resources\StashListBorderT.png" />
+    <None Include="Resources\StashListBackground.jpg" />
+    <None Include="Resources\ShadowRight.png" />
+    <None Include="Resources\ShadowMiddle.png" />
+    <None Include="Resources\ShadowLeft.png" />
+    <None Include="Resources\ShadowBottomRight.png" />
+    <None Include="Resources\ShadowBottomLeft.png" />
+    <None Include="Resources\ShadowBottom.png" />
+    <None Include="Resources\ShadowTopRight.png" />
+    <None Include="Resources\ShadowTopLeft.png" />
+    <None Include="Resources\ShadowTop.png" />
+    <None Include="Resources\itemtextures.zip" />
+    <None Include="Resources\WindowBorderBottom.png" />
+    <None Include="Resources\WindowBorderBottomRight.png" />
+    <None Include="Resources\WindowBorderTopRight.png" />
+    <None Include="Resources\WindowBorderRight.png" />
+    <None Include="Resources\WindowBorderTop.png" />
+    <None Include="Resources\WindowBackground.jpg" />
+    <None Include="Resources\GDMSLogo.png" />
+    <None Include="Resources\ReloadButtonSmallUp.png" />
+    <None Include="Resources\ReloadButtonSmallOver.png" />
+    <None Include="Resources\ReloadButtonSmallDown.png" />
+    <None Include="Resources\ScrollBarBottom.png" />
+    <None Include="Resources\ScrollBarTop.png" />
+    <None Include="Resources\ScrollBar.png" />
+    <None Include="Resources\font_LinBiolinum_RI.ttf" />
+    <None Include="Resources\local_zhCN.txt" />
+    <None Include="Resources\icon32.ico" />
+    <Content Include="icon64.ico" />
+    <None Include="Resources\border.png" />
+    <None Include="Resources\buttonCloseGray.png" />
+    <None Include="Resources\buttonCloseWhite.png" />
+    <None Include="Resources\buttonMinimizeGray.png" />
+    <None Include="Resources\buttonMinimizeWhite.png" />
+    <None Include="Resources\buttonLargeUp.png" />
+    <None Include="Resources\ButtonLargeDown.png" />
+    <None Include="Resources\ButtonLargeOver.png" />
+    <None Include="Resources\ButtonDropDownArrow.png" />
+    <None Include="Resources\ButtonDropUpArrow.png" />
+    <None Include="Resources\ButtonRoundDownOver.png" />
+    <None Include="Resources\ButtonRoundOver.png" />
+    <None Include="Resources\ButtonRoundUp.png" />
+    <None Include="Resources\ButtonRoundDown.png" />
+    <Content Include="Resources\ButtonSmallDown.png" />
+    <Content Include="Resources\ButtonSmallOver.png" />
+    <Content Include="Resources\ButtonSmallUp.png" />
+    <None Include="Resources\local_deDE.txt" />
+    <None Include="Resources\local_enGB.txt" />
+    <None Include="Resources\local_enUS.txt" />
+    <None Include="Resources\buttonTrayGray.png" />
+    <None Include="Resources\buttonTrayWhite.png" />
+    <None Include="Resources\CheckBoxTickDisabled.png" />
+    <None Include="Resources\CheckBoxCrossDisabled.png" />
+    <None Include="Resources\CheckBoxBack.png" />
+    <None Include="Resources\CheckBoxBackHover.png" />
+    <None Include="Resources\CheckBoxTick.png" />
+    <None Include="Resources\CheckBoxCross.png" />
+    <None Include="Resources\iteminfos.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\D3DHook\D3DHook.csproj">
+      <Project>{23178a3d-2ac0-419a-b1b6-59ca45191270}</Project>
+      <Name>D3DHook</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GDIALib\GDIALib.csproj">
+      <Project>{49f05d10-fa9f-4c5d-ba1e-4ae415843022}</Project>
+      <Name>GDIALib</Name>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <Aliases>global</Aliases>
+    </ProjectReference>
+    <ProjectReference Include="..\GDMultiStashUpdater\GDMultiStashUpdater.csproj">
+      <Project>{68f7f106-747a-458a-9ca1-649e760bac31}</Project>
+      <Name>GDMultiStashUpdater</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildProjectDirectory)\Properties\_buildforcer">
+      <Visible>true</Visible>
+    </None>
+  </ItemGroup>
+  <Target Name="ForceNextBuild" AfterTargets="PrepareForRun" Condition=" '$(BuildingInsideVisualStudio)' == 'true' ">
+    <Touch Files="$(MSBuildProjectDirectory)\Properties\_buildforcer" AlwaysCreate="true" />
+  </Target>
+</Project>

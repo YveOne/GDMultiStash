@@ -16,7 +16,7 @@ namespace GDMultiStash.Overlay
     {
         public override Color DebugColor => Color.FromArgb(128, 0, 255, 255);
 
-        public GroupListChild() : base()
+        public GroupListChild() : base(StaticResources.GroupListItemFontHandler)
         {
             MouseClick += delegate { Global.Ingame.ActiveGroupID = Model.ID; };
         }

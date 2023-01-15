@@ -28,12 +28,12 @@ namespace GDMultiStash.Overlay
             Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_RB);
             Utils.FontLoader.LoadFromResource(Resources.font_LinBiolinum_RI);
 
-            StaticResources.InfoBoxTitleFont = Utils.FontLoader.GetFont("Linux Biolinum", 21, FontStyle.Regular);
-            StaticResources.InfoBoxTextFont = Utils.FontLoader.GetFont("Linux Biolinum", 19, FontStyle.Regular);
-            StaticResources.SmallButtonFont = Utils.FontLoader.GetFont("Linux Biolinum", 15, FontStyle.Regular);
-            StaticResources.LargeButtonFont = Utils.FontLoader.GetFont("Linux Biolinum", 20, FontStyle.Regular);
-            StaticResources.GroupListItemFont = Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular);
-            StaticResources.StashListItemFont = Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular);
+            StaticResources.InfoBoxTitleFontHandler = new FontHandler(Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular));
+            StaticResources.InfoBoxTextFontHandler = new FontHandler(Utils.FontLoader.GetFont("Linux Biolinum", 20, FontStyle.Regular));
+            StaticResources.SmallButtonFontHandler = new FontHandler(Utils.FontLoader.GetFont("Linux Biolinum", 17, FontStyle.Regular));
+            StaticResources.LargeButtonFontHandler = new FontHandler(Utils.FontLoader.GetFont("Linux Biolinum", 23, FontStyle.Regular));
+            StaticResources.GroupListItemFontHandler = new FontHandler(Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular));
+            StaticResources.StashListItemFontHandler = new FontHandler(Utils.FontLoader.GetFont("Linux Biolinum", 22, FontStyle.Regular));
 
             StaticResources.GDMSLogo = OverlayResources.CreateImageResource(Resources.GDMSLogo, ImageFormat.Png);
 
@@ -136,7 +136,9 @@ namespace GDMultiStash.Overlay
 
 
 
-
+            Global.Configuration.AppearanceChanged += delegate {
+                FontHandler.ClearFontCache();
+            };
 
 
 

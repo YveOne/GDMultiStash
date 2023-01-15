@@ -109,6 +109,7 @@ namespace GDMultiStash.GlobalHandlers
             ReopenStash(() => {
                 if (File.Exists(file))
                     File.Delete(file);
+                Global.FileSystem.Watcher.SkipNextFile(Path.GetFileName(file));
                 File.Move(temp, file);
             });
         }

@@ -68,6 +68,7 @@ namespace GDMultiStash.Forms
             checkVersionCheckBox.Checked = _settings.CheckForNewVersion;
             saveOverLockedCheckBox.Checked = _settings.SaveOverwritesLocked;
             overlayShowWorkloadCheckBox.Checked = _settings.OverlayShowWorkload;
+            saveExternalChangesCheckBox.Checked = _settings.SaveExternalChanges;
 
             applyButton.Enabled = false;
 
@@ -290,24 +291,28 @@ namespace GDMultiStash.Forms
             checkVersionCheckBox.Text = L.CheckVersionLabel();
             saveOverLockedCheckBox.Text = L.SaveLockedStashesLabel();
             extractTranslationFilesButton.Text = L.ExtractTranslationsButton();
+            overlayWindowGroupBox.Text = L.OverlayWindowLabel();
+            behaviorGroupBox.Text = L.BehaviorLabel();
+            selectFirstStashInGroupCheckBox.Text = L.SelectFirstStashInGroupLabel();
+            saveExternalChangesCheckBox.Text = L.SaveExternalChangesLabel();
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -347,6 +352,12 @@ namespace GDMultiStash.Forms
         private void SelectFirstStashInGroupCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             _settings.AutoSelectFirstStashInGroup = selectFirstStashInGroupCheckBox.Checked;
+            applyButton.Enabled = true;
+        }
+
+        private void SaveExternalChangesCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _settings.SaveExternalChanges = saveExternalChangesCheckBox.Checked;
             applyButton.Enabled = true;
         }
 
@@ -516,8 +527,8 @@ namespace GDMultiStash.Forms
 
 
 
-
-
+        
+            
 
         #region Dialog
 
@@ -540,6 +551,7 @@ namespace GDMultiStash.Forms
         {
             return base.ShowDialog(owner);
         }
+
 
         #endregion
 

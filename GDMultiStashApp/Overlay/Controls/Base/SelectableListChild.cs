@@ -29,13 +29,13 @@ namespace GDMultiStash.Overlay.Controls.Base
         private readonly int _textMarginLeft = 30;
 
         private const float _alphaActive = 1f;
-        private const float _alphaInactive = 0.66f;
+        private const float _alphaInactive = 0.75f;
 
         private bool _active = false;
 
-        public SelectableListChild()
+        public SelectableListChild(FontHandler fontHandler)
         {
-            _textElement = new TextElement()
+            _textElement = new TextElement(fontHandler)
             {
                 Align = StringAlignment.Near,
                 AnchorPoint = Anchor.Left,
@@ -84,12 +84,6 @@ namespace GDMultiStash.Overlay.Controls.Base
         {
             get { return base.Height; }
             set { base.Height = value; _textElement.Height = value; }
-        }
-
-        public Font Font
-        {
-            get => _textElement.Font;
-            set => _textElement.Font = value;
         }
 
         public Color Color

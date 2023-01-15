@@ -11,11 +11,10 @@ namespace GDMultiStash.Overlay.Controls.Base
         protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ButtonSmallOver;
         protected override D3DHook.Hook.Common.IImageResource DownResource => StaticResources.ButtonSmallDown;
 
-        public SmallButton()
+        public SmallButton() : base(StaticResources.SmallButtonFontHandler)
         {
-            Font = StaticResources.SmallButtonFont;
             Width = 120;
-            Height = 22;
+            Height = 25;
             Color = Color.FromArgb(255, 209, 191, 153);
         }
 

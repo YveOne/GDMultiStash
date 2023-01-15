@@ -17,7 +17,7 @@ namespace GDMultiStash.Common.Overlay
         protected virtual D3DHook.Hook.Common.IImageResource DownResource { get; }
         protected virtual D3DHook.Hook.Common.IImageResource OverResource { get; }
 
-        public ButtonElement()
+        public ButtonElement(FontHandler fontHandler)
         {
 
             _back = new ImageElement()
@@ -28,7 +28,7 @@ namespace GDMultiStash.Common.Overlay
             };
             AddChild(_back);
 
-            _text = new TextElement()
+            _text = new TextElement(fontHandler)
             {
                 WidthToParent = true,
                 HeightToParent = true,
@@ -52,12 +52,6 @@ namespace GDMultiStash.Common.Overlay
         {
             get { return _text.Color; }
             set { _text.Color = value; }
-        }
-
-        public Font Font
-        {
-            get { return _text.Font; }
-            set { _text.Font = value; }
         }
 
         public string Text

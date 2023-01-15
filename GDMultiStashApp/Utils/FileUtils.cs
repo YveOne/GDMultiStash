@@ -17,6 +17,17 @@ namespace Utils
         {
             try
             {
+
+                byte[] hash;
+                using (var stream = new BufferedStream(File.OpenRead(filepath), 1048576 * 1))
+                {
+                    hash = System.Security.Cryptography.HashAlgorithm.Create().ComputeHash(stream);
+                }
+                return string.Concat(hash.Select(x => x.ToString("X2")));
+
+
+
+                /*
                 if (!File.Exists(filepath)) return null;
                 byte[] hash;
                 using (var inputStream = File.Open(filepath, FileMode.Open))
@@ -25,6 +36,7 @@ namespace Utils
                     hash = md5.ComputeHash(inputStream);
                 }
                 return string.Concat(hash.Select(x => x.ToString("X2")));
+                */
             }
             catch(IOException e)
             {

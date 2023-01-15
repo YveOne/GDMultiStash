@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
+using GDMultiStash.Common.Overlay;
+
 using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay
@@ -12,12 +14,12 @@ namespace GDMultiStash.Overlay
     internal class StaticResources
     {
 
-        public static Font InfoBoxTitleFont = null;
-        public static Font InfoBoxTextFont = null;
-        public static Font SmallButtonFont = null;
-        public static Font LargeButtonFont = null;
-        public static Font StashListItemFont = null;
-        public static Font GroupListItemFont = null;
+        public static FontHandler InfoBoxTitleFontHandler;
+        public static FontHandler InfoBoxTextFontHandler;
+        public static FontHandler SmallButtonFontHandler;
+        public static FontHandler LargeButtonFontHandler;
+        public static FontHandler GroupListItemFontHandler;
+        public static FontHandler StashListItemFontHandler;
 
         public static IImageResource GDMSLogo;
 
