@@ -7,6 +7,8 @@ using System.Drawing.Imaging;
 
 using GDMultiStash.Common.Config;
 
+using Utils.Extensions;
+
 namespace GDMultiStash.Common.Objects
 {
     internal class StashDummyObject : StashObject
@@ -82,7 +84,7 @@ namespace GDMultiStash.Common.Objects
             float posMax = 0.9f;
 
             //int barWidth = (int)(42f / _transferFile.TabsUsage.Count + 0.5f);
-            int maxTabs = (int)GrimDawnLib.GrimDawn.Stashes.GetStashInfoForExpansion(Expansion).MaxTabs;
+            int maxTabs = (int)TransferFile.GetStashInfoForExpansion(Expansion).MaxTabs;
             int barWidth = (int)(42f / maxTabs + 0.5f);
 
             _usageIndicator = new Bitmap(6 * 5 + 5 * 2, 10, PixelFormat.Format32bppArgb);
@@ -169,7 +171,7 @@ namespace GDMultiStash.Common.Objects
 
         public bool AddTab()
         {
-            var stashInfo = GrimDawnLib.GrimDawn.Stashes.GetStashInfoForExpansion(Expansion);
+            var stashInfo = TransferFile.GetStashInfoForExpansion(Expansion);
             return AddTab(new GDIALib.Parser.Stash.StashTab()
             {
                 Width = stashInfo.Width,
@@ -238,7 +240,7 @@ namespace GDMultiStash.Common.Objects
 
         public DateTime LastWriteTime => File.GetLastWriteTime(FilePath);
 
-        public float Usage => _transferFile != null ? _transferFile.TotalUsage : 0f;
+        public float TotalUsage => _transferFile != null ? _transferFile.TotalUsage : 0f;
 
         public string UsageText => _transferFile != null ? _transferFile.TotalUsageText : "???";
 

@@ -1,15 +1,16 @@
 ﻿
-using GDMultiStash.Common.Overlay;
+using D3DHook.Overlay;
+using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay.Panels
 {
     internal class BackgroundBorderPanel : PanelElement
     {
-        protected override D3DHook.Hook.Common.IImageResource T => StaticResources.WindowBorderTop;
-        protected override D3DHook.Hook.Common.IImageResource TR => StaticResources.WindowBorderTopRight;
-        protected override D3DHook.Hook.Common.IImageResource R => StaticResources.WindowBorderRight;
-        protected override D3DHook.Hook.Common.IImageResource B => StaticResources.WindowBorderBottom;
-        protected override D3DHook.Hook.Common.IImageResource BR => StaticResources.WindowBorderBottomRight;
+        protected override IImageResource T => StaticResources.WindowBorderTop;
+        protected override IImageResource TR => StaticResources.WindowBorderTopRight;
+        protected override IImageResource R => StaticResources.WindowBorderRight;
+        protected override IImageResource B => StaticResources.WindowBorderBottom;
+        protected override IImageResource BR => StaticResources.WindowBorderBottomRight;
 
         public BackgroundBorderPanel() : base()
         {

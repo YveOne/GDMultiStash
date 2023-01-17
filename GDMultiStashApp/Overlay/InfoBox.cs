@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Overlay;
 using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
-using GrimDawnLib;
+
+using D3DHook.Overlay;
 
 namespace GDMultiStash.Overlay
 {
@@ -76,7 +76,7 @@ namespace GDMultiStash.Overlay
             };
             AddChild(_reloadButton);
 
-            Global.Ingame.ActiveStashChanged += delegate {
+            Global.Runtime.ActiveStashChanged += delegate {
                 UpdateInfoText();
             };
             Global.Ingame.StashReopenEnd += delegate {
@@ -91,7 +91,7 @@ namespace GDMultiStash.Overlay
             Global.Configuration.LanguageChanged += delegate {
                 UpdateButtonText();
             };
-            Global.Ingame.StashesInfoChanged += delegate {
+            Global.Runtime.StashesInfoChanged += delegate {
                 UpdateInfoText(); // maybe name changed
             };
         }
@@ -104,8 +104,8 @@ namespace GDMultiStash.Overlay
 
         private void UpdateInfoText()
         {
-            StashObject stash = Global.Stashes.GetStash(Global.Ingame.ActiveStashID);
-            if (stash == null) return; // something happend
+            if (!Global.Stashes.TryGetStash(Global.Runtime.ActiveStashID, out StashObject stash))
+                return;
             _titleElement.Text = stash.Name;
             _lastChangeIntern.Text = stash.LastWriteTime.ToString();
         }

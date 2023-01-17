@@ -81,7 +81,7 @@ namespace GDMultiStash.Forms
             autoFillComboBox.Enabled = false;
             ControlBox = false;
 
-            if (Global.Ingame.StashIsOpened) // todo: localize me
+            if (Global.Runtime.StashIsOpened) // todo: localize me
                 Console.Warning("Close ingame stash before continue to prevent item loss!");
 
             _selectedEnvironment = (GrimDawnGameEnvironment)transferFileComboBox.SelectedValue;
@@ -90,8 +90,8 @@ namespace GDMultiStash.Forms
             _craftingTransferFile = TransferFile.CreateForExpansion(_selectedEnvironment.GameExpansion);
             _craftingTransferFile.WriteToFile(_selectedEnvironment.TransferFilePath);
 
-            _craftingGroupObject = Global.Stashes.CreateStashGroup(Global.L.CraftingModeButton(), true);
-            Global.Ingame.InvokeStashGroupsAdded(_craftingGroupObject);
+            _craftingGroupObject = Global.Groups.CreateGroup(Global.L.CraftingModeButton(), true);
+            Global.Runtime.InvokeStashGroupsAdded(_craftingGroupObject);
             Global.Configuration.Save();
 
             _selectedAutoFillMode = autoFillCheckBox.Checked ? autoFillComboBox.SelectedIndex : -1;
@@ -119,7 +119,7 @@ namespace GDMultiStash.Forms
                 return;
             }
 
-            var stash = Global.Stashes.CreateImportStash(_selectedEnvironment.TransferFilePath, "Crafted", _selectedEnvironment.GameExpansion, GrimDawnGameMode.Both);
+            var stash = Global.Stashes.ImportCreateStash(_selectedEnvironment.TransferFilePath, "Crafted", _selectedEnvironment.GameExpansion, GrimDawnGameMode.Both);
             stash.GroupID = _craftingGroupObject.ID;
             switch (_selectedAutoFillMode)
             {
@@ -129,7 +129,7 @@ namespace GDMultiStash.Forms
                     stash.LoadTransferFile();
                     break;
             }
-            Global.Ingame.InvokeStashesAdded(stash);
+            Global.Runtime.InvokeStashesAdded(stash);
             Global.Configuration.Save();
 
             _skipNextChange = true;

@@ -16,7 +16,7 @@ namespace GDMultiStash.Forms.StashTabsEditor
     {
         public StashTabAddPanel(StashObject stashObject) : base(stashObject)
         {
-            var stashInfo = GrimDawnLib.GrimDawn.Stashes.GetStashInfoForExpansion(stashObject.Expansion);
+            var stashInfo = TransferFile.GetStashInfoForExpansion(stashObject.Expansion);
             Image bgImage;
             switch (stashInfo.Width)
             {

@@ -9,7 +9,7 @@ using GDMultiStash.Common.Objects;
 
 namespace GDMultiStash.Forms.Dragging
 {
-    internal class StashesDragHandler : BaseDragHandler<StashObject>
+    internal class StashesDragHandler : Base.DragHandler<StashObject>
     {
         public new Controls.OLVGroupFeatures ListView => (Controls.OLVGroupFeatures)base.ListView;
         public new StashesDragSource DragSource => (StashesDragSource)base.DragSource;
@@ -30,7 +30,7 @@ namespace GDMultiStash.Forms.Dragging
                 {
                     stash.GroupID = DropSink.OverStashGroup.ID;
                 }
-                Global.Stashes.UpdateOrder(DropSink.OrderedList);
+                Global.Stashes.ResetOrder(DropSink.OrderedList);
             }
             DropSink.Reset();
         }

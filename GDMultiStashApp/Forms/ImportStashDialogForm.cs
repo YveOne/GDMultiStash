@@ -27,7 +27,7 @@ namespace GDMultiStash.Forms
             Load += delegate {
                 groupComboBox.DisplayMember = "Name";
                 groupComboBox.ValueMember = "Key";
-                groupComboBox.DataSource = Global.Stashes.GetSortedStashGroups();
+                groupComboBox.DataSource = Global.Groups.GetSortedGroups();
                 groupComboBox.SelectedIndex = lastSelectedGroupIndex;
             };
 
@@ -122,7 +122,7 @@ namespace GDMultiStash.Forms
             GrimDawnGameMode mode = GrimDawnGameMode.None;
             if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
             if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
-            StashObject stash = Global.Stashes.CreateImportStash(srcFile, nameTextBox.Text, exp, mode);
+            StashObject stash = Global.Stashes.ImportCreateStash(srcFile, nameTextBox.Text, exp, mode);
 
             if (stash != null)
             {

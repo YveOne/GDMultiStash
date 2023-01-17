@@ -2,12 +2,14 @@
 using System;
 using System.Drawing;
 
+using D3DHook.Overlay;
+
 namespace GDMultiStash.Overlay.Controls
 {
     internal class GroupSelectButton : Base.LargeButton
     {
 
-        private Common.Overlay.ImageElement _dropArrowImage;
+        private ImageElement _dropArrowImage;
 
         private bool _droppedDown = false;
 
@@ -16,10 +18,10 @@ namespace GDMultiStash.Overlay.Controls
 
         public GroupSelectButton() : base()
         {
-            TextAnchor = Common.Overlay.Anchor.Left;
+            TextAnchor = Anchor.Left;
             TextAlign = StringAlignment.Near;
-            _dropArrowImage = new Common.Overlay.ImageElement() {
-                AnchorPoint = Common.Overlay.Anchor.Right,
+            _dropArrowImage = new ImageElement() {
+                AnchorPoint = Anchor.Right,
                 Width = 15,
                 Height = 15,
             };
@@ -31,12 +33,12 @@ namespace GDMultiStash.Overlay.Controls
 
 
 
-            Text = Global.Stashes.GetStashGroup(Global.Ingame.ActiveGroupID).Name;
-            Global.Ingame.ActiveGroupChanged += delegate {
-                Text = Global.Stashes.GetStashGroup(Global.Ingame.ActiveGroupID).Name;
+            Text = Global.Groups.GetGroup(Global.Runtime.ActiveGroupID).Name;
+            Global.Runtime.ActiveGroupChanged += delegate {
+                Text = Global.Groups.GetGroup(Global.Runtime.ActiveGroupID).Name;
             };
-            Global.Ingame.StashGroupsInfoChanged += delegate {
-                Text = Global.Stashes.GetStashGroup(Global.Ingame.ActiveGroupID).Name;
+            Global.Runtime.StashGroupsInfoChanged += delegate {
+                Text = Global.Groups.GetGroup(Global.Runtime.ActiveGroupID).Name;
             };
 
         }

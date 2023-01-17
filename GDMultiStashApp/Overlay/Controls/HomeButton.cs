@@ -1,27 +1,24 @@
 ﻿
-using System;
-using System.Drawing;
+using D3DHook.Overlay;
 
 namespace GDMultiStash.Overlay.Controls
 {
     internal class HomeButton : Base.SmallButton
     {
 
-        private Common.Overlay.ImageElement _homeImage;
+        private ImageElement _homeImage;
 
         public HomeButton() : base()
         {
-            _homeImage = new Common.Overlay.ImageElement() {
-                AnchorPoint = Common.Overlay.Anchor.Center,
+            _homeImage = new ImageElement() {
+                AnchorPoint = Anchor.Center,
                 Width = 20,
                 Height = 20,
                 Resource = StaticResources.HomeButtonIcon,
             };
             AddChild(_homeImage);
             MouseClick += delegate {
-                int mainStashID = Global.Configuration.GetMainStashID(Global.Ingame.ActiveExpansion, Global.Ingame.ActiveMode);
-                Global.Ingame.SwitchToStash(mainStashID);
-                Global.Ingame.ActiveGroupID = 0;
+                Global.Ingame.SwitchToMainStash();
             };
         }
 

@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace GDMultiStash.Services
 {
-    internal class GDWindowHookService : Service
+    internal class GDWindowHookService : Base.Service
     {
 
         private class TargetForm : Form
@@ -113,7 +113,7 @@ namespace GDMultiStash.Services
             hasFocus = true;
             GotFocus?.Invoke(null, new EventArgs());
             new System.Threading.Thread(() => {
-                System.Threading.Thread.Sleep(5000);
+                System.Threading.Thread.Sleep(1000);
                 Native.SetForegroundWindow(m_target);
             }).Start();
         }

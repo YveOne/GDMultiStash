@@ -23,7 +23,9 @@ namespace GDMultiStash.Forms.Plexiglass
                 this.AutoScaleMode = AutoScaleMode.None;
                 this.Padding = Padding.Empty;
             }
-            
+
+            protected override bool ShowWithoutActivation => true;
+
             protected override CreateParams CreateParams
             {
                 // i am using this.FormBorderStyle = FormBorderStyle.FixedToolWindow;

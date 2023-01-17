@@ -1,3 +1,17 @@
+v1.36.4
+- Fixed: Ingame stash not automatically reloading after editing stash tabs
+- Fixed: Auto-back-to-main feature not working when quitting GD
+- Fixed: When copying stash to other expansion new created stash gets added to current list
+- Fixed: Stash content not getting saved when using ingame home (back to main) button
+- Fixed: GDMS crashing after startup caused by new transfer file watcher
+- Fixed: GDMS crashing when hiding/showing columns in listview
+- Fixed: Auto sorted stashes first tab always empty
+- Changed: Only empty groups can be deleted now.
+  You need to delete or move all stashes (all expansions/sc/hc) of that group into other group first
+- Changed: Changelog window will no more appear on startup when auto starting Grim Dawn
+- Changed: Main window will nomore get activated/focused on startup when auto starting Grim Dawn
+- Reworked source code structure
+
 v1.36.3
 - Increased text readability of scaled overlay
 - Implemented custom transfer file watcher

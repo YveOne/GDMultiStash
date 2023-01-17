@@ -19,8 +19,7 @@ namespace GDMultiStash.Forms.Plexiglass
             this._target = target;
 
             base.ShowForm(target); // target.ParentForm
-            target.Focus();
-
+            //target.Focus();
 
             target.ClientSizeChanged += Any_ClientSizeChanged;
 

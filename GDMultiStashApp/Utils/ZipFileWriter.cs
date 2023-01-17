@@ -8,6 +8,7 @@ using System.IO.Compression;
 
 namespace Utils
 {
+
     internal class ZipFileWriter
     {
 
@@ -17,7 +18,7 @@ namespace Utils
         {
             public string Name { get; private set; }
             public Entry(string extryName)
-            { 
+            {
                 Name = extryName;
             }
             public abstract byte[] GetContent();
@@ -82,6 +83,6 @@ namespace Utils
                 }
             }
         }
-        
     }
+
 }

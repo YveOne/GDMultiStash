@@ -7,6 +7,7 @@ using System.Reflection;
 
 namespace Utils
 {
+
     internal class AssemblyInfo
     {
         public string AppName { get; private set; }
@@ -25,6 +26,6 @@ namespace Utils
             Description = ((AssemblyDescriptionAttribute)asm.GetCustomAttribute(typeof(AssemblyDescriptionAttribute))).Description;
         }
 
-
     }
+
 }

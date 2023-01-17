@@ -6,7 +6,7 @@ using BrightIdeasSoftware;
 namespace GDMultiStash.Common.Objects.Sorting
 {
 
-    internal class ObjectListViewSortComparer<T> : UniversalComparer<OLVListItem>
+    internal class ObjectListViewSortComparer<T> : Utils.UniversalComparer<OLVListItem>
     {
         private readonly IComparer<T> comparer;
 

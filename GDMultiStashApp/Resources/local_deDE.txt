@@ -20,6 +20,7 @@ msg_stash_is_active = Dieser Stash ist gerade aktiv
 msg_stash_is_main = Dies ist ein Hauptstash
 msg_cannot_delete_stash_group = Gruppe "{0}" kann nicht gelöscht werden:\n{1}
 msg_stash_group_is_main = Dies ist eine Hauptgruppe
+msg_stash_group_is_not_empty = Gruppe ist nicht leer
 msg_disable_cloud_sync = Warnung: Cloud Sync ist aktiviert!\nUm GDMS zu benutzt muss es in den GD Optionen deaktiviert werden!
 msg_confirm_delete_old_stashes = Alte Stashes löschen?
 msg_confirm_delete_stash_tab = Diesen Tab löschen?

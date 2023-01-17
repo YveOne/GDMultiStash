@@ -13,6 +13,8 @@ namespace GDMultiStash.Forms
     internal partial class ProgressDialogForm : DialogForm
     {
 
+        // this is not used yet
+
         public delegate void ActionDelegate(ProgressHandler methods);
 
         public class ProgressHandler

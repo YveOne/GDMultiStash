@@ -28,7 +28,7 @@ namespace GDMultiStash.Forms.StashTabsEditor
 
         public StashTabBasePanel(StashObject stashObject)
         {
-            var stashInfo = GrimDawnLib.GrimDawn.Stashes.GetStashInfoForExpansion(stashObject.Expansion);
+            var stashInfo = TransferFile.GetStashInfoForExpansion(stashObject.Expansion);
             switch (stashInfo.Width)
             {
                 case 8:

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Overlay;
 using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
+
+using D3DHook.Overlay;
 
 namespace GDMultiStash.Overlay
 {

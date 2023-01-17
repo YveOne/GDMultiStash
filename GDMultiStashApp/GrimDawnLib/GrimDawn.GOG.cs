@@ -20,7 +20,7 @@ namespace GrimDawnLib
             public static readonly string GalaxyClientPath = (GalaxyPath != null && GalaxyExe != null) ? Path.Combine(GalaxyPath, GalaxyExe) : null;
 
             public static readonly string GamePath64 = (string)Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\GOG.com\Games\" + GameAppID.ToString(), "path", null);
-            public static readonly string GameStartCommand64 = GalaxyClientPath != null ? string.Format(@"""{0}"" /command=runGame /gameId=1449651388 /path=""{1}""", GalaxyClientPath, GamePath64) : null;
+            public static readonly string GameStartCommand64 = GalaxyClientPath != null ? $"\"{GalaxyClientPath}\" /command=runGame /gameId=1449651388 /path=\"{GamePath64}\"" : null;
 
         }
     }

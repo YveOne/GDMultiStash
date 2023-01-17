@@ -10,6 +10,8 @@ namespace GDMultiStash
 {
     internal static class Constants
     {
+        public static string AppName { get; } = "GDMultiStash";
+        public static int WM_SHOWME { get; } = Native.RegisterWindowMessage("GDMS_SHOW");
 
         internal static int WindowCaptionDragHeight { get; } = 60;
         internal static int WindowResizeBorderSize { get; } = 8;

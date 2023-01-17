@@ -10,6 +10,8 @@ using GDMultiStash.Common;
 using GDMultiStash.Common.Objects;
 using GDMultiStash.Forms.StashTabsEditor;
 
+using Utils.Extensions;
+
 namespace GDMultiStash.Forms
 {
     internal partial class StashTabsEditorWindow : BaseForm
@@ -32,7 +34,7 @@ namespace GDMultiStash.Forms
             tabsListPanel.BackColor = Constants.FormBackColor;
 
             stashObject = stash;
-            maxTabs = GrimDawnLib.GrimDawn.Stashes.GetStashInfoForExpansion(stash.Expansion).MaxTabs;
+            maxTabs = TransferFile.GetStashInfoForExpansion(stash.Expansion).MaxTabs;
 
             AddButtonPanel = new StashTabAddPanel(stash);
             AddButtonPanel.Click += AddButton_Click;
@@ -58,32 +60,32 @@ namespace GDMultiStash.Forms
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
-            Global.Ingame.StashesRemoved += Global_Ingame_StashesRemoved;
-            Global.Ingame.StashesContentChanged += Global_Ingame_StashesContentChanged;
-            Global.Ingame.StashesInfoChanged += Global_Ingame_StashesInfoChanged;
+            Global.Runtime.StashesRemoved += Global_Ingame_StashesRemoved;
+            Global.Runtime.StashesContentChanged += Global_Ingame_StashesContentChanged;
+            Global.Runtime.StashesInfoChanged += Global_Ingame_StashesInfoChanged;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
             base.OnFormClosing(e);
-            Global.Ingame.StashesRemoved -= Global_Ingame_StashesRemoved;
-            Global.Ingame.StashesContentChanged -= Global_Ingame_StashesContentChanged;
-            Global.Ingame.StashesInfoChanged -= Global_Ingame_StashesInfoChanged;
+            Global.Runtime.StashesRemoved -= Global_Ingame_StashesRemoved;
+            Global.Runtime.StashesContentChanged -= Global_Ingame_StashesContentChanged;
+            Global.Runtime.StashesInfoChanged -= Global_Ingame_StashesInfoChanged;
         }
 
-        private void Global_Ingame_StashesRemoved(object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> e)
+        private void Global_Ingame_StashesRemoved(object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> e)
         {
             if (e.Items.Contains(stashObject))
                 Invoke(new Action(Close));
         }
 
-        private void Global_Ingame_StashesContentChanged(object sender, GlobalHandlers.IngameHandler.StashesContentChangedEventArgs e)
+        private void Global_Ingame_StashesContentChanged(object sender, GlobalHandlers.RuntimeHandler.StashesContentChangedEventArgs e)
         {
             if (e.Items.Contains(stashObject))
                 Invoke(new Action(CreateTabs));
         }
 
-        private void Global_Ingame_StashesInfoChanged(object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashObject> e)
+        private void Global_Ingame_StashesInfoChanged(object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> e)
         {
             if (e.Items.Contains(stashObject))
                 Invoke(new Action(UpdateWindowTitle));
@@ -164,7 +166,7 @@ namespace GDMultiStash.Forms
             stashObject.AddTab();
             stashObject.SaveTransferFile();
             stashObject.LoadTransferFile();
-            Global.Ingame.InvokeStashesContentChanged(stashObject, true);
+            Global.Runtime.InvokeStashesContentChanged(stashObject, true);
             UpdateAddButton();
         }
 
@@ -176,29 +178,35 @@ namespace GDMultiStash.Forms
 
             ContextMenu cm = new ContextMenu();
 
-            cm.MenuItems.Add(Global.L.ClearButton(), delegate {
-                if (tabPanel.StashTab.Items.Count != 0
-                    && Global.Configuration.Settings.ConfirmStashDelete
-                    && !Console.Confirm(Global.L.ConfirmClearStashTabMessage())) return;
+            if (tabPanel.StashTab.Items.Count != 0)
+            {
+                cm.MenuItems.Add(Global.L.ClearButton(), delegate {
+                    if (tabPanel.StashTab.Items.Count != 0
+                        && Global.Configuration.Settings.ConfirmStashDelete
+                        && !Console.Confirm(Global.L.ConfirmClearStashTabMessage())) return;
 
-                Global.FileSystem.BackupStashTransferFile(stashObject.ID);
-                tabPanel.StashTab.Items.Clear();
-                stashObject.SaveTransferFile();
-                stashObject.LoadTransferFile();
-                Global.Ingame.InvokeStashesContentChanged(stashObject, true);
-            });
+                    Global.FileSystem.BackupStashTransferFile(stashObject.ID);
+                    tabPanel.StashTab.Items.Clear();
+                    stashObject.SaveTransferFile();
+                    stashObject.LoadTransferFile();
+                    Global.Runtime.InvokeStashesContentChanged(stashObject, true);
+                });
+            }
 
             if (stashObject.Tabs.Count < stashObject.MaxTabsCount)
             {
-                cm.MenuItems.Add(Global.L.DuplicateButton(), delegate {
-                    var dup = new GDIALib.Parser.Stash.StashTab();
-                    foreach(var item in tabPanel.StashTab.Items)
-                        dup.Items.Add(item.DeepClone());
-                    stashObject.AddTab(dup);
-                    stashObject.SaveTransferFile();
-                    stashObject.LoadTransferFile();
-                    Global.Ingame.InvokeStashesContentChanged(stashObject, true);
-                });
+                if (tabPanel.StashTab.Items.Count != 0)
+                {
+                    cm.MenuItems.Add(Global.L.DuplicateButton(), delegate {
+                        var dup = new GDIALib.Parser.Stash.StashTab();
+                        foreach (var item in tabPanel.StashTab.Items)
+                            dup.Items.Add(item.DeepClone());
+                        stashObject.AddTab(dup);
+                        stashObject.SaveTransferFile();
+                        stashObject.LoadTransferFile();
+                        Global.Runtime.InvokeStashesContentChanged(stashObject, true);
+                    });
+                }
             }
 
             // dont delete last tab! it would crash gd!
@@ -213,7 +221,7 @@ namespace GDMultiStash.Forms
                     stashObject.RemoveTabAt(stashObject.Tabs.IndexOf(tabPanel.StashTab));
                     stashObject.SaveTransferFile();
                     stashObject.LoadTransferFile();
-                    Global.Ingame.InvokeStashesContentChanged(stashObject, true);
+                    Global.Runtime.InvokeStashesContentChanged(stashObject, true);
                 });
             }
 
@@ -275,14 +283,14 @@ namespace GDMultiStash.Forms
                 Global.FileSystem.BackupStashTransferFile(tabPanel.StashObject.ID);
                 tabPanel.StashObject.SaveTransferFile();
                 tabPanel.StashObject.LoadTransferFile();
-                Global.Ingame.InvokeStashesContentChanged(tabPanel.StashObject, true);
+                Global.Runtime.InvokeStashesContentChanged(tabPanel.StashObject, true);
 
                 if (stashObject != tabPanel.StashObject)
                 {
                     Global.FileSystem.BackupStashTransferFile(stashObject.ID);
                     stashObject.SaveTransferFile();
                     stashObject.LoadTransferFile();
-                    Global.Ingame.InvokeStashesContentChanged(stashObject, true);
+                    Global.Runtime.InvokeStashesContentChanged(stashObject, true);
                 }
             }
         }

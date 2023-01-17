@@ -1,19 +1,20 @@
 ﻿
-using GDMultiStash.Common.Overlay;
+using D3DHook.Overlay;
+using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay.Panels
 {
     internal class ListBorderPanel : PanelElement
     {
-        protected override D3DHook.Hook.Common.IImageResource TL => StaticResources.StashListBorderTL;
-        protected override D3DHook.Hook.Common.IImageResource T => StaticResources.StashListBorderT;
-        protected override D3DHook.Hook.Common.IImageResource TR => StaticResources.StashListBorderTR;
-        protected override D3DHook.Hook.Common.IImageResource L => StaticResources.StashListBorderL;
-        protected override D3DHook.Hook.Common.IImageResource M => StaticResources.StashListBackground;
-        protected override D3DHook.Hook.Common.IImageResource R => StaticResources.StashListBorderR;
-        protected override D3DHook.Hook.Common.IImageResource BL => StaticResources.StashListBorderBL;
-        protected override D3DHook.Hook.Common.IImageResource B => StaticResources.StashListBorderB;
-        protected override D3DHook.Hook.Common.IImageResource BR => StaticResources.StashListBorderBR;
+        protected override IImageResource TL => StaticResources.StashListBorderTL;
+        protected override IImageResource T => StaticResources.StashListBorderT;
+        protected override IImageResource TR => StaticResources.StashListBorderTR;
+        protected override IImageResource L => StaticResources.StashListBorderL;
+        protected override IImageResource M => StaticResources.StashListBackground;
+        protected override IImageResource R => StaticResources.StashListBorderR;
+        protected override IImageResource BL => StaticResources.StashListBorderBL;
+        protected override IImageResource B => StaticResources.StashListBorderB;
+        protected override IImageResource BR => StaticResources.StashListBorderBR;
 
         public ListBorderPanel() : base()
         {

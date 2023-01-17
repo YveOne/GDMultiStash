@@ -5,8 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-using GDMultiStash.Common.Overlay;
-
+using D3DHook.Overlay;
 using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay

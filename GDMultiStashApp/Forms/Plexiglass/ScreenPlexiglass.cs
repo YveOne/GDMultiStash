@@ -10,6 +10,9 @@ namespace GDMultiStash.Forms.Plexiglass
 {
     internal class ScreenPlexiglass : Plexiglass
     {
+
+        // this is not used yet
+
         public ScreenPlexiglass() : base()
         {
 

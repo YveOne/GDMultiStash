@@ -5,16 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-using GDMultiStash.Common.Overlay;
-using GrimDawnLib;
+using D3DHook.Overlay;
+using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay.Controls
 {
     public class InfoBoxReloadButton : ButtonElement
     {
-        protected override D3DHook.Hook.Common.IImageResource UpResource => StaticResources.ReloadButtonSmallUp;
-        protected override D3DHook.Hook.Common.IImageResource DownResource => StaticResources.ReloadButtonSmallDown;
-        protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ReloadButtonSmallOver;
+        protected override IImageResource UpResource => StaticResources.ReloadButtonSmallUp;
+        protected override IImageResource DownResource => StaticResources.ReloadButtonSmallDown;
+        protected override IImageResource OverResource => StaticResources.ReloadButtonSmallOver;
 
         public InfoBoxReloadButton() : base(null)
         {

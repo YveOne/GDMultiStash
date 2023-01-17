@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Overlay;
 using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
+
+using D3DHook.Overlay;
 
 namespace GDMultiStash.Overlay
 {
@@ -18,7 +19,7 @@ namespace GDMultiStash.Overlay
 
         public GroupListChild() : base(StaticResources.GroupListItemFontHandler)
         {
-            MouseClick += delegate { Global.Ingame.ActiveGroupID = Model.ID; };
+            MouseClick += delegate { Global.Runtime.ActiveGroupID = Model.ID; };
         }
 
     }

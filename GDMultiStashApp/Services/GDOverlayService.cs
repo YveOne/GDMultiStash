@@ -14,7 +14,7 @@ using D3DHook;
 
 namespace GDMultiStash.Services
 {
-    internal class GDOverlayService : Service
+    internal class GDOverlayService : Base.Service
     {
 
         private readonly D3DHook.Hook.Common.Overlay _dummyOverlay;

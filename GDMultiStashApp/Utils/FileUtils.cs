@@ -9,7 +9,6 @@ using System.Runtime.InteropServices;
 namespace Utils
 {
 
-
     internal static class FileUtils
     {
 
@@ -24,30 +23,11 @@ namespace Utils
                     hash = System.Security.Cryptography.HashAlgorithm.Create().ComputeHash(stream);
                 }
                 return string.Concat(hash.Select(x => x.ToString("X2")));
-
-
-
-                /*
-                if (!File.Exists(filepath)) return null;
-                byte[] hash;
-                using (var inputStream = File.Open(filepath, FileMode.Open))
-                {
-                    var md5 = System.Security.Cryptography.MD5.Create();
-                    hash = md5.ComputeHash(inputStream);
-                }
-                return string.Concat(hash.Select(x => x.ToString("X2")));
-                */
             }
-            catch(IOException e)
+            catch (IOException e)
             {
                 return null;
             }
-        }
-
-        public static long GetLastWriteTicks(string filePath)
-        {
-            if (!File.Exists(filePath)) return 0;
-            return (new FileInfo(filePath)).LastWriteTime.Ticks;
         }
 
         public static bool FileIsLocked(string filePath)

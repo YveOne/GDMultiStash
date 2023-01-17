@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Overlay;
 using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
+
+using D3DHook.Overlay;
 
 namespace GDMultiStash.Overlay
 {
@@ -30,36 +31,22 @@ namespace GDMultiStash.Overlay
             _groupId2Item = new Dictionary<int, GroupListChild>();
             _loadItems = true; // build list on startup
 
-            Global.Ingame.ActiveGroupChanged += delegate (object sender, GlobalHandlers.IngameHandler.ActiveGroupChangedEventArgs e) {
+            Global.Runtime.ActiveGroupChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveGroupChangedEventArgs e) {
                 ChangeActiveGroup(e.OldID, e.NewID);
             };
-            Global.Ingame.StashGroupsRebuild += delegate { _loadItems = true; };
-            Global.Ingame.ActiveExpansionChanged += delegate { _loadItems = true; };
-            Global.Ingame.ActiveModeChanged += delegate { _loadItems = true; };
-            Global.Ingame.StashGroupsAdded += delegate { _loadItems = true; };
-            Global.Ingame.StashGroupsRemoved += delegate { _loadItems = true; };
-            Global.Ingame.StashGroupsInfoChanged += delegate (object sender, GlobalHandlers.IngameHandler.ListUpdatedEventArgs<StashGroupObject> e)
+            Global.Runtime.StashGroupsMoved += delegate { _loadItems = true; };
+            Global.Runtime.ActiveExpansionChanged += delegate { _loadItems = true; };
+            Global.Runtime.ActiveModeChanged += delegate { _loadItems = true; };
+            Global.Runtime.StashGroupsAdded += delegate { _loadItems = true; };
+            Global.Runtime.StashGroupsRemoved += delegate { _loadItems = true; };
+            Global.Runtime.StashGroupsInfoChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> e)
             {
                 foreach (StashGroupObject item in e.Items)
                     UpdateItem(item);
             };
-            // yes we need to load items too when stashes changed!
-            // because an empty group could become not empty
-            Global.Ingame.StashesRebuild += delegate { _loadItems = true; };
-            Global.Ingame.StashesAdded += delegate { _loadItems = true; };
-            Global.Ingame.StashesRemoved += delegate { _loadItems = true; };
-            /*
-            // we shall not need that
-            // because stashes can only be changed by stashlist
-            Global.Runtime.StashReopenStart += delegate {
-                MouseCheckChildren = false;
-                Alpha = 0.33f;
-            };
-            Global.Runtime.StashReopenEnd += delegate {
-                MouseCheckChildren = true;
-                Alpha = 1f;
-            };
-            */
+            Global.Runtime.StashesMoved += delegate { _loadItems = true; }; // maybe a stash's group has been changed
+            Global.Runtime.StashesAdded += delegate { _loadItems = true; };
+            Global.Runtime.StashesRemoved += delegate { _loadItems = true; };
             MouseWheel += delegate (object sender, MouseWheelEventArgs e)
             {
                 ScrollHandler.ScrollPositionY -= e.Delta < 0 ? -1 : 1;
@@ -78,13 +65,13 @@ namespace GDMultiStash.Overlay
                 _groupId2Item.Clear();
                 ClearScrollItems();
 
-                GrimDawnLib.GrimDawnGameMode mode = Global.Ingame.ActiveMode;
-                GrimDawnLib.GrimDawnGameExpansion exp = Global.Ingame.ActiveExpansion;
-                int activeGroupID = Global.Ingame.ActiveGroupID;
+                GrimDawnLib.GrimDawnGameMode mode = Global.Runtime.ActiveMode;
+                GrimDawnLib.GrimDawnGameExpansion exp = Global.Runtime.ActiveExpansion;
+                int activeGroupID = Global.Runtime.ActiveGroupID;
 
                 // first we need to find the groups that are not empty
                 Dictionary<int, int> GroupStashesCount = new Dictionary<int, int>();
-                foreach (var group in Global.Stashes.GetAllStashGroups())
+                foreach (var group in Global.Groups.GetAllGroups())
                     GroupStashesCount.Add(group.ID, 0);
                 Global.Stashes.GetAllStashes()
                     .Where(stash => stash.Expansion == exp && ((
@@ -95,7 +82,7 @@ namespace GDMultiStash.Overlay
                         GroupStashesCount[stash.GroupID] += 1;
                     });
                     
-                List<StashGroupObject> groups = Global.Stashes.GetSortedStashGroups()
+                List<StashGroupObject> groups = Global.Groups.GetSortedGroups()
                     .Where(group => GroupStashesCount[group.ID] != 0)
                     .ToList();
 
@@ -117,11 +104,6 @@ namespace GDMultiStash.Overlay
 
         public void AddGroupItem(StashGroupObject group)
         {
-            /*
-            GroupListChild item = GetCachedScrollItem();
-            if (item == null)
-                item = new GroupListChild();
-            */
             GroupListChild item = new GroupListChild();
             item.Model = group;
             item.Active = false;

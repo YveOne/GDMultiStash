@@ -9,7 +9,7 @@ using GDMultiStash.Common.Objects;
 
 namespace GDMultiStash.Forms.Dragging
 {
-    internal class GroupsDragHandler : BaseDragHandler<StashGroupObject>
+    internal class GroupsDragHandler : Base.DragHandler<StashGroupObject>
     {
         public new ObjectListView ListView => base.ListView;
         public new GroupsDragSource DragSource => (GroupsDragSource)base.DragSource;
@@ -26,7 +26,7 @@ namespace GDMultiStash.Forms.Dragging
             base.OnDragEnd(sender, args);
             if (DropSink.OverIndex != -1)
             {
-                Global.Stashes.UpdateOrder(DropSink.OrderedList);
+                Global.Groups.ResetOrder(DropSink.OrderedList);
             }
             DropSink.Reset();
         }

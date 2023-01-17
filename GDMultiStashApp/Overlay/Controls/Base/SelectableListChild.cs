@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 using System.Drawing;
 
-using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Overlay;
+using D3DHook.Overlay;
+using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay.Controls.Base
 {
@@ -14,11 +10,10 @@ namespace GDMultiStash.Overlay.Controls.Base
     {
         public override Color DebugColor => Color.FromArgb(255, 0, 0);
 
-        protected override D3DHook.Hook.Common.IImageResource UpResource => StaticResources.ButtonRoundUp;
-        protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ButtonRoundOver;
-        protected override D3DHook.Hook.Common.IImageResource CheckedUpResource => StaticResources.ButtonRoundDown;
-        protected override D3DHook.Hook.Common.IImageResource CheckedOverResource => StaticResources.ButtonRoundDownOver;
-
+        protected override IImageResource UpResource => StaticResources.ButtonRoundUp;
+        protected override IImageResource OverResource => StaticResources.ButtonRoundOver;
+        protected override IImageResource CheckedUpResource => StaticResources.ButtonRoundDown;
+        protected override IImageResource CheckedOverResource => StaticResources.ButtonRoundDownOver;
     }
 
     internal class SelectableListChild<T> : ListBoxItemElement<T>

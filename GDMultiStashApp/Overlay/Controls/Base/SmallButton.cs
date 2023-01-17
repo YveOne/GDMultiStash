@@ -1,15 +1,16 @@
 ﻿
 using System.Drawing;
 
-using GDMultiStash.Common.Overlay;
+using D3DHook.Overlay;
+using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay.Controls.Base
 {
     public class SmallButton : ButtonElement
     {
-        protected override D3DHook.Hook.Common.IImageResource UpResource => StaticResources.ButtonSmallUp;
-        protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ButtonSmallOver;
-        protected override D3DHook.Hook.Common.IImageResource DownResource => StaticResources.ButtonSmallDown;
+        protected override IImageResource UpResource => StaticResources.ButtonSmallUp;
+        protected override IImageResource OverResource => StaticResources.ButtonSmallOver;
+        protected override IImageResource DownResource => StaticResources.ButtonSmallDown;
 
         public SmallButton() : base(StaticResources.SmallButtonFontHandler)
         {

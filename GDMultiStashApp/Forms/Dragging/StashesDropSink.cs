@@ -10,7 +10,7 @@ using GDMultiStash.Common.Objects;
 namespace GDMultiStash.Forms.Dragging
 {
 
-    internal class StashesDropSink : BaseDropSink<StashObject>
+    internal class StashesDropSink : Base.DropSink<StashObject>
     {
         public new StashesDragHandler DragHandler => (StashesDragHandler)base.DragHandler;
 

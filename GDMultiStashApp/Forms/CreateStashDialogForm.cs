@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using GrimDawnLib;
+using GDMultiStash.Common;
 using GDMultiStash.Common.Objects;
 
 namespace GDMultiStash.Forms
@@ -29,7 +30,7 @@ namespace GDMultiStash.Forms
             Load += delegate {
                 groupComboBox.DisplayMember = "Name";
                 groupComboBox.ValueMember = "Key";
-                groupComboBox.DataSource = Global.Stashes.GetSortedStashGroups();
+                groupComboBox.DataSource = Global.Groups.GetSortedGroups();
             };
 
             nameTextBox.KeyDown += delegate(object sender, KeyEventArgs e)
@@ -57,7 +58,7 @@ namespace GDMultiStash.Forms
         {
             tabsComboBox.Items.Clear();
             GrimDawnGameExpansion exp = (GrimDawnGameExpansion)expansionComboBox.SelectedIndex;
-            int maxTabs = (int)GrimDawn.Stashes.GetStashInfoForExpansion(exp).MaxTabs;
+            int maxTabs = (int)TransferFile.GetStashInfoForExpansion(exp).MaxTabs;
             for (var i=1; i<= maxTabs; i+=1)
             {
                 tabsComboBox.Items.Add(i);
@@ -92,7 +93,7 @@ namespace GDMultiStash.Forms
             StashObject stash = Global.Stashes.CreateStash(nameTextBox.Text, exp, mode, tabsCount);
             stash.GroupID = ((StashGroupObject)groupComboBox.SelectedItem).ID;
             Global.Configuration.Save();
-            Global.Ingame.InvokeStashesAdded(stash);
+            Global.Runtime.InvokeStashesAdded(stash);
             nameTextBox.SelectAll();
             nameTextBox.Focus();
         }

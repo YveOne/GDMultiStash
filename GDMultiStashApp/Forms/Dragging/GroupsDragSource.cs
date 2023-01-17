@@ -11,7 +11,7 @@ using GDMultiStash.Common.Objects.Sorting;
 namespace GDMultiStash.Forms.Dragging
 {
 
-    internal class GroupsDragSource : BaseDragSource<StashGroupObject>
+    internal class GroupsDragSource : Base.DragSource<StashGroupObject>
     {
 
         public GroupsDragSource() : base(new GroupsSortComparer())

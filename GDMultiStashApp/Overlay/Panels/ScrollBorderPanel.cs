@@ -1,13 +1,14 @@
 ﻿
-using GDMultiStash.Common.Overlay;
+using D3DHook.Overlay;
+using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay.Panels
 {
     internal class ScrollBorderPanel : PanelElement
     {
-        protected override D3DHook.Hook.Common.IImageResource T => StaticResources.ScrollAreaTop;
-        protected override D3DHook.Hook.Common.IImageResource M => StaticResources.ScrollAreaMiddle;
-        protected override D3DHook.Hook.Common.IImageResource B => StaticResources.ScrollAreaBottom;
+        protected override IImageResource T => StaticResources.ScrollAreaTop;
+        protected override IImageResource M => StaticResources.ScrollAreaMiddle;
+        protected override IImageResource B => StaticResources.ScrollAreaBottom;
 
         public ScrollBorderPanel() : base()
         {

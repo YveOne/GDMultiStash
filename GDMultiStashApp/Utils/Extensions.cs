@@ -7,55 +7,51 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Forms;
 
-public static class Extensions
+
+namespace Utils
 {
-    public static List<T> RemoveAndGetRange<T>(this List<T> list, int index, int count)
+    namespace Extensions
     {
-        lock (list)
+
+        public static class Extensions
         {
-            List<T> result = new List<T>();
-            for(int i=1; i<=count; i+=1)
+            public static List<T> RemoveAndGetRange<T>(this List<T> list, int index, int count)
             {
-                if (list.Count <= index) return result;
-                result.Add(list[index]);
-                list.RemoveAt(index);
+                lock (list)
+                {
+                    List<T> result = new List<T>();
+                    for (int i = 1; i <= count; i += 1)
+                    {
+                        if (list.Count <= index) return result;
+                        result.Add(list[index]);
+                        list.RemoveAt(index);
+                    }
+                    return result;
+                }
             }
-            return result;
+
+            public static T DeepClone<T>(this T obj)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    var formatter = new BinaryFormatter();
+                    formatter.Serialize(ms, obj);
+                    ms.Position = 0;
+                    return (T)formatter.Deserialize(ms);
+                }
+            }
+
+            public static int Clamp(this int v, int min, int max)
+            {
+                return (v < min) ? min : (v > max) ? max : v;
+            }
+
+            public static bool InRange(this int v, int min, int max)
+            {
+                return v >= min && v <= max;
+            }
+
         }
+
     }
-
-    public static T DeepClone<T>(this T obj)
-    {
-        using (var ms = new MemoryStream())
-        {
-            var formatter = new BinaryFormatter();
-            formatter.Serialize(ms, obj);
-            ms.Position = 0;
-            return (T)formatter.Deserialize(ms);
-        }
-    }
-
-    public static void KeepOpenOnDropdownCheck(this ToolStripDropDownItem ctl)
-    {
-        foreach (var item in ctl.DropDownItems.OfType<ToolStripDropDownItem>())
-        {
-            item.MouseEnter += (o, e) => ctl.DropDown.AutoClose = false;
-            item.MouseLeave += (o, e) => ctl.DropDown.AutoClose = true;
-        }
-    }
-
-    public static int Clamp(this int v, int min, int max)
-    {
-        return (v < min) ? min : (v > max) ? max : v;
-    }
-
-    public static bool InRange(this int v, int min, int max)
-    {
-        return v >= min && v <= max;
-    }
-
-
-
-
-
 }

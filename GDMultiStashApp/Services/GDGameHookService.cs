@@ -6,7 +6,7 @@ using GDIALib.GDHook;
 
 namespace GDMultiStash.Services
 {
-    internal class GDGameHookService : Service
+    internal class GDGameHookService : Base.Service
     {
 
         public class StashStatusChangedEventArgs : EventArgs

@@ -49,10 +49,10 @@ namespace GrimDawnLib
 
     public static partial class GrimDawn
     {
-
-        public static string DocumentsPath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Grim Dawn");
-        public static string DocumentsSavePath => Path.Combine(DocumentsPath, "save");
-        public static string DocumentsSettingsPath => Path.Combine(DocumentsPath, "Settings");
+        public static GrimDawnGameExpansion LatestExpansion { get; } = GrimDawnGameExpansion.FG;
+        public static string DocumentsPath { get; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Grim Dawn");
+        public static string DocumentsSavePath { get; } = Path.Combine(DocumentsPath, "save");
+        public static string DocumentsSettingsPath { get; } = Path.Combine(DocumentsPath, "Settings");
 
         private static readonly Dictionary<string, GrimDawnGameExpansion> extension2expansion = new Dictionary<string, GrimDawnGameExpansion>
             {
@@ -80,23 +80,21 @@ namespace GrimDawnLib
                 { GrimDawnGameMode.HC, "h" },
             };
 
-        public static GrimDawnGameExpansion LatestExpansion => GrimDawnGameExpansion.FG;
-
-        public static readonly IReadOnlyDictionary<GrimDawnGameExpansion, string> ExpansionNames = new Dictionary<GrimDawnGameExpansion, string>
+        public static IReadOnlyDictionary<GrimDawnGameExpansion, string> ExpansionNames { get; } = new Dictionary<GrimDawnGameExpansion, string>
             {
                 { GrimDawnGameExpansion.Vanilla, "Grim Dawn" },
                 { GrimDawnGameExpansion.AoM, "Grim Dawn: Ashes of Malmouth" },
                 { GrimDawnGameExpansion.FG, "Grim Dawn: Forgotten Gods" },
             };
 
-        public static readonly IReadOnlyList<GrimDawnGameExpansion> ExpansionList = new List<GrimDawnGameExpansion>
+        public static IReadOnlyList<GrimDawnGameExpansion> ExpansionList { get; } = new List<GrimDawnGameExpansion>
             {
                 GrimDawnGameExpansion.Vanilla,
                 GrimDawnGameExpansion.AoM,
                 GrimDawnGameExpansion.FG,
             };
 
-        public static readonly IReadOnlyList<GrimDawnGameEnvironment> GameEnvironmentList = new List<GrimDawnGameEnvironment>
+        public static IReadOnlyList<GrimDawnGameEnvironment> GameEnvironmentList { get; } = new List<GrimDawnGameEnvironment>
             {
                 new GrimDawnGameEnvironment(GrimDawnGameExpansion.Vanilla, GrimDawnGameMode.SC),
                 new GrimDawnGameEnvironment(GrimDawnGameExpansion.Vanilla, GrimDawnGameMode.HC),
@@ -124,7 +122,7 @@ namespace GrimDawnLib
             return GrimDawnGameExpansion.Vanilla;
         }
 
-        public static bool ValidGamePath(string gamePath)
+        public static bool ValidateGamePath(string gamePath)
         {
             if (!File.Exists(Path.Combine(gamePath, "Grim Dawn.exe"))) return false;
             if (!Directory.Exists(Path.Combine(gamePath, "database"))) return false;
@@ -132,12 +130,14 @@ namespace GrimDawnLib
             return true;
         }
 
-        public static bool ValidDocsPath()
+        public static bool ValidateDocumentsPath()
         {
-            // TODO... could be done better
-            return Directory.Exists(DocumentsPath);
+            if (!Directory.Exists(DocumentsPath)) return false;
+            if (!Directory.Exists(DocumentsSavePath)) return false;
+            if (!Directory.Exists(DocumentsSettingsPath)) return false;
+            return true;
         }
-
+        
         public static System.Windows.Forms.DialogResult ShowSelectTransferFilesDialog(out string[] files, bool multiselect, bool allExtensions)
         {
             string filter = string.Join(";", GameEnvironmentList.Select(env => $"*{env.TransferFileExtension}"));
@@ -154,9 +154,6 @@ namespace GrimDawnLib
                 return result;
             }
         }
-
-
-
 
         public static GrimDawnGameEnvironment GetEnvironmentByExtension(string ext)
         {
@@ -183,103 +180,6 @@ namespace GrimDawnLib
         {
             return GetEnvironmentByExtension(Path.GetExtension(fileName));
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public static partial class Stashes
-        {
-
-            public struct StashFileValues
-            {
-                public bool IsExpansion1;
-                public uint Width;
-                public uint Height;
-                public uint MaxTabs;
-            }
-
-            private static readonly Dictionary<GrimDawnGameExpansion, StashFileValues> _stashFileValues = new Dictionary<GrimDawnGameExpansion, StashFileValues> {
-                { GrimDawnGameExpansion.Vanilla, new StashFileValues {
-                    IsExpansion1 = false,
-                    Width = 8,
-                    Height = 16,
-                    MaxTabs = 4,
-                } },
-                { GrimDawnGameExpansion.AoM, new StashFileValues {
-                    IsExpansion1 = true,
-                    Width = 10,
-                    Height = 18,
-                    MaxTabs = 5,
-                } },
-                { GrimDawnGameExpansion.FG, new StashFileValues {
-                    IsExpansion1 = false,
-                    Width = 10,
-                    Height = 18,
-                    MaxTabs = 6,
-                } },
-            };
-
-            public static StashFileValues GetStashInfoForExpansion(GrimDawnGameExpansion exp)
-            {
-                if (_stashFileValues.TryGetValue(exp, out StashFileValues v))
-                {
-                    return new StashFileValues
-                    {
-                        IsExpansion1 = v.IsExpansion1,
-                        Width = v.Width,
-                        Height = v.Height,
-                        MaxTabs = v.MaxTabs,
-                    };
-                }
-                return new StashFileValues
-                {
-                    IsExpansion1 = false,
-                    Width = 0,
-                    Height = 0,
-                    MaxTabs = 0,
-                };
-            }
-
-        }
-
-
-
-
-
-
-
 
     }
 }

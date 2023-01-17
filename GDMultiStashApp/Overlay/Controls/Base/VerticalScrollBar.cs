@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using GDMultiStash.Common.Overlay;
+﻿
+using D3DHook.Overlay;
 
 namespace GDMultiStash.Overlay.Controls.Base
 {

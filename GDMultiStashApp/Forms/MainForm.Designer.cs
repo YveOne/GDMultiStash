@@ -33,6 +33,7 @@
             this.captionImportButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionImportTransferFilesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionImportGDSCButton = new System.Windows.Forms.ToolStripMenuItem();
+            this.captionImportCraftingModeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionExportButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionExportTransferFilesButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionSettingsButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,7 +50,6 @@
             this.captionMinimizeButton = new System.Windows.Forms.Button();
             this.captionTrayButton = new System.Windows.Forms.Button();
             this.captionGameButton = new System.Windows.Forms.Button();
-            this.captionImportCraftingModeButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionMenuStrip.SuspendLayout();
             this.formPaddingPanel.SuspendLayout();
             this.formBackgroundPanel.SuspendLayout();
@@ -62,7 +62,7 @@
             this.captionMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.captionFileButton,
             this.captionHelpButton});
-            this.captionMenuStrip.Location = new System.Drawing.Point(130, 2);
+            this.captionMenuStrip.Location = new System.Drawing.Point(141, 2);
             this.captionMenuStrip.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.captionMenuStrip.Name = "captionMenuStrip";
             this.captionMenuStrip.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
@@ -90,7 +90,7 @@
             this.captionImportGDSCButton,
             this.captionImportCraftingModeButton});
             this.captionImportButton.Name = "captionImportButton";
-            this.captionImportButton.Size = new System.Drawing.Size(180, 24);
+            this.captionImportButton.Size = new System.Drawing.Size(131, 24);
             this.captionImportButton.Text = "Import";
             // 
             // captionImportTransferFilesButton
@@ -107,12 +107,19 @@
             this.captionImportGDSCButton.Text = "GD Stash Changer";
             this.captionImportGDSCButton.Click += new System.EventHandler(this.ImportGDSCButton_Click);
             // 
+            // captionImportCraftingModeButton
+            // 
+            this.captionImportCraftingModeButton.Name = "captionImportCraftingModeButton";
+            this.captionImportCraftingModeButton.Size = new System.Drawing.Size(212, 24);
+            this.captionImportCraftingModeButton.Text = "Crafting Mode";
+            this.captionImportCraftingModeButton.Click += new System.EventHandler(this.CaptionImportCraftingModeButton_Click);
+            // 
             // captionExportButton
             // 
             this.captionExportButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.captionExportTransferFilesButton});
             this.captionExportButton.Name = "captionExportButton";
-            this.captionExportButton.Size = new System.Drawing.Size(180, 24);
+            this.captionExportButton.Size = new System.Drawing.Size(131, 24);
             this.captionExportButton.Text = "Export";
             // 
             // captionExportTransferFilesButton
@@ -125,7 +132,7 @@
             // captionSettingsButton
             // 
             this.captionSettingsButton.Name = "captionSettingsButton";
-            this.captionSettingsButton.Size = new System.Drawing.Size(180, 24);
+            this.captionSettingsButton.Size = new System.Drawing.Size(131, 24);
             this.captionSettingsButton.Text = "Settings";
             this.captionSettingsButton.Click += new System.EventHandler(this.SettingsButton_Click);
             // 
@@ -292,13 +299,6 @@
             this.captionGameButton.TabIndex = 5;
             this.captionGameButton.Text = "Groups";
             this.captionGameButton.UseVisualStyleBackColor = false;
-            // 
-            // captionImportCraftingModeButton
-            // 
-            this.captionImportCraftingModeButton.Name = "captionImportCraftingModeButton";
-            this.captionImportCraftingModeButton.Size = new System.Drawing.Size(212, 24);
-            this.captionImportCraftingModeButton.Text = "Crafting Mode";
-            this.captionImportCraftingModeButton.Click += new System.EventHandler(this.CaptionImportCraftingModeButton_Click);
             // 
             // MainForm
             // 

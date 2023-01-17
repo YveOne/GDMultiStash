@@ -34,5 +34,20 @@ namespace GDMultiStash.Common.Config
 			Locked = false;
 		}
 
+		public ConfigStash Copy()
+        {
+			return new ConfigStash() {
+				ID = ID,
+				Order = Order,
+				SC = SC,
+				HC = HC,
+				Expansion = Expansion,
+				GroupID = GroupID,
+				Name = Name,
+				Color = Color,
+				Locked = Locked,
+			};
+        }
+
 	}
 }

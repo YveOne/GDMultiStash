@@ -11,10 +11,6 @@ namespace GDMultiStash.Common.Config
     [Serializable]
     public class ConfigSettingList
     {
-
-        [XmlIgnore] private static readonly int _LastRevision = 4;
-        [XmlIgnore] public int LastRevision => _LastRevision;
-        [XmlElement("Revision")] public int Revision = _LastRevision;
         [XmlElement("LastToolVersion")] public string LastToolVersion = "";
         
         [XmlElement("WindowWidth")] public int WindowWidth = 650;
@@ -58,7 +54,6 @@ namespace GDMultiStash.Common.Config
         {
             return new ConfigSettingList
             {
-                Revision = Revision,
                 LastToolVersion = LastToolVersion,
 
                 WindowWidth = WindowWidth,
@@ -101,7 +96,6 @@ namespace GDMultiStash.Common.Config
 
         public void Set(ConfigSettingList s)
         {
-            Revision = s.Revision;
             LastToolVersion = s.LastToolVersion;
 
             WindowWidth = s.WindowWidth;

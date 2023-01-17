@@ -1,15 +1,16 @@
 ﻿
 using System.Drawing;
 
-using GDMultiStash.Common.Overlay;
+using D3DHook.Overlay;
+using D3DHook.Hook.Common;
 
 namespace GDMultiStash.Overlay.Controls.Base
 {
     public class LargeButton : ButtonElement
     {
-        protected override D3DHook.Hook.Common.IImageResource UpResource => StaticResources.ButtonLargeUp;
-        protected override D3DHook.Hook.Common.IImageResource DownResource => StaticResources.ButtonLargeDown;
-        protected override D3DHook.Hook.Common.IImageResource OverResource => StaticResources.ButtonLargeOver;
+        protected override IImageResource UpResource => StaticResources.ButtonLargeUp;
+        protected override IImageResource DownResource => StaticResources.ButtonLargeDown;
+        protected override IImageResource OverResource => StaticResources.ButtonLargeOver;
 
         public LargeButton() : base(StaticResources.LargeButtonFontHandler)
         {

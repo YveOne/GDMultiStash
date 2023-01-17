@@ -108,7 +108,7 @@ namespace GDMultiStash.Forms
         {
             if (path == null) return;
             path = path.Trim();
-            if (!GrimDawn.ValidGamePath(path)) return;
+            if (!GrimDawn.ValidateGamePath(path)) return;
             _gameInstallPathsList[path] = path;
         }
 
@@ -415,7 +415,7 @@ namespace GDMultiStash.Forms
             if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
             {
                 string p = folderBrowserDialog1.SelectedPath;
-                if (GrimDawn.ValidGamePath(p))
+                if (GrimDawn.ValidateGamePath(p))
                 {
                     _settings.GamePath = p;
                     _settings.StartGameCommand = "";

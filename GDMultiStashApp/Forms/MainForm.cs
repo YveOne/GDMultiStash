@@ -15,9 +15,9 @@ namespace GDMultiStash.Forms
     {
         private Plexiglass.DockingPlexiglass _plexiglass = null;
 
-        public Main.DecorationCollection Decorations { get; } = new Main.DecorationCollection();
-        public Main.StashesPage StashesPage { get; }
-        public Main.StashGroupsPage StashGroupsPage { get; }
+        public MainWindow.DecorationCollection Decorations { get; } = new MainWindow.DecorationCollection();
+        public MainWindow.StashesPage StashesPage { get; }
+        public MainWindow.StashGroupsPage StashGroupsPage { get; }
 
         public EventHandler<EventArgs> SpaceClick;
 
@@ -25,10 +25,10 @@ namespace GDMultiStash.Forms
 
         class PageHolder
         {
-            public Main.Page Page { get; }
+            public MainWindow.Page Page { get; }
             public Button Button { get; }
 
-            public PageHolder(Main.Page page, Button button)
+            public PageHolder(MainWindow.Page page, Button button)
             {
                 Page = page;
                 Button = button;
@@ -39,7 +39,7 @@ namespace GDMultiStash.Forms
         //private readonly EventHandler<EventArgs> PageChanged;
         private readonly List<PageHolder> pages = new List<PageHolder>();
 
-        private void InitPage(Main.Page page, Button button)
+        private void InitPage(MainWindow.Page page, Button button)
         {
             button.FlatStyle = FlatStyle.Flat;
             button.FlatAppearance.BorderSize = 0;
@@ -104,7 +104,7 @@ namespace GDMultiStash.Forms
         {
             if (m.Msg == Native.WM_NCLBUTTONDBLCLK) return; // disable doubleclick on titlebar
             base.WndProc(ref m);
-            if (m.Msg == Global.WM_SHOWME)
+            if (m.Msg == Constants.WM_SHOWME)
             {
                 if (!Visible)
                     Show();
@@ -272,18 +272,20 @@ namespace GDMultiStash.Forms
             formPaddingPanel.Click += spaceClickhandler;
             pagesPaddingPanel.Click += spaceClickhandler;
 
-            StashesPage = new Main.StashesPage(this);
+            StashesPage = new MainWindow.StashesPage(this);
             InitPage(StashesPage, stashesPageButton);
 
-            StashGroupsPage = new Main.StashGroupsPage(this);
+            StashGroupsPage = new MainWindow.StashGroupsPage(this);
             InitPage(StashGroupsPage, stashGroupsPageButton);
 
             ShowPage(0);
         }
 
+        protected override bool ShowWithoutActivation => Global.Configuration.Settings.AutoStartGame;
+
         protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
-            Text = Global.AppName;
+            Text = Constants.AppName;
 
             // form
             captionGameButton.Text = L.StartGameButton();
@@ -428,7 +430,7 @@ namespace GDMultiStash.Forms
                     if (transferFile.TotalUsage == 0) continue; // no items inside
 
                     var stashName = System.Web.HttpUtility.HtmlDecode(mName.Groups[1].Value.Trim());
-                    StashObject stash = Global.Stashes.CreateImportStash(stashFile, stashName, transferFile.Expansion, GrimDawnLib.GrimDawnGameMode.Both);
+                    StashObject stash = Global.Stashes.ImportCreateStash(stashFile, stashName, transferFile.Expansion, GrimDawnLib.GrimDawnGameMode.Both);
                     if (stash == null) continue;
                     importedStashes.Add(stash);
 
@@ -438,12 +440,12 @@ namespace GDMultiStash.Forms
 
                 if (importedStashes.Count != 0)
                 {
-                    var group = Global.Stashes.CreateStashGroup("GDSC", true);
+                    var group = Global.Groups.CreateGroup("GDSC", true);
                     foreach(var s in importedStashes)
                         s.GroupID = group.ID;
                     Global.Configuration.Save();
-                    Global.Ingame.InvokeStashesAdded(importedStashes);
-                    Global.Ingame.InvokeStashGroupsAdded(group);
+                    Global.Runtime.InvokeStashesAdded(importedStashes);
+                    Global.Runtime.InvokeStashGroupsAdded(group);
                 }
             }
         }

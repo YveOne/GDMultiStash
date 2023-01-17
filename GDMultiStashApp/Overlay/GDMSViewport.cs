@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-using GDMultiStash.Common.Overlay;
-using GDMultiStash.Common.Overlay.Animations;
-
 using GDMultiStash.Properties;
+
+using D3DHook.Overlay;
+using D3DHook.Overlay.Animations;
 
 namespace GDMultiStash.Overlay
 {
@@ -136,7 +136,7 @@ namespace GDMultiStash.Overlay
 
 
 
-            Global.Configuration.AppearanceChanged += delegate {
+            Global.Configuration.OverlayDesignChanged += delegate {
                 FontHandler.ClearFontCache();
             };
 
@@ -153,8 +153,8 @@ namespace GDMultiStash.Overlay
                 }
             };
 
-            Global.Ingame.GameWindowSizeChanged += delegate {
-                Size s = Global.Ingame.GameWindowSize;
+            Global.Runtime.GameWindowSizeChanged += delegate {
+                Size s = Global.Runtime.GameWindowSize;
                 Width = s.Width;
                 Height = s.Height;
             };

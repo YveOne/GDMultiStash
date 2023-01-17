@@ -4,9 +4,11 @@ using System.IO;
 
 using GrimDawnLib;
 
+using Utils.Extensions;
+
 namespace GDMultiStash.Common
 {
-	internal class TransferFile
+	internal partial class TransferFile
 	{
 		private readonly GDIALib.Parser.Stash.Stash stash;
 		private float _usageTotal = 0f;
@@ -30,7 +32,7 @@ namespace GDMultiStash.Common
 
 		public IList<float> TabsUsage => _usagePages.AsReadOnly();
 
-		public uint MaxTabsCount => GrimDawn.Stashes.GetStashInfoForExpansion(Expansion).MaxTabs;
+		public uint MaxTabsCount => GetStashInfoForExpansion(Expansion).MaxTabs;
 
 		public uint Width => stash.Width;
 
@@ -40,13 +42,17 @@ namespace GDMultiStash.Common
 
 		public static TransferFile CreateForExpansion(GrimDawnGameExpansion exp, int tabsCount = -1)
 		{
-			GrimDawn.Stashes.StashFileValues def = GrimDawn.Stashes.GetStashInfoForExpansion(exp);
+			Values def = GetStashInfoForExpansion(exp);
 			GDIALib.Parser.Stash.Stash stash = new GDIALib.Parser.Stash.Stash()
 			{
 				IsExpansion1 = def.IsExpansion1,
 			};
 			if (tabsCount == -1) tabsCount = (int)def.MaxTabs;
-			tabsCount = tabsCount.Clamp(1, (int)def.MaxTabs);
+			tabsCount = tabsCount.Clamp(0, (int)def.MaxTabs);
+			if (tabsCount == 0)
+            {
+				Console.WriteLine("Warning: Creating transfer file with 0 tabs");
+            }
 			for (int i = 1; i <= tabsCount; i += 1)
 			{
 				stash.Tabs.Add(new GDIALib.Parser.Stash.StashTab()
@@ -93,7 +99,7 @@ namespace GDMultiStash.Common
 		public void LoadUsage()
         {
 			_usageTotal = 0f;
-			var expInfo = GrimDawn.Stashes.GetStashInfoForExpansion(Expansion);
+			var expInfo = GetStashInfoForExpansion(Expansion);
 			long spacePerTab = expInfo.Width * expInfo.Height;
 			long spacePerStash = stash.Tabs.Count * spacePerTab;
 			long usedTotal = 0;

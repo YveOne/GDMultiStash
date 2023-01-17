@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Utils
 {
+
     internal class Funcs
     {
         public delegate bool WaitForConditionDelegate();
@@ -40,4 +41,5 @@ namespace Utils
         }
 
     }
+
 }

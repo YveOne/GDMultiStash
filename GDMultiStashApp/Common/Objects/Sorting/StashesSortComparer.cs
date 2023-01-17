@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GDMultiStash.Common.Objects.Sorting
 {
-    internal class StashesSortComparer : IComparer<StashObject>
+    internal class StashesSortComparer : Utils.UniversalComparer<StashObject>
     {
         public delegate bool CustomDelegate(StashObject x, StashObject y, out int ret);
 
@@ -21,7 +21,7 @@ namespace GDMultiStash.Common.Objects.Sorting
             _custom = custom;
         }
 
-        public int Compare(StashObject x, StashObject y)
+        public override int Compare(StashObject x, StashObject y)
         {
             if (x is StashDummyObject) return +1;
             if (y is StashDummyObject) return -1;

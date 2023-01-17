@@ -111,7 +111,8 @@ namespace GrimDawnLib
 
             private static bool FileChanged()
             {
-                long curWriteTicks = Utils.FileUtils.GetLastWriteTicks(keybindingsFile);
+                if (!File.Exists(keybindingsFile)) return false;
+                long curWriteTicks = new FileInfo(keybindingsFile).LastWriteTime.Ticks;
                 if (curWriteTicks != lastWriteTicks)
                 {
                     lastWriteTicks = curWriteTicks;

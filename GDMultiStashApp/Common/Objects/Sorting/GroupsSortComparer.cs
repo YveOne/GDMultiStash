@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace GDMultiStash.Common.Objects.Sorting
 {
 
-    internal class GroupsSortComparer : IComparer<StashGroupObject>
+    internal class GroupsSortComparer : Utils.UniversalComparer<StashGroupObject>
     {
         public delegate bool CustomDelegate(StashGroupObject x, StashGroupObject y, out int ret);
 
@@ -19,7 +19,7 @@ namespace GDMultiStash.Common.Objects.Sorting
             _custom = custom;
         }
 
-        public int Compare(StashGroupObject x, StashGroupObject y)
+        public override int Compare(StashGroupObject x, StashGroupObject y)
         {
             if (x.ID == 0) return -1; // keep main stashgrp always at top
             if (y.ID == 0) return +1;
