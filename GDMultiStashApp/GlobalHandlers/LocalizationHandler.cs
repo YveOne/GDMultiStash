@@ -28,14 +28,18 @@ namespace GDMultiStash.GlobalHandlers
             public static Dictionary<string, string> ParseDictionary(string lines)
             {
                 Dictionary<string, string> dict = new Dictionary<string, string>();
-                foreach (string line in lines.Split(new string[] { Environment.NewLine }, StringSplitOptions.None))
+                using (System.IO.StringReader sr = new System.IO.StringReader(lines))
                 {
-                    string[] splits = Regex.Replace(line, @"//.*?$", "").Split('=');
-                    if (splits.Length == 2)
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
                     {
-                        string k = splits[0].Trim();
-                        string v = splits[1].Trim();
-                        dict[k] = v;
+                        string[] splits = Regex.Replace(line, @"//.*?$", "").Split('=');
+                        if (splits.Length == 2)
+                        {
+                            string k = splits[0].Trim();
+                            string v = splits[1].Trim();
+                            dict[k] = v;
+                        }
                     }
                 }
                 return dict;

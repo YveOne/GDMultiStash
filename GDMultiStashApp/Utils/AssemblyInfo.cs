@@ -18,9 +18,9 @@ namespace Utils
 
         public AssemblyInfo()
         {
-            AppName = Assembly.GetExecutingAssembly().GetName().Name;
             Assembly asm = Assembly.GetExecutingAssembly();
-            Location = asm.Location;
+            AppName = asm.GetName().Name;
+            Location = System.IO.Path.ChangeExtension(asm.Location, "exe");
             Copyright = ((AssemblyCopyrightAttribute)asm.GetCustomAttribute(typeof(AssemblyCopyrightAttribute))).Copyright;
             Version = ((AssemblyFileVersionAttribute)asm.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version;
             Description = ((AssemblyDescriptionAttribute)asm.GetCustomAttribute(typeof(AssemblyDescriptionAttribute))).Description;

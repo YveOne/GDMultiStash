@@ -142,50 +142,56 @@ namespace GDMultiStash.GlobalHandlers
 
         public void LoadItemInfos(string text)
         {
-            string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             Console.WriteLine("Reading item infos ...");
             string[] splits;
             string record;
-            foreach (string line in lines)
+            using (StringReader sr = new StringReader(text))
             {
-                splits = line.Split('|');
-                if (splits.Length < 4) continue;
-                record = splits[0].Trim();
-                if (record.StartsWith("//")) continue;
-                if (!uint.TryParse(splits[1], out uint width)) continue;
-                if (!uint.TryParse(splits[2], out uint height)) continue;
-                if (!uint.TryParse(splits[3], out uint level)) continue;
-                _itemRecordInfos[record] = new ItemRecordInfo()
+                string line;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    Width = width,
-                    Height = height,
-                    RequiredLevel = level,
-                    Class = splits[4],
-                    Quality = splits[5],
-                    Texture = splits[6],
-                };
+                    splits = line.Split('|');
+                    if (splits.Length < 4) continue;
+                    record = splits[0].Trim();
+                    if (record.StartsWith("//")) continue;
+                    if (!uint.TryParse(splits[1], out uint width)) continue;
+                    if (!uint.TryParse(splits[2], out uint height)) continue;
+                    if (!uint.TryParse(splits[3], out uint level)) continue;
+                    _itemRecordInfos[record] = new ItemRecordInfo()
+                    {
+                        Width = width,
+                        Height = height,
+                        RequiredLevel = level,
+                        Class = splits[4],
+                        Quality = splits[5],
+                        Texture = splits[6],
+                    };
+                }
             }
             Console.WriteLine("- Found " + _itemRecordInfos.Count + " records");
         }
 
         public void LoadItemAffixInfos(string text)
         {
-            string[] lines = text.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
             Console.WriteLine("Reading affix infos ...");
             string[] splits;
             string record;
-            foreach (string line in lines)
+            using (StringReader sr = new StringReader(text))
             {
-                splits = line.Split('|');
-                if (splits.Length < 2) continue;
-                record = splits[0].Trim();
-                if (record.StartsWith("//")) continue;
-                if (!uint.TryParse(splits[1], out uint level)) continue;
-                _affixRecordInfos[record] = new AffixRecordInfo()
+                string line;
+                while ((line = sr.ReadLine()) != null)
                 {
-                    RequiredLevel = level,
-                    Quality = splits[2],
-                };
+                    splits = line.Split('|');
+                    if (splits.Length < 2) continue;
+                    record = splits[0].Trim();
+                    if (record.StartsWith("//")) continue;
+                    if (!uint.TryParse(splits[1], out uint level)) continue;
+                    _affixRecordInfos[record] = new AffixRecordInfo()
+                    {
+                        RequiredLevel = level,
+                        Quality = splits[2],
+                    };
+                }
             }
             Console.WriteLine("- Found " + _affixRecordInfos.Count + " records");
         }

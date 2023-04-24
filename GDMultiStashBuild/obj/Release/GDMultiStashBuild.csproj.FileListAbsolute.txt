@@ -1,0 +1,11 @@
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4\_bin\GDMultiStashBuild.exe
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4\GDMultiStashBuild\obj\Release\GDMultiStashBuild.csproj.SuggestedBindingRedirects.cache
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4\GDMultiStashBuild\obj\Release\GDMultiStashBuild.g.resources
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4\GDMultiStashBuild\obj\Release\GDMultiStashBuild.csproj.CoreCompileInputs.cache
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4\GDMultiStashBuild\obj\Release\GDMultiStashBuild.exe
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4-master\_bin\GDMultiStashBuild.exe
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.csproj.AssemblyReference.cache
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.csproj.SuggestedBindingRedirects.cache
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.g.resources
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.csproj.CoreCompileInputs.cache
+C:\Users\Yvonne\Desktop\GDMultiStash-1.36.4-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.exe

@@ -1,3 +1,6 @@
+v1.36.5
+- Fixed shortcut creation
+
 v1.36.4
 - Fixed: Ingame stash not automatically reloading after editing stash tabs
 - Fixed: Auto-back-to-main feature not working when quitting GD
