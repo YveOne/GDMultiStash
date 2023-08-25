@@ -1,3 +1,12 @@
+v1.37
+- [Start GD] "Steam Client" is now using the command "<path>/Steam.exe -applaunch 219990 /x64"
+- [Start GD] "Grim Dawn.exe" is now using "/x64" argument by default
+- [Start GD] Commands are now relative to game path. No need to reset start command after changing game path anymore
+- [Start GD] Information: Custom start commands remain unharmed and are still supported
+- Addes stash sorting methods "by set/level" and "by level/set"
+- - (An additional group "Unsorted" will be created for non-set items)
+- Fixed a bug where "Sort items by level" uses wrong calculated required item levels
+
 v1.36.5
 - Fixed shortcut creation
 

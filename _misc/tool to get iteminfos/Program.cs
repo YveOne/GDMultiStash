@@ -15,17 +15,395 @@ namespace ConsoleApp1
 {
     internal class Program
     {
-        private static List<string> argsList;
 
-        private static string GetNextArg()
+        private static readonly string GDPATH = "Z:\\Games\\Steam\\steamapps\\common\\Grim Dawn";
+
+        private static readonly string GD0_DB = Path.Combine(GDPATH, "database", "database.arz");
+        private static readonly string GD1_DB = Path.Combine(GDPATH, "gdx1", "database", "GDX1.arz");
+        private static readonly string GD2_DB = Path.Combine(GDPATH, "gdx2", "database", "GDX2.arz");
+        private static readonly string GD0_RES = Path.Combine(GDPATH, "resources");
+        private static readonly string GD1_RES = Path.Combine(GDPATH, "gdx1", "resources");
+        private static readonly string GD2_RES = Path.Combine(GDPATH, "gdx2", "resources");
+
+        private static readonly string CWD = Path.Combine(Environment.CurrentDirectory, "working");
+        private static readonly int CWDLEN = CWD.Length + 1;
+        private static readonly string CWD_RECORDS = Path.Combine(CWD, "records");
+        private static readonly string CWD_TEXTURES = Path.Combine(CWD, "textures");
+
+        private static readonly Dictionary<string, RegexPattern> RegexPatterns = new Dictionary<string, RegexPattern>()
         {
-            if (argsList.Count == 0) return null;
-            string ret = argsList[0];
-            argsList.RemoveAt(0);
-            return ret;
+            // items
+            ["bitmap"] = new RegexPattern {
+                Pattern = new Regex(@"^[a-z]*bitmap[a-z]*,([^,]+\.tex),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "", // has to be set in dbr
+            },
+            ["class"] = new RegexPattern {
+                Pattern = new Regex(@"^class,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "", // has to be set in dbr
+            },
+            ["levelRequirement"] = new RegexPattern {
+                Pattern = new Regex(@"^levelRequirement,(\d+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "0"
+            },
+            ["itemClassification"] = new RegexPattern {
+                Pattern = new Regex(@"^itemClassification,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "None",
+            },
+            ["itemSetName"] = new RegexPattern
+            {
+                Pattern = new Regex(@"^itemSetName,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "",
+            },
+            ["itemLevel"] = new RegexPattern {
+                Pattern = new Regex(@"^itemLevel,(\d+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "0",
+            },
+
+            // itemsets
+            ["setName"] = new RegexPattern {
+                Pattern = new Regex(@"^setName,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "", // has to be set in dbr
+            },
+            ["setMembers"] = new RegexPattern {
+                Pattern = new Regex(@"^setMembers,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase),
+                Default = "", // has to be set in dbr
+            },
+        };
+
+        private static readonly Dictionary<string, string> CustomQualities = new Dictionary<string, string>() {
+            ["records/endlessdungeon/items/a001_ring.dbr"] = "Legendary",
+        };
+
+        static void Main(string[] args)
+        {
+            if (!Directory.Exists(GDPATH))
+            {
+                Console.WriteLine("GDPATH not found: " + GDPATH);
+                return;
+            }
+            ExtractFiles();
+
+            var itemRecordInfos = new Dictionary<string, RecordInfo>();
+            var foundBitmaps = new Dictionary<string, bool>();
+            var bitmapInfos = new Dictionary<string, BitmapInfo>();
+            var itemInfos = new SortedDictionary<string, ItemInfo>();
+            var pngPaths = new Dictionary<string, string>();
+
+            Console.WriteLine("Reading item records ...");
+            foreach (string dbrFile in GetRecordFiles(CWD_RECORDS, true))
+            {
+                var record = GetRecordPath(dbrFile);
+                if (record.StartsWith("records/level art/")) continue;
+                if (record.StartsWith("records/proxies/")) continue;
+                if (record.StartsWith("records/sandbox/")) continue;
+                if (record.StartsWith("records/controllers/")) continue;
+                if (record.StartsWith("records/sounds/")) continue;
+                if (record.StartsWith("records/skills/")) continue;
+                if (record.StartsWith("records/endlessdungeon/skills/")) continue;
+                if (record.StartsWith("records/items/lootaffixes/")) continue;
+                Console.WriteLine(record);
+
+                var dbrData = DoRegex(File.ReadAllText(dbrFile), new string[] {
+                    "bitmap", "class", "levelRequirement", "itemClassification", "itemSetName"
+                });
+                var _bitmap = dbrData["bitmap"];
+                var _class = dbrData["class"];
+                var _levelRequirement = dbrData["levelRequirement"];
+                var _itemClassification = dbrData["itemClassification"];
+                var _itemSetName = dbrData["itemSetName"];
+
+                if (_bitmap == "") continue;
+                if (_class == "") continue;
+
+                if (CustomQualities.TryGetValue(record, out string q))
+                    _itemClassification = q;
+
+                foundBitmaps[_bitmap] = true;
+                itemRecordInfos[record] = new RecordInfo()
+                {
+                    Bitmap = _bitmap,
+                    Class = _class,
+                    LevelRequirement = _levelRequirement,
+                    ItemClassification = _itemClassification,
+                    ItemSetName = _itemSetName,
+                };
+            }
+
+            Console.WriteLine("Loading image sizes...");
+            foreach (string bitmap in foundBitmaps.Keys)
+            {
+                Console.WriteLine(bitmap);
+                var texName = $"{Path.GetFileName(bitmap)}.png";
+                var texPath = Path.Combine(CWD_TEXTURES, texName);
+                if (!File.Exists(texPath))
+                {
+                    Console.WriteLine("  - Skipped, not found");
+                    continue;
+                }
+                using (Image png = Image.FromFile(texPath))
+                {
+                    if (png.Width % 32 != 0) continue;
+                    if (png.Height % 32 != 0) continue;
+                    var width = png.Width / 32;
+                    var height = png.Height / 32;
+                    if (width > 8 || height > 8) continue;
+                    bitmapInfos[bitmap] = new BitmapInfo
+                    {
+                        Width = width,
+                        Height = height,
+                        File = texPath,
+                    };
+                }
+            }
+
+            Console.WriteLine("itemRecordInfo -> itemInfo");
+            foreach (KeyValuePair<string, RecordInfo> kvp in itemRecordInfos)
+            {
+                var record = kvp.Key;
+                var recordInfo = kvp.Value;
+                var bitmap = recordInfo.Bitmap;
+
+                if (!bitmapInfos.TryGetValue(bitmap, out BitmapInfo bitmapInfo)) continue;
+
+                var iteminfo = new ItemInfo()
+                {
+                    RecordInfo = recordInfo,
+                    BitmapInfo = bitmapInfo,
+                    BitmapName = Path.ChangeExtension(Path.GetFileName(bitmap), ".png"),
+                };
+                itemInfos[record] = iteminfo;
+                pngPaths[iteminfo.BitmapName] = bitmapInfo.File;
+                Console.WriteLine($"{record} = size:{iteminfo.BitmapInfo.Width}/{iteminfo.BitmapInfo.Height} level:{iteminfo.RecordInfo.LevelRequirement}");
+                System.Threading.Thread.Sleep(1);
+            }
+
+            Console.WriteLine("Creating itemtextures.zip ...");
+            if (File.Exists("textures.zip")) File.Delete("itemtextures.zip");
+            using (FileStream zipStream = new FileStream("itemtextures.zip", FileMode.Create))
+            {
+                using (ZipArchive zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Update))
+                {
+                    ImageConverter converter = new ImageConverter();
+                    foreach (var entry in pngPaths)
+                    {
+                        string pngName = entry.Key;
+                        string pngPath = entry.Value;
+                        Console.WriteLine($"Zipping {pngName}");
+                        ZipArchiveEntry zipEntry = zipArchive.CreateEntry(pngName);
+
+                        using (Image pngOriginal = Image.FromFile(pngPath))
+                        {
+                            if (pngOriginal != null)
+                            {
+                                using (Image pngResized = ResizeImage(pngOriginal, 0.5f))
+                                {
+                                    using (StreamWriter writer = new StreamWriter(zipEntry.Open()))
+                                    {
+                                        byte[] buffer = (byte[])converter.ConvertTo(pngResized, typeof(byte[]));
+                                        writer.BaseStream.Write(buffer, 0, buffer.Length);
+                                    }
+                                }
+                            }
+                        }
+                        System.Threading.Thread.Sleep(1);
+                    }
+                }
+            }
+
+            Console.WriteLine("Writing iteminfos.txt ...");
+            string itemInfosFile = Environment.CurrentDirectory + "\\iteminfos.txt";
+            if (File.Exists(itemInfosFile)) File.Delete(itemInfosFile);
+            using (StreamWriter sw = File.AppendText(itemInfosFile))
+            {
+                sw.WriteLine($"//record|width|height|level|class|quality|bitmap|setrecord");
+                var allClasses = new SortedDictionary<string, bool>();
+                var allQualities = new SortedDictionary<string, bool>();
+                foreach (KeyValuePair<string, ItemInfo> kvp in itemInfos)
+                {
+                    object[] l = new object[] {
+                        kvp.Key,
+                        kvp.Value.BitmapInfo.Width,
+                        kvp.Value.BitmapInfo.Height,
+                        kvp.Value.RecordInfo.LevelRequirement,
+                        kvp.Value.RecordInfo.Class,
+                        kvp.Value.RecordInfo.ItemClassification,
+                        kvp.Value.BitmapName,
+                        kvp.Value.RecordInfo.ItemSetName,
+                    };
+                    sw.WriteLine(string.Join("|", Array.ConvertAll(l, Convert.ToString)));
+                    allClasses[kvp.Value.RecordInfo.Class] = true;
+                    allQualities[kvp.Value.RecordInfo.ItemClassification] = true;
+                }
+                sw.WriteLine($"//Classes:");
+                foreach (string s in allClasses.Keys)
+                    sw.WriteLine($"// - {s}");
+                sw.WriteLine($"//Qualities:");
+                foreach (string s in allQualities.Keys)
+                    sw.WriteLine($"// - {s}");
+            }
+
+            Console.WriteLine("Writing itemaffixes.txt ...");
+            string itemAffixesFile = Environment.CurrentDirectory + "\\itemaffixes.txt";
+            if (File.Exists(itemAffixesFile)) File.Delete(itemAffixesFile);
+            using (StreamWriter sw = File.AppendText(itemAffixesFile))
+            {
+                sw.WriteLine($"//record|level|quality");
+                var allQualities = new SortedDictionary<string, bool>();
+
+                foreach (string dbrFile in GetRecordFiles(CWD_RECORDS, true))
+                {
+                    var record = GetRecordPath(dbrFile);
+                    if (!(record.StartsWith("records/items/lootaffixes/")
+                       || record.StartsWith("records/items/enchants/")
+                       || record.StartsWith("records/items/materia/")
+                    )) continue;
+
+                    var dbrData = DoRegex(File.ReadAllText(dbrFile), new string[] {
+                        "levelRequirement", "itemClassification"
+                    });
+                    var _levelRequirement = dbrData["levelRequirement"];
+                    var _itemClassification = dbrData["itemClassification"];
+
+                    if (CustomQualities.TryGetValue(record, out string q))
+                        _itemClassification = q;
+
+                    allQualities[_itemClassification] = true;
+
+                    sw.WriteLine(string.Join("|", new string[] {
+                        record,
+                        _levelRequirement,
+                        _itemClassification,
+                    }));
+                }
+                sw.WriteLine($"//Qualities:");
+                foreach (string s in allQualities.Keys)
+                    sw.WriteLine($"// - {s}");
+            }
+
+            Console.WriteLine("Writing itemsets.txt ...");
+            string itemSetsFile = Environment.CurrentDirectory + "\\itemsets.txt";
+            if (File.Exists(itemSetsFile)) File.Delete(itemSetsFile);
+            using (StreamWriter sw = File.AppendText(itemSetsFile))
+            {
+                sw.WriteLine($"//record|setname|setitems");
+                foreach (string dbrFile in GetRecordFiles(CWD_RECORDS, true))
+                {
+                    var record = GetRecordPath(dbrFile);
+                    if (record.Contains("petbonus")
+                       || !(record.StartsWith("records/items/lootsets/")
+                       || record.StartsWith("records/storyelements/signs/")
+                    )) continue;
+
+                    var dbrData = DoRegex(File.ReadAllText(dbrFile), new string[] {
+                        "setName", "setMembers"
+                    });
+                    var _setName = dbrData["setName"];
+                    var _setMembers = dbrData["setMembers"];
+
+                    if (_setName == "" || _setMembers == "")
+                        continue;
+
+                    sw.WriteLine(string.Join("|", new string[] {
+                        record,
+                        _setName,
+                        _setMembers,
+                    }));
+                }
+            }
+
+            Console.WriteLine("DONE -  Press enter to exit");
+            Console.ReadLine();
         }
 
-        private static string CWD = Path.Combine(Environment.CurrentDirectory, "working");
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #region structs
+
+        internal struct RecordInfo
+        {
+            public string Bitmap;
+            public string Class;
+            public string LevelRequirement;
+            public string ItemClassification;
+            public string ItemSetName;
+        }
+
+        internal struct BitmapInfo
+        {
+            public int Width;
+            public int Height;
+            public string File;
+        }
+
+        internal struct ItemInfo
+        {
+            public RecordInfo RecordInfo;
+            public BitmapInfo BitmapInfo;
+            public string BitmapName;
+        }
+
+        internal struct RegexPattern
+        {
+            public Regex Pattern;
+            public string Default;
+        }
+
+        #endregion
+
+
+
+
+
+
+        private static Dictionary<string, string> DoRegex(string text, string[] keys)
+        {
+            var p = new Dictionary<string, string>();
+            foreach (string k in keys)
+            {
+                Match m = RegexPatterns[k].Pattern.Match(text);
+                p[k] = m.Success
+                    ? m.Groups[1].Value
+                    : RegexPatterns[k].Default;
+            }
+            return p;
+        }
+
+        private static string GetRecordPath(string path) =>
+            path.Substring(CWDLEN, path.Length - CWDLEN).Replace("\\", "/");
+
+        private static string[] GetRecordFiles(string path, bool recursive = false)
+        {
+            SearchOption options = recursive
+                ? SearchOption.AllDirectories
+                : SearchOption.TopDirectoryOnly;
+            return Directory.GetFiles(path, "*.dbr", options);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         private static void RunProcess(string FileName, string Arguments)
         {
@@ -46,7 +424,7 @@ namespace ConsoleApp1
                     p.Start();
                     while (!p.StandardOutput.EndOfStream)
                         Console.WriteLine(p.StandardOutput.ReadLine());
-                    
+
                     p.WaitForExit();
                 }
             }
@@ -56,349 +434,34 @@ namespace ConsoleApp1
             }
         }
 
-        struct RecordInfo
+        private static void ExtractFiles()
         {
-            public string Bitmap;
-            public string LevelRequirement;
-            public string Class;
-            public string Classification;
-        }
-
-        struct BitmapInfo
-        {
-            public int Width;
-            public int Height;
-            public string File;
-        }
-
-        struct ItemInfo
-        {
-            public RecordInfo RecordInfo;
-            public BitmapInfo BitmapInfo;
-            public string BitmapName;
-        }
-
-        static void Main(string[] args)
-        {
-            //if (args.Length == 0) return;
-            argsList = new List<string>(args);
-            string GDPATH = GetNextArg();
-
-
-            GDPATH = "Z:\\Games\\Steam\\steamapps\\common\\Grim Dawn";
-            if (!Directory.Exists(GDPATH))
-            {
-                Console.WriteLine("Directory not found: " + GDPATH);
-                return;
-            }
-
-            int cwdLen = CWD.Length + 1;
-            string recordsDir = Path.Combine(CWD, "records");
-            string texturesDir = Path.Combine(CWD, "textures");
-
-            string database0 = GDPATH + "\\database\\database.arz";
-            string database1 = GDPATH + "\\gdx1\\database\\GDX1.arz";
-            string database2 = GDPATH + "\\gdx2\\database\\GDX2.arz";
-            string resources0 = GDPATH + "\\resources\\";
-            string resources1 = GDPATH + "\\gdx1\\resources\\";
-            string resources2 = GDPATH + "\\gdx2\\resources\\";
-
-
-            //if (Directory.Exists(CWD)) Directory.Delete(CWD, true);
             if (!Directory.Exists(CWD))
             {
                 Directory.CreateDirectory(CWD);
+            }
+            if (!Directory.Exists(CWD_RECORDS))
+            {
                 Console.WriteLine("Extracting records ...");
-                RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + database0 + "\" -database \"" + CWD + "\"");
-                RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + database1 + "\" -database \"" + CWD + "\"");
-                RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + database2 + "\" -database \"" + CWD + "\"");
-                /*
-                foreach (string resPath in new string[] { resources0, resources1, resources2 })
-                {
-                    foreach (string arcFile in Directory.GetFiles(resPath, "*.arc"))
-                    {
-                        if (arcFile.ToLower().EndsWith("Conversations.arc")) continue;
-                        if (arcFile.ToLower().EndsWith("Sound.arc")) continue;
-                        if (arcFile.ToLower().EndsWith("Fonts.arc")) continue;
-
-                        RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + arcFile + "\" -extract \"" + CWD + "\"");
-                    }
-                }
-                */
+                RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + GD0_DB + "\" -database \"" + CWD + "\"");
+                RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + GD1_DB + "\" -database \"" + CWD + "\"");
+                RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + GD2_DB + "\" -database \"" + CWD + "\"");
             }
-
-            //if (Directory.Exists(texturesDir)) Directory.Delete(texturesDir, true);
-            if (!Directory.Exists(texturesDir))
+            if (!Directory.Exists(CWD_TEXTURES))
             {
-                Directory.CreateDirectory(texturesDir);
+                Directory.CreateDirectory(CWD_TEXTURES);
                 Console.WriteLine("Extracting textures ...");
-                foreach (string resPath in new string[] { resources0, resources1, resources2 })
+                foreach (string resPath in new string[] { GD0_RES, GD1_RES, GD2_RES })
                 {
                     foreach (string arcFile in Directory.GetFiles(resPath, "*.arc"))
                     {
-                        DDSImageReader.ExtractItemIcons(arcFile, texturesDir);
+                        if (arcFile.EndsWith("Scripts.arc")
+                            || arcFile.EndsWith("Shaders.arc"))
+                            continue;
+                        DDSImageReader.ExtractItemIcons(arcFile, CWD_TEXTURES);
                     }
                 }
             }
-
-
-
-
-
-            Dictionary<string, Regex> regex = new Dictionary<string, Regex>();
-            regex["bitmap"] = new Regex(@"^[a-z]*bitmap[a-z]*,([^,]+\.tex),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            regex["levelRequirement"] = new Regex(@"^levelRequirement,(\d+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            //regex["itemLevel"] = new Regex(@"^itemLevel,(\d+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            regex["itemClassification"] = new Regex(@"^itemClassification,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-            regex["class"] = new Regex(@"^class,([^,]+),$", RegexOptions.Multiline | RegexOptions.IgnoreCase);
-
-            Dictionary<string, RecordInfo> recordInfos = new Dictionary<string, RecordInfo>();
-            Dictionary<string, bool> foundBitmaps = new Dictionary<string, bool>();
-            var bitmapInfos = new Dictionary<string, BitmapInfo>();
-            SortedDictionary<string, ItemInfo> itemInfos = new SortedDictionary<string, ItemInfo>();
-            var pngPaths = new Dictionary<string, string>();
-
-            
-            var customQualities = new Dictionary<string, string>();
-            customQualities["records/endlessdungeon/items/a001_ring.dbr"] = "Legendary";
-
-
-            Console.WriteLine("Reading item records ...");
-            foreach (string dbrFile in Directory.GetFiles(recordsDir, "*.dbr", SearchOption.AllDirectories))
-            {
-                string record = dbrFile.Substring(cwdLen, dbrFile.Length - cwdLen).Replace("\\", "/");
-                if (record.StartsWith("records/level art/")) continue;
-                if (record.StartsWith("records/proxies/")) continue;
-                if (record.StartsWith("records/sandbox/")) continue;
-                if (record.StartsWith("records/controllers/")) continue;
-                if (record.StartsWith("records/sounds/")) continue;
-                if (record.StartsWith("records/skills/")) continue;
-                if (record.StartsWith("records/endlessdungeon/skills/")) continue;
-                if (record.StartsWith("records/items/lootaffixes/")) continue;
-                Console.WriteLine(record);
-
-                string dbrText = File.ReadAllText(dbrFile);
-                Dictionary<string, Match> m = new Dictionary<string, Match>();
-                foreach (var kvp in regex)
-                    m[kvp.Key] = kvp.Value.Match(dbrText);
-
-                if (!m["bitmap"].Success) continue;
-                if (!m["class"].Success) continue;
-
-                string recordBitmap = m["bitmap"].Groups[1].Value;
-                string recordLevel = m["levelRequirement"].Success
-                        ? m["levelRequirement"].Groups[1].Value
-                        : "0";
-                string recordClass = m["class"].Success
-                        ? m["class"].Groups[1].Value
-                        : "Unknown";
-                string recordQuality = m["itemClassification"].Success
-                        ? m["itemClassification"].Groups[1].Value
-                        : "None";
-
-                if (customQualities.TryGetValue(record, out string q))
-                    recordQuality = q;
-
-                RecordInfo recordInfo = new RecordInfo()
-                {
-                    Bitmap = recordBitmap,
-                    LevelRequirement = recordLevel,
-                    Class = recordClass,
-                    Classification = recordQuality,
-                };
-
-                recordInfos[record] = recordInfo;
-                foundBitmaps[recordInfo.Bitmap] = true;
-            }
-
-
-
-
-
-            Console.WriteLine("Loading image sizes...");
-            foreach (string bitmap in foundBitmaps.Keys)
-            {
-                Console.WriteLine(bitmap);
-                string texName = $"{Path.GetFileName(bitmap)}.png";
-                string texPath = Path.Combine(texturesDir, texName);
-                if (!File.Exists(texPath))
-                {
-                    Console.WriteLine("  - Skipped, not found");
-                    continue;
-                }
-                using (Image png = Image.FromFile(texPath))
-                {
-                    if (png.Width % 32 != 0) continue;
-                    if (png.Height % 32 != 0) continue;
-                    int width = png.Width / 32;
-                    int height = png.Height / 32;
-                    if (width > 8 || height > 8) continue;
-                    bitmapInfos[bitmap] = new BitmapInfo {
-                        Width = width,
-                        Height = height,
-                        File = texPath,
-                    };
-                }
-            }
-
-
-
-            Console.WriteLine("...");
-            foreach (KeyValuePair<string, RecordInfo> kvp in recordInfos)
-            {
-                string record = kvp.Key;
-                RecordInfo recordInfo = kvp.Value;
-                string bitmap = recordInfo.Bitmap;
-
-                if (!bitmapInfos.TryGetValue(bitmap, out BitmapInfo bitmapInfo)) continue;
-
-                ItemInfo iteminfo = new ItemInfo() {
-                    RecordInfo = recordInfo,
-                    BitmapInfo = bitmapInfo,
-                    BitmapName = Path.ChangeExtension(Path.GetFileName(bitmap), ".png"),
-                };
-                itemInfos[record] = iteminfo;
-                pngPaths[iteminfo.BitmapName] = bitmapInfo.File;
-                Console.WriteLine($"{record} = size:{iteminfo.BitmapInfo.Width}/{iteminfo.BitmapInfo.Height} level:{iteminfo.RecordInfo.LevelRequirement}");
-                System.Threading.Thread.Sleep(1);
-            }
-
-
-
-            Console.WriteLine("Creating itemtextures.zip ...");
-            if (File.Exists("textures.zip")) File.Delete("itemtextures.zip");
-            using (FileStream zipStream = new FileStream("itemtextures.zip", FileMode.Create))
-            {
-                using (ZipArchive zipArchive = new ZipArchive(zipStream, ZipArchiveMode.Update))
-                {
-                    ImageConverter converter = new ImageConverter();
-                    foreach (var entry in pngPaths)
-                    {
-                        string pngName = entry.Key;
-                        string pngPath = entry.Value;
-                        Console.WriteLine($"Zipping {pngName}");
-                        ZipArchiveEntry zipEntry = zipArchive.CreateEntry(pngName);
-                        
-                        using (Image pngOriginal = Image.FromFile(pngPath))
-                        {
-                            if (pngOriginal != null)
-                            {
-                                using (Image pngResized = ResizeImage(pngOriginal, 0.5f))
-                                {
-                                    using (StreamWriter writer = new StreamWriter(zipEntry.Open()))
-                                    {
-                                        byte[] buffer = (byte[])converter.ConvertTo(pngResized, typeof(byte[]));
-                                        writer.BaseStream.Write(buffer, 0, buffer.Length);
-                                    }
-                                }
-                            }
-                        }
-                        //byte[] buffer = File.ReadAllBytes(entry.Key);
-                        System.Threading.Thread.Sleep(1);
-                    }
-                }
-            }
-
-
-
-
-            string itemInfosFile = Environment.CurrentDirectory + "\\iteminfos.txt";
-            if (File.Exists(itemInfosFile)) File.Delete(itemInfosFile);
-            using (StreamWriter sw = File.AppendText(itemInfosFile))
-            {
-                sw.WriteLine($"//record|width|height|level|class|quality|bitmap");
-                var allClasses = new SortedDictionary<string, bool>();
-                var allQualities = new SortedDictionary<string, bool>();
-                foreach (KeyValuePair<string, ItemInfo> kvp in itemInfos)
-                {
-                    object[] l = new object[] {
-                        kvp.Key,
-                        kvp.Value.BitmapInfo.Width,
-                        kvp.Value.BitmapInfo.Height,
-                        kvp.Value.RecordInfo.LevelRequirement,
-                        kvp.Value.RecordInfo.Class,
-                        kvp.Value.RecordInfo.Classification,
-                        kvp.Value.BitmapName,
-                    };
-                    sw.WriteLine(string.Join("|", Array.ConvertAll(l, Convert.ToString)));
-                    allClasses[kvp.Value.RecordInfo.Class] = true;
-                    allQualities[kvp.Value.RecordInfo.Classification] = true;
-                }
-                sw.WriteLine($"//Classes:");
-                foreach (string s in allClasses.Keys)
-                    sw.WriteLine($"// - {s}");
-                sw.WriteLine($"//Qualities:");
-                foreach (string s in allQualities.Keys)
-                    sw.WriteLine($"// - {s}");
-            }
-
-
-
-
-
-            Console.WriteLine("Reading affixes&enchants records ...");
-            string itemAffixesFile = Environment.CurrentDirectory + "\\itemaffixes.txt";
-            if (File.Exists(itemAffixesFile)) File.Delete(itemAffixesFile);
-            using (StreamWriter sw = File.AppendText(itemAffixesFile))
-            {
-                sw.WriteLine($"//record|level|quality");
-                var allQualities = new SortedDictionary<string, bool>();
-                foreach (string dbrFile in Directory.GetFiles(recordsDir, "*.dbr", SearchOption.AllDirectories))
-                {
-                    string record = dbrFile.Substring(cwdLen, dbrFile.Length - cwdLen).Replace("\\", "/");
-                    if (!(record.StartsWith("records/items/lootaffixes/")
-                       || record.StartsWith("records/items/enchants/")
-                       || record.StartsWith("records/items/materia/")
-                    )) continue;
-                    Console.WriteLine(record);
-                    
-                    string dbrText = File.ReadAllText(dbrFile);
-                    Dictionary<string, Match> m = new Dictionary<string, Match>();
-                    foreach (var kvp in regex)
-                        m[kvp.Key] = kvp.Value.Match(dbrText);
-
-                    string recordLevel = m["levelRequirement"].Success
-                        ? m["levelRequirement"].Groups[1].Value
-                        : "0";
-                    string recordQuality = m["itemClassification"].Success
-                            ? m["itemClassification"].Groups[1].Value
-                            : "None";
-
-                    if (customQualities.TryGetValue(record, out string q))
-                        recordQuality = q;
-
-
-                    object[] l = new object[] {
-                        record,
-                        recordLevel,
-                        recordQuality,
-                    };
-                    sw.WriteLine(string.Join("|", Array.ConvertAll(l, Convert.ToString)));
-                    allQualities[recordQuality] = true;
-                }
-                sw.WriteLine($"//Qualities:");
-                foreach (string s in allQualities.Keys)
-                    sw.WriteLine($"// - {s}");
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //Directory.Delete(CWD, true);
-            Console.WriteLine("DONE -  Press enter to exit");
-            Console.ReadLine();
         }
 
         public static Image ResizeImage(Image img, float f)

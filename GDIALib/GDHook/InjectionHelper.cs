@@ -11,7 +11,7 @@ namespace GDIALib.GDHook
 {
     public class InjectionHelper : IDisposable
     {
-
+        //private static readonly ILog Logger = LogManager.GetLogger(typeof(InjectionHelper));
         private BackgroundWorker _bw;
         private readonly HashSet<uint> _previouslyInjected = new HashSet<uint>();
         private readonly HashSet<uint> _dontLog = new HashSet<uint>();
@@ -99,6 +99,7 @@ namespace GDIALib.GDHook
                 Thread.CurrentThread.Name = "InjectionHelper";
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en-US");
             }
+            //ExceptionReporter.EnableLogUnhandledOnThread();
 
             try
             {
@@ -106,15 +107,15 @@ namespace GDIALib.GDHook
 
                 while (!worker.CancellationPending)
                 {
-                    if (!File.Exists("DllInjector64.exe"))
-                    {
-                        Console.WriteLine("[GDHook] Shutting down injection helper. End user has been avasted and IA is now inoperational until reinstalled.");
-                        return;
-                    }
-                    else
-                    {
-                        Process(worker, e.Argument as RunArguments);
-                    }
+                    //if (!File.Exists("DllInjector64.exe"))
+                    //{
+                    //Console.WriteLine("Shutting down injection helper. End user has been avasted and IA is now inoperational until reinstalled.");
+                    //return;
+                    //}
+                    //else
+                    //{
+                    Process(worker, e.Argument as RunArguments);
+                    //}
                 }
             }
             catch (Exception ex)
@@ -141,7 +142,7 @@ namespace GDIALib.GDHook
 
             if (!string.IsNullOrEmpty(args.WindowName))
             {
-                return DllInjector.FindProcessForWindow(args.WindowName);
+                return EvilsoftCommons.DllInjector.DllInjector.FindProcessForWindow(args.WindowName);
             }
             else
             {
@@ -154,11 +155,11 @@ namespace GDIALib.GDHook
             try
             {
                 var p = System.Diagnostics.Process.GetProcessById(pid);
-                return DllInjector.Is64BitProcess(p);
+                return EvilsoftCommons.DllInjector.DllInjector.Is64BitProcess(p);
             }
             catch (Win32Exception ex)
             {
-                Console.WriteLine("[GDHook] Error checking 32/64bit status of GD, if this was an access denied error, try running as administrator.");
+                Console.WriteLine("Error checking 32/64bit status of GD, if this was an access denied error, try running as administrator.");
                 Console.WriteLine(ex.Message);
                 Console.WriteLine(ex.StackTrace);
                 if (!_hasWarnedPermissionError)
@@ -169,8 +170,9 @@ namespace GDIALib.GDHook
 
                 return false;
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
+                Console.WriteLine("Error checking 32/64 bit status", ex);
                 return false;
             }
         }
@@ -180,12 +182,6 @@ namespace GDIALib.GDHook
             return InjectXBit("DllInjector64.exe", exe, dll, method);
         }
 
-        /*
-        private static IntPtr Inject32Bit(string exe, string dll, int method)
-        {
-            return InjectXBit("DllInjector32.exe", exe, dll, method);
-        }
-        */
 
         private static IntPtr InjectXBit(string injector, string exe, string dll, int method)
         {
@@ -194,7 +190,7 @@ namespace GDIALib.GDHook
             if (method != 1 && method != 3 && method != 5 && method != 6)
                 throw new ArgumentException("Illegal argument", "method");
 
-            Console.WriteLine($"[GDHook] Running {injector}...");
+            Console.WriteLine($"Running {injector}...");
             if (File.Exists(injector))
             {
                 ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -216,7 +212,7 @@ namespace GDIALib.GDHook
                     processTemp.WaitForExit(timeout);
                     if (!processTemp.HasExited)
                     {
-                        Console.WriteLine($"[GDHook] Injector did not finish in {timeout}ms, discarding result");
+                        Console.WriteLine($"Injector did not finish in {timeout}ms, discarding result");
                         return IntPtr.Zero;
                     }
 
@@ -226,31 +222,31 @@ namespace GDIALib.GDHook
                         string output = processTemp.StandardOutput.ReadLine();
                         if (processTemp.ExitCode != 0)
                         {
-                            Console.WriteLine($"[GDHook] Injector returned status code {processTemp.ExitCode} with error: {output}");
+                            Console.WriteLine($"Injector returned status code {processTemp.ExitCode} with error: {output}");
                             return IntPtr.Zero;
                         }
                         else
                         {
-                            Console.WriteLine("[GDHook] Injection reported as successful.. (may or may not have loaded)");
+                            Console.WriteLine("Injection reported as successful.. (may or may not have loaded)");
                             return new IntPtr(0xBADF00D);
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"[GDHook] Exception while attempting to verify injection.. {ex.Message}", ex);
+                    Console.WriteLine($"Exception while attempting to verify injection.. {ex.Message}", ex);
                 }
             }
             else
             {
-                Console.WriteLine($"[GDHook] Could not find {injector}, unable to inject into Grim Dawn.");
+                Console.WriteLine($"Could not find {injector}, unable to inject into Grim Dawn.");
             }
             return IntPtr.Zero;
         }
 
         private void Process(BackgroundWorker worker, RunArguments arguments)
         {
-            Thread.Sleep(1200);
+            System.Threading.Thread.Sleep(1200);
 
             HashSet<uint> pids = FindProcesses(arguments);
 
@@ -261,106 +257,47 @@ namespace GDIALib.GDHook
                 worker.ReportProgress(NO_PROCESS_FOUND, null);
 
             string dll64Bit = Path.Combine(Directory.GetCurrentDirectory(), arguments.DllName);
-            foreach (uint pid in pids)
+            if (!File.Exists(dll64Bit))
             {
-                if (!_previouslyInjected.Contains(pid))
+                Console.WriteLine("Could not find {1} at \"{0}\"", dll64Bit, arguments.DllName);
+            }
+            else
+            {
+                foreach (uint pid in pids)
                 {
-                    if (Is64Bit((int)pid, worker))
+
+                    if (!_previouslyInjected.Contains(pid))
                     {
-                        if (InjectionVerifier.VerifyInjection(pid, dll64Bit))
+                        if (Is64Bit((int)pid, worker))
                         {
-                            Console.WriteLine($"[GDHook] DLL already injected into target process, skipping injection into {pid}");
-                            _dontLog.Add(pid);
-                            _previouslyInjected.Add(pid);
-                        }
-                        else
-                        {
-                            Inject64Bit("Grim Dawn.exe", dll64Bit, _injectionMethods.GetInjectionMethod());
-
-                            if (!InjectionVerifier.VerifyInjection(pid, dll64Bit))
+                            if (InjectionVerifier.VerifyInjection(pid, dll64Bit))
                             {
-                                Console.WriteLine($"[GDHook] Error injecting DLL into Grim Dawn. Injection method {_injectionMethods.GetInjectionMethod()}, switching to injetion method {_injectionMethods.GetNextInjectionMethod()}");
-                                _injectionMethods.SwitchInjectionMethod();
+                                Console.WriteLine($"DLL already injected into target process, skipping injection into {pid}");
+                                _dontLog.Add(pid);
+                                _previouslyInjected.Add(pid);
+                            }
+                            else
+                            {
+                                Inject64Bit("Grim Dawn.exe", dll64Bit, _injectionMethods.GetInjectionMethod());
+
+                                if (!InjectionVerifier.VerifyInjection(pid, dll64Bit))
+                                {
+                                    Console.WriteLine($"Error injecting DLL into Grim Dawn. Injection method {_injectionMethods.GetInjectionMethod()}, switching to injection method {_injectionMethods.GetNextInjectionMethod()}");
+                                    _injectionMethods.SwitchInjectionMethod();
 
 
-                                worker.ReportProgress(INJECTION_ERROR, null);
+                                    worker.ReportProgress(INJECTION_ERROR, null);
+                                }
                             }
                         }
                     }
                     else
                     {
-                        RuntimeSettings.ThrowFatalError("32bit (x86) not supported");
-                    }
-                }
-                else
-                {
-                    worker.ReportProgress(STILL_RUNNING, null);
+                        worker.ReportProgress(STILL_RUNNING, null);
 
+                    }
                 }
             }
-            //GDIAHook
-
-            /*
-            string dll32Bit = Path.Combine(Directory.GetCurrentDirectory(), arguments.DllName.Replace(".dll", "_x86.dll"));
-            string dll64Bit = Path.Combine(Directory.GetCurrentDirectory(), arguments.DllName.Replace(".dll", "_x64.dll"));
-
-
-            foreach (uint pid in pids)
-            {
-                if (!_previouslyInjected.Contains(pid))
-                {
-                    if (Is64Bit((int)pid, worker))
-                    {
-                        if (InjectionVerifier.VerifyInjection(pid, dll64Bit))
-                        {
-                            Console.WriteLine($"[GDHook] DLL already injected into target process, skipping injection into {pid}");
-                            _dontLog.Add(pid);
-                            _previouslyInjected.Add(pid);
-                        }
-                        else
-                        {
-                            Inject64Bit("Grim Dawn.exe", dll64Bit, _injectionMethods.GetInjectionMethod());
-
-                            if (!InjectionVerifier.VerifyInjection(pid, dll64Bit))
-                            {
-                                Console.WriteLine($"[GDHook] Error injecting DLL into Grim Dawn. Injection method {_injectionMethods.GetInjectionMethod()}, switching to injetion method {_injectionMethods.GetNextInjectionMethod()}");
-                                _injectionMethods.SwitchInjectionMethod();
-
-
-                                worker.ReportProgress(INJECTION_ERROR, null);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (InjectionVerifier.VerifyInjection(pid, dll32Bit))
-                        {
-                            Console.WriteLine($"[GDHook] DLL already injected into target process, skipping injection into {pid}");
-                            _dontLog.Add(pid);
-                            _previouslyInjected.Add(pid);
-                        }
-                        else
-                        {
-                            Inject32Bit("Grim Dawn.exe", dll32Bit, _injectionMethods.GetInjectionMethod());
-
-                            if (!InjectionVerifier.VerifyInjection(pid, dll32Bit))
-                            {
-                                Console.WriteLine($"[GDHook] Error injecting DLL into Grim Dawn. Injection method {_injectionMethods.GetInjectionMethod()}, switching to injetion method {_injectionMethods.GetNextInjectionMethod()}");
-                                _injectionMethods.SwitchInjectionMethod();
-
-
-                                worker.ReportProgress(INJECTION_ERROR, null);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    worker.ReportProgress(STILL_RUNNING, null);
-
-                }
-            }
-            */
         }
     }
 }

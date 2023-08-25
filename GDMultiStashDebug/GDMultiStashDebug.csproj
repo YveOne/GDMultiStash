@@ -77,11 +77,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>copy /y "$(SolutionDir)GDMultiStashApp\Properties\AssemblyInfo.cs" "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
+    <PreBuildEvent>copy /y "$(SolutionDir)GDMultiStash\Properties\AssemblyInfo.cs" "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>del "$(TargetDir)GDMultiStash.exe" 2&gt;nul
-move "$(TargetDir)GDMultiStashStarter.exe" "$(TargetDir)GDMultiStash.exe" 2&gt;nul</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildProjectDirectory)\Properties\_buildforcer">

@@ -83,13 +83,9 @@ namespace GDMultiStashUpdater
                     foreach (ZipArchiveEntry entry in archive.Entries)
                     {
                         if (entry.Name == "") continue; // folder
-                        //if (entry.Name == "GDMultiStashUpdater.exe") continue; // because its currently running
-                        //Console.WriteLine("   " + entry.Name);
                         try
                         {
-                            string f = Path.Combine("Update", entry.Name);
-                            //if (File.Exists(f)) File.Delete(f);
-                            entry.ExtractToFile(f);
+                            entry.ExtractToFile(Path.Combine("Update", entry.Name));
                         }
                         catch(Exception)
                         {

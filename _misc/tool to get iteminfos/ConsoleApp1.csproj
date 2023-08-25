@@ -50,20 +50,21 @@
     <Reference Include="System.IO.Compression" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ARCFilePart.cs" />
-    <Compile Include="ARCHeader.cs" />
-    <Compile Include="DDSHeader.cs" />
-    <Compile Include="DDSImageReader.cs" />
-    <Compile Include="DDSPixelFormat.cs" />
-    <Compile Include="Decompress.cs" />
-    <Compile Include="IOHelper.cs" />
-    <Compile Include="ItemTag.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\ARCFilePart.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\ARCHeader.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\DDSHeader.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\DDSImageReader.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\DDSPixelFormat.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\Decompress.cs" />
+    <Compile Include="External\EvilsoftCommons\IOHelper.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\ItemTag.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Record.cs" />
+    <Compile Include="External\IAGrim\Parser\Arc\Record.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
