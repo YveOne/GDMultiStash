@@ -39,6 +39,14 @@ namespace GDMultiStashUpdater
 
         internal static void RunUpdate()
         {
+            if (!NewVersionAvailable())
+            {
+                Console.WriteLine("Your GDMultiStash is up to date - you rock!");
+                Console.WriteLine("Updater will exit in 5 Seconds...");
+                Thread.Sleep(5000);
+                return;
+            }
+
             Console.WriteLine("Welcome to GDMultiStash Updater <3");
             Console.WriteLine("Getting data...");
             LatestReleaseData data = GetUpdateData();
