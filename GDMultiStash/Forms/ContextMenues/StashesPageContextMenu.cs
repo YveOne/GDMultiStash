@@ -253,11 +253,13 @@ namespace GDMultiStash.Forms.ContextMenues
             });
             sortButton.DropDownItems.Add(X(Global.L.SortBySet1Button()), null, delegate {
                 var result = new ItemRecordSortHandler<string>(new ItemSet1SortMethod()).Run(selectedStashes, page.ShownExpansion);
-                result = new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(result.RemainingStashes, page.ShownExpansion);
+                if (result.RemainingStashes.Count() > 0)
+                    result = new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(result.RemainingStashes, page.ShownExpansion);
             });
             sortButton.DropDownItems.Add(X(Global.L.SortBySet2Button()), null, delegate {
                 var result = new ItemRecordSortHandler<string>(new ItemSet2SortMethod()).Run(selectedStashes, page.ShownExpansion);
-                result = new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(result.RemainingStashes, page.ShownExpansion);
+                if (result.RemainingStashes.Count() > 0)
+                    result = new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(result.RemainingStashes, page.ShownExpansion);
             });
             sortButton.DropDownItems.Add(X(Global.L.SortByNoneButton()), null, delegate {
                 new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(selectedStashes, page.ShownExpansion);

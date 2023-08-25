@@ -1,3 +1,6 @@
+v1.37.2
+- Fixed crash caused by "index out of bounds" caused by new sorting methods "by set"
+
 v1.37
 - [Start GD] "Steam Client" is now using the command "<path>/Steam.exe -applaunch 219990 /x64"
 - [Start GD] "Grim Dawn.exe" is now using "/x64" argument by default

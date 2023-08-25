@@ -24,16 +24,13 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes.Handlers
         }
 
         public SortHandlerResult Run(
-            IEnumerable<StashObject> selectedStashes,
+            IEnumerable<StashObject> useStashes,
             GrimDawnGameExpansion gdExpansion
             )
         {
-
             var ignoreKeys = method.IgnoreKeys;
 
-
-
-            foreach (var stash in selectedStashes)
+            foreach (var stash in useStashes)
             {
                 Global.FileSystem.BackupStashTransferFile(stash.ID);
                 foreach (var tab in stash.Tabs)
@@ -62,7 +59,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes.Handlers
 
             // create new group for new stashes
             var group = Global.Groups.CreateGroup(method.GroupText, true);
-            var firstSelectedStash = selectedStashes.ToList()[0];
+            var firstSelectedStash = useStashes.ToList()[0];
             var stashWidth = firstSelectedStash.Width; // all selected stashes should have same width and hight
             var stashHeight = firstSelectedStash.Height;
             var addedStashes = new List<StashObject>();
@@ -96,7 +93,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes.Handlers
             }
 
             // delete empty stashes/groups
-            var deletedStashes = Global.Stashes.DeleteStashes(selectedStashes, true); // true = only empty
+            var deletedStashes = Global.Stashes.DeleteStashes(useStashes, true); // true = only empty
             Global.Runtime.InvokeStashesRemoved(deletedStashes);
             var emptyGroups = parentGroups.Keys
                 .Where(grpId => Global.Stashes.GetStashesForGroup(grpId).Length == 0)
@@ -108,7 +105,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes.Handlers
                 var deletedGroups = Global.Groups.DeleteGroups(emptyGroups);
                 Global.Runtime.InvokeStashGroupsRemoved(deletedGroups);
             }
-            var remainingStashIds = selectedStashes
+            var remainingStashIds = useStashes
                 .Where((s) => Global.Stashes.GetStash(s.ID) != null);
 
             Global.Configuration.Save();
