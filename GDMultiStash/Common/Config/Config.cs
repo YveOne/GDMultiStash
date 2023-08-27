@@ -21,6 +21,9 @@ namespace GDMultiStash.Common.Config
         [XmlElement("Colors")]
         public ConfigColorList Colors;
 
+        [XmlElement("SortPatterns")]
+        public ConfigSortPatternList SortPatterns;
+
         [XmlElement("Expansions")]
         public ConfigExpansionList Expansions;
 
@@ -34,6 +37,7 @@ namespace GDMultiStash.Common.Config
         {
             Settings = new ConfigSettingList();
             Colors = new ConfigColorList();
+            SortPatterns = new ConfigSortPatternList();
             Expansions = new ConfigExpansionList();
             Stashes = new ConfigStashList();
             StashGroups = new ConfigStashGroupList();

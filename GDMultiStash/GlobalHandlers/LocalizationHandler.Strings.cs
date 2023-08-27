@@ -36,8 +36,6 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter ConfirmDeleteOldStashesMessage => _.Get("msg_confirm_delete_old_stashes");
             public _Core.StringGetter ConfirmDeleteStashTabMessage => _.Get("msg_confirm_delete_stash_tab");
             public _Core.StringGetter ConfirmClearStashTabMessage => _.Get("msg_confirm_clear_stash_tab");
-            public _Core.StringGetter ConfirmDeleteEmptyGroupsMessage => _.Get("msg_confirm_delete_empty_groups");
-            public _Core.StringGetter ConfirmDeleteEmptyStashesMessage => _.Get("msg_confirm_delete_empty_stashes");
 
 
 
@@ -79,13 +77,6 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter EditTabsButton => _.Get("btn_edit_tabs");
             public _Core.StringGetter EmptyButton => _.Get("btn_empty");
             public _Core.StringGetter SortItemsButton => _.Get("btn_sort_items");
-            public _Core.StringGetter SortByLevelButton => _.Get("btn_sort_by_level");
-            public _Core.StringGetter SortByTypeButton => _.Get("btn_sort_by_type");
-            public _Core.StringGetter SortByClassButton => _.Get("btn_sort_by_class");
-            public _Core.StringGetter SortByQualityButton => _.Get("btn_sort_by_quality");
-            public _Core.StringGetter SortBySet1Button => _.Get("btn_sort_by_set1");
-            public _Core.StringGetter SortBySet2Button => _.Get("btn_sort_by_set2");
-            public _Core.StringGetter SortByNoneButton => _.Get("btn_sort_by_none");
             public _Core.StringGetter AutoFillButton => _.Get("btn_auto_fill");
             public _Core.StringGetter AutoFillRandomSeedsButton => _.Get("btn_auto_fill_random_seeds");
             public _Core.StringGetter ExitButton => _.Get("btn_exit");
@@ -162,30 +153,24 @@ namespace GDMultiStash.GlobalHandlers
 
 
 
+            #region sort stashes
 
-            #region stash names
+            public _Core.StringGetter SortByNone => _.Get("sort_by_none");
+            public _Core.StringGetter SortByLevel => _.Get("sort_by_level");
+            public _Core.StringGetter SortByQuality => _.Get("sort_by_quality");
+            public _Core.StringGetter SortByClass => _.Get("sort_by_class");
+            public _Core.StringGetter SortByType => _.Get("sort_by_type");
+            public _Core.StringGetter SortBySet => _.Get("sort_by_set");
+            public _Core.StringGetter SortAIO => _.Get("sort_aio");
 
-            public _Core.StringGetter DefaultStashName => _.Get("default_stash_name");
-            public _Core.StringGetter DefaultStashGroupName => _.Get("default_stash_group_name");
-            public _Core.StringGetter StashSortByLevelName => _.Get("stash_name_sort_by_level");
-            public _Core.StringGetter StashSortByNoneName => _.Get("stash_name_sort_by_none");
-            
             #endregion
 
-            #region group names
+            #region stash/group names
 
             public _Core.StringGetter MainGroupName => _.Get("main_group_name");
+            public _Core.StringGetter DefaultStashName => _.Get("default_stash_name");
+            public _Core.StringGetter DefaultStashGroupName => _.Get("default_stash_group_name");
 
-            public _Core.StringGetter ImportedGroupName => _.Get("group_imported");
-
-            public _Core.StringGetter GroupSortByLevelName => _.Get("group_name_sort_by_level");
-            public _Core.StringGetter GroupSortByTypeName => _.Get("group_name_sort_by_type");
-            public _Core.StringGetter GroupSortByClassName => _.Get("group_name_sort_by_class");
-            public _Core.StringGetter GroupSortByQualityName => _.Get("group_name_sort_by_quality");
-            public _Core.StringGetter GroupSortBySet1Name => _.Get("group_name_sort_by_set1");
-            public _Core.StringGetter GroupSortBySet2Name => _.Get("group_name_sort_by_set2");
-            public _Core.StringGetter GroupSortByNoneName => _.Get("group_name_sort_by_none");
-            
             #endregion
 
             #region item qualities

@@ -27,6 +27,8 @@ namespace GDMultiStash.GlobalHandlers
         protected Size _windowSize;
         protected bool _characterMovementDisabled = false;
 
+        protected GrimDawnGameExpansion _shownExpansion = GrimDawnGameExpansion.Unknown;
+
         public GrimDawnGameExpansion ActiveExpansion
         {
             get => _activeExpansion;
@@ -206,6 +208,19 @@ namespace GDMultiStash.GlobalHandlers
             ushort k = GrimDawn.Keybindings.GetKeyBinding(GrimDawnKey.StationaryAttack).Primary;
             Native.Keyboard.SendKeyDown(k);
             InvokeCharacterMovementDisabled();
+        }
+
+        public GrimDawnGameExpansion ShownExpansion
+        {
+            get => _shownExpansion;
+            set
+            {
+                if (_shownExpansion == value) return;
+                var previous = _shownExpansion;
+                _shownExpansion = value;
+                Console.WriteLine($"shown expansion changed: {previous} -> {_shownExpansion}");
+                InvokeShownExpansionChanged(_shownExpansion);
+            }
         }
 
     }

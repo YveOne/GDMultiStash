@@ -25,8 +25,6 @@ msg_disable_cloud_sync = Warning: Cloud Sync is enabled!\nTo use GDMS you need t
 msg_confirm_delete_old_stashes = Delete old stashes?
 msg_confirm_delete_stash_tab = Delete this tab?
 msg_confirm_clear_stash_tab = Clear this tab?
-msg_confirm_delete_empty_groups = Delete empty groups?
-msg_confirm_delete_empty_stashes = Delete empty stashes?
 
 // buttons
 btn_file = File
@@ -63,13 +61,6 @@ btn_copy_to_expansion = Copy to expansion
 btn_edit_tabs = Edit tabs
 btn_empty = (empty)
 btn_sort_items = Sort Items
-btn_sort_by_level = By level
-btn_sort_by_type = By type
-btn_sort_by_class = By class
-btn_sort_by_quality = By quality
-btn_sort_by_set1 = By Set/Level
-btn_sort_by_set2 = By level/Set
-btn_sort_by_none = None (unsorted)
 btn_auto_fill = Fill automatically
 btn_auto_fill_random_seeds = With random seeds
 btn_exit = Exit
@@ -140,17 +131,6 @@ main_stash_name_2hc = Main (HC, FG)
 default_stash_name = New Stash
 default_stash_group_name = New Group
 
-group_imported = Imported
-group_name_sort_by_level = Sort by level
-group_name_sort_by_type = Sort by type
-group_name_sort_by_class = Sort by class
-group_name_sort_by_quality = Sort by quality
-group_name_sort_by_set1 = Sort by Set/Level
-group_name_sort_by_set2 = Sort by level/Set
-group_name_sort_by_none = Unsorted
-stash_name_sort_by_level = Level {0}
-stash_name_sort_by_none = Unsorted
-
 item_quality_none = None
 item_quality_common = Common (White)
 item_quality_magical = Magical (Yellow)
@@ -200,3 +180,11 @@ item_class_other_endless = Shattered Realms
 item_class_unknown = Unknown
 
 zip_archive = Zip Archive
+
+sort_by_none = Unsorted
+sort_by_level = By level
+sort_by_quality = By quality
+sort_by_class = By class
+sort_by_type = By type
+sort_by_set = By set
+sort_aio = AIO

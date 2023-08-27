@@ -99,6 +99,16 @@ namespace GDMultiStash.GlobalHandlers
             }
         }
 
+        public class ShownExpansionChangedEventArgs : EventArgs
+        {
+            public GrimDawnGameExpansion Expansion { get => _expansion; }
+            private GrimDawnGameExpansion _expansion;
+            public ShownExpansionChangedEventArgs(GrimDawnGameExpansion expansion)
+            {
+                _expansion = expansion;
+            }
+        }
+
         public event EventHandler<ActiveExpansionChangedEventArgs> ActiveExpansionChanged;
         public event EventHandler<ActiveModeChangedEventArgs> ActiveModeChanged;
         public event EventHandler<ActiveStashChangedEventArgs> ActiveStashChanged;
@@ -129,21 +139,18 @@ namespace GDMultiStash.GlobalHandlers
         public event EventHandler<EventArgs> CharacterMovementEnabled;
         public event EventHandler<EventArgs> CharacterMovementDisabled;
 
+        public event EventHandler<ShownExpansionChangedEventArgs> ShownExpansionChanged;
+        
         public void InvokeActiveExpansionChanged(GrimDawnGameExpansion exp)
             => SaveInvoke(() => ActiveExpansionChanged?.Invoke(null, new ActiveExpansionChangedEventArgs(exp)));
-
         public void InvokeActiveModeChanged(GrimDawnGameMode mode)
             => SaveInvoke(() => ActiveModeChanged?.Invoke(null, new ActiveModeChangedEventArgs(mode)));
-
         public void InvokeActiveStashChanged(int oldId, int newId)
             => SaveInvoke(() => ActiveStashChanged?.Invoke(null, new ActiveStashChangedEventArgs(oldId, newId)));
-
         public void InvokeActiveGroupChanged(int oldId, int newId)
             => SaveInvoke(() => ActiveGroupChanged?.Invoke(null, new ActiveGroupChangedEventArgs(oldId, newId)));
-
         public void InvokeStashOpened()
             => SaveInvoke(() => StashOpened?.Invoke(null, EventArgs.Empty));
-
         public void InvokeStashClosed()
             => SaveInvoke(() => StashClosed?.Invoke(null, EventArgs.Empty));
 
@@ -209,6 +216,9 @@ namespace GDMultiStash.GlobalHandlers
             => SaveInvoke(() => CharacterMovementEnabled?.Invoke(null, EventArgs.Empty));
         public void InvokeCharacterMovementDisabled()
             => SaveInvoke(() => CharacterMovementDisabled?.Invoke(null, EventArgs.Empty));
+
+        public void InvokeShownExpansionChanged(GrimDawnGameExpansion exp)
+            => SaveInvoke(() => ShownExpansionChanged?.Invoke(null, new ShownExpansionChangedEventArgs(exp)));
 
     }
 }

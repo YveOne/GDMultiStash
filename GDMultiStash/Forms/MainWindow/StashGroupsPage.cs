@@ -23,7 +23,7 @@ namespace GDMultiStash.Forms.MainWindow
         #region columns
 
         private readonly OLVColumn columnSpacer = new DefaultOLVColumn()
-        { // just is just a spacer to match stashes listview first columns
+        { // just a spacer to match stashes listview first columns
             Text = "",
             Width = 30,
         };
@@ -50,6 +50,14 @@ namespace GDMultiStash.Forms.MainWindow
             IsEditable = true,
             FillsFreeSpace = true,
             CellEditUseWholeCell = true,
+        };
+
+        private readonly OLVColumn columnStashesCount = new DefaultOLVColumn()
+        {
+            Text = "",
+            AspectName = "StashesCount",
+            Width = 40,
+            TextAlign = HorizontalAlignment.Right,
         };
 
         #endregion
@@ -129,7 +137,7 @@ namespace GDMultiStash.Forms.MainWindow
                 //stashes_listView.DragDrop += Stashes_Dragging_DragDrop;
 
                 Global.Runtime.StashesAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshStashesObjects(args.Items); };
-                Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshStashesObjects(args.Items); };
+                Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshAllObjects(); };
                 Global.Runtime.StashesMoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshAllObjects(); };
                 Global.Runtime.StashGroupsAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) { groupsListView.AddObjects(args.Items); };
                 Global.Runtime.StashGroupsRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) { groupsListView.RemoveObjects(args.Items); };
@@ -193,7 +201,8 @@ namespace GDMultiStash.Forms.MainWindow
             {
                 columnSpacer,
                 columnID,
-                columnName
+                columnName,
+                columnStashesCount
             });
         }
 
@@ -219,6 +228,10 @@ namespace GDMultiStash.Forms.MainWindow
 
         private void GroupsListView_FormatCell(object sender, FormatCellEventArgs e)
         {
+            if (e.ColumnIndex == columnStashesCount.Index)
+            {
+                e.Item.SubItems[columnStashesCount.Index].Font = new Font(e.Item.Font.FontFamily, 8);
+            }
         }
 
         private void GroupsListView_FormatRow(object sender, FormatRowEventArgs e)

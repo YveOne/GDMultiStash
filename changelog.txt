@@ -1,3 +1,10 @@
+v1.37.3
+- Empty stash tabs will displayed cyan in usage indicators
+- Updated stash sorting system, prepared for user defined sort rules
+- Previously selected stashes will be reselected after sorting
+- Fixed a bug where stash count get not refreshed correctly in group header after deleting stashes
+- Added column for stash counts in groups tab page
+
 v1.37.2
 - Fixed crash caused by "index out of bounds" caused by new sorting methods "by set"
 

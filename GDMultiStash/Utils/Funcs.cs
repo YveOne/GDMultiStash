@@ -99,6 +99,8 @@ namespace Utils
             }
         }
 
+        public static string[] StringLines(string str)
+            => str.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
 
     }
 

@@ -15,6 +15,7 @@ namespace GDMultiStash.GlobalHandlers
         public Common.Config.ConfigSettingList Settings => _config.Settings;
         public List<Common.Config.ConfigStash> Stashes => _config.Stashes.Items;
         public List<Common.Config.ConfigColor> Colors => _config.Colors.Items;
+        public List<Common.Config.ConfigSortPattern> SortPatterns => _config.SortPatterns.Items;
         public List<Common.Config.ConfigStashGroup> StashGroups => _config.StashGroups.Items;
         public List<Common.Config.ConfigExpansion> Expansions => _config.Expansions.Items;
 
@@ -70,9 +71,6 @@ namespace GDMultiStash.GlobalHandlers
         private Common.Config.Config LoadFromFile(string filePath)
         {
             Common.Config.ConfigBase _configBase = XmlIO.ReadXmlText<Common.Config.ConfigBase>(File.ReadAllText(filePath));
-
-            if (_configBase.OldVersion != 0)
-                _configBase.Version = _configBase.OldVersion;
             Console.WriteLine("Version of config file: " + _configBase.Version);
 
             while (_configBase.Version++ < Common.Config.ConfigBase.LatestVersion)
@@ -80,68 +78,6 @@ namespace GDMultiStash.GlobalHandlers
                 Console.WriteLine(string.Format("Updating Config to v{0}...", _configBase.Version.ToString()));
                 switch (_configBase.Version)
                 {
-                    case 5:
-                        {
-                            Common.Config.V4.Config configOld = XmlIO.ReadXmlText<Common.Config.V4.Config>(File.ReadAllText(filePath));
-                            Common.Config.V5.Config configNew = XmlIO.ReadXmlText<Common.Config.V5.Config>(File.ReadAllText(filePath));
-                            configNew.Version = _configBase.Version;
-
-                            configNew.OldVersion = 0;
-                            configNew.Settings.AutoStartGame = configOld.Settings.AutoStartGD;
-                            configNew.Settings.StartGameCommand = configOld.Settings.AutoStartGDCommand;
-                            configNew.Settings.StartGameArguments = configOld.Settings.AutoStartGDArguments;
-                            configNew.Stashes.LastID = configOld.Settings.LastID;
-                            configNew.Expansions.Items.Clear();
-                            configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
-                            {
-                                ID = (int)GrimDawnGameExpansion.Vanilla,
-                                Name = GrimDawn.ExpansionNames[GrimDawnGameExpansion.Vanilla],
-                                SC = new Common.Config.ConfigExpansionMode()
-                                {
-                                    MainID = configOld.Settings.Main0SCID,
-                                    CurrentID = configOld.Settings.Cur0SCID,
-                                },
-                                HC = new Common.Config.ConfigExpansionMode()
-                                {
-                                    MainID = configOld.Settings.Main0HCID,
-                                    CurrentID = configOld.Settings.Cur0HCID,
-                                },
-                            });
-                            configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
-                            {
-                                ID = (int)GrimDawnGameExpansion.AoM,
-                                Name = GrimDawn.ExpansionNames[GrimDawnGameExpansion.AoM],
-                                SC = new Common.Config.ConfigExpansionMode()
-                                {
-                                    MainID = configOld.Settings.Main1SCID,
-                                    CurrentID = configOld.Settings.Cur1SCID,
-                                },
-                                HC = new Common.Config.ConfigExpansionMode()
-                                {
-                                    MainID = configOld.Settings.Main1HCID,
-                                    CurrentID = configOld.Settings.Cur1HCID,
-                                },
-                            });
-                            configNew.Expansions.Items.Add(new Common.Config.V5.ConfigExpansion()
-                            {
-                                ID = (int)GrimDawnGameExpansion.FG,
-                                Name = GrimDawn.ExpansionNames[GrimDawnGameExpansion.FG],
-                                SC = new Common.Config.ConfigExpansionMode()
-                                {
-                                    MainID = configOld.Settings.Main2SCID,
-                                    CurrentID = configOld.Settings.Cur2SCID,
-                                },
-                                HC = new Common.Config.ConfigExpansionMode()
-                                {
-                                    MainID = configOld.Settings.Main2HCID,
-                                    CurrentID = configOld.Settings.Cur2HCID,
-                                },
-                            });
-
-                            WriteToFile(configNew, filePath);
-                        }
-                        break;
-
                     case 6:
                         {
                             Common.Config.V5.Config configOld = XmlIO.ReadXmlText<Common.Config.V5.Config>(File.ReadAllText(filePath));
@@ -191,7 +127,6 @@ namespace GDMultiStash.GlobalHandlers
                             WriteToFile(configNew, filePath);
                         }
                         break;
-
 
                 }
                 Console.WriteLine("... Done");
@@ -271,9 +206,44 @@ namespace GDMultiStash.GlobalHandlers
                 _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#f765ad", Name = Global.L.RoseColor() });
             }
 
-
-
-
+            if (_config.SortPatterns.Items.Count == 0)
+            {
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortByNone(),
+                    Value = "{none}/{none}",
+                });
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortByLevel(),
+                    Value = Global.L.SortByLevel() + " / {level}",
+                });
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortByQuality(),
+                    Value = Global.L.SortByQuality() + " / {quality}",
+                });
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortByClass(),
+                    Value = Global.L.SortByClass() + " / {class}",
+                });
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortByType(),
+                    Value = Global.L.SortByType() + " / {type}",
+                });
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortBySet(),
+                    Value = "{quality} / [{level}] {set}",
+                });
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortAIO(),
+                    Value = "{quality}/[{level}] {set}\n{type} - {quality}/{class} - lvl {level}",
+                });
+            }
 
             List<int> existingStashGroupIds = new List<int>();
             List< Common.Config.ConfigStashGroup> stashGroupsToDelete = new List<Common.Config.ConfigStashGroup>();

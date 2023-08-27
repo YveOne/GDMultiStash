@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 using GDMultiStash.Common.Config;
 
@@ -17,15 +20,6 @@ namespace GDMultiStash.Common.Objects
             _configStashGroup = configStashGroup;
         }
 
-        #region Methods
-
-        public void UpdateOrder()
-        {
-
-        }
-
-        #endregion
-
         #region properties
 
         public int ID => _configStashGroup.ID;
@@ -40,6 +34,17 @@ namespace GDMultiStash.Common.Objects
         {
             get { return _configStashGroup.Order; }
             set { _configStashGroup.Order = value; }
+        }
+
+        public string StashesCount
+        {
+            get
+            {
+                var expansion = Global.Runtime.ShownExpansion;
+                var allStashes = Global.Stashes.GetStashesForGroup(ID).ToList();
+                var curStashes = allStashes.Where(s => s.Expansion == expansion);
+                return $"{curStashes.Count()}/{allStashes.Count()}";
+            }
         }
 
         public bool Collapsed

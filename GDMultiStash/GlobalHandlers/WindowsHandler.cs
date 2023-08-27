@@ -21,7 +21,7 @@ namespace GDMultiStash.GlobalHandlers
         private ChangelogDialogForm ChangelogWindow { get; }
         private ProgressDialogForm ProgressDialog { get; }
         private Dictionary<int, StashTabsEditorWindow> StashTabsEditorWindows { get; }
-        private Forms.Plexiglass.ScreenPlexiglass StashTabsEditorPlexiglass { get; }
+        //private Forms.Plexiglass.ScreenPlexiglass StashTabsEditorPlexiglass { get; }
 
         public WindowsHandler() : base()
         {
@@ -35,7 +35,7 @@ namespace GDMultiStash.GlobalHandlers
             ChangelogWindow = new ChangelogDialogForm();
             ProgressDialog = new ProgressDialogForm();
             StashTabsEditorWindows = new Dictionary<int, StashTabsEditorWindow>();
-            StashTabsEditorPlexiglass = new Forms.Plexiglass.ScreenPlexiglass();
+            //StashTabsEditorPlexiglass = new Forms.Plexiglass.ScreenPlexiglass();
         }
 
         public void LocalizeWindows()

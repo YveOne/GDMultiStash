@@ -161,7 +161,7 @@ namespace GDMultiStash.GlobalHandlers
                 File.Move(GetStashTransferFile(stashID, backupIndex), GetStashTransferFile(stashID, backupIndex + 1));
                 backupIndex -= 1;
             }
-            File.Move(GetStashTransferFile(stashID), GetStashTransferFile(stashID, 1));
+            File.Copy(GetStashTransferFile(stashID), GetStashTransferFile(stashID, 1));
         }
 
         public bool RestoreStashTransferFile(int stashID, string srcFile)

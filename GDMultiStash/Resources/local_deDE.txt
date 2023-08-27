@@ -25,8 +25,6 @@ msg_disable_cloud_sync = Warnung: Cloud Sync ist aktiviert!\nUm GDMS zu benutzt 
 msg_confirm_delete_old_stashes = Alte Stashes löschen?
 msg_confirm_delete_stash_tab = Diesen Tab löschen?
 msg_confirm_clear_stash_tab = Diesen Tab leeren?
-msg_confirm_delete_empty_groups = Leere Gruppen löschen?
-msg_confirm_delete_empty_stashes = Leere Stashes löschen?
 
 // buttons
 btn_file = Datei
@@ -63,13 +61,6 @@ btn_copy_to_expansion = In Erweiterung kopieren
 btn_edit_tabs = Tabs bearbeiten
 btn_empty = (leer)
 btn_sort_items = Gegenstände sortieren
-btn_sort_by_level = Nach Stufe
-btn_sort_by_type = Nach Art
-btn_sort_by_class = Nach Klasse
-btn_sort_by_quality = Nach Qualität
-btn_sort_by_set1 = Nach Set/Stufe
-btn_sort_by_set2 = Nach Stufe/Set
-btn_sort_by_none = Nichts (unsortiert)
 btn_auto_fill = Automatisch befüllen
 btn_auto_fill_random_seeds = Mit zufälligen Seeds
 btn_exit = Beenden
@@ -140,18 +131,6 @@ main_stash_name_2hc = Main (HC, FG)
 default_stash_name = Neuer Stash
 default_stash_group_name = Neue Gruppe
 
-group_imported = Importiert
-group_name_sort_by_level = Sortiert nach Stufe
-group_name_sort_by_type = Sortiert nach Art
-group_name_sort_by_class = Sortiert nach Klasse
-group_name_sort_by_quality = Sortiert nach Qualität
-group_name_sort_by_set =  Set
-group_name_sort_by_set1 = Sortiert nach Set/Stufe
-group_name_sort_by_set2 = Sortiert nach Stufe/Set
-group_name_sort_by_none = Unsortiert
-stash_name_sort_by_level = Stufe {0}
-stash_name_sort_by_none = Unsortiert
-
 item_quality_none = Keine
 item_quality_common = Gewöhnlich (Weiß)
 item_quality_magical = Magisch (Gelb)
@@ -201,3 +180,11 @@ item_class_other_endless = Anderes - Zersplitterte Reiche
 item_class_unknown = Unbekannt
 
 zip_archive = Zip Archiv
+
+sort_by_none = Unsortiert
+sort_by_level = nach Level
+sort_by_quality = Nach Qualität
+sort_by_class = Nach Art
+sort_by_type = Nach Kategorie
+sort_by_set = Nach Set
+sort_aio = AIO

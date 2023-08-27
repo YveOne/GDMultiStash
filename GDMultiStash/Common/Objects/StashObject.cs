@@ -61,7 +61,7 @@ namespace GDMultiStash.Common.Objects
         {
             int rZero = 0;
             int gZero = 255;
-            int bZero = 0;
+            int bZero = 255;
 
             int rMin = 0;
             int gMin = 255;

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 
 using BrightIdeasSoftware;
 
@@ -19,8 +21,6 @@ namespace GDMultiStash.Forms.MainWindow
 
         private Dragging.StashesDragHandler dragHandler;
         private StashesSortComparer sortComparer;
-
-        public GrimDawnLib.GrimDawnGameExpansion ShownExpansion { get; private set; }
 
         #region columns
 
@@ -242,8 +242,8 @@ namespace GDMultiStash.Forms.MainWindow
 
             Load += delegate {
 
-                ShownExpansion = GrimDawnLib.GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath);
-                showExpansionComboBox.SelectedIndex = (int)ShownExpansion;
+                Global.Runtime.ShownExpansion = GrimDawnLib.GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath);
+                showExpansionComboBox.SelectedIndex = (int)Global.Runtime.ShownExpansion;
                 showSoftCoreCheckbox.CheckState = Global.Configuration.IntToCheckState(Global.Configuration.Settings.ShowSoftcoreState);
                 showHardCoreCheckbox.CheckState = Global.Configuration.IntToCheckState(Global.Configuration.Settings.ShowHardcoreState);
 
@@ -301,11 +301,14 @@ namespace GDMultiStash.Forms.MainWindow
                 Global.Runtime.ActiveModeChanged += delegate { ReloadList(); };
                 Global.Runtime.StashesAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) {
                     int scrollY = stashesListView.LowLevelScrollPosition.Y;
-                    stashesListView.AddObjects(args.Items.Where(s => s.Expansion == ShownExpansion).ToList());
+                    stashesListView.AddObjects(args.Items.Where(s => s.Expansion == Global.Runtime.ShownExpansion).ToList());
                     stashesListView.LowLevelScroll(0, scrollY);
                     stashesListView.EnsureModelVisible(args.Items[0]);
                 };
-                Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { stashesListView.RemoveObjects(args.Items); };
+                Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) {
+                    stashesListView.RemoveObjects(args.Items);
+                    stashesListView.AddObjects(new List<StashObject>()); // debug: stashes count not refreshing
+                };
                 Global.Runtime.StashesInfoChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) {
                     RefreshObjects(args.Items);
                 };
@@ -374,7 +377,13 @@ namespace GDMultiStash.Forms.MainWindow
             Main.ClearFocus();
         }
 
-        public void RefreshObjects(IList<StashObject> l)
+        public void SelectStashes(IEnumerable<StashObject> stashes)
+        {
+            stashesListView.Focus();
+            stashesListView.SelectObjects(stashes.ToList());
+        }
+
+        public void RefreshObjects(IEnumerable<StashObject> l)
         {
             stashesListView.RefreshObjects(l.ToArray());
         }
@@ -399,6 +408,11 @@ namespace GDMultiStash.Forms.MainWindow
         {
             OLVListItem item = (OLVListItem)stashesListView.Items[index];
             stashesListView.EditSubItem(item, columnName.Index);
+        }
+
+        public void StashEnsureVisible(StashObject stash)
+        {
+            stashesListView.EnsureModelVisible(stash);
         }
 
         #endregion
@@ -439,7 +453,7 @@ namespace GDMultiStash.Forms.MainWindow
             totalStashesCount = 0;
 
             stashesListView.SetObjects(Array.FindAll(Global.Stashes.GetAllStashes(), delegate (StashObject stash) {
-                if (ShownExpansion == stash.Expansion)
+                if (Global.Runtime.ShownExpansion == stash.Expansion)
                 {
                     totalStashesCount += 1;
                     if (!(stash.SC && _sc == 0 || !stash.SC && _sc == 1 || stash.HC && _hc == 0 || !stash.HC && _hc == 1))
@@ -489,7 +503,7 @@ namespace GDMultiStash.Forms.MainWindow
 
         private void CreateStashButton_Click(object sender, EventArgs e)
         {
-            Global.Windows.ShowCreateStashDialog(ShownExpansion);
+            Global.Windows.ShowCreateStashDialog(Global.Runtime.ShownExpansion);
         }
 
         private void StashesListView_BeforeCreatingGroups(object s, CreateGroupsEventArgs args)
@@ -810,7 +824,7 @@ namespace GDMultiStash.Forms.MainWindow
 
         private void ShowExpansionComboBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            ShownExpansion = (GrimDawnLib.GrimDawnGameExpansion)showExpansionComboBox.SelectedIndex;
+            Global.Runtime.ShownExpansion = (GrimDawnLib.GrimDawnGameExpansion)showExpansionComboBox.SelectedIndex;
             ReloadList();
         }
 

@@ -7,8 +7,7 @@ using System.Drawing;
 using GDMultiStash.Common;
 using GDMultiStash.Common.Objects;
 
-using GDMultiStash.Forms.ContextMenues.SortStashes.Methods;
-using GDMultiStash.Forms.ContextMenues.SortStashes.Handlers;
+using GDMultiStash.Forms.ContextMenues.SortStashes;
 
 using BrightIdeasSoftware;
 
@@ -190,10 +189,10 @@ namespace GDMultiStash.Forms.ContextMenues
 
         public void AddChangeExpansionOption()
         {
-            if (page.ShownExpansion == GrimDawnLib.GrimDawn.LatestExpansion) return;
+            if (Global.Runtime.ShownExpansion == GrimDawnLib.GrimDawn.LatestExpansion) return;
 
             ToolStripMenuItem copyToExpButton = (ToolStripMenuItem)Items.Add(X(Global.L.CopyToExpansionButton()));
-            for (int i = (int)page.ShownExpansion + 1; i <= (int)GrimDawnLib.GrimDawn.LatestExpansion; i += 1)
+            for (int i = (int)Global.Runtime.ShownExpansion + 1; i <= (int)GrimDawnLib.GrimDawn.LatestExpansion; i += 1)
             {
                 GrimDawnLib.GrimDawnGameExpansion exp = (GrimDawnLib.GrimDawnGameExpansion)i;
                 copyToExpButton.DropDownItems.Add(X(GrimDawnLib.GrimDawn.ExpansionNames[exp]), null, delegate {
@@ -239,31 +238,15 @@ namespace GDMultiStash.Forms.ContextMenues
         {
             var sortButtonText = X(Global.L.SortItemsButton());
             var sortButton = (ToolStripMenuItem)Items.Add(sortButtonText);
-            sortButton.DropDownItems.Add(X(Global.L.SortByLevelButton()), null, delegate {
-                new ItemSizeSortHandler<uint>(new ItemLevelSortMethod()).Run(selectedStashes, page.ShownExpansion);
-            });
-            sortButton.DropDownItems.Add(X(Global.L.SortByTypeButton()), null, delegate {
-                new ItemSizeSortHandler<int>(new ItemTypeSortMethod()).Run(selectedStashes, page.ShownExpansion);
-            });
-            sortButton.DropDownItems.Add(X(Global.L.SortByClassButton()), null, delegate {
-                new ItemSizeSortHandler<int>(new ItemClassSortMethod()).Run(selectedStashes, page.ShownExpansion);
-            });
-            sortButton.DropDownItems.Add(X(Global.L.SortByQualityButton()), null, delegate {
-                new ItemSizeSortHandler<int>(new ItemQualitySortMethod()).Run(selectedStashes, page.ShownExpansion);
-            });
-            sortButton.DropDownItems.Add(X(Global.L.SortBySet1Button()), null, delegate {
-                var result = new ItemRecordSortHandler<string>(new ItemSet1SortMethod()).Run(selectedStashes, page.ShownExpansion);
-                if (result.RemainingStashes.Count() > 0)
-                    result = new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(result.RemainingStashes, page.ShownExpansion);
-            });
-            sortButton.DropDownItems.Add(X(Global.L.SortBySet2Button()), null, delegate {
-                var result = new ItemRecordSortHandler<string>(new ItemSet2SortMethod()).Run(selectedStashes, page.ShownExpansion);
-                if (result.RemainingStashes.Count() > 0)
-                    result = new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(result.RemainingStashes, page.ShownExpansion);
-            });
-            sortButton.DropDownItems.Add(X(Global.L.SortByNoneButton()), null, delegate {
-                new ItemSizeSortHandler<int>(new ItemNoneSortMethod()).Run(selectedStashes, page.ShownExpansion);
-            });
+            
+            foreach (Common.Config.ConfigSortPattern sortPat in Global.Configuration.SortPatterns)
+            {
+                sortButton.DropDownItems.Add(X(sortPat.Name), null, delegate {
+                    new SortHandler(selectedStashes).Sort(sortPat.Value);
+                    page.StashEnsureVisible(clickedStash);
+                    page.SelectStashes(selectedStashes.ToList());
+                });
+            }
         }
         
         public void AddDeleteOption()

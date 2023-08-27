@@ -87,13 +87,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cleanup.cs" />
+    <Compile Include="Common\Config\ConfigSortPattern.cs" />
     <Compile Include="Common\Config\ConfigColor.cs" />
+    <Compile Include="Common\Config\ConfigSortPatternList.cs" />
     <Compile Include="Common\Config\ConfigColorList.cs" />
     <Compile Include="Common\Config\ConfigExpansion.cs" />
     <Compile Include="Common\Config\ConfigExpansionList.cs" />
     <Compile Include="Common\Config\ConfigExpansionMode.cs" />
-    <Compile Include="Common\Config\V4\Config.cs" />
-    <Compile Include="Common\Config\V4\ConfigSettingList.cs" />
     <Compile Include="Common\Config\Config.cs" />
     <Compile Include="Common\Config\ConfigSettingList.cs" />
     <Compile Include="Common\Config\ConfigStash.cs" />
@@ -101,8 +101,6 @@
     <Compile Include="Common\Config\ConfigStashGroupList.cs" />
     <Compile Include="Common\Config\ConfigStashList.cs" />
     <Compile Include="Common\Config\ConfigBase.cs" />
-    <Compile Include="Common\Config\V4\ConfigStash.cs" />
-    <Compile Include="Common\Config\V4\ConfigStashList.cs" />
     <Compile Include="Common\Config\V5\ConfigStashGroup.cs" />
     <Compile Include="Common\Config\V5\ConfigStashGroupList.cs" />
     <Compile Include="Common\Config\V5\ConfigColor.cs" />
@@ -134,19 +132,17 @@
     <Compile Include="Forms\ContextMenues\BaseContextMenu.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Forms\ContextMenues\SortStashes\Handlers\ItemRecordSortHandler.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Handlers\SortHandler.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Handlers\ItemSizeSortHandler.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Handlers\SortHandlerResult.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemClassSortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemLevelSortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemNoneSortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemQualitySortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemSet1SortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemSet2SortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemSetSortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemSortMethod.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Methods\ItemTypeSortMethod.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\ClassSortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\NoneSortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\QualitySortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\SetSortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\SortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\LevelSortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\TypeSortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\SortingStructures\SizeSortingStructure.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\SortingStructures\SortingStructure.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\SortingStructures\RecordSortingStructure.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\SortHandler.cs" />
     <Compile Include="Forms\CraftingModeDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
