@@ -240,7 +240,7 @@ namespace GDMultiStash.GlobalHandlers
                 });
                 _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
                 {
-                    Name = Global.L.SortAIO(),
+                    Name = Global.L.SortByAIO(),
                     Value = "{quality}/[{level}] {set}\n{type} - {quality}/{class} - lvl {level}",
                 });
             }

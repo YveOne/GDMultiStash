@@ -161,8 +161,9 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter SortByClass => _.Get("sort_by_class");
             public _Core.StringGetter SortByType => _.Get("sort_by_type");
             public _Core.StringGetter SortBySet => _.Get("sort_by_set");
-            public _Core.StringGetter SortAIO => _.Get("sort_aio");
-
+            public _Core.StringGetter SortByAIO => _.Get("sort_by_aio");
+            public _Core.StringGetter SortingFinishedMessage => _.Get("sorting_finished");
+            
             #endregion
 
             #region stash/group names

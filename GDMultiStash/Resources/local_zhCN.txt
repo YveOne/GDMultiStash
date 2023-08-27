@@ -187,4 +187,5 @@ sort_by_quality = By quality
 sort_by_class = By class
 sort_by_type = By type
 sort_by_set = By set
-sort_aio = AIO
+sort_by_aio = AIO
+sorting_finished = Finished sorting

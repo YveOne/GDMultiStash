@@ -187,4 +187,5 @@ sort_by_quality = Nach Qualität
 sort_by_class = Nach Art
 sort_by_type = Nach Kategorie
 sort_by_set = Nach Set
-sort_aio = AIO
+sort_by_aio = AIO
+sorting_finished = Sortierung abgeschlossen
