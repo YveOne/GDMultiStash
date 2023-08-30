@@ -1,3 +1,7 @@
+v1.37.4
+- Fixed debug console showing everytime when starting GDMS
+
+
 v1.37.3
 - Empty stash tabs will displayed cyan in usage indicators
 - Updated stash sorting system, prepared for user defined sort rules

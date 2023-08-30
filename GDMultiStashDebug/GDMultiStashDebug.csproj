@@ -80,8 +80,8 @@
     <PreBuildEvent>copy /y "$(SolutionDir)GDMultiStash\Properties\AssemblyInfo.cs" "$(ProjectDir)Properties\AssemblyInfo.cs"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>del "$(TargetDir)GDMultiStash.exe" 2&gt;nul
+move "$(TargetDir)GDMultiStashStarter.exe" "$(TargetDir)GDMultiStash.exe" 2&gt;nul</PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <None Include="$(MSBuildProjectDirectory)\Properties\_buildforcer">

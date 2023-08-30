@@ -16,7 +16,6 @@ namespace GDMultiStash
 
         public static void DoCleanup()
         {
-            DeleteFile("GDMultiStash.bin");
         }
 
     }

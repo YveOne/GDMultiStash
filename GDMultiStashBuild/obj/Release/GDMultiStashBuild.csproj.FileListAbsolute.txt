@@ -20,3 +20,4 @@ C:\Users\Yvonne\Desktop\PROJECTS\GDMultiStash-master\GDMultiStashBuild\obj\Relea
 C:\Users\Yvonne\Desktop\PROJECTS\GDMultiStash-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.g.resources
 C:\Users\Yvonne\Desktop\PROJECTS\GDMultiStash-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.csproj.CoreCompileInputs.cache
 C:\Users\Yvonne\Desktop\PROJECTS\GDMultiStash-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.exe
+C:\Users\Yvonne\Desktop\PROJECTS\GDMultiStash-master\GDMultiStashBuild\obj\Release\GDMultiStashBuild.csproj.AssemblyReference.cache

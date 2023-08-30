@@ -98,17 +98,11 @@
     PostBuildMacros;
   </PostBuildEventDependsOn>
     <PostBuildEvent>copy /y "$(SolutionDir)changelog.txt" "$(TargetDir)Release\changelog.txt"
-
 rmdir /s /q "$(TargetDir)GDMultiStash-v@(VersionNumber)\" 2&gt;nul
-
 xcopy "$(TargetDir)Release" "$(TargetDir)GDMultiStash-v@(VersionNumber)\"
-
 del /q "$(TargetDir)GDMultiStash-v@(VersionNumber)\*.xml"
-
 del /q "$(TargetDir)GDMultiStash-v@(VersionNumber)\*.pdb"
-
 del /q "$(TargetDir)GDMultiStash-v@(VersionNumber)\*.config"
-
 del /q "$(TargetDir)GDMultiStash-v@(VersionNumber)\log.txt"</PostBuildEvent>
   </PropertyGroup>
 </Project>

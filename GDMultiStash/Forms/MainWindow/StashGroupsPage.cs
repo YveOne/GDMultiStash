@@ -56,7 +56,7 @@ namespace GDMultiStash.Forms.MainWindow
         {
             Text = "",
             AspectName = "StashesCount",
-            Width = 40,
+            Width = 60,
             TextAlign = HorizontalAlignment.Right,
         };
 
