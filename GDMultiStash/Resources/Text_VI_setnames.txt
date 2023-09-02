@@ -1,0 +1,171 @@
+tagItemSetC001Name|Đồng Phục Vệ Binh
+tagItemSetC001NameB|Đồng Phục Lính Bảo Vệ Hoà Bình
+tagItemSetC002Name|Trang Phục Nhà Thám Hiểm
+tagItemSetC003Name|Thánh Địa của Maiven
+tagItemSetC003NameB|Thánh Điện của Maiven
+tagItemSetC004Name|Vinh Quang của Kẻ Khát Máu
+tagItemSetC004NameB|Cuộc Tàn Sát của Kẻ Khát Máu
+tagItemSetC005Name|Công Lý của Kẻ Cướp Bóc
+tagItemSetC005NameB|Phát Quyết của Kẻ Cướp Bóc
+tagItemSetC006Name|Biểu Tượng của Sứ Giả
+tagItemSetC006NameB|Dấu Hiệu của Sứ Giả
+tagItemSetC007Name|Thầy Thuốc
+tagItemSetC007NameB|Người Chữa Thương
+tagItemSetC008Name|Tuyệt Diệt
+tagItemSetC008NameB|Triệt Tiêu
+tagItemSetC009Name|Sát Thủ Mù
+tagItemSetC010Name|Dấu Ấn Thiện Xạ
+tagItemSetC011Name|Giao Ước Tội Lỗi
+tagItemSetC012Name|Trang Sức Hoàng Gia
+tagItemSetC013Name|Kẻ Bội Ước
+tagItemSetC013NameB|Ngọn Lửa của Kẻ bội ước
+tagItemSetC014Name|Trang Sức của Sự Can Đảm
+tagItemSetC015Name|Tàn Sát
+tagItemSetC016Name|Hình Mẫu của Hội Pháp Sư
+tagItemSetC017Name|Hộ Vệ Bình Minh
+tagItemSetC018Name|Cơn Thịnh Nộ của Alkamos
+tagItemSetC018NameB|Cơn Cuồng Nộ của Alkamos
+tagItemSetC019Name|Phục Trang Độc Tố
+tagItemSetC019NameB|Phục Trang Kịch Độc
+tagItemSetC020Name|Liệt Hoả Lưu Huỳnh
+tagItemSetC020NameB|Hoả Diệm Lưu Huỳnh
+tagItemSetC021Name|Lời Thề Phương Đông
+tagItemSetC022Name|Triệu Hồi Sư Vùng Hoang Dã
+tagItemSetC022NameB|Tiếng Gọi của Triệu Hồi Sư
+tagItemSetC023Name|Vệ Binh Ưu Tú
+tagItemSetC024Name|Người Giữ Lửa
+tagItemSetC025Name|Trang Phục của Callidor
+tagItemSetC026Name|Giáp Phục của Vệ Binh Cấp Cao
+tagItemSetC027Name|Sự Thanh Thản của Mogdrogen
+tagItemSetC028Name|Cơn Bão Ma Thuật
+tagItemSetC029Name|Sự Cân Bằng của Nguyên Tố
+tagItemSetD001Name|Bộ Giáp Công Lý
+tagItemSetD002Name|Sự Cân Bằng Thần Thánh
+tagItemSetD003Name|Biểu Tượng của Kẻ Gọi Thú
+tagItemSetD004Name|Ánh Sáng của Người Gieo Ánh Bình Minh
+tagItemSetD005Name|Sứ Giả của Cái Chết
+tagItemSetD006Name|Ấn Tín của Thẩm Phán
+tagItemSetD007Name|Trang Phục của Kẻ Diệt Quỷ
+tagItemSetD008Name|Cặp Súng của Thợ Rèn Súng
+tagItemSetD009Name|Vệ Binh Hoang Dã
+tagItemSetD010Name|Trí Giả
+tagItemSetD011Name|Sức Mạnh Nguyên Tố của Người Cầu Nguyện
+tagItemSetD012Name|Pháo Đài của Markovian
+tagItemSetD013Name|Hiện Thân của Ulzuin
+tagItemSetD014Name|Lễ Phục của Dreeg
+tagItemSetD015Name|Tử Ấn
+tagItemSetD016Name|Sự Hòa Hợp của Iskandra
+tagItemSetD017Name|Cơn Bão của Ultos
+tagItemSetD018Name|Con Đường Thăng Thiên của Trozan
+tagItemSetD019Name|Sự Phản Trắc của Valdun
+tagItemSetD020Name|Khế Ước của Lưỡi Đao Độc
+tagItemSetD021Name|Giao Ước Hắc Hỏa
+tagItemSetD022Name|Người Bảo Hộ Ánh Sáng
+tagItemSetD023Name|Hiệp Sĩ Hỏa Ngục
+tagItemSetD024Name|Cơn Thịnh Nộ của Agrivix
+tagItemSetD025Name|Chiến Giáp
+tagItemSetD026Name|Sự Điên Loạn của Huyết Cuồng Nộ
+tagItemSetD027Name|Dấu Ấn của Kẻ Hành Quyết
+tagGDX1ItemSetC018CName|Nỗi Đau của Alkamos
+tagGDX1ItemSetC101Name|Kẻ Tha Hoá Lý Trí
+tagGDX1ItemSetC101BName|Kẻ Tha Hoá Linh Hồn
+tagGDX1ItemSetC102Name|Hộ Vệ Bạc
+tagGDX1ItemSetC102BName|Vệ Binh Bạc
+tagGDX1ItemSetC103Name|Hoả Tiên Tri
+tagGDX1ItemSetC104Name|Lãnh Chúa Pháp Thuật
+tagGDX1ItemSetC105Name|Kẻ Gieo Rắc Sợ Hãi
+tagGDX1ItemSetC106Name|Trang Phục Luminari
+tagItemSetC009BName|Cặp Mắt Vô Hình
+tagItemSetC010BName|Nghĩa Vụ của Tay Súng Thiện Xạ
+tagItemSetC011BName|Giao Kèo của Kẻ Báng Bổ
+tagItemSetC016BName|Tuyệt Phẩm của Panetti
+tagItemSetC017BName|Thủ Hộ Bình Minh
+tagItemSetC021BName|Lời Thề Phương Đông
+tagItemSetC024BName|Người Giữ Lửa
+tagItemSetC025BName|Hàng Phòng Ngự của Callidor
+tagItemSetC026BName|Đồn Trú Kẻ Đánh Thuê
+tagItemSetC027BName|Hoà Ước của Mogdrogen
+tagItemSetC028BName|Cơn Bão Ma Thuật
+tagItemSetC029BName|Sự Hài Hoà của Nguyên Tố
+tagGDX1ItemSetD101Name|Quân Phục của Krieg
+tagGDX1ItemSetD102Name|Thiên Nhiên Phục Hận
+tagGDX1ItemSetD103Name|Người Dẫn Lối Linh Hồn
+tagGDX1ItemSetD104Name|Nhiệt Huyết của Octavius
+tagGDX1ItemSetD105Name|Huỷ Diệt
+tagGDX1ItemSetD106Name|Thạch Hộ Vệ
+tagGDX1ItemSetD107Name|Pháo Đài của Quân Đoàn
+tagGDX1ItemSetD108Name|Cơn Cuồng Nộ của Korba
+tagGDX1ItemSetD109Name|Trang Bị Hắc Hoả
+tagGDX1ItemSetD110Name|Tai Ương Ma Pháp
+tagGDX1ItemSetD111Name|Thợ Săn Pháp Sư
+tagGDX1ItemSetD112Name|Cơn Khát của Valguur
+tagGDX1ItemSetD113Name|Cổ Ngữ Phong Ấn Giả
+tagGDX1ItemSetD114Name|Ngoại Trang của Uroboruuk
+tagGDX1ItemSetD115Name|Kiệt Tác của Allagast
+tagGDX1ItemSetD116Name|Sự Huỷ Diệt của Dagallon
+tagGDX1ItemSetD117Name|Hộ Vệ Tử Thần
+tagGDX1ItemSetD118Name|Tầm Nhìn của Nhà Tiên Tri
+tagGDX1ItemSetD119Name|Món Quà từ Kẻ Hắc Ám
+tagGDX1ItemSetD120Name|Sự Cuồng Sát của Belgothian
+tagGDX1ItemSetD121Name|Sự Điên Cuồng của Radaggan
+tagGDX1ItemSetD122Name|Lưỡi Băng
+tagGDX1ItemSetD123Name|Huyết Kỵ Sĩ
+tagItemSetD001BName|Thẩm Phán Bảo Hộ
+tagItemSetD002BName|Sự Hài Hoà Thần Thánh
+tagItemSetD003BName|Biểu Tượng của Tiếng Gọi Thiên Nhiên
+tagItemSetD004BName|Ánh Sáng của Người Tìm Bình Minh
+tagItemSetD005BName|Lời Nhắn từ Sứ Giả
+tagItemSetD006BName|Dấu Ấn của Thẩm Phán
+tagItemSetD007BName|Trang Bị của Kẻ Diệt Quỷ
+tagItemSetD008BName|Vũ Khí Huỷ Diệt của Thợ Rèn Súng
+tagItemSetD009BName|Người Tiên Phong Hoang Dã
+tagItemSetD010BName|Sự Tập Trung của Trí Giả
+tagItemSetD011BName|Ý Chí Người Cầu Nguyện
+tagItemSetD012BName|Thành Luỹ của Markovian
+tagItemSetD013BName|Hiện Thân Rực Lửa của Ulzuin
+tagItemSetD014BName|Sự Lừa Dối của Dreeg
+tagItemSetD015BName|Bóng Ma của Tử Ấn
+tagItemSetD016BName|Sự Hợp Nhất của Iskandra
+tagItemSetD017BName|Cơn Cuồng Phong của Ultos
+tagItemSetD018BName|Lỗ Thủng Bầu Trời của Trozan
+tagItemSetD019BName|Sự Phản Bội của Valdun
+tagItemSetD020BName|Khế Ước của Tà Đao Sĩ
+tagItemSetD021BName|Khế Ước Hắc Hoả
+tagItemSetD022BName|Người Bảo Vệ Ánh Sáng
+tagItemSetD023BName|Hoả Ngục Đấu Sĩ
+tagItemSetD024BName|Cơn Thịnh Nộ của Agrivix
+tagItemSetD025BName|Thành Luỹ Chiến Tranh
+tagItemSetD026BName|Sự Điên Cuồng Vô Tận của Huyết Nộ Giả
+tagItemSetD027BName|Dấu Ấn Kinh Hoàng của Alkamos
+tagItemSetC008CName|Ân Xá
+tagItemSetC007CName|Nhà Tiên Tri
+tagItemSetC013CName|Sự Điên Loạn Của Kẻ Bội Ước
+tagItemSetC015BName|Tàn Sát Điên Cuồng
+tagGDX2ItemSetC201Name|Thiết Giáp Của Baldir
+tagGDX2ItemSetC201BName|Biểu Chương Của Baldir
+tagGDX2ItemSetC202Name|Lôi Xà
+tagGDX2ItemSetC203Name|Ngọn Lửa Tàn Độc
+tagGDX2ItemSetC204Name|Lời Tuyên Thệ Của Daega
+tagGDX2ItemSetC205Name|Thạch Thần
+tagGDX2ItemSetD201Name|Hộ Vệ Thế Giới Tan Vỡ
+tagGDX2ItemSetD202Name|Kẻ Thống Trị
+tagGDX2ItemSetD203Name|Lời Thì Thầm Băng Giá
+tagGDX2ItemSetD204Name|Niềm Kiêu Hãnh Của Ludrigan
+tagGDX2ItemSetD205Name|Người Rải Xương Tàn
+tagGDX2ItemSetD206Name|Ánh Sáng Công Lý
+tagGDX2ItemSetD207Name|Cận Vệ Tam Thần
+tagGDX2ItemSetD208Name|Tài Khéo Léo Của Harra
+tagGDX2ItemSetD209Name|Cuồng Phong
+tagGDX2ItemSetD210Name|Nỗi Thống Khổ Của Rah'zin
+tagGDX2ItemSetD211Name|Lãnh Chúa Suy Tàn
+tagGDX2ItemSetD212Name|Sự Hiểm Độc Của Ghol
+tagGDX2ItemSetD213Name|Trang Sức Của Bysmiel
+tagGDX2ItemSetD214Name|Ác Quỷ Sa Mạc Korvan
+tagGDX2ItemSetD215Name|Sự Trầm Tư Của Pyran
+tagGDX2ItemSetD216Name|Kiệt Tác Của Targo
+tagGDX2ItemSetD217Name|Linh Hồn Hư Không
+tagGDX2ItemSetD218Name|Ác Ma Thối Rữa
+tagGDX2ItemSetD219Name|Bộ Giáp Của Bóng Đêm Vĩnh Cửu
+tagGDX2ItemSetD220Name|Veilkeeper
+tagGDX2ItemSetD221Name|Goredrinker
+tagGDX2ItemSetD222Name|Ember's Calling

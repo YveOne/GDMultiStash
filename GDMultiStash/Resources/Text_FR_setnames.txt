@@ -1,0 +1,171 @@
+tagItemSetC001Name|Vêtements de garde
+tagItemSetC001NameB|Habit de gardien de la paix
+tagItemSetC002Name|Vêtements d'explorateur
+tagItemSetC003Name|Sanctuaire de Maiven
+tagItemSetC003NameB|Sanctuaire de Maiven
+tagItemSetC004Name|Gloire de la faucheuse ensanglantée
+tagItemSetC004NameB|Carnage de la Faucheuse ensanglantée
+tagItemSetC005Name|Justice du maraudeur
+tagItemSetC005NameB|Jugement du maraudeur
+tagItemSetC006Name|Régalia du Héraut
+tagItemSetC006NameB|Marquage du Héraut
+tagItemSetC007Name|L'Apothicaire
+tagItemSetC007NameB|Le Devin
+tagItemSetC008Name|Perdition
+tagItemSetC008NameB|Absolution
+tagItemSetC009Name|L'œil aveugle
+tagItemSetC010Name|Emblème de tireur d'élite
+tagItemSetC011Name|Alliance profane
+tagItemSetC012Name|Exubérance royale
+tagItemSetC013Name|Briseur de serment
+tagItemSetC013NameB|Flamme du Briseur de serment
+tagItemSetC014Name|Ornements de vaillance
+tagItemSetC015Name|Carnage
+tagItemSetC016Name|Le parangon d'Arcanum
+tagItemSetC017Name|Garde de l'aube
+tagItemSetC018Name|Courroux d'Alkamos
+tagItemSetC018NameB|Rage d'Alkamos
+tagItemSetC019Name|Miasme
+tagItemSetC019NameB|Miasme mortel
+tagItemSetC020Name|Soufre
+tagItemSetC020NameB|Soufre toujours ardent
+tagItemSetC021Name|La promesse orientale
+tagItemSetC022Name|Appelle-sauvage
+tagItemSetC022NameB|Appel de l'Appelle-sauvage
+tagItemSetC023Name|Le Prétorien
+tagItemSetC024Name|Gardien de la flamme
+tagItemSetC025Name|Régalia de Callidor
+tagItemSetC026Name|Armure de Myrmidon
+tagItemSetC027Name|Tranquillité de Mogdrogen
+tagItemSetC028Name|La Tempête arcanique
+tagItemSetC029Name|Équilibre élémentaire
+tagItemSetD001Name|Armure de Justicar
+tagItemSetD002Name|La balance sacrée
+tagItemSetD003Name|Régalia de L'Appeleur de bêtes
+tagItemSetD004Name|Lumière du briseur d'aube
+tagItemSetD005Name|L'Annonciateur
+tagItemSetD006Name|Sceau de l'adjudicateur
+tagItemSetD007Name|Costume de tueur de démons
+tagItemSetD008Name|Jumeaux de Barrelsmith
+tagItemSetD009Name|Avant-garde du sang chaud
+tagItemSetD010Name|Le clairvoyant
+tagItemSetD011Name|Éléments d'invocateur
+tagItemSetD012Name|Forteresse de Markovian
+tagItemSetD013Name|Avatar d'Ulzuin
+tagItemSetD014Name|Suaire de Dreeg
+tagItemSetD015Name|La Marque de la Mort
+tagItemSetD016Name|Unité d'Iskandra
+tagItemSetD017Name|Tempête d'Ultos
+tagItemSetD018Name|Ascension de Trozan
+tagItemSetD019Name|Traîtrise de Valdun
+tagItemSetD020Name|Pacte de la Lame venimeuse
+tagItemSetD021Name|Alliance de la Flamme Noire
+tagItemSetD022Name|Défenseur de la Lumière
+tagItemSetD023Name|Le Chevalier Infernal
+tagItemSetD024Name|Courroux d'Agrivix
+tagItemSetD025Name|Armure de Guerre-né
+tagItemSetD026Name|Frénésie du Rageur de sang
+tagItemSetD027Name|Sceau de l'exécuteur
+tagGDX1ItemSetC018CName|Misère d'Alkamos
+tagGDX1ItemSetC101Name|Corrupteur d'Esprits
+tagGDX1ItemSetC101BName|Corrupteur d'Âmes
+tagGDX1ItemSetC102Name|Le Gardien d'Argent
+tagGDX1ItemSetC102BName|La Sentinelle d'Argent
+tagGDX1ItemSetC103Name|Voyant de Flambée
+tagGDX1ItemSetC104Name|Le Sire-mage
+tagGDX1ItemSetC105Name|Marcheur de Terreur
+tagGDX1ItemSetC106Name|Régalia Luminari
+tagItemSetC009BName|Le Regard Aveugle
+tagItemSetC010BName|Devoir de Tireur d'élite
+tagItemSetC011BName|Alliance de Profanateur
+tagItemSetC016BName|Le Paragon de Panetti
+tagItemSetC017BName|Bouclier de l'Aurore
+tagItemSetC021BName|Le serment oriental
+tagItemSetC024BName|Conservateur de la Flambée
+tagItemSetC025BName|Défense de Callidor
+tagItemSetC026BName|Bastion de Myrmidon
+tagItemSetC027BName|Paix de Mogdrogen
+tagItemSetC028BName|La Tempête arcanique
+tagItemSetC029BName|Harmonie élémentaire
+tagGDX1ItemSetD101Name|Armement de Krieg
+tagGDX1ItemSetD102Name|Vengeur de la Nature
+tagGDX1ItemSetD103Name|Berger des Âmes perdues
+tagGDX1ItemSetD104Name|Ardeur d'Octavius
+tagGDX1ItemSetD105Name|Le Cataclysme
+tagGDX1ItemSetD106Name|Garde de pierre
+tagGDX1ItemSetD107Name|Forteresse de la Légion
+tagGDX1ItemSetD108Name|Fureur de Korba
+tagGDX1ItemSetD109Name|Costume de Flambée Ténébreuse
+tagGDX1ItemSetD110Name|Le Fléau de Sorts
+tagGDX1ItemSetD111Name|Le tueur de mages
+tagGDX1ItemSetD112Name|Faim de Valguur
+tagGDX1ItemSetD113Name|Le Lieur de runes
+tagGDX1ItemSetD114Name|Attirail d'Uroboruuk
+tagGDX1ItemSetD115Name|Chef d'œuvre d'Allagast
+tagGDX1ItemSetD116Name|Destruction de Dagallon
+tagGDX1ItemSetD117Name|Garde de la Mort
+tagGDX1ItemSetD118Name|Vision de Divinateur
+tagGDX1ItemSetD119Name|Don du Ténébreux
+tagGDX1ItemSetD120Name|Massacre de Belgothian
+tagGDX1ItemSetD121Name|Folie de Radaggan
+tagGDX1ItemSetD122Name|Langue de Givre
+tagGDX1ItemSetD123Name|Le Chevalier de Sang
+tagItemSetD001BName|Garde de Justicier
+tagItemSetD002BName|L'Harmonie Sacrée
+tagItemSetD003BName|Régalia de l'Appel de la Nature
+tagItemSetD004BName|Lumière du Chercheur de Lumière
+tagItemSetD005BName|Le Message de l'Annonciateur
+tagItemSetD006BName|Sceaux de Jugeur
+tagItemSetD007BName|Armement de Tueur de démons
+tagItemSetD008BName|Destructeurs de Tonnelier
+tagItemSetD009BName|Avant-garde Cœur-sauvage
+tagItemSetD010BName|Focalisateur du Clairvoyant
+tagItemSetD011BName|Volonté d'Invocateur
+tagItemSetD012BName|Bastion de Markovian
+tagItemSetD013BName|Avatar infernal d'Ulzuin
+tagItemSetD014BName|Tromperie de Dreeg
+tagItemSetD015BName|Ombre de Marque de la Mort
+tagItemSetD016BName|Unification d'Iskandra
+tagItemSetD017BName|Tempête d'Ultos
+tagItemSetD018BName|Brèche céleste de Trozan
+tagItemSetD019BName|Trahison de Valdun
+tagItemSetD020BName|Le Pacte de Lame-vile
+tagItemSetD021BName|Bande de Noire Brûlure
+tagItemSetD022BName|Gardien de Lumière
+tagItemSetD023BName|Le Champion Infernal
+tagItemSetD024BName|Rage d'Agrivix
+tagItemSetD025BName|Bastion Né-de-la-guerre
+tagItemSetD026BName|Frénésie sans fin d'Enragé de sang
+tagItemSetD027BName|Sceaux de terreur d'Alkamos
+tagItemSetC008CName|Amnistie
+tagItemSetC007CName|L'Augure
+tagItemSetC013CName|Folie du Brise-serment
+tagItemSetC015BName|Carnage Gratuit
+tagGDX2ItemSetC201Name|Plaque de Baldir
+tagGDX2ItemSetC201BName|Regalia de Baldir
+tagGDX2ItemSetC202Name|Le Serpent-Tempête
+tagGDX2ItemSetC203Name|Flambée pourrissante
+tagGDX2ItemSetC204Name|Serment de Daega
+tagGDX2ItemSetC205Name|Père-de-pierre
+tagGDX2ItemSetD201Name|Gardien Fragmenté
+tagGDX2ItemSetD202Name|Le Vainqueur
+tagGDX2ItemSetD203Name|Murmure de Frisson
+tagGDX2ItemSetD204Name|Fierté de Ludrigan
+tagGDX2ItemSetD205Name|Vend'os
+tagGDX2ItemSetD206Name|Lumière de la Vertu
+tagGDX2ItemSetD207Name|Sentinelle des Trois
+tagGDX2ItemSetD208Name|Artifice de Harra
+tagGDX2ItemSetD209Name|Le Cyclone
+tagGDX2ItemSetD210Name|Tourment de Rah'Zin
+tagGDX2ItemSetD211Name|Le Sire de la Nielle
+tagGDX2ItemSetD212Name|Malice de Ghol
+tagGDX2ItemSetD213Name|Bibelots de Bysmiel
+tagGDX2ItemSetD214Name|Le Démon des dunes de Korvan
+tagGDX2ItemSetD215Name|Ruminations de Pyran
+tagGDX2ItemSetD216Name|Artisanat de Targo
+tagGDX2ItemSetD217Name|L'Âme du Vide
+tagGDX2ItemSetD218Name|Rotgheist
+tagGDX2ItemSetD219Name|Armure de la Nuit Éternelle
+tagGDX2ItemSetD220Name|Conservateur du Voile
+tagGDX2ItemSetD221Name|Buveur de Sang caillé
+tagGDX2ItemSetD222Name|Appel de Braise

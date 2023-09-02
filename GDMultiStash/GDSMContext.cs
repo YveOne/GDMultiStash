@@ -41,12 +41,13 @@ namespace GDMultiStash
             }
 
             Global.FileSystem.CreateDirectories();
+            Global.Configuration.SaveBackup();
             Global.Configuration.Load();
 
-            Global.Localization.AddLanguageFile("deDE", Properties.Resources.local_deDE);
-            Global.Localization.AddLanguageFile("enGB", Properties.Resources.local_enGB);
-            Global.Localization.AddLanguageFile("enUS", Properties.Resources.local_enUS);
-            Global.Localization.AddLanguageFile("zhCN", Properties.Resources.local_zhCN);
+            Global.Localization.AddLanguageFile("enUS");
+            Global.Localization.AddLanguageFile("deDE");
+            Global.Localization.AddLanguageFile("zhCN");
+            Global.Localization.AddLanguageFilesFrom(Global.FileSystem.LocalesDirectory);
             Global.Configuration.LanguageChanged += Global_Configuration_LanguageChanged;
 
             if (Global.Configuration.IsNewConfiguration)
@@ -59,7 +60,8 @@ namespace GDMultiStash
             }
             else
             {
-                Global.Localization.LoadLanguage(Global.Configuration.Settings.Language);
+                if (!Global.Localization.LoadLanguage(Global.Configuration.Settings.Language))
+                    Global.Localization.LoadLanguage("enUS");
             }
 
             if (!GrimDawn.ValidateDocumentsPath())
@@ -96,6 +98,23 @@ namespace GDMultiStash
                 return;
             }
 
+            // directory gdx3 doesnt exist yet in 1.2
+            if (!File.Exists(Path.Combine(Global.Configuration.Settings.GamePath, "resources", "Text_DE.arc")))
+            {
+                Global.Configuration.RestoreBackup();
+                string msg = Global.L.OldGDVersionNotSupported();
+                if (Console.Confirm(msg, MessageBoxIcon.Information))
+                {
+                    Global.Update.StartUpdater(GDMultiStashUpdater.UpdaterAPI.LatestUrlOld);
+                }
+                else
+                {
+                    System.Diagnostics.Process.Start("https://github.com/YveOne/GDMultiStashOld/releases");
+                    Program.Quit();
+                }
+                return;
+            }
+
             // check for new version
             if (Global.Update.NewVersionAvailable())
             {
@@ -108,6 +127,7 @@ namespace GDMultiStash
             }
 
             Global.Configuration.UpdateAndCleanup();
+            Global.Configuration.DeleteBackup();
 
             // warn user if cloud saving is enabled in gd settings
             {
@@ -117,7 +137,21 @@ namespace GDMultiStash
                 }
             }
 
+            Global.Localization.LoadGameLanguage("Text_DE", "German");
+            Global.Localization.LoadGameLanguage("Text_EN", "English");
+            Global.Localization.LoadGameLanguage("Text_ES", "Spanish");
+            Global.Localization.LoadGameLanguage("Text_FR", "French");
+            Global.Localization.LoadGameLanguage("Text_IT", "Italian");
+            Global.Localization.LoadGameLanguage("Text_CS", "Czech");
+            Global.Localization.LoadGameLanguage("Text_JA", "Japanese");
+            Global.Localization.LoadGameLanguage("Text_KO", "Korean");
+            Global.Localization.LoadGameLanguage("Text_PL", "Polish");
+            Global.Localization.LoadGameLanguage("Text_PT", "Portuguese");
+            Global.Localization.LoadGameLanguage("Text_VI", "Vietnamese");
+            Global.Localization.LoadGameLanguage("Text_ZH", "Chinese");
+
             Global.Database.LoadItemInfos(Properties.Resources.iteminfos);
+            Global.Database.LoadMissingItemInfos();
             Global.Database.LoadItemAffixInfos(Properties.Resources.itemaffixes);
             Global.Database.LoadItemSets(Properties.Resources.itemsets);
             Global.Database.LoadItemTextures(Properties.Resources.itemtextures);
@@ -175,10 +209,14 @@ namespace GDMultiStash
             Global.Windows.CloseMainWindow();
             Global.Database.Destroy();
             StopServices();
-            _gdWindowHookService.Destroy();
-            _gdGameHookService.Destroy();
-            _gdOverlayService.Destroy();
-            trayIcon.Visible = false;
+            if (_gdWindowHookService != null)
+                _gdWindowHookService.Destroy();
+            if (_gdGameHookService != null)
+                _gdGameHookService.Destroy();
+            if (_gdOverlayService != null)
+                _gdOverlayService.Destroy();
+            if (trayIcon != null)
+                trayIcon.Visible = false;
         }
 
         private void StartServices()
@@ -214,6 +252,8 @@ namespace GDMultiStash
 
         private void StopServices()
         {
+            if (!_servicesInstalled) return;
+
             _gdWindowHookService.HookInstalled -= GDWindowHook_HookInstalled;
             _gdWindowHookService.MoveSize -= GDWindowHook_MoveSize;
             _gdWindowHookService.GotFocus -= GDWindowHook_GotFocus;

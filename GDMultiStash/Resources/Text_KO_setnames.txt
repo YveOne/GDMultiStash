@@ -1,0 +1,171 @@
+tagItemSetC001Name|근위병의 정복
+tagItemSetC001NameB|치안유지군의 정복
+tagItemSetC002Name|탐험가용 의복
+tagItemSetC003Name|메이븐의 안식처
+tagItemSetC003NameB|메이븐의 성역
+tagItemSetC004Name|피수확자의 영광
+tagItemSetC004NameB|피수확자의 학살
+tagItemSetC005Name|습격자의 심판
+tagItemSetC005NameB|습격자의 판결
+tagItemSetC006Name|전령관의 예복
+tagItemSetC006NameB|전령관의 상징들
+tagItemSetC007Name|약제사
+tagItemSetC007NameB|치료사
+tagItemSetC008Name|징벌
+tagItemSetC008NameB|단죄
+tagItemSetC009Name|초점없는 눈동자
+tagItemSetC010Name|샤프슈터의 상징
+tagItemSetC011Name|부정한 계약의 증표
+tagItemSetC012Name|왕가의 부
+tagItemSetC013Name|서약위반자
+tagItemSetC013NameB|서약위반자의 화염
+tagItemSetC014Name|용기의 장식
+tagItemSetC015Name|학살
+tagItemSetC016Name|비전의 권위자
+tagItemSetC017Name|새벽수호자
+tagItemSetC018Name|알카모스의 격노
+tagItemSetC018NameB|알카모스의 맹위
+tagItemSetC019Name|독기
+tagItemSetC019NameB|죽음의 독기
+tagItemSetC020Name|유황
+tagItemSetC020NameB|꺼지지 않는 유황불
+tagItemSetC021Name|동방의 징표
+tagItemSetC022Name|야성호출자
+tagItemSetC022NameB|야성호출자의 부름
+tagItemSetC023Name|황제친위대
+tagItemSetC024Name|화염보관자
+tagItemSetC025Name|칼리도르의 정복
+tagItemSetC026Name|미르미돈 갑옷
+tagItemSetC027Name|모그드로젠의 차분함
+tagItemSetC028Name|비전 마법 폭풍
+tagItemSetC029Name|근원적 균형
+tagItemSetD001Name|심판자의 갑옷
+tagItemSetD002Name|성스러운 균형
+tagItemSetD003Name|야수소환사의 정복
+tagItemSetD004Name|새벽인도자의 빛
+tagItemSetD005Name|하빈저
+tagItemSetD006Name|법관의 인장
+tagItemSetD007Name|악마사냥꾼의 복장
+tagItemSetD008Name|총포제작자의 쌍둥이
+tagItemSetD009Name|야만족 선봉대
+tagItemSetD010Name|투시자
+tagItemSetD011Name|인보커의 본령
+tagItemSetD012Name|마코비안의 요새
+tagItemSetD013Name|얼즈인의 아바타
+tagItemSetD014Name|드리그의 수의
+tagItemSetD015Name|데스마크
+tagItemSetD016Name|이스칸드라의 일관성
+tagItemSetD017Name|울토스의 폭풍
+tagItemSetD018Name|트로잔의 승천
+tagItemSetD019Name|발던의 배반
+tagItemSetD020Name|맹독칼날의 계약
+tagItemSetD021Name|검은 화염의 계약 증표
+tagItemSetD022Name|빛의 수호자
+tagItemSetD023Name|지옥의 기사
+tagItemSetD024Name|아그리빅스의 격노
+tagItemSetD025Name|워본 갑옷
+tagItemSetD026Name|피의 광란자의 흥분
+tagItemSetD027Name|최고집행자의 인장
+tagGDX1ItemSetC018CName|알카모스의 고뇌
+tagGDX1ItemSetC101Name|정신을 더럽히는 자
+tagGDX1ItemSetC101BName|영혼을 더럽히는 자
+tagGDX1ItemSetC102Name|은빛의 수호자
+tagGDX1ItemSetC102BName|은빛의 감시자
+tagGDX1ItemSetC103Name|불길 바라보는 자
+tagGDX1ItemSetC104Name|궁정마법사
+tagGDX1ItemSetC105Name|드레드워커
+tagGDX1ItemSetC106Name|광휘단 정복
+tagItemSetC009BName|초점없는 시선
+tagItemSetC010BName|샤프슈터의 의무
+tagItemSetC011BName|모독적 계약의 증표
+tagItemSetC016BName|파네티를 이은 권위자
+tagItemSetC017BName|새벽의 방패
+tagItemSetC021BName|동방의 서약
+tagItemSetC024BName|불길보관자
+tagItemSetC025BName|칼리도르의 방어
+tagItemSetC026BName|미르미돈 요새
+tagItemSetC027BName|모그드로젠의 안식
+tagItemSetC028BName|비전 마법 소용돌이
+tagItemSetC029BName|근원적 조화
+tagGDX1ItemSetD101Name|크리그의 무장
+tagGDX1ItemSetD102Name|자연의 복수자
+tagGDX1ItemSetD103Name|길 잃은 영혼들의 인도자
+tagGDX1ItemSetD104Name|옥타비우스의 정열
+tagGDX1ItemSetD105Name|격변
+tagGDX1ItemSetD106Name|스톤가드
+tagGDX1ItemSetD107Name|군단의 요새
+tagGDX1ItemSetD108Name|코르바의 맹렬함
+tagGDX1ItemSetD109Name|암흑화염 복장
+tagGDX1ItemSetD110Name|주문의 재앙
+tagGDX1ItemSetD111Name|메이지슬레이어
+tagGDX1ItemSetD112Name|발구르의 갈망
+tagGDX1ItemSetD113Name|룬바인더
+tagGDX1ItemSetD114Name|우로보룩의 복장
+tagGDX1ItemSetD115Name|알라가스트의 걸작
+tagGDX1ItemSetD116Name|다갈론의 파괴
+tagGDX1ItemSetD117Name|죽음의 경비자
+tagGDX1ItemSetD118Name|예언자의 통찰력
+tagGDX1ItemSetD119Name|어둠의 존재의 선물
+tagGDX1ItemSetD120Name|벨고시안의 학살
+tagGDX1ItemSetD121Name|라다간의 어리석음
+tagGDX1ItemSetD122Name|서리방언
+tagGDX1ItemSetD123Name|피의 기사
+tagItemSetD001BName|심판자의 가호
+tagItemSetD002BName|성스러운 조화
+tagItemSetD003BName|자연의 부름의 정복
+tagItemSetD004BName|새벽추구자의 빛
+tagItemSetD005BName|하빈저의 살육
+tagItemSetD006BName|법관의 문장
+tagItemSetD007BName|악마사냥꾼의 무장
+tagItemSetD008BName|총포제작자의 파괴병기
+tagItemSetD009BName|야생의 심장 선봉대
+tagItemSetD010BName|투시자의 집중
+tagItemSetD011BName|인보커의 의지
+tagItemSetD012BName|마코비안의 성채
+tagItemSetD013BName|얼즈인의 지옥의 아바타
+tagItemSetD014BName|드리그의 기만
+tagItemSetD015BName|데스마크의 그림자
+tagItemSetD016BName|이스칸드라의 합일
+tagItemSetD017BName|울토스의 돌풍
+tagItemSetD018BName|트로잔의 폭풍우
+tagItemSetD019BName|발던의 배신
+tagItemSetD020BName|사악칼날의 계약
+tagItemSetD021BName|검은 소각의 계약 증표
+tagItemSetD022BName|빛의 가디언
+tagItemSetD023BName|지옥의 챔피언
+tagItemSetD024BName|아그리빅스의 맹렬함
+tagItemSetD025BName|워본 요새
+tagItemSetD026BName|피의 광란자의 끝없는 광기
+tagItemSetD027BName|알카모스의 공포의 인장
+tagItemSetC008CName|사면
+tagItemSetC007CName|점술가
+tagItemSetC013CName|서약위반자의 어리석음
+tagItemSetC015BName|무자비한 학살
+tagGDX2ItemSetC201Name|발디르의 판금
+tagGDX2ItemSetC201BName|발디르의 의복
+tagGDX2ItemSetC202Name|폭풍뱀
+tagGDX2ItemSetC203Name|곪는 불길
+tagGDX2ItemSetC204Name|다에가의 서약
+tagGDX2ItemSetC205Name|돌아비
+tagGDX2ItemSetD201Name|조각난 수호자
+tagGDX2ItemSetD202Name|정복자
+tagGDX2ItemSetD203Name|차가운 속삭임
+tagGDX2ItemSetD204Name|루드리건의 긍지
+tagGDX2ItemSetD205Name|뼈수집가
+tagGDX2ItemSetD206Name|미덕의 빛
+tagGDX2ItemSetD207Name|삼신의 센티넬
+tagGDX2ItemSetD208Name|하라의 기교
+tagGDX2ItemSetD209Name|사이클론
+tagGDX2ItemSetD210Name|라'진의 고통
+tagGDX2ItemSetD211Name|마름병군주
+tagGDX2ItemSetD212Name|골의 적의
+tagGDX2ItemSetD213Name|비스미엘의 장신구
+tagGDX2ItemSetD214Name|코르반 모래언덕 악마
+tagGDX2ItemSetD215Name|파이란의 심사숙고
+tagGDX2ItemSetD216Name|타르고의 수공예품
+tagGDX2ItemSetD217Name|공허망령
+tagGDX2ItemSetD218Name|부패한 가이스트
+tagGDX2ItemSetD219Name|영원한 어둠의 갑옷
+tagGDX2ItemSetD220Name|장막 관리자
+tagGDX2ItemSetD221Name|피를 마시는 자
+tagGDX2ItemSetD222Name|잉걸불 소환사

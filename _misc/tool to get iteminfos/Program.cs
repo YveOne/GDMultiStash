@@ -256,6 +256,7 @@ namespace ConsoleApp1
                     if (!(record.StartsWith("records/items/lootaffixes/")
                        || record.StartsWith("records/items/enchants/")
                        || record.StartsWith("records/items/materia/")
+                       || record == "records/items/gearweapons/focus/b203c_focus.dbr"
                     )) continue;
 
                     var dbrData = DoRegex(File.ReadAllText(dbrFile), new string[] {
@@ -290,7 +291,7 @@ namespace ConsoleApp1
                 {
                     var record = GetRecordPath(dbrFile);
                     if (record.Contains("petbonus")
-                       || !(record.StartsWith("records/items/lootsets/")
+                    || !(record.StartsWith("records/items/lootsets/")
                        || record.StartsWith("records/storyelements/signs/")
                     )) continue;
 

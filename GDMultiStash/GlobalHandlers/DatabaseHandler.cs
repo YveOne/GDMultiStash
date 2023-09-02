@@ -166,56 +166,74 @@ namespace GDMultiStash.GlobalHandlers
         public void LoadItemInfos(string text)
         {
             Console.WriteLine("Reading item infos ...");
-            string[] splits;
-            string record;
-            using (StringReader sr = new StringReader(text))
+            foreach (var line in Utils.Funcs.ReadTextLinesIter(text))
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                var splits = line.Split('|');
+                if (splits.Length < 8) continue;
+                var record = splits[0].Trim();
+                if (!uint.TryParse(splits[1], out uint width)) continue;
+                if (!uint.TryParse(splits[2], out uint height)) continue;
+                if (!uint.TryParse(splits[3], out uint level)) continue;
+                _itemRecordInfos[record] = new ItemRecordInfo()
                 {
-                    splits = line.Split('|');
-                    if (splits.Length < 8) continue;
-                    record = splits[0].Trim();
-                    if (record.StartsWith("//")) continue;
-                    if (!uint.TryParse(splits[1], out uint width)) continue;
-                    if (!uint.TryParse(splits[2], out uint height)) continue;
-                    if (!uint.TryParse(splits[3], out uint level)) continue;
-                    _itemRecordInfos[record] = new ItemRecordInfo()
-                    {
-                        Width = width,
-                        Height = height,
-                        RequiredLevel = level,
-                        Class = splits[4],
-                        Quality = splits[5],
-                        Texture = splits[6],
-                        ItemSetRecord = splits[7],
-                    };
-                }
+                    Width = width,
+                    Height = height,
+                    RequiredLevel = level,
+                    Class = splits[4],
+                    Quality = splits[5],
+                    Texture = splits[6],
+                    ItemSetRecord = splits[7],
+                };
             }
             Console.WriteLine("- Found " + _itemRecordInfos.Count + " records");
+        }
+
+        public void LoadMissingItemInfos()
+        {
+            Console.WriteLine("Reading missing item infos ...");
+            var missingRecords = new List<string>() {
+                "records/items/misc/potions/potion_energya01.dbr|1|1|0|OneShot_PotionMana|None|potion_energya01up.png|",
+                "records/items/misc/potions/potion_healtha01.dbr|1|1|0|OneShot_PotionHealth|None|potion_healtha01up.png|",
+                "records/items/misc/potions/potion_healtha02.dbr|1|1|12|OneShot_PotionHealth|None|potion_healtha01up.png|",
+                "records/items/misc/potions/potion_healtha03.dbr|1|1|24|OneShot_PotionHealth|None|potion_healtha01up.png|",
+                "records/items/misc/potions/potion_healthb01.dbr|1|1|0|OneShot_PotionHealth|None|potion_healthb01up.png|",
+            };
+            foreach (var line in missingRecords)
+            {
+                var splits = line.Split('|');
+                if (splits.Length < 8) continue;
+                var record = splits[0].Trim();
+                if (!uint.TryParse(splits[1], out uint width)) continue;
+                if (!uint.TryParse(splits[2], out uint height)) continue;
+                if (!uint.TryParse(splits[3], out uint level)) continue;
+                _itemRecordInfos[record] = new ItemRecordInfo()
+                {
+                    Width = width,
+                    Height = height,
+                    RequiredLevel = level,
+                    Class = splits[4],
+                    Quality = splits[5],
+                    Texture = splits[6],
+                    ItemSetRecord = splits[7],
+                };
+            }
+            Console.WriteLine("- Found " + _itemRecordInfos.Count + " missing records");
         }
 
         public void LoadItemAffixInfos(string text)
         {
             Console.WriteLine("Reading affix infos ...");
-            string[] splits;
-            string record;
-            using (StringReader sr = new StringReader(text))
+            foreach (var line in Utils.Funcs.ReadTextLinesIter(text))
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                var splits = line.Split('|');
+                if (splits.Length < 2) continue;
+                var record = splits[0].Trim();
+                if (!uint.TryParse(splits[1], out uint level)) continue;
+                _affixRecordInfos[record] = new AffixRecordInfo()
                 {
-                    splits = line.Split('|');
-                    if (splits.Length < 2) continue;
-                    record = splits[0].Trim();
-                    if (record.StartsWith("//")) continue;
-                    if (!uint.TryParse(splits[1], out uint level)) continue;
-                    _affixRecordInfos[record] = new AffixRecordInfo()
-                    {
-                        RequiredLevel = level,
-                        Quality = splits[2],
-                    };
-                }
+                    RequiredLevel = level,
+                    Quality = splits[2],
+                };
             }
             Console.WriteLine("- Found " + _affixRecordInfos.Count + " records");
         }
@@ -223,23 +241,16 @@ namespace GDMultiStash.GlobalHandlers
         public void LoadItemSets(string text)
         {
             Console.WriteLine("Reading itemsets infos ...");
-            string[] splits;
-            string record;
-            using (StringReader sr = new StringReader(text))
+            foreach (var line in Utils.Funcs.ReadTextLinesIter(text))
             {
-                string line;
-                while ((line = sr.ReadLine()) != null)
+                var splits = line.Split('|');
+                if (splits.Length < 3) continue;
+                var record = splits[0].Trim();
+                _itemSetRecordInfos[record] = new ItemSetRecordInfo()
                 {
-                    splits = line.Split('|');
-                    if (splits.Length < 3) continue;
-                    record = splits[0].Trim();
-                    if (record.StartsWith("//")) continue;
-                    _itemSetRecordInfos[record] = new ItemSetRecordInfo()
-                    {
-                        ItemSetNameKey = splits[1],
-                        ItemSetItemRecords = splits[2].Split(';'),
-                    };
-                }
+                    ItemSetNameKey = splits[1],
+                    ItemSetItemRecords = splits[2].Split(';'),
+                };
             }
             Console.WriteLine("- Found " + _itemSetRecordInfos.Count + " records");
         }
@@ -258,9 +269,12 @@ namespace GDMultiStash.GlobalHandlers
 
         public void Destroy()
         {
-            _texturesZipArchive.Dispose();
-            _texturesMemoryStream.Close();
-            _texturesMemoryStream.Dispose();
+            if (_texturesZipArchive != null)
+                _texturesZipArchive.Dispose();
+            if (_texturesMemoryStream != null)
+                _texturesMemoryStream.Close();
+            if (_texturesMemoryStream != null)
+                _texturesMemoryStream.Dispose();
         }
 
         private Dictionary<string, uint> quality2number = new Dictionary<string, uint>() {

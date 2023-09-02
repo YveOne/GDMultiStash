@@ -1,6 +1,11 @@
+v1.38
+- Added new sort criteria "rarity" to sort MI's and DR's
+- Locales directory is back! Languages files getting extracted from resource into that directory.
+- Fixed unknown affix "records/items/gearweapons/focus/b203c_focus.dbr"
+- Fixed missing localization string "item_class_relics"
+
 v1.37.4
 - Fixed debug console showing everytime when starting GDMS
-
 
 v1.37.3
 - Empty stash tabs will displayed cyan in usage indicators

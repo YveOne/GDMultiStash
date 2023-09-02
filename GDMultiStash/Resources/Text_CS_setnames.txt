@@ -1,0 +1,171 @@
+tagItemSetC001Name|Gardistovo roucho
+tagItemSetC001NameB|Mírotvůrcovo roucho
+tagItemSetC002Name|Cestovatelův oděv
+tagItemSetC003Name|Maivenino útočiště
+tagItemSetC003NameB|Maivenina svatyně
+tagItemSetC004Name|Sláva krvavého žence
+tagItemSetC004NameB|Krveprolití krvavého žence
+tagItemSetC005Name|Záškodníkova spravedlnost
+tagItemSetC005NameB|Záškodníkův rozsudek
+tagItemSetC006Name|Klenoty císařského posla
+tagItemSetC006NameB|Značení císařského posla
+tagItemSetC007Name|Lékárník
+tagItemSetC007NameB|Jasnovidec
+tagItemSetC008Name|Zhouba
+tagItemSetC008NameB|Rozhřešení
+tagItemSetC009Name|Nevidoucí oko
+tagItemSetC010Name|Ostrostřelcův terč
+tagItemSetC011Name|Bezbožná úmluva
+tagItemSetC012Name|Královská nevázanost
+tagItemSetC013Name|Zrádce
+tagItemSetC013NameB|Zrádcův plamen
+tagItemSetC014Name|Ozdoby udatnosti
+tagItemSetC015Name|Krveprolití
+tagItemSetC016Name|Ideální tajemství
+tagItemSetC017Name|Budoucí strážce
+tagItemSetC018Name|Alkamosův hněv
+tagItemSetC018NameB|Alkamosova zuřivost
+tagItemSetC019Name|Nepříjemnost
+tagItemSetC019NameB|Smrtící nepříjemnost
+tagItemSetC020Name|Síra
+tagItemSetC020NameB|Věčně hořící síra
+tagItemSetC021Name|Orientální zástava
+tagItemSetC022Name|Divochovo volání
+tagItemSetC022NameB|Volání divočiny
+tagItemSetC023Name|Pretorián
+tagItemSetC024Name|Strážce ohně
+tagItemSetC025Name|Callidorovy poklady
+tagItemSetC026Name|Myrmidonova zbroj
+tagItemSetC027Name|Mogdrogenova umírněnost
+tagItemSetC028Name|Tajemná bouře
+tagItemSetC029Name|Živelná rovnováha
+tagItemSetD001Name|Soudcova zbroj
+tagItemSetD002Name|Posvátná rovnováha
+tagItemSetD003Name|Klenoty přivolavače zvířat
+tagItemSetD004Name|Bojovník ranního světla
+tagItemSetD005Name|Zvěstovatel
+tagItemSetD006Name|Soudcovy pečetě
+tagItemSetD007Name|Oděv zabijáka démonů
+tagItemSetD008Name|Soudkařova dvojčata
+tagItemSetD009Name|Zdivočelý předvoj
+tagItemSetD010Name|Jasnovidec
+tagItemSetD011Name|Vyvolavač živlů
+tagItemSetD012Name|Markovianova pevnost
+tagItemSetD013Name|Ulzuinovo ztělesnění
+tagItemSetD014Name|Dreegův rubáš
+tagItemSetD015Name|Střelmistr
+tagItemSetD016Name|Iskandřina svornost
+tagItemSetD017Name|Ultosova bouře
+tagItemSetD018Name|Trozanovo nanebevzetí
+tagItemSetD019Name|Valdunova zrada
+tagItemSetD020Name|Smlouva s pomalou smrtí
+tagItemSetD021Name|Dohoda s černým plamenem
+tagItemSetD022Name|Obránce Světla
+tagItemSetD023Name|Pekelný rytíř
+tagItemSetD024Name|Agrivixův hněv
+tagItemSetD025Name|Zbroj ze starých válek
+tagItemSetD026Name|Šílenství vzteklého krvesaje
+tagItemSetD027Name|Katovy okultní výbava
+tagGDX1ItemSetC018CName|Alkamosova nouze
+tagGDX1ItemSetC101Name|Narušitel duchů
+tagGDX1ItemSetC101BName|Narušitel duší
+tagGDX1ItemSetC102Name|Stříbrný strážce
+tagGDX1ItemSetC102BName|Stříbrná hlídka
+tagGDX1ItemSetC103Name|Požárník
+tagGDX1ItemSetC104Name|Velký kouzelník
+tagGDX1ItemSetC105Name|Hrůzný chodec
+tagGDX1ItemSetC106Name|Luminářské klenoty
+tagItemSetC009BName|Pohled neviditelného
+tagItemSetC010BName|Ostrostřelcova služba
+tagItemSetC011BName|Závazek znesvětitele
+tagItemSetC016BName|Panettiho ideál
+tagItemSetC017BName|Štít úsvitu
+tagItemSetC021BName|Kletba Východu
+tagItemSetC024BName|Strážce požárů
+tagItemSetC025BName|Callidorova obrana
+tagItemSetC026BName|Myrmidonská bašta
+tagItemSetC027BName|Mogdrogenův mír
+tagItemSetC028BName|Chemická bouře
+tagItemSetC029BName|Harmonie živlů
+tagGDX1ItemSetD101Name|Kriegova výzbroj
+tagGDX1ItemSetD102Name|Pomsta přírody
+tagGDX1ItemSetD103Name|Pastýř ztracených duší
+tagGDX1ItemSetD104Name|Octaviovo zanícení
+tagGDX1ItemSetD105Name|Zkáza
+tagGDX1ItemSetD106Name|Kamenná stráž
+tagGDX1ItemSetD107Name|Legionářská pevnost
+tagGDX1ItemSetD108Name|Korbina zuřivost
+tagGDX1ItemSetD109Name|Oděv spálený na uhel
+tagGDX1ItemSetD110Name|Magická bouře
+tagGDX1ItemSetD111Name|Zabiják čarodějů
+tagGDX1ItemSetD112Name|Valguurova nenasytnost
+tagGDX1ItemSetD113Name|Runotepec
+tagGDX1ItemSetD114Name|Uroboruukova pravá tvář
+tagGDX1ItemSetD115Name|Allagastův mistrovský kousek
+tagGDX1ItemSetD116Name|Dagallonova záhuba
+tagGDX1ItemSetD117Name|Strážce smrti
+tagGDX1ItemSetD118Name|Prorokova vize
+tagGDX1ItemSetD119Name|Dar Pána temnot
+tagGDX1ItemSetD120Name|Belgothianovo krveprolití
+tagGDX1ItemSetD121Name|Radagganova pošetilost
+tagGDX1ItemSetD122Name|Mrazík
+tagGDX1ItemSetD123Name|Krvavý rytíř
+tagItemSetD001BName|Ochránce spravedlivých
+tagItemSetD002BName|Posvátná harmonie
+tagItemSetD003BName|Natuřiny vyzývavé klenoty
+tagItemSetD004BName|Světlo hledače úsvitu
+tagItemSetD005BName|Poslova zpráva
+tagItemSetD006BName|Soudcovy pečeti
+tagItemSetD007BName|Výstroj zabijáka démonů
+tagItemSetD008BName|Likvidátoři ostříleného soudkaře
+tagItemSetD009BName|Divoké srdce předvoje
+tagItemSetD010BName|Jasnovidcova vidina
+tagItemSetD011BName|Vyvolávačova vůle
+tagItemSetD012BName|Markovianská bašta
+tagItemSetD013BName|Ulzuinovo pekelné ztělesnění
+tagItemSetD014BName|Dreegův podvod
+tagItemSetD015BName|Střelmistrův stín
+tagItemSetD016BName|Iskandřino sjednocení
+tagItemSetD017BName|Ultosova vřava
+tagItemSetD018BName|Trozanův nebeský dech
+tagItemSetD019BName|Valdunova zrada
+tagItemSetD020BName|Smlouva s ďáblem
+tagItemSetD021BName|Závazek na celý život
+tagItemSetD022BName|Strážce Světla
+tagItemSetD023BName|Pekelný rytíř
+tagItemSetD024BName|Agrivixův vztek
+tagItemSetD025BName|Bašta ze starých válek
+tagItemSetD026BName|Nekonečná posedlost vzteklého krvesaje
+tagItemSetD027BName|Alkamosovy hrůzné pečeti
+tagItemSetC008CName|Milost
+tagItemSetC007CName|Předzvěst
+tagItemSetC013CName|Zrádcova pošetilost
+tagItemSetC015BName|Nechtěné krveprolití
+tagGDX2ItemSetC201Name|Baldirův plát
+tagGDX2ItemSetC201BName|Baldirovy klenoty
+tagGDX2ItemSetC202Name|Bouřný had
+tagGDX2ItemSetC203Name|Zničující požár
+tagGDX2ItemSetC204Name|Daegina kletba
+tagGDX2ItemSetC205Name|Kameňák
+tagGDX2ItemSetD201Name|Pokřivený strážce
+tagGDX2ItemSetD202Name|Přemožitel
+tagGDX2ItemSetD203Name|Mrazivé šepoty
+tagGDX2ItemSetD204Name|Ludriganova chlouba
+tagGDX2ItemSetD205Name|Obchodník s kostmi
+tagGDX2ItemSetD206Name|Světlo ctnosti
+tagGDX2ItemSetD207Name|Strážce Tří
+tagGDX2ItemSetD208Name|Harrova rafinovanost
+tagGDX2ItemSetD209Name|Cyklóna
+tagGDX2ItemSetD210Name|Rah'Zinova muka
+tagGDX2ItemSetD211Name|Pán zmaru
+tagGDX2ItemSetD212Name|Gholova potměšilost
+tagGDX2ItemSetD213Name|Bysmieliny cetky
+tagGDX2ItemSetD214Name|Korvanský písečný ďábel
+tagGDX2ItemSetD215Name|Pyranovo zamyšlení
+tagGDX2ItemSetD216Name|Targovo umění
+tagGDX2ItemSetD217Name|Pustá duše
+tagGDX2ItemSetD218Name|Umrlec
+tagGDX2ItemSetD219Name|Zbroj nekonečné noci
+tagGDX2ItemSetD220Name|Zavinovač
+tagGDX2ItemSetD221Name|Chlemtač krve
+tagGDX2ItemSetD222Name|Pyromaniak

@@ -1,0 +1,171 @@
+tagItemSetC001Name|Indumentária do Soldado da Guarda
+tagItemSetC001NameB|Indumentária do Pacificador
+tagItemSetC002Name|Vestes do Explorador
+tagItemSetC003Name|Santuário de Maiven
+tagItemSetC003NameB|Sacrário de Maiven
+tagItemSetC004Name|Glória do Ceifador Sanguinário
+tagItemSetC004NameB|Carnificina do Ceifador Sanguinário
+tagItemSetC005Name|Justiça do Saqueador
+tagItemSetC005NameB|Julgamento do Saqueador
+tagItemSetC006Name|Paramentos do Arauto
+tagItemSetC006NameB|Marcas do Arauto
+tagItemSetC007Name|O Boticário
+tagItemSetC007NameB|O Adivinho
+tagItemSetC008Name|Perdição
+tagItemSetC008NameB|Absolvição
+tagItemSetC009Name|O Olho que não Vê
+tagItemSetC010Name|Marca do Franco-atirador
+tagItemSetC011Name|Pacto Profano
+tagItemSetC012Name|Exuberância Real
+tagItemSetC013Name|Perjuro
+tagItemSetC013NameB|Chama do Perjuro
+tagItemSetC014Name|Adereços da Valentia
+tagItemSetC015Name|Carnificina
+tagItemSetC016Name|O Paradigma do Arcano
+tagItemSetC017Name|Guarda da Aurora
+tagItemSetC018Name|Ira de Alkamos
+tagItemSetC018NameB|Raiva de Alkamos
+tagItemSetC019Name|Miasma
+tagItemSetC019NameB|Miasma Mortal
+tagItemSetC020Name|Enxofre
+tagItemSetC020NameB|Enxofre Sempre Ardente
+tagItemSetC021Name|A Promessa Oriental
+tagItemSetC022Name|Evocador Selvagem
+tagItemSetC022NameB|Chamado do Evocador Selvagem
+tagItemSetC023Name|O Pretoriano
+tagItemSetC024Name|Guardião da Chama
+tagItemSetC025Name|Paramentos de Callidor
+tagItemSetC026Name|Armadura do Mirmidão
+tagItemSetC027Name|Tranquilidade de Mogdrogen
+tagItemSetC028Name|A Tempestade Arcana
+tagItemSetC029Name|Equilíbrio Elemental
+tagItemSetD001Name|Armadura do Justicar
+tagItemSetD002Name|O Equilíbrio Sagrado
+tagItemSetD003Name|Paramentos do Evocador de Feras
+tagItemSetD004Name|Luz de Quebraurora
+tagItemSetD005Name|O Precursor
+tagItemSetD006Name|Sinetes do Judicante
+tagItemSetD007Name|Farda do Assassino de Demônios
+tagItemSetD008Name|Gêmeos do Forja-canos
+tagItemSetD009Name|Vanguarda do Sangue Selvagem
+tagItemSetD010Name|O Clarividente
+tagItemSetD011Name|Elementos do Invocador
+tagItemSetD012Name|Fortaleza de Markovian
+tagItemSetD013Name|Avatar de Ulzuin
+tagItemSetD014Name|Sudário de Dreeg
+tagItemSetD015Name|A Marca da Morte
+tagItemSetD016Name|Unidade de Iskandra
+tagItemSetD017Name|Tempestade de Ultos
+tagItemSetD018Name|Ascensão de Trozan
+tagItemSetD019Name|Perfídia de Valdun
+tagItemSetD020Name|O Pacto da Lâmina Venenosa
+tagItemSetD021Name|Pacto da Chama Negra
+tagItemSetD022Name|Defensor da Luz
+tagItemSetD023Name|O Cavaleiro Infernal
+tagItemSetD024Name|Ira de Agrivix
+tagItemSetD025Name|Armadura da Guerra
+tagItemSetD026Name|Frenesi do Furissangue
+tagItemSetD027Name|Sigilos do Executor
+tagGDX1ItemSetC018CName|Miséria de Alkamos
+tagGDX1ItemSetC101Name|Corruptor de Espíritos
+tagGDX1ItemSetC101BName|Corruptor de Almas
+tagGDX1ItemSetC102Name|O Guardião de Prata
+tagGDX1ItemSetC102BName|A Sentinela de Prata
+tagGDX1ItemSetC103Name|Vidente Flamejante
+tagGDX1ItemSetC104Name|O Senhor da Magia
+tagGDX1ItemSetC105Name|Andarilho Pavoroso
+tagGDX1ItemSetC106Name|Paramentos Luminari
+tagItemSetC009BName|O Olhar que não Vê
+tagItemSetC010BName|Dever do Franco-atirador
+tagItemSetC011BName|Pacto do Profanador
+tagItemSetC016BName|O Paradigma de Panetti
+tagItemSetC017BName|Escudo da Aurora
+tagItemSetC021BName|O Juramento Oriental
+tagItemSetC024BName|Guardião da Labareda
+tagItemSetC025BName|Defesa de Callidor
+tagItemSetC026BName|Bastião do Mirmidão
+tagItemSetC027BName|Paz de Mogdrogen
+tagItemSetC028BName|A Tormenta Arcana
+tagItemSetC029BName|Harmonia Elemental
+tagGDX1ItemSetD101Name|Armamento de Krieg
+tagGDX1ItemSetD102Name|Vingador da Natureza
+tagGDX1ItemSetD103Name|Pastor das Almas Perdidas
+tagGDX1ItemSetD104Name|Ardor de Octavius
+tagGDX1ItemSetD105Name|O Cataclismo
+tagGDX1ItemSetD106Name|Guarda Pétrea
+tagGDX1ItemSetD107Name|Fortaleza da Legião
+tagGDX1ItemSetD108Name|Fúria de Korba
+tagGDX1ItemSetD109Name|Farda do Fulgor Negro
+tagGDX1ItemSetD110Name|O Flagelo Místico
+tagGDX1ItemSetD111Name|O Assassino de Magos
+tagGDX1ItemSetD112Name|Fome de Valguur
+tagGDX1ItemSetD113Name|O Cosedor Rúnico
+tagGDX1ItemSetD114Name|Induto de Uroboruuk
+tagGDX1ItemSetD115Name|Obra-prima de Allagast
+tagGDX1ItemSetD116Name|Destruição de Dagallon
+tagGDX1ItemSetD117Name|Guarda da Morte
+tagGDX1ItemSetD118Name|Visão do Adivinho
+tagGDX1ItemSetD119Name|Dádiva do Sombrio
+tagGDX1ItemSetD120Name|Matança de Belgothian
+tagGDX1ItemSetD121Name|Insensatez de Radaggan
+tagGDX1ItemSetD122Name|Língua Geosa
+tagGDX1ItemSetD123Name|O Cavaleiro Sangrento
+tagItemSetD001BName|Guarda do Justicar
+tagItemSetD002BName|A Harmonia Sagrada
+tagItemSetD003BName|Paramentos do Chamado da Natureza
+tagItemSetD004BName|Luz de Buscaurora
+tagItemSetD005BName|Mensagem do Precursor
+tagItemSetD006BName|Selos do Judicante
+tagItemSetD007BName|Armamento do Assassino de Demônios
+tagItemSetD008BName|Destruidores do Forja-canos
+tagItemSetD009BName|Vanguarda do Coração Selvagem
+tagItemSetD010BName|Foco do Clarividente
+tagItemSetD011BName|Vontade do Invocador
+tagItemSetD012BName|Bastião de Markovian
+tagItemSetD013BName|Avatar Infernal de Ulzuin
+tagItemSetD014BName|Enganação de Dreeg
+tagItemSetD015BName|Sombra da Marca da Morte
+tagItemSetD016BName|Unificação de Iskandra
+tagItemSetD017BName|Tormenta de Ultos
+tagItemSetD018BName|Rompimento do Céu de Trozan
+tagItemSetD019BName|Traição de Valdun
+tagItemSetD020BName|O Pacto da Lâmina Vil
+tagItemSetD021BName|Pacto do Abrasamento Negro
+tagItemSetD022BName|Guardião da Luz
+tagItemSetD023BName|O Campeão Infernal
+tagItemSetD024BName|Raiva de Agrivix
+tagItemSetD025BName|Bastião da Guerra
+tagItemSetD026BName|Frenesi sem Fim do Furissangue
+tagItemSetD027BName|Sigilos Pavorosos de Alkamos
+tagItemSetC008CName|Amnesty
+tagItemSetC007CName|The Augur
+tagItemSetC013CName|Oathbreaker's Folly
+tagItemSetC015BName|Wanton Carnage
+tagGDX2ItemSetC201Name|Baldir's Plate
+tagGDX2ItemSetC201BName|Baldir's Regalia
+tagGDX2ItemSetC202Name|The Stormserpent
+tagGDX2ItemSetC203Name|Festerblaze
+tagGDX2ItemSetC204Name|Daega's Oath
+tagGDX2ItemSetC205Name|Stonefather
+tagGDX2ItemSetD201Name|Shattered Guardian
+tagGDX2ItemSetD202Name|The Vanquisher
+tagGDX2ItemSetD203Name|Chillwhisper
+tagGDX2ItemSetD204Name|Ludrigan's Pride
+tagGDX2ItemSetD205Name|Bonemonger
+tagGDX2ItemSetD206Name|Virtue's Light
+tagGDX2ItemSetD207Name|Sentinel of the Three
+tagGDX2ItemSetD208Name|Harra's Artifice
+tagGDX2ItemSetD209Name|The Cyclone
+tagGDX2ItemSetD210Name|Rah'Zin's Torment
+tagGDX2ItemSetD211Name|The Blightlord
+tagGDX2ItemSetD212Name|Ghol's Malice
+tagGDX2ItemSetD213Name|Bysmiel's Trinkets
+tagGDX2ItemSetD214Name|The Korvan Dunefiend
+tagGDX2ItemSetD215Name|Pyran's Ruminations
+tagGDX2ItemSetD216Name|Targo's Craft
+tagGDX2ItemSetD217Name|The Voidsoul
+tagGDX2ItemSetD218Name|Rotgheist
+tagGDX2ItemSetD219Name|Armor of the Eternal Night
+tagGDX2ItemSetD220Name|Veilkeeper
+tagGDX2ItemSetD221Name|Goredrinker
+tagGDX2ItemSetD222Name|Ember's Calling

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.IO;
 
 namespace GDMultiStash.GlobalHandlers
 {
@@ -38,19 +37,52 @@ namespace GDMultiStash.GlobalHandlers
             }
         }
 
+        public class GameLanguage
+        {
+            public string TextFileName;
+            public Dictionary<string, string> ItemSetNames;
+        }
+
         private readonly Dictionary<string, Language> _languages = new Dictionary<string, Language>();
+        private readonly Dictionary<string, GameLanguage> _gameLanguages = new Dictionary<string, GameLanguage>();
+
         public StringsHolder Strings { get; private set; } = new StringsHolder();
 
         public Language[] Languages { get { return _languages.Values.ToArray(); } }
 
         public string CurrentCode => System.Globalization.CultureInfo.CurrentCulture.Name.Replace("-", string.Empty);
 
-        public void AddLanguageFile(string langCode, string content)
+        public void AddLanguageFile(string langCode)
         {
-            Language lang = new Language(langCode, content);
+            var resourceName = $"local_{langCode}";
+            var resourceText = Properties.Resources.ResourceManager.GetString(resourceName);
+            if (resourceText == null)
+            {
+                Console.Warning($"Failed reading resource {resourceName}");
+                return;
+            }
+            var resourceFile = resourceName.Replace("local_", "");
+            resourceFile = Path.Combine(Global.FileSystem.LocalesDirectory, $"{resourceFile}.txt");
+            resourceText = Global.Resources.WriteReadResource(resourceText, resourceFile, '=');
+
+            Language lang = new Language(langCode, resourceText);
             _languages[langCode.ToLower()] = lang;
             //_languages.Add(langCode.ToLower(), lang);
             Console.WriteLine($"Added language: {langCode} {lang.Name}");
+        }
+
+        public void AddLanguageFilesFrom(string dir)
+        {
+            foreach (var file in Directory.GetFiles(dir))
+            {
+                var langCode = Path.GetFileNameWithoutExtension(file).ToLower();
+                if (!_languages.ContainsKey(langCode))
+                {
+                    Language lang = new Language(langCode, File.ReadAllText(file));
+                    _languages[langCode.ToLower()] = lang;
+                    Console.WriteLine($"Added custom language: {langCode} {lang.Name}");
+                }
+            }
         }
 
         public bool LoadLanguage(string langCode)
@@ -69,6 +101,38 @@ namespace GDMultiStash.GlobalHandlers
             Console.WriteLine("- Not found");
             return false;
         }
+
+        public void LoadGameLanguage(string textFileName, string languageName)
+        {
+            Console.WriteLine($"Loading game language: {textFileName}");
+
+            var gameLang = new GameLanguage();
+            gameLang.TextFileName = textFileName;
+            gameLang.ItemSetNames = new Dictionary<string, string>();
+
+            var setNamesResourceText = Properties.Resources.ResourceManager.GetString($"{textFileName}_setnames");
+            if (setNamesResourceText != null)
+            {
+                foreach (var line in Utils.Funcs.ReadTextLinesIter(setNamesResourceText))
+                {
+                    var splits = line.Split('|');
+                    if (splits.Length < 2) continue;
+                    var setNameTag = splits[0].Trim();
+                    var setName = splits[1].Trim();
+                    gameLang.ItemSetNames[setNameTag] = setName;
+                }
+                Console.WriteLine($"- {gameLang.ItemSetNames.Count} item set names");
+            }
+
+            _gameLanguages[languageName] = gameLang;
+        }
+
+        public bool GetGameLanguage(string langName, out GameLanguage gameLang)
+        {
+            return _gameLanguages.TryGetValue(langName, out gameLang);
+        }
+
+
 
     }
 }

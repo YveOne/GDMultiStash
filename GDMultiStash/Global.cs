@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.IO;
-using System.Drawing;
 
 using GrimDawnLib;
 using GDMultiStash.GlobalHandlers;
@@ -24,6 +20,7 @@ namespace GDMultiStash
         public static GroupsHandler Groups { get; } = new GroupsHandler();
         public static UpdateHandler Update { get; } = new UpdateHandler();
         public static WindowsHandler Windows { get; } = new WindowsHandler();
+        public static ResourceHandler Resources { get; } = new ResourceHandler();
         public static SoundHandler Sounds { get; } = new SoundHandler();
         public static RuntimeHandler Runtime { get; } = new RuntimeHandler();
         public static IngameHandler Ingame { get; } = new IngameHandler();

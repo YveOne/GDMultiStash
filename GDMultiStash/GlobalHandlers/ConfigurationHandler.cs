@@ -165,126 +165,174 @@ namespace GDMultiStash.GlobalHandlers
             WriteToFile(_config, Global.FileSystem.ConfigFile);
         }
 
+        public void SaveBackup()
+        {
+            if (File.Exists(Global.FileSystem.ConfigFile))
+            {
+                File.Copy(Global.FileSystem.ConfigFile, Global.FileSystem.ConfigFile + ".backup");
+            }
+        }
+
+        public void RestoreBackup()
+        {
+            if (File.Exists(Global.FileSystem.ConfigFile + ".backup"))
+            {
+                File.Delete(Global.FileSystem.ConfigFile);
+                File.Move(Global.FileSystem.ConfigFile + ".backup", Global.FileSystem.ConfigFile);
+            }
+        }
+
+        public void DeleteBackup()
+        {
+            if (File.Exists(Global.FileSystem.ConfigFile + ".backup"))
+            {
+                File.Delete(Global.FileSystem.ConfigFile + ".backup");
+            }
+        }
+
         public void UpdateAndCleanup()
         {
-            bool needSaveAfterUpdate = false;
-
+            var needSaveAfterUpdate = false;
             Utils.AssemblyInfo ai = new Utils.AssemblyInfo();
-            if (ai.Version != Settings.LastToolVersion)
+            if (ai.Version != _config.LastToolVersion)
             {
-                AppVersionUpdated = Settings.LastToolVersion != "";
-                Settings.LastToolVersion = ai.Version;
+                AppVersionUpdated = _config.LastToolVersion != "";
+                _config.LastToolVersion = ai.Version;
                 needSaveAfterUpdate = true;
             }
 
-            foreach(GrimDawnGameExpansion exp in GrimDawn.ExpansionList)
+            #region check expansion list
             {
-                if (exp == GrimDawnGameExpansion.Unknown) continue;
-                Common.Config.ConfigExpansion cfgExp = _config.Expansions.Items.Find(ex => { return ex.ID == (int)exp; });
-                if (cfgExp == null)
+                foreach (GrimDawnGameExpansion exp in GrimDawn.ExpansionList)
                 {
-                    CreateExpansion(exp);
+                    if (exp == GrimDawnGameExpansion.Unknown) continue;
+                    Common.Config.ConfigExpansion cfgExp = _config.Expansions.Items.Find(ex => { return ex.ID == (int)exp; });
+                    if (cfgExp == null)
+                    {
+                        CreateExpansion(exp);
+                        needSaveAfterUpdate = true;
+                    }
+                    else
+                    {
+                        // update the name in the comment
+                        cfgExp.NameCommentValue = GrimDawn.ExpansionNames[exp];
+                    }
+                }
+                _config.Expansions.Items.Sort((x, y) => x.ID.CompareTo(y.ID));
+            }
+            #endregion
+
+            #region check stashes and groups
+            {
+                List<int> existingStashGroupIds = new List<int>();
+                List<Common.Config.ConfigStashGroup> stashGroupsToDelete = new List<Common.Config.ConfigStashGroup>();
+                foreach (Common.Config.ConfigStashGroup cat in StashGroups)
+                {
+                    if (existingStashGroupIds.Contains(cat.ID))
+                        stashGroupsToDelete.Add(cat);
+                    else
+                        existingStashGroupIds.Add(cat.ID);
+                }
+                if (stashGroupsToDelete.Count > 0)
+                {
+                    foreach (Common.Config.ConfigStashGroup cat in stashGroupsToDelete)
+                        StashGroups.Remove(cat);
                     needSaveAfterUpdate = true;
                 }
-                else
+                if (!existingStashGroupIds.Contains(0))
                 {
-                    // update the name in the comment
-                    cfgExp.NameCommentValue = GrimDawn.ExpansionNames[exp];
+                    CreateMainGroup(Global.L.MainGroupName());
+                    existingStashGroupIds.Add(0);
+                    needSaveAfterUpdate = true;
+                }
+                _config.StashGroups.Items.Sort((x, y) => x.ID.CompareTo(y.ID));
+
+                foreach (Common.Config.ConfigStash stash in Stashes)
+                {
+                    if (!existingStashGroupIds.Contains(stash.GroupID))
+                    {
+                        stash.GroupID = 0;
+                        needSaveAfterUpdate = true;
+                    }
                 }
             }
-            _config.Expansions.Items.Sort((x, y) => x.ID.CompareTo(y.ID));
+            #endregion
 
-            if (_config.Colors.Items.Count == 0)
+            var revisionUpdates = new SortedDictionary<int, Action>();
+            revisionUpdates[1] = () => {
+                if (_config.Colors.Items.Count == 0)
+                {
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#ebdec3", Name = Global.L.DefaultColor() });
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#34eb58", Name = Global.L.GreenColor() });
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#5ecfff", Name = Global.L.BlueColor() });
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#af69ff", Name = Global.L.PurpleColor() });
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#ffcc00", Name = Global.L.GoldColor() });
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#aaaaaa", Name = Global.L.GrayColor() });
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#f0f0f0", Name = Global.L.WhiteColor() });
+                    _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#f765ad", Name = Global.L.RoseColor() });
+                }
+            };
+            revisionUpdates[2] = () => {
+                if (_config.SortPatterns.Items.Count == 0)
+                {
+                    _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                    {
+                        Name = Global.L.SortByNone(),
+                        Value = "{none}/{none}",
+                    });
+                    _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                    {
+                        Name = Global.L.SortByLevel(),
+                        Value = Global.L.SortByLevel() + " / {level}",
+                    });
+                    _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                    {
+                        Name = Global.L.SortByQuality(),
+                        Value = Global.L.SortByQuality() + " / {quality}",
+                    });
+                    _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                    {
+                        Name = Global.L.SortByClass(),
+                        Value = Global.L.SortByClass() + " / {class}",
+                    });
+                    _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                    {
+                        Name = Global.L.SortByType(),
+                        Value = Global.L.SortByType() + " / {type}",
+                    });
+                    _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                    {
+                        Name = Global.L.SortBySet(),
+                        Value = "{quality} / [{level}] {set}",
+                    });
+                    _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                    {
+                        Name = Global.L.SortByAIO(),
+                        Value = "{quality}/[{level}] {set}\n{type} - {quality}/{class} - lvl {level}",
+                    });
+                }
+            };
+            revisionUpdates[3] = () => {
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortByRarity(),
+                    Value = Global.L.SortByRarity() + " / {rarity}",
+                });
+                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                {
+                    Name = Global.L.SortByAIO() + " (2)",
+                    Value = Global.L.SortByRarity() + "/{rarity}\n" + Global.L.SortBySet() + " - {quality}/[{level}] {set}\n{type} - {quality}/{class} - lvl {level}",
+                });
+            };
+            foreach (var revUptdKvp in revisionUpdates)
             {
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#ebdec3", Name = Global.L.DefaultColor() });
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#34eb58", Name = Global.L.GreenColor() });
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#5ecfff", Name = Global.L.BlueColor() });
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#af69ff", Name = Global.L.PurpleColor() });
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#ffcc00", Name = Global.L.GoldColor() });
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#aaaaaa", Name = Global.L.GrayColor() });
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#f0f0f0", Name = Global.L.WhiteColor() });
-                _config.Colors.Items.Add(new Common.Config.ConfigColor() { Value = "#f765ad", Name = Global.L.RoseColor() });
-            }
-
-            if (_config.SortPatterns.Items.Count == 0)
-            {
-                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
+                if (_config.UpdateRevision < revUptdKvp.Key)
                 {
-                    Name = Global.L.SortByNone(),
-                    Value = "{none}/{none}",
-                });
-                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
-                {
-                    Name = Global.L.SortByLevel(),
-                    Value = Global.L.SortByLevel() + " / {level}",
-                });
-                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
-                {
-                    Name = Global.L.SortByQuality(),
-                    Value = Global.L.SortByQuality() + " / {quality}",
-                });
-                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
-                {
-                    Name = Global.L.SortByClass(),
-                    Value = Global.L.SortByClass() + " / {class}",
-                });
-                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
-                {
-                    Name = Global.L.SortByType(),
-                    Value = Global.L.SortByType() + " / {type}",
-                });
-                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
-                {
-                    Name = Global.L.SortBySet(),
-                    Value = "{quality} / [{level}] {set}",
-                });
-                _config.SortPatterns.Items.Add(new Common.Config.ConfigSortPattern()
-                {
-                    Name = Global.L.SortByAIO(),
-                    Value = "{quality}/[{level}] {set}\n{type} - {quality}/{class} - lvl {level}",
-                });
-            }
-
-            List<int> existingStashGroupIds = new List<int>();
-            List< Common.Config.ConfigStashGroup> stashGroupsToDelete = new List<Common.Config.ConfigStashGroup>();
-            foreach (Common.Config.ConfigStashGroup cat in StashGroups)
-            {
-                if (existingStashGroupIds.Contains(cat.ID))
-                    stashGroupsToDelete.Add(cat);
-                else
-                    existingStashGroupIds.Add(cat.ID);
-            }
-            if (stashGroupsToDelete.Count > 0)
-            {
-                foreach (Common.Config.ConfigStashGroup cat in stashGroupsToDelete)
-                    StashGroups.Remove(cat);
-                needSaveAfterUpdate = true;
-            }
-            if (!existingStashGroupIds.Contains(0))
-            {
-                CreateMainGroup(Global.L.MainGroupName());
-                existingStashGroupIds.Add(0);
-                needSaveAfterUpdate = true;
-            }
-            _config.StashGroups.Items.Sort((x, y) => x.ID.CompareTo(y.ID));
-
-
-
-
-            foreach (Common.Config.ConfigStash stash in Stashes)
-            {
-                if (!existingStashGroupIds.Contains(stash.GroupID))
-                {
-                    stash.GroupID = 0;
+                    _config.UpdateRevision = revUptdKvp.Key;
+                    revUptdKvp.Value();
                     needSaveAfterUpdate = true;
                 }
             }
-
-
-
-
-
-
 
             if (needSaveAfterUpdate)
                 Global.Configuration.Save();
@@ -482,7 +530,7 @@ namespace GDMultiStash.GlobalHandlers
             }
             return false;
         }
-        
+
         public bool IsMainStashID(int stashID, GrimDawnGameExpansion exp, GrimDawnGameMode mode)
         {
             Common.Config.ConfigExpansion cexp = Expansions[(int)exp];

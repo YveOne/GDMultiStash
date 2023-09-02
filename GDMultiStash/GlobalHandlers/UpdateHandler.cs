@@ -18,11 +18,14 @@ namespace GDMultiStash.GlobalHandlers
             return UpdaterAPI.NewVersionAvailable();
         }
 
-        public void StartUpdater()
+        public void StartUpdater(string latestUrl = null)
         {
             string updaterPath = Path.Combine(Application.StartupPath, "GDMultiStashUpdater.exe");
             new System.Threading.Thread(new System.Threading.ThreadStart(() => {
-                Process.Start(updaterPath);
+                if (latestUrl == null)
+                    Process.Start(updaterPath);
+                else
+                    Process.Start(updaterPath, $"\"{latestUrl}\"");
             })).Start();
             Program.Quit();
         }

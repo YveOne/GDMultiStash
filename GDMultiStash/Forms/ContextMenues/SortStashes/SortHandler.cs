@@ -23,6 +23,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
             {"level", new LevelSortCriteria()},
             {"type", new TypeSortCriteria()},
             {"quality", new QualitySortCriteria()},
+            {"rarity", new RaritySortCriteria()},
             {"set", new SetSortCriteria()},
         };
 

@@ -59,7 +59,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.languageComboBox = new System.Windows.Forms.ComboBox();
-            this.extractTranslationFilesButton = new System.Windows.Forms.Button();
             this.cleanupBackupsButton = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
             this.behaviorGroupBox = new System.Windows.Forms.GroupBox();
@@ -378,7 +377,7 @@
             // 
             this.createShortcutButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.createShortcutButton.AutoSize = true;
-            this.createShortcutButton.Location = new System.Drawing.Point(6, 465);
+            this.createShortcutButton.Location = new System.Drawing.Point(6, 494);
             this.createShortcutButton.Name = "createShortcutButton";
             this.createShortcutButton.Size = new System.Drawing.Size(226, 23);
             this.createShortcutButton.TabIndex = 3;
@@ -402,7 +401,6 @@
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.Controls.Add(this.languageComboBox);
-            this.panel4.Controls.Add(this.extractTranslationFilesButton);
             this.panel4.Controls.Add(this.cleanupBackupsButton);
             this.panel4.Controls.Add(this.panel5);
             this.panel4.Controls.Add(this.createShortcutButton);
@@ -426,23 +424,11 @@
             this.languageComboBox.Size = new System.Drawing.Size(226, 21);
             this.languageComboBox.TabIndex = 9;
             // 
-            // extractTranslationFilesButton
-            // 
-            this.extractTranslationFilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.extractTranslationFilesButton.AutoSize = true;
-            this.extractTranslationFilesButton.Location = new System.Drawing.Point(6, 523);
-            this.extractTranslationFilesButton.Name = "extractTranslationFilesButton";
-            this.extractTranslationFilesButton.Size = new System.Drawing.Size(226, 23);
-            this.extractTranslationFilesButton.TabIndex = 21;
-            this.extractTranslationFilesButton.Text = "Extract translation files";
-            this.extractTranslationFilesButton.UseVisualStyleBackColor = true;
-            this.extractTranslationFilesButton.Click += new System.EventHandler(this.ExtractTranslationFilesButton_Click);
-            // 
             // cleanupBackupsButton
             // 
             this.cleanupBackupsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.cleanupBackupsButton.AutoSize = true;
-            this.cleanupBackupsButton.Location = new System.Drawing.Point(6, 494);
+            this.cleanupBackupsButton.Location = new System.Drawing.Point(6, 523);
             this.cleanupBackupsButton.Name = "cleanupBackupsButton";
             this.cleanupBackupsButton.Size = new System.Drawing.Size(226, 23);
             this.cleanupBackupsButton.TabIndex = 4;
@@ -670,7 +656,6 @@
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Button cleanupBackupsButton;
         private System.Windows.Forms.CheckBox saveOverLockedCheckBox;
-        private System.Windows.Forms.Button extractTranslationFilesButton;
         private System.Windows.Forms.ComboBox languageComboBox;
         private System.Windows.Forms.Label overlayStashesCountLabel;
         private System.Windows.Forms.TrackBar overlayStashesCountTrackBar;

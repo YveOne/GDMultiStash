@@ -45,8 +45,8 @@ namespace GDMultiStash
 
         private static void Destroy()
         {
-            context.Destroy();
-            Console.DestroyConsole();
+            try { context.Destroy(); } catch { }
+            try { Console.DestroyConsole(); } catch { }
         }
 
         #region Trap application termination

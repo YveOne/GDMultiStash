@@ -516,26 +516,6 @@ namespace GDMultiStash.Properties {
         
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 
-        ///language_name = English (GB)
-        ///
-        ///// messages
-        ///msg_select_game_directory = Please first select your game directory
-        ///msg_game_directory_not_found = Game directory not found!
-        ///msg_documents_directory_not_found = Documents directory not found!
-        ///msg_update_available = New version available: {0}\nUpdate now?
-        ///msg_confirm_closing = Grim Dawn is still running\nClose anyway?
-        ///msg_already_running = GDMultiStash is already running!
-        ///msg_game_already_running = Grim Dawn is already running!
-        ///msg_shortcut_created = Shortcut has be [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
-        /// </summary>
-        internal static string local_enGB {
-            get {
-                return ResourceManager.GetString("local_enGB", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 
         ///language_name = English (US)
         ///
         ///// messages
@@ -873,6 +853,273 @@ namespace GDMultiStash.Properties {
             get {
                 object obj = ResourceManager.GetObject("StashListBorderTR", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Gardistovo roucho
+        ///tagItemSetC001NameB|Mírotvůrcovo roucho
+        ///tagItemSetC002Name|Cestovatelův oděv
+        ///tagItemSetC003Name|Maivenino útočiště
+        ///tagItemSetC003NameB|Maivenina svatyně
+        ///tagItemSetC004Name|Sláva krvavého žence
+        ///tagItemSetC004NameB|Krveprolití krvavého žence
+        ///tagItemSetC005Name|Záškodníkova spravedlnost
+        ///tagItemSetC005NameB|Záškodníkův rozsudek
+        ///tagItemSetC006Name|Klenoty císařského posla
+        ///tagItemSetC006NameB|Značení císařského posla
+        ///tagItemSetC007Name|Lékárník
+        ///tagItemSetC007NameB| [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_CS_setnames {
+            get {
+                return ResourceManager.GetString("Text_CS_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Gardistenkleidung
+        ///tagItemSetC001NameB|Kleidung des Friedensbewahrers
+        ///tagItemSetC002Name|Forschergewand
+        ///tagItemSetC003Name|Maivens Heiligtum
+        ///tagItemSetC003NameB|Maivens Allerheiligstes
+        ///tagItemSetC004Name|Ruhm des Blutschnitters
+        ///tagItemSetC004NameB|Gemetzel des Blutschnitters
+        ///tagItemSetC005Name|Gerechtigkeit des Marodeurs
+        ///tagItemSetC005NameB|Urteil des Marodeurs
+        ///tagItemSetC006Name|Ornat des Herolds
+        ///tagItemSetC006NameB|Erkennungszeichen des Herolds
+        ///tagItemSetC007Name|Der Apotheker [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_DE_setnames {
+            get {
+                return ResourceManager.GetString("Text_DE_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Guardsman&apos;s Raiment
+        ///tagItemSetC001NameB|Peacekeeper&apos;s Raiment
+        ///tagItemSetC002Name|Explorer&apos;s Garments
+        ///tagItemSetC003Name|Maiven&apos;s Sanctuary
+        ///tagItemSetC003NameB|Maiven&apos;s Sanctum
+        ///tagItemSetC004Name|Bloodreaper&apos;s Glory
+        ///tagItemSetC004NameB|Bloodreaper&apos;s Carnage
+        ///tagItemSetC005Name|Marauder&apos;s Justice
+        ///tagItemSetC005NameB|Marauder&apos;s Judgment
+        ///tagItemSetC006Name|Herald&apos;s Regalia
+        ///tagItemSetC006NameB|Herald&apos;s Markings
+        ///tagItemSetC007Name|The Apothecary
+        ///tagItemSetC007NameB|The Soothsayer
+        ///ta [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_EN_setnames {
+            get {
+                return ResourceManager.GetString("Text_EN_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Atuendo del Centinela
+        ///tagItemSetC001NameB|Atuendo del pacificador
+        ///tagItemSetC002Name|Prendas del Explorador
+        ///tagItemSetC003Name|Santuario de Maiven
+        ///tagItemSetC003NameB|Santuario de Maiven
+        ///tagItemSetC004Name|Gloria del Sanguinario
+        ///tagItemSetC004NameB|Carnicería del Segador Sangriento
+        ///tagItemSetC005Name|Justicia del Merodeador
+        ///tagItemSetC005NameB|Juicio del Merodeador
+        ///tagItemSetC006Name|Ropa de Gala del Heraldo
+        ///tagItemSetC006NameB|Marcas del Heraldo
+        ///tagItemSetC007Name|El Boticario [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_ES_setnames {
+            get {
+                return ResourceManager.GetString("Text_ES_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Vêtements de garde
+        ///tagItemSetC001NameB|Habit de gardien de la paix
+        ///tagItemSetC002Name|Vêtements d&apos;explorateur
+        ///tagItemSetC003Name|Sanctuaire de Maiven
+        ///tagItemSetC003NameB|Sanctuaire de Maiven
+        ///tagItemSetC004Name|Gloire de la faucheuse ensanglantée
+        ///tagItemSetC004NameB|Carnage de la Faucheuse ensanglantée
+        ///tagItemSetC005Name|Justice du maraudeur
+        ///tagItemSetC005NameB|Jugement du maraudeur
+        ///tagItemSetC006Name|Régalia du Héraut
+        ///tagItemSetC006NameB|Marquage du Héraut
+        ///tagItemSetC007Name|L&apos; [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_FR_setnames {
+            get {
+                return ResourceManager.GetString("Text_FR_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Uniforme della Guardia
+        ///tagItemSetC001NameB|Armatura della Guardia
+        ///tagItemSetC002Name|Abiti dell&apos;Esploratore
+        ///tagItemSetC003Name|Santuario di Maiven
+        ///tagItemSetC003NameB|Sanctorum di Maiven
+        ///tagItemSetC004Name|Gloria del Mietitore di Sangue
+        ///tagItemSetC004NameB|Massacro del Mietitore di Sangue
+        ///tagItemSetC005Name|Giustizia del Predone
+        ///tagItemSetC005NameB|Giudizio del Predone
+        ///tagItemSetC006Name|Abiti Cerimoniali dell&apos;Araldo
+        ///tagItemSetC006NameB|Insegne dell&apos;Araldo
+        ///tagItemSetC007Name|Lo [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_IT_setnames {
+            get {
+                return ResourceManager.GetString("Text_IT_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|ガーズマンの衣装
+        ///tagItemSetC001NameB|ピースキーパーの衣装
+        ///tagItemSetC002Name|探検家の衣服
+        ///tagItemSetC003Name|メイヴェンの聖域
+        ///tagItemSetC003NameB|メイヴェンの聖所
+        ///tagItemSetC004Name|ブラッドリーパーの栄光
+        ///tagItemSetC004NameB|ブラッドリーパーの殺戮
+        ///tagItemSetC005Name|略奪者の正義
+        ///tagItemSetC005NameB|略奪者の審判
+        ///tagItemSetC006Name|伝令官の礼装
+        ///tagItemSetC006NameB|伝令官の印
+        ///tagItemSetC007Name|薬剤師
+        ///tagItemSetC007NameB|占い師
+        ///tagItemSetC008Name|破滅
+        ///tagItemSetC008NameB|赦免
+        ///tagItemSetC009Name|虚ろな目
+        ///tagItemSetC010Name|鋭敏な射手の印
+        ///tagItemSetC011Name|不浄の誓約
+        ///tagItemSetC012Na [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_JA_setnames {
+            get {
+                return ResourceManager.GetString("Text_JA_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|근위병의 정복
+        ///tagItemSetC001NameB|치안유지군의 정복
+        ///tagItemSetC002Name|탐험가용 의복
+        ///tagItemSetC003Name|메이븐의 안식처
+        ///tagItemSetC003NameB|메이븐의 성역
+        ///tagItemSetC004Name|피수확자의 영광
+        ///tagItemSetC004NameB|피수확자의 학살
+        ///tagItemSetC005Name|습격자의 심판
+        ///tagItemSetC005NameB|습격자의 판결
+        ///tagItemSetC006Name|전령관의 예복
+        ///tagItemSetC006NameB|전령관의 상징들
+        ///tagItemSetC007Name|약제사
+        ///tagItemSetC007NameB|치료사
+        ///tagItemSetC008Name|징벌
+        ///tagItemSetC008NameB|단죄
+        ///tagItemSetC009Name|초점없는 눈동자
+        ///tagItemSetC010Name|샤프슈터의 상징
+        ///tagItemSetC011Name|부정한 계약의 증표
+        ///tagItemS [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_KO_setnames {
+            get {
+                return ResourceManager.GetString("Text_KO_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Ubiór Strażnika
+        ///tagItemSetC001NameB|Szaty Rozjemcy
+        ///tagItemSetC002Name|Wyposażenie Odkrywcy
+        ///tagItemSetC003Name|Sanktuarium Maiveny
+        ///tagItemSetC003NameB|Święte Miejsce Maiveny
+        ///tagItemSetC004Name|Chwała Krwawego Żniwiarza
+        ///tagItemSetC004NameB|Masakra Krwawego Żniwiarza
+        ///tagItemSetC005Name|Sprawiedliwość Banity
+        ///tagItemSetC005NameB|Osąd Banity
+        ///tagItemSetC006Name|Insygnia Herolda
+        ///tagItemSetC006NameB|Znaki Herolda
+        ///tagItemSetC007Name|Aptekarz
+        ///tagItemSetC007NameB|Uśmierzacz Bólu
+        ///tagItemS [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_PL_setnames {
+            get {
+                return ResourceManager.GetString("Text_PL_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Indumentária do Soldado da Guarda
+        ///tagItemSetC001NameB|Indumentária do Pacificador
+        ///tagItemSetC002Name|Vestes do Explorador
+        ///tagItemSetC003Name|Santuário de Maiven
+        ///tagItemSetC003NameB|Sacrário de Maiven
+        ///tagItemSetC004Name|Glória do Ceifador Sanguinário
+        ///tagItemSetC004NameB|Carnificina do Ceifador Sanguinário
+        ///tagItemSetC005Name|Justiça do Saqueador
+        ///tagItemSetC005NameB|Julgamento do Saqueador
+        ///tagItemSetC006Name|Paramentos do Arauto
+        ///tagItemSetC006NameB|Marcas do Arauto
+        ///tagItemSetC007N [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_PT_setnames {
+            get {
+                return ResourceManager.GetString("Text_PT_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|Đồng Phục Vệ Binh
+        ///tagItemSetC001NameB|Đồng Phục Lính Bảo Vệ Hoà Bình
+        ///tagItemSetC002Name|Trang Phục Nhà Thám Hiểm
+        ///tagItemSetC003Name|Thánh Địa của Maiven
+        ///tagItemSetC003NameB|Thánh Điện của Maiven
+        ///tagItemSetC004Name|Vinh Quang của Kẻ Khát Máu
+        ///tagItemSetC004NameB|Cuộc Tàn Sát của Kẻ Khát Máu
+        ///tagItemSetC005Name|Công Lý của Kẻ Cướp Bóc
+        ///tagItemSetC005NameB|Phát Quyết của Kẻ Cướp Bóc
+        ///tagItemSetC006Name|Biểu Tượng của Sứ Giả
+        ///tagItemSetC006NameB|Dấu Hiệu của Sứ Giả
+        ///tagItemSetC007Name|Th [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_VI_setnames {
+            get {
+                return ResourceManager.GetString("Text_VI_setnames", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die tagItemSetC001Name|帝国卫兵的戎装
+        ///tagItemSetC001NameB|和平守护者的戎装
+        ///tagItemSetC002Name|探险家的服饰
+        ///tagItemSetC003Name|麦文的圣装
+        ///tagItemSetC003NameB|麦文的圣衣
+        ///tagItemSetC004Name|鲜血收割者的荣耀
+        ///tagItemSetC004NameB|鲜血收割者的屠杀
+        ///tagItemSetC005Name|掠夺者的正义
+        ///tagItemSetC005NameB|掠夺者的审判
+        ///tagItemSetC006Name|使者的华服
+        ///tagItemSetC006NameB|使者的标记
+        ///tagItemSetC007Name|药剂师
+        ///tagItemSetC007NameB|预言者
+        ///tagItemSetC008Name|破灭
+        ///tagItemSetC008NameB|赦免
+        ///tagItemSetC009Name|盲眼
+        ///tagItemSetC010Name|神射手的徽记
+        ///tagItemSetC011Name|不洁圣契
+        ///tagItemSetC012Name|皇家的奢华
+        ///tagItemSet [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string Text_ZH_setnames {
+            get {
+                return ResourceManager.GetString("Text_ZH_setnames", resourceCulture);
             }
         }
         

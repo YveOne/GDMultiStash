@@ -1,0 +1,171 @@
+tagItemSetC001Name|Ubiór Strażnika
+tagItemSetC001NameB|Szaty Rozjemcy
+tagItemSetC002Name|Wyposażenie Odkrywcy
+tagItemSetC003Name|Sanktuarium Maiveny
+tagItemSetC003NameB|Święte Miejsce Maiveny
+tagItemSetC004Name|Chwała Krwawego Żniwiarza
+tagItemSetC004NameB|Masakra Krwawego Żniwiarza
+tagItemSetC005Name|Sprawiedliwość Banity
+tagItemSetC005NameB|Osąd Banity
+tagItemSetC006Name|Insygnia Herolda
+tagItemSetC006NameB|Znaki Herolda
+tagItemSetC007Name|Aptekarz
+tagItemSetC007NameB|Uśmierzacz Bólu
+tagItemSetC008Name|Potępienie
+tagItemSetC008NameB|Rozgrzeszenie
+tagItemSetC009Name|Niewidzące Oko
+tagItemSetC010Name|Znak Strzelca Wyborowego
+tagItemSetC011Name|Nikczemne Przymierze
+tagItemSetC012Name|Królewska Obfitość
+tagItemSetC013Name|Złamana Przysięga
+tagItemSetC013NameB|Płomień Złamanej Przysięgi
+tagItemSetC014Name|Przebranie Wielkiej Odwagi
+tagItemSetC015Name|Rzeź
+tagItemSetC016Name|Wzór Sztuk Magicznych
+tagItemSetC017Name|Strażnik Świtu
+tagItemSetC018Name|Gniew Alkamosa
+tagItemSetC018NameB|Furia Alkamosa
+tagItemSetC019Name|Wyziew
+tagItemSetC019NameB|Zabójczy Wyziew
+tagItemSetC020Name|Ogień Piekielny
+tagItemSetC020NameB|Wieczniepłonący Ogień Piekielny
+tagItemSetC021Name|Przysięga Wschodu
+tagItemSetC022Name|Przyzywacz Dziczy
+tagItemSetC022NameB|Wołanie Przyzywacza Dziczy
+tagItemSetC023Name|Pretorianin
+tagItemSetC024Name|Władca Płomieni
+tagItemSetC025Name|Uroczysty Strój Callidora
+tagItemSetC026Name|Zbroja Myrmidona
+tagItemSetC027Name|Opanowanie Mogdrogena
+tagItemSetC028Name|Ezoteryczna Burza
+tagItemSetC029Name|Elementarna Równowaga
+tagItemSetD001Name|Pancerz Justycjariusza
+tagItemSetD002Name|Wyświęcona Równowaga
+tagItemSetD003Name|Uroczysty Strój Wołającego Bestie
+tagItemSetD004Name|Światło Brzasku
+tagItemSetD005Name|Zwiastun
+tagItemSetD006Name|Sygnety Judykatury
+tagItemSetD007Name|Strój Łowcy Demonów
+tagItemSetD008Name|Bliźniaki Rusznikarza
+tagItemSetD009Name|Dzika Krew
+tagItemSetD010Name|Jasnowidz
+tagItemSetD011Name|Przybory Zaklinacza
+tagItemSetD012Name|Forteca Markoviana
+tagItemSetD013Name|Avatar Ulzuina
+tagItemSetD014Name|Całun Dreega
+tagItemSetD015Name|Znak Śmierci
+tagItemSetD016Name|Jedność Iskandry
+tagItemSetD017Name|Burza Ultosa
+tagItemSetD018Name|Wyświęcenie Trozana
+tagItemSetD019Name|Zdrada Valduna
+tagItemSetD020Name|Pakt Zatrutego Ostrza
+tagItemSetD021Name|Przymierze Czarnego Płomienia
+tagItemSetD022Name|Obrońca Światła
+tagItemSetD023Name|Piekielny Rycerz
+tagItemSetD024Name|Gniew Agrivixa
+tagItemSetD025Name|Zbroja Zrodzona w Boju
+tagItemSetD026Name|Szał Łaknącego Krwi
+tagItemSetD027Name|Pieczęcie Kata
+tagGDX1ItemSetC018CName|Męka Alkamosa
+tagGDX1ItemSetC101Name|Koruptor Duchów
+tagGDX1ItemSetC101BName|Koruptor Dusz
+tagGDX1ItemSetC102Name|Srebrny Wartownik
+tagGDX1ItemSetC102BName|Srebrny Strażnik
+tagGDX1ItemSetC103Name|Proroczy Przebłysk
+tagGDX1ItemSetC104Name|Mag Władca
+tagGDX1ItemSetC105Name|Siejący Postrach
+tagGDX1ItemSetC106Name|Strój Luminari
+tagItemSetC009BName|Niewidzące Spojrzenie
+tagItemSetC010BName|Służba Strzelca Wyborowego
+tagItemSetC011BName|Profanator Nikczemnego Przymierza
+tagItemSetC016BName|Wzór Panettiego
+tagItemSetC017BName|Osłona Strażnika Świtu
+tagItemSetC021BName|Wschodnia Przysięga
+tagItemSetC024BName|Gloria Władcy Płomieni
+tagItemSetC025BName|Defensywa Callidora
+tagItemSetC026BName|Bastion Myrmidona
+tagItemSetC027BName|Spokój Mogdrogena
+tagItemSetC028BName|Aetherialna Nawałnica
+tagItemSetC029BName|Harmonia Żywiołów
+tagGDX1ItemSetD101Name|Uzbrojenie Kriega
+tagGDX1ItemSetD102Name|Mściciel Natury
+tagGDX1ItemSetD103Name|Pasterz Straconych Dusz
+tagGDX1ItemSetD104Name|Namiętność Octaviusa
+tagGDX1ItemSetD105Name|Kataklizm
+tagGDX1ItemSetD106Name|Kamienna Ochrona
+tagGDX1ItemSetD107Name|Twierdza Legionu
+tagGDX1ItemSetD108Name|Szał Korby
+tagGDX1ItemSetD109Name|Mroczna Pożoga
+tagGDX1ItemSetD110Name|Magiczny Bicz
+tagGDX1ItemSetD111Name|Pogromca Magów
+tagGDX1ItemSetD112Name|Głód Valguura
+tagGDX1ItemSetD113Name|Władca Run
+tagGDX1ItemSetD114Name|Przebranie Uroboruuka
+tagGDX1ItemSetD115Name|Arcydzieło Allagasta
+tagGDX1ItemSetD116Name|Destrukcja Dagallona
+tagGDX1ItemSetD117Name|Strażnik Śmierci
+tagGDX1ItemSetD118Name|Wizja Wróżbity
+tagGDX1ItemSetD119Name|Dar Mrocznego
+tagGDX1ItemSetD120Name|Rzeź Belgothiana
+tagGDX1ItemSetD121Name|Szaleństwo Radaggana
+tagGDX1ItemSetD122Name|Oszroniony Jęzor
+tagGDX1ItemSetD123Name|Rycerz Krwi
+tagItemSetD001BName|Garda Justycjariusza
+tagItemSetD002BName|Wyświęcona Harmonia
+tagItemSetD003BName|Regalia Zewu Natury
+tagItemSetD004BName|Światło Poszukiwacza Brzasku
+tagItemSetD005BName|Wiadomość Zwiastuna
+tagItemSetD006BName|Pieczęcie Judykatora
+tagItemSetD007BName|Uzbrojenie Pogromcy Demonów
+tagItemSetD008BName|Niszczyciele Rusznikarza
+tagItemSetD009BName|Przednia Straż Dzikiego Serca
+tagItemSetD010BName|Fokus Jasnowidza
+tagItemSetD011BName|Wola Zaklinacza
+tagItemSetD012BName|Bastion Markoviana
+tagItemSetD013BName|Piekielne Wcielenie Ulzuina
+tagItemSetD014BName|Podstępność Dreega
+tagItemSetD015BName|Cień Naznaczonego Śmiercią
+tagItemSetD016BName|Zjednoczenie Iskandry
+tagItemSetD017BName|Nawałnica Ultosa
+tagItemSetD018BName|Nieboskłon Trozana
+tagItemSetD019BName|Zdrada Valduna
+tagItemSetD020BName|Pakt Nikczemnego Ostrza
+tagItemSetD021BName|Testament Spalonej Czerni
+tagItemSetD022BName|Strażnik Światła
+tagItemSetD023BName|Wieczny Czempion
+tagItemSetD024BName|Wściekłość Agrivixa
+tagItemSetD025BName|Bastion Zrodzonych w Boju
+tagItemSetD026BName|Wieczne Szaleństwo Łaknącego Krwi
+tagItemSetD027BName|Przerażające Pieczęcie Alkamosa
+tagItemSetC008CName|Amnestia
+tagItemSetC007CName|Augur
+tagItemSetC013CName|Szaleństwo Wiernych Przysiędze
+tagItemSetC015BName|Rzeźnia Wantona
+tagGDX2ItemSetC201Name|Płyta Baldira
+tagGDX2ItemSetC201BName|Regalia Baldira
+tagGDX2ItemSetC202Name|Sztormowy Wąż
+tagGDX2ItemSetC203Name|Gnijący Blask
+tagGDX2ItemSetC204Name|Przysięga Daegi
+tagGDX2ItemSetC205Name|Kamienny Ojciec
+tagGDX2ItemSetD201Name|Roztrzaskany Strażnik
+tagGDX2ItemSetD202Name|Zwycięzca
+tagGDX2ItemSetD203Name|Mroźny Szept
+tagGDX2ItemSetD204Name|Duma Ludrigana
+tagGDX2ItemSetD205Name|Handlarz Kości
+tagGDX2ItemSetD206Name|Światło Cnoty
+tagGDX2ItemSetD207Name|Strażnik Trójcy
+tagGDX2ItemSetD208Name|Podstęp Harra
+tagGDX2ItemSetD209Name|Cyklon
+tagGDX2ItemSetD210Name|Udręka Rah'Zina
+tagGDX2ItemSetD211Name|Pan Zarazy
+tagGDX2ItemSetD212Name|Złośliwość Ghola
+tagGDX2ItemSetD213Name|Świecidełka Bysmiel
+tagGDX2ItemSetD214Name|Korvański Wydmowy Wróg
+tagGDX2ItemSetD215Name|Rozmyślania Pyrana
+tagGDX2ItemSetD216Name|Rzemiosło Targo
+tagGDX2ItemSetD217Name|Dusza z Otchłani
+tagGDX2ItemSetD218Name|Czerwony Duch
+tagGDX2ItemSetD219Name|Zbroja Wiecznej Nocy
+tagGDX2ItemSetD220Name|Strażnik Zasłony
+tagGDX2ItemSetD221Name|Chłeptacz Posoki
+tagGDX2ItemSetD222Name|Wzywające Zgliszcza

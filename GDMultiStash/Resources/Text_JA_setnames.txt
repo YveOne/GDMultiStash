@@ -1,0 +1,171 @@
+tagItemSetC001Name|ガーズマンの衣装
+tagItemSetC001NameB|ピースキーパーの衣装
+tagItemSetC002Name|探検家の衣服
+tagItemSetC003Name|メイヴェンの聖域
+tagItemSetC003NameB|メイヴェンの聖所
+tagItemSetC004Name|ブラッドリーパーの栄光
+tagItemSetC004NameB|ブラッドリーパーの殺戮
+tagItemSetC005Name|略奪者の正義
+tagItemSetC005NameB|略奪者の審判
+tagItemSetC006Name|伝令官の礼装
+tagItemSetC006NameB|伝令官の印
+tagItemSetC007Name|薬剤師
+tagItemSetC007NameB|占い師
+tagItemSetC008Name|破滅
+tagItemSetC008NameB|赦免
+tagItemSetC009Name|虚ろな目
+tagItemSetC010Name|鋭敏な射手の印
+tagItemSetC011Name|不浄の誓約
+tagItemSetC012Name|王の楽しい熱中
+tagItemSetC013Name|誓い破り
+tagItemSetC013NameB|誓い破りの炎
+tagItemSetC014Name|剛勇の装飾
+tagItemSetC015Name|殺戮
+tagItemSetC016Name|アルケイナムの模範
+tagItemSetC017Name|ドーンガード
+tagItemSetC018Name|アルカモスの憤怒
+tagItemSetC018NameB|アルカモスの激怒
+tagItemSetC019Name|ミアズマ
+tagItemSetC019NameB|死の瘴気
+tagItemSetC020Name|業火
+tagItemSetC020NameB|常燃の業火
+tagItemSetC021Name|ザ イースタン プレッジ
+tagItemSetC022Name|ワイルドコーラー
+tagItemSetC022NameB|ワイルドコーラーの呼び声
+tagItemSetC023Name|近衛兵
+tagItemSetC024Name|炎の番人
+tagItemSetC025Name|キャリドアの礼装
+tagItemSetC026Name|ミュルミドン アーマー
+tagItemSetC027Name|モグドロゲンの静穏
+tagItemSetC028Name|ザ アルケイン ストーム
+tagItemSetC029Name|エレメンタル バランス
+tagItemSetD001Name|大司法官の防具
+tagItemSetD002Name|聖なるバランス
+tagItemSetD003Name|ビーストコーラーの礼装
+tagItemSetD004Name|暁光
+tagItemSetD005Name|ザ ハービンジャー
+tagItemSetD006Name|裁判官の印環
+tagItemSetD007Name|デーモンスレイヤーの服装
+tagItemSetD008Name|銃身職工の双銃
+tagItemSetD009Name|ワイルドブラッド ヴァンガード
+tagItemSetD010Name|千里眼
+tagItemSetD011Name|インヴォーカーのエレメント
+tagItemSetD012Name|マーコヴィアンの砦
+tagItemSetD013Name|ウルズインのアバター
+tagItemSetD014Name|ドリーグの覆い
+tagItemSetD015Name|ザ デスマーク
+tagItemSetD016Name|イスカンドラの一式
+tagItemSetD017Name|ウルトスの嵐
+tagItemSetD018Name|トロザンの上昇
+tagItemSetD019Name|ヴァルダンの裏切り
+tagItemSetD020Name|毒刃の盟約
+tagItemSetD021Name|黒炎の誓約
+tagItemSetD022Name|光の守護者
+tagItemSetD023Name|地獄の騎士
+tagItemSetD024Name|アグリヴィックスの憤怒
+tagItemSetD025Name|ウォーボーン アーマー
+tagItemSetD026Name|ブラッドレイジャーの狂乱
+tagItemSetD027Name|死刑執行人の印
+tagGDX1ItemSetC018CName|アルカモスの苦難
+tagGDX1ItemSetC101Name|精神を汚す者
+tagGDX1ItemSetC101BName|魂を汚す者
+tagGDX1ItemSetC102Name|ザ シルバー ガーディアン
+tagGDX1ItemSetC102BName|ザ シルバー センチネル
+tagGDX1ItemSetC103Name|炎の予言者
+tagGDX1ItemSetC104Name|ザ メイジロード
+tagGDX1ItemSetC105Name|ドレッドウォーカー
+tagGDX1ItemSetC106Name|ルミナリの礼装
+tagItemSetC009BName|虚ろな凝視
+tagItemSetC010BName|鋭敏な射手の任務
+tagItemSetC011BName|冒涜者の誓約
+tagItemSetC016BName|パネッティの模範
+tagItemSetC017BName|ドーンシールド
+tagItemSetC021BName|ザ イースタン オース
+tagItemSetC024BName|炎熱の番人
+tagItemSetC025BName|キャリドアの防御
+tagItemSetC026BName|ミュルミドン バスティオン
+tagItemSetC027BName|モグドロゲンの平静
+tagItemSetC028BName|ザ アルケイン テンペスト
+tagItemSetC029BName|エレメンタル ハーモニー
+tagGDX1ItemSetD101Name|クリーグの武装
+tagGDX1ItemSetD102Name|自然の復讐者
+tagGDX1ItemSetD103Name|彷徨える魂の飼い主
+tagGDX1ItemSetD104Name|オクタヴィアスの熱意
+tagGDX1ItemSetD105Name|大異変
+tagGDX1ItemSetD106Name|ストーンガード
+tagGDX1ItemSetD107Name|リージョンの砦
+tagGDX1ItemSetD108Name|コルバの激怒
+tagGDX1ItemSetD109Name|闇炎の服装
+tagGDX1ItemSetD110Name|ザ スペルスカージ
+tagGDX1ItemSetD111Name|ザ メイジスレイヤー
+tagGDX1ItemSetD112Name|ヴァルグールの飢え
+tagGDX1ItemSetD113Name|ザ ルーンバインダー
+tagGDX1ItemSetD114Name|ウロボルークの外装
+tagGDX1ItemSetD115Name|アラガストの傑作
+tagGDX1ItemSetD116Name|ダガロンの破壊
+tagGDX1ItemSetD117Name|デスガード
+tagGDX1ItemSetD118Name|ディヴァイナの予見
+tagGDX1ItemSetD119Name|闇き者の賜物
+tagGDX1ItemSetD120Name|ベルゴシアンの屠殺
+tagGDX1ItemSetD121Name|ラダガンの愚行
+tagGDX1ItemSetD122Name|ライムタン
+tagGDX1ItemSetD123Name|ザ ブラッド ナイト
+tagItemSetD001BName|大司法官の防護
+tagItemSetD002BName|聖なる調和
+tagItemSetD003BName|ネイチャーズ コールの礼装
+tagItemSetD004BName|曙光
+tagItemSetD005BName|ハービンジャーの伝言
+tagItemSetD006BName|裁判官の封印
+tagItemSetD007BName|デーモンスレイヤーの武装
+tagItemSetD008BName|銃身職工の破壊者
+tagItemSetD009BName|ワイルドハート ヴァンガード
+tagItemSetD010BName|千里眼の集中
+tagItemSetD011BName|インヴォーカーの意志
+tagItemSetD012BName|マーコヴィアンの要塞
+tagItemSetD013BName|ウルズインの地獄のアバター
+tagItemSetD014BName|ドリーグの欺瞞
+tagItemSetD015BName|デスマークの影
+tagItemSetD016BName|イスカンドラの統一
+tagItemSetD017BName|ウルトスのテンペスト
+tagItemSetD018BName|トロザンの空裂き
+tagItemSetD019BName|ヴァルダンの背信
+tagItemSetD020BName|卑刃の盟約
+tagItemSetD021BName|黒焦の誓約
+tagItemSetD022BName|光のガーディアン
+tagItemSetD023BName|地獄のチャンピオン
+tagItemSetD024BName|アグリヴィックスの激怒
+tagItemSetD025BName|ウォーボーン バスティオン
+tagItemSetD026BName|ブラッドレイジャーの果てなき狂乱
+tagItemSetD027BName|アルカモスの恐怖の印
+tagItemSetC008CName|大赦
+tagItemSetC007CName|予言者
+tagItemSetC013CName|誓い破りの愚行
+tagItemSetC015BName|無慈悲な殺戮
+tagGDX2ItemSetC201Name|バルディアの装甲
+tagGDX2ItemSetC201BName|バルディアの盛装
+tagGDX2ItemSetC202Name|嵐大蛇
+tagGDX2ItemSetC203Name|膿爛火炎
+tagGDX2ItemSetC204Name|デイガの誓い
+tagGDX2ItemSetC205Name|ストーンファーザー
+tagGDX2ItemSetD201Name|シャッタード ガーディアン
+tagGDX2ItemSetD202Name|覇者
+tagGDX2ItemSetD203Name|チルウィスパー
+tagGDX2ItemSetD204Name|ルドリガンの誇り
+tagGDX2ItemSetD205Name|骨狩り狂
+tagGDX2ItemSetD206Name|美徳の光
+tagGDX2ItemSetD207Name|三神の衛兵
+tagGDX2ItemSetD208Name|ハラの術策
+tagGDX2ItemSetD209Name|大竜巻
+tagGDX2ItemSetD210Name|ラー'ズィンの苦悶
+tagGDX2ItemSetD211Name|病害卿
+tagGDX2ItemSetD212Name|グルの悪意
+tagGDX2ItemSetD213Name|ビスミールの策動
+tagGDX2ItemSetD214Name|コルヴァン デューンフィーンド
+tagGDX2ItemSetD215Name|ピランの黙想
+tagGDX2ItemSetD216Name|ターゴの技巧
+tagGDX2ItemSetD217Name|ヴォイドソウル
+tagGDX2ItemSetD218Name|ロットゲイスト
+tagGDX2ItemSetD219Name|果て無き夜の防具
+tagGDX2ItemSetD220Name|ベールキーパー
+tagGDX2ItemSetD221Name|ゴアドリンカー
+tagGDX2ItemSetD222Name|エンバーズ コーリング

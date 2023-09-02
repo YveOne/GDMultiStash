@@ -130,9 +130,6 @@
   <data name="local_deDE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\local_deDE.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="local_enGB" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\local_enGB.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="local_enUS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\local_enUS.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
@@ -363,5 +360,41 @@
   </data>
   <data name="itemsets" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\itemsets.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Text_CS_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_CS_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_DE_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_DE_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_EN_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_EN_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Text_ES_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_ES_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_FR_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_FR_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_IT_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_IT_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_JA_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_JA_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_KO_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_KO_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_PL_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_PL_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_PT_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_PT_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_VI_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_VI_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Text_ZH_setnames" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Text_ZH_setnames.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

@@ -10,7 +10,14 @@ namespace GDMultiStashUpdater
     {
         static void Main(string[] args)
         {
-            UpdaterAPI.RunUpdate();
+            if (args.Length >= 1)
+            {
+                UpdaterAPI.RunUpdate(args[0]);
+            }
+            else
+            {
+                UpdaterAPI.RunUpdate();
+            }
         }
     }
 }

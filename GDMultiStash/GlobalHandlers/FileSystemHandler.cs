@@ -15,6 +15,7 @@ namespace GDMultiStash.GlobalHandlers
 
         public string DataDirectory { get; private set; }
         public string StashesDirectory { get; private set; }
+        public string LocalesDirectory { get; private set; }
         public string ConfigFile { get; private set; }
         public Utils.SimpleFileWatcher Watcher { get; private set; }
 
@@ -22,6 +23,7 @@ namespace GDMultiStash.GlobalHandlers
         {
             DataDirectory = Path.Combine(Application.StartupPath, "Data");
             StashesDirectory = Path.Combine(DataDirectory, "Stashes");
+            LocalesDirectory = Path.Combine(DataDirectory, "Locales");
             ConfigFile = Path.Combine(DataDirectory, "Config.xml");
 
             Watcher = new Utils.SimpleFileWatcher(GrimDawn.DocumentsSavePath);
@@ -36,6 +38,7 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (!Directory.Exists(DataDirectory)) Directory.CreateDirectory(DataDirectory);
             if (!Directory.Exists(StashesDirectory)) Directory.CreateDirectory(StashesDirectory);
+            if (!Directory.Exists(LocalesDirectory)) Directory.CreateDirectory(LocalesDirectory);
         }
 
         public string GetStashDirectory(int stashID)

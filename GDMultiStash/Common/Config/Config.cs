@@ -15,6 +15,12 @@ namespace GDMultiStash.Common.Config
     public partial class Config : ConfigBase
     {
 
+        [XmlElement("LastToolVersion")]
+        public string LastToolVersion = "";
+
+        [XmlAttribute("UpdateRevision")]
+        public int UpdateRevision = 0;
+
         [XmlElement("Settings")]
         public ConfigSettingList Settings;
 

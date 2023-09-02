@@ -277,7 +277,6 @@ namespace GDMultiStash.Forms
             autoBackToMainCheckBox.Text = L.AutoBackToMainLabel();
             checkVersionCheckBox.Text = L.CheckVersionLabel();
             saveOverLockedCheckBox.Text = L.SaveLockedStashesLabel();
-            extractTranslationFilesButton.Text = L.ExtractTranslationsButton();
             overlayWindowGroupBox.Text = L.OverlayWindowLabel();
             behaviorGroupBox.Text = L.BehaviorLabel();
             selectFirstStashInGroupCheckBox.Text = L.SelectFirstStashInGroupLabel();
@@ -370,27 +369,6 @@ namespace GDMultiStash.Forms
         private void CleanupBackupsButton_Click(object sender, EventArgs e)
         {
             Global.Stashes.CleanupBackups();
-        }
-
-        private void ExtractTranslationFilesButton_Click(object sender, EventArgs e)
-        {
-            using (var dialog = new SaveFileDialog()
-            {
-                Filter = $"{Global.L.ZipArchive()}|*.zip",
-                FileName = "GDMS Localizations.zip",
-            })
-            {
-                DialogResult result = dialog.ShowDialog();
-                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(dialog.FileName))
-                {
-                    Utils.ZipFileWriter zip = new Utils.ZipFileWriter();
-                    foreach(GlobalHandlers.LocalizationHandler.Language lang in Global.Localization.Languages)
-                    {
-                        zip.AddString($"{lang.Code}.txt", lang.Text);
-                    }
-                    zip.SaveTo(dialog.FileName);
-                }
-            }
         }
 
         private void GamePathSearchButton_Click(object sender, EventArgs e)

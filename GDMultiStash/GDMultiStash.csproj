@@ -134,6 +134,7 @@
     </Compile>
     <Compile Include="Forms\ContextMenues\SortStashes\Criteria\ClassSortCriteria.cs" />
     <Compile Include="Forms\ContextMenues\SortStashes\Criteria\NoneSortCriteria.cs" />
+    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\RaritySortCriteria.cs" />
     <Compile Include="Forms\ContextMenues\SortStashes\Criteria\QualitySortCriteria.cs" />
     <Compile Include="Forms\ContextMenues\SortStashes\Criteria\SetSortCriteria.cs" />
     <Compile Include="Forms\ContextMenues\SortStashes\Criteria\SortCriteria.cs" />
@@ -160,6 +161,8 @@
     <Compile Include="GlobalHandlers\IngameHandler.Events.cs" />
     <Compile Include="GlobalHandlers\LocalizationHandler.Events.cs" />
     <Compile Include="GlobalHandlers\LocalizationHandler.Strings.cs" />
+    <Compile Include="GlobalHandlers\ResourceHandler.cs" />
+    <Compile Include="GlobalHandlers\ResourceHandler.Events.cs" />
     <Compile Include="GlobalHandlers\RuntimeHandler.cs" />
     <Compile Include="GlobalHandlers\RuntimeHandler.Events.cs" />
     <Compile Include="GlobalHandlers\SoundHandler.Events.cs" />
@@ -439,6 +442,18 @@
     <Resource Include="app.config" CopyToOutputDirectory="Never" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Text_FR_setnames.txt" />
+    <None Include="Resources\Text_ES_setnames.txt" />
+    <None Include="Resources\Text_EN_setnames.txt" />
+    <None Include="Resources\Text_DE_setnames.txt" />
+    <None Include="Resources\Text_CS_setnames.txt" />
+    <None Include="Resources\Text_ZH_setnames.txt" />
+    <None Include="Resources\Text_VI_setnames.txt" />
+    <None Include="Resources\Text_PT_setnames.txt" />
+    <None Include="Resources\Text_PL_setnames.txt" />
+    <None Include="Resources\Text_KO_setnames.txt" />
+    <None Include="Resources\Text_JA_setnames.txt" />
+    <None Include="Resources\Text_IT_setnames.txt" />
     <None Include="Resources\itemsets.txt" />
     <None Include="Resources\iteminfos.txt" />
     <None Include="Resources\itemaffixes.txt" />
@@ -513,7 +528,6 @@
     <Content Include="Resources\ButtonSmallOver.png" />
     <Content Include="Resources\ButtonSmallUp.png" />
     <None Include="Resources\local_deDE.txt" />
-    <None Include="Resources\local_enGB.txt" />
     <None Include="Resources\local_enUS.txt" />
     <None Include="Resources\buttonTrayGray.png" />
     <None Include="Resources\buttonTrayWhite.png" />

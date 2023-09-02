@@ -14,9 +14,9 @@ namespace GDMultiStashUpdater
     public static class UpdaterAPI
     {
 
-
-
-        private static readonly string latestUrl = @"https://api.github.com/repos/YveOne/GDMultiStash/releases/latest";
+        public const string LatestUrlLive = "https://api.github.com/repos/YveOne/GDMultiStash/releases/latest";
+        public const string LatestUrlOld = "https://api.github.com/repos/YveOne/GDMultiStashOld/releases/latest";
+        public const string LatestUrlThis = LatestUrlLive;
 
         private static string _newVersionUrl = null;
         private static string _newVersionName = null;
@@ -37,19 +37,22 @@ namespace GDMultiStashUpdater
             public IList<LatestReleaseDataAsset> assets { get; set; }
         }
 
-        internal static void RunUpdate()
+        internal static void RunUpdate(string latestUrl = null)
         {
-            if (!NewVersionAvailable())
+            if (latestUrl == null && !NewVersionAvailable())
             {
                 Console.WriteLine("Your GDMultiStash is up to date - you rock!");
                 Console.WriteLine("Updater will exit in 5 Seconds...");
                 Thread.Sleep(5000);
                 return;
             }
+            
+            if (latestUrl == null)
+                latestUrl = LatestUrlThis;
 
             Console.WriteLine("Welcome to GDMultiStash Updater <3");
             Console.WriteLine("Getting data...");
-            LatestReleaseData data = GetUpdateData();
+            LatestReleaseData data = GetUpdateData(latestUrl);
             if (data == null)
             {
                 Console.WriteLine("FAILED GETTING DATA FROM GITHUB!");
@@ -122,7 +125,7 @@ namespace GDMultiStashUpdater
 
         }
 
-        public static LatestReleaseData GetUpdateData()
+        public static LatestReleaseData GetUpdateData(string latestUrl)
         {
             using (WebClient wc = new WebClient())
             {
@@ -178,7 +181,7 @@ namespace GDMultiStashUpdater
         public static bool NewVersionAvailable()
         {
 
-            LatestReleaseData data = GetUpdateData();
+            LatestReleaseData data = GetUpdateData(LatestUrlThis);
             if (data == null) return false;
 
             Match vMatch = Regex.Match(data.tag_name, @"^v([\d\.]+)(.*?)$");

@@ -1,0 +1,171 @@
+tagItemSetC001Name|Gardistenkleidung
+tagItemSetC001NameB|Kleidung des Friedensbewahrers
+tagItemSetC002Name|Forschergewand
+tagItemSetC003Name|Maivens Heiligtum
+tagItemSetC003NameB|Maivens Allerheiligstes
+tagItemSetC004Name|Ruhm des Blutschnitters
+tagItemSetC004NameB|Gemetzel des Blutschnitters
+tagItemSetC005Name|Gerechtigkeit des Marodeurs
+tagItemSetC005NameB|Urteil des Marodeurs
+tagItemSetC006Name|Ornat des Herolds
+tagItemSetC006NameB|Erkennungszeichen des Herolds
+tagItemSetC007Name|Der Apotheker
+tagItemSetC007NameB|Der Wahrsager
+tagItemSetC008Name|Verderben
+tagItemSetC008NameB|Absolution
+tagItemSetC009Name|Das blinde Auge
+tagItemSetC010Name|Zeichen des Scharfschützen
+tagItemSetC011Name|Unheiliger Bund
+tagItemSetC012Name|Königliche Ausgelassenheit
+tagItemSetC013Name|Eidbrecher
+tagItemSetC013NameB|Flamme des Eidbrechers
+tagItemSetC014Name|Verzierungen der Tapferkeit
+tagItemSetC015Name|Blutbad
+tagItemSetC016Name|Das Vorbild des Arcanums
+tagItemSetC017Name|Morgenwache
+tagItemSetC018Name|Alkamos' Zorn
+tagItemSetC018NameB|Alkamos' Wut
+tagItemSetC019Name|Miasma
+tagItemSetC019NameB|Tödliches Miasma
+tagItemSetC020Name|Schwefel
+tagItemSetC020NameB|Ewig brennender Schwefel
+tagItemSetC021Name|Das morgenländische Versprechen
+tagItemSetC022Name|Wildrufer
+tagItemSetC022NameB|Ruf des Wildrufers
+tagItemSetC023Name|Der Prätorianer
+tagItemSetC024Name|Der Flammenwächter
+tagItemSetC025Name|Callidors Ornat
+tagItemSetC026Name|Myrmidonenrüstung
+tagItemSetC027Name|Mogdrogens Gelassenheit
+tagItemSetC028Name|Der Arkansturm
+tagItemSetC029Name|Elementares Gleichgewicht
+tagItemSetD001Name|Rüstung des Richters
+tagItemSetD002Name|Das heilige Gleichgewicht
+tagItemSetD003Name|Ornat des Bestienrufers
+tagItemSetD004Name|Licht des Morgengrauens
+tagItemSetD005Name|Der Vorbote
+tagItemSetD006Name|Siegel des Richters
+tagItemSetD007Name|Gewand des Dämonentöters
+tagItemSetD008Name|Zwillinge des Büchsenmachers
+tagItemSetD009Name|Wildblutvorhut
+tagItemSetD010Name|Der Hellseher
+tagItemSetD011Name|Elemente des Beschwörers
+tagItemSetD012Name|Markovians Festung
+tagItemSetD013Name|Ulzuins Avatar
+tagItemSetD014Name|Dreegs Schleier
+tagItemSetD015Name|Das Todeszeichen
+tagItemSetD016Name|Iskandras Einheit
+tagItemSetD017Name|Ultos' Sturm
+tagItemSetD018Name|Trozans Aufstieg
+tagItemSetD019Name|Valduns Verrat
+tagItemSetD020Name|Der Pakt der Giftklinge
+tagItemSetD021Name|Bund der Schwarzen Flamme
+tagItemSetD022Name|Verteidiger des Lichts
+tagItemSetD023Name|Der Höllische Ritter
+tagItemSetD024Name|Agrivix' Zorn
+tagItemSetD025Name|Kriegsgeschmiedete Rüstung
+tagItemSetD026Name|Raserei des Blutrünstigen
+tagItemSetD027Name|Siegel des Vollstreckers
+tagGDX1ItemSetC018CName|Alkamos' Elend
+tagGDX1ItemSetC101Name|Verderber der Geister
+tagGDX1ItemSetC101BName|Verderber der Seelen
+tagGDX1ItemSetC102Name|Der Silberwächter
+tagGDX1ItemSetC102BName|Der Silberwächter
+tagGDX1ItemSetC103Name|Der Feuerprophet
+tagGDX1ItemSetC104Name|Der Magierlord
+tagGDX1ItemSetC105Name|Schreckensläufer
+tagGDX1ItemSetC106Name|Ornat der Luminari
+tagItemSetC009BName|Der unsichtbare Blick
+tagItemSetC010BName|Die Pflicht des Scharfschützen
+tagItemSetC011BName|Bund des Schänders
+tagItemSetC016BName|Panettis Vorbild
+tagItemSetC017BName|Schild des Morgengrauens
+tagItemSetC021BName|Der morgenländische Schwur
+tagItemSetC024BName|Hüter des Feuers
+tagItemSetC025BName|Callidors Verteidigung
+tagItemSetC026BName|Bastion des Myrmidonen
+tagItemSetC027BName|Mogdrogens Frieden
+tagItemSetC028BName|Der Arkansturm
+tagItemSetC029BName|Elementare Harmonie
+tagGDX1ItemSetD101Name|Kriegs Rüstung
+tagGDX1ItemSetD102Name|Rächer der Natur
+tagGDX1ItemSetD103Name|Hirte der verlorenen Seelen
+tagGDX1ItemSetD104Name|Octavius' Begeisterung
+tagGDX1ItemSetD105Name|Der Kataklysmus
+tagGDX1ItemSetD106Name|Steinwächter
+tagGDX1ItemSetD107Name|Festung der Legion
+tagGDX1ItemSetD108Name|Korbas Zorn
+tagGDX1ItemSetD109Name|Schwarzflammige Kleidung
+tagGDX1ItemSetD110Name|Die Zaubergeißel
+tagGDX1ItemSetD111Name|Der Magiertöter
+tagGDX1ItemSetD112Name|Valguurs Hunger
+tagGDX1ItemSetD113Name|Der Runenbinder
+tagGDX1ItemSetD114Name|Uroboruuks Gewand
+tagGDX1ItemSetD115Name|Allagasts Meisterwerk
+tagGDX1ItemSetD116Name|Dagallons Zerstörung
+tagGDX1ItemSetD117Name|Todeswächter
+tagGDX1ItemSetD118Name|Vision des Hellsehers
+tagGDX1ItemSetD119Name|Geschenk des Finsteren
+tagGDX1ItemSetD120Name|Belgothians Gemetzel
+tagGDX1ItemSetD121Name|Radaggans Torheit
+tagGDX1ItemSetD122Name|Frostzunge
+tagGDX1ItemSetD123Name|Der Blutritter
+tagItemSetD001BName|Schutz des Richters
+tagItemSetD002BName|Die heilige Harmonie
+tagItemSetD003BName|Gewand des Rufs der Natur
+tagItemSetD004BName|Licht des Morgensuchers
+tagItemSetD005BName|Die Nachricht des Vorboten
+tagItemSetD006BName|Siegel des Rechtssprechers
+tagItemSetD007BName|Rüstung des Dämonentöters
+tagItemSetD008BName|Zerstörer des Büchsenmachers
+tagItemSetD009BName|Wildherzvorhut
+tagItemSetD010BName|Fokus des Hellsehers
+tagItemSetD011BName|Der Wille des Beschwörers
+tagItemSetD012BName|Markovians Bastion
+tagItemSetD013BName|Ulzuins höllischer Avatar
+tagItemSetD014BName|Dreegs Täuschung
+tagItemSetD015BName|Schatten des Todeszeichens
+tagItemSetD016BName|Iskandras Vereinigung
+tagItemSetD017BName|Ultos' Sturm
+tagItemSetD018BName|Trozans Himmelsbrecher
+tagItemSetD019BName|Valduns Verrat
+tagItemSetD020BName|Der Pakt der abscheulichen Klinge
+tagItemSetD021BName|Bund des Schwarzen Feuers
+tagItemSetD022BName|Wächter des Lichts
+tagItemSetD023BName|Der höllische Champion
+tagItemSetD024BName|Agrivix' Wut
+tagItemSetD025BName|Kriegsgeschmiedete Bastion
+tagItemSetD026BName|Der endlose Wahnsinn des Blutrünstigen
+tagItemSetD027BName|Alkamos' schreckliche Siegelringe
+tagItemSetC008CName|Amnestie
+tagItemSetC007CName|Der Augur
+tagItemSetC013CName|Torheit des Eidbrechers
+tagItemSetC015BName|Mutwilliges Gemetzel
+tagGDX2ItemSetC201Name|Baldirs Rüstung
+tagGDX2ItemSetC201BName|Baldirs Ornat
+tagGDX2ItemSetC202Name|Die Sturmschlange
+tagGDX2ItemSetC203Name|Fäulnisfeuer
+tagGDX2ItemSetC204Name|Daegas Schwur
+tagGDX2ItemSetC205Name|Steinvater
+tagGDX2ItemSetD201Name|Erschütterter Wächter
+tagGDX2ItemSetD202Name|Der Bezwinger
+tagGDX2ItemSetD203Name|Frostiges Geflüster
+tagGDX2ItemSetD204Name|Ludrigans Stolz
+tagGDX2ItemSetD205Name|Knochenhändler
+tagGDX2ItemSetD206Name|Licht der Tugend
+tagGDX2ItemSetD207Name|Schildwache der Drei
+tagGDX2ItemSetD208Name|Harras Geschick
+tagGDX2ItemSetD209Name|Der Zyklon
+tagGDX2ItemSetD210Name|Rah'Zins Folter
+tagGDX2ItemSetD211Name|Der Seuchenfürst
+tagGDX2ItemSetD212Name|Ghols Bosheit
+tagGDX2ItemSetD213Name|Bysmiels Schmuck
+tagGDX2ItemSetD214Name|Der Korvanische Dünendämon
+tagGDX2ItemSetD215Name|Pyrans Grübelei
+tagGDX2ItemSetD216Name|Targos Handwerk
+tagGDX2ItemSetD217Name|Die Seele der Leere
+tagGDX2ItemSetD218Name|Rotgheist
+tagGDX2ItemSetD219Name|Rüstung der Ewigen Nacht
+tagGDX2ItemSetD220Name|Schleierwächter
+tagGDX2ItemSetD221Name|Bluttrinker
+tagGDX2ItemSetD222Name|Glutbeschwörung

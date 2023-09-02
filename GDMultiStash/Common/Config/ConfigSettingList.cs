@@ -11,8 +11,6 @@ namespace GDMultiStash.Common.Config
     [Serializable]
     public class ConfigSettingList
     {
-        [XmlElement("LastToolVersion")] public string LastToolVersion = "";
-        
         [XmlElement("WindowWidth")] public int WindowWidth = 650;
         [XmlElement("WindowHeight")] public int WindowHeight = 500;
 
@@ -54,8 +52,6 @@ namespace GDMultiStash.Common.Config
         {
             return new ConfigSettingList
             {
-                LastToolVersion = LastToolVersion,
-
                 WindowWidth = WindowWidth,
                 WindowHeight = WindowHeight,
 
@@ -96,8 +92,6 @@ namespace GDMultiStash.Common.Config
 
         public void Set(ConfigSettingList s)
         {
-            LastToolVersion = s.LastToolVersion;
-
             WindowWidth = s.WindowWidth;
             WindowHeight = s.WindowHeight;
 

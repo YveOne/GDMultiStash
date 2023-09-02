@@ -36,8 +36,9 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter ConfirmDeleteOldStashesMessage => _.Get("msg_confirm_delete_old_stashes");
             public _Core.StringGetter ConfirmDeleteStashTabMessage => _.Get("msg_confirm_delete_stash_tab");
             public _Core.StringGetter ConfirmClearStashTabMessage => _.Get("msg_confirm_clear_stash_tab");
+            public _Core.StringGetter OldGDVersionNotSupported => _.Get("msg_old_gd_not_supported");
 
-
+            
 
 
 
@@ -66,7 +67,6 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter SearchButton => _.Get("btn_search");
             public _Core.StringGetter CreateShortcutButton => _.Get("btn_create_shortcut");
             public _Core.StringGetter CleanupBackupsButton => _.Get("btn_cleanup_backups");
-            public _Core.StringGetter ExtractTranslationsButton => _.Get("btn_extract_translations");
             public _Core.StringGetter CreateButton => _.Get("btn_create");
             public _Core.StringGetter LoadButton => _.Get("btn_load");
             public _Core.StringGetter CreateGroupButton => _.Get("btn_create_group");
@@ -158,6 +158,7 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter SortByNone => _.Get("sort_by_none");
             public _Core.StringGetter SortByLevel => _.Get("sort_by_level");
             public _Core.StringGetter SortByQuality => _.Get("sort_by_quality");
+            public _Core.StringGetter SortByRarity => _.Get("sort_by_rarity");
             public _Core.StringGetter SortByClass => _.Get("sort_by_class");
             public _Core.StringGetter SortByType => _.Get("sort_by_type");
             public _Core.StringGetter SortBySet => _.Get("sort_by_set");
@@ -223,7 +224,7 @@ namespace GDMultiStash.GlobalHandlers
 
             public _Core.StringGetter ItemClassOther => _.Get("item_class_other");
 
-            public _Core.StringGetter ItemClassOtherRelics => _.Get("item_class_relics");
+            public _Core.StringGetter ItemClassOtherRelics => _.Get("item_class_other_relics");
             public _Core.StringGetter ItemClassOtherFactions => _.Get("item_class_other_factions");
             public _Core.StringGetter ItemClassOtherConsumable => _.Get("item_class_other_consumable");
             public _Core.StringGetter ItemClassOtherBlueprints => _.Get("item_class_other_blueprints");

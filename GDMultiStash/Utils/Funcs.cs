@@ -5,11 +5,13 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Utils
 {
     internal class Funcs
     {
         public delegate bool WaitForConditionDelegate();
+
         public static bool WaitFor(WaitForConditionDelegate condition, int time, int delay = 1)
         {
             long timeout = Environment.TickCount + time;
@@ -40,50 +42,67 @@ namespace Utils
             return Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
         }
 
-        public static Dictionary<string, string> ReadDictionaryFromFile(string file, char splitby = '=')
+        public static IEnumerable<string> ReadFileLinesIter(string file)
         {
-            var kvp = new Dictionary<string, string>();
             foreach (var line in File.ReadAllLines(file))
             {
-                var split = line.Split(splitby);
-                if (split.Length < 2) continue;
-                var key = split[0].Trim();
-                var val = String.Join("=", split.Skip(1).ToArray()).Trim();
-                kvp.Add(key, val);
+                yield return line;
             }
-            return kvp;
         }
 
-        public static Dictionary<string, string> ReadDictionaryFromText(string text, char splitby = '=')
+        public static IEnumerable<string> ReadTextLinesIter(string text)
         {
-            var kvp = new Dictionary<string, string>();
             using (StringReader sr = new StringReader(text))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
                 {
-                    var split = line.Split(splitby);
-                    if (split.Length < 2) continue;
-                    var key = split[0].Trim();
-                    var val = String.Join("=", split.Skip(1).ToArray()).Trim();
-                    kvp.Add(key, val);
+                    yield return line;
                 }
             }
-            return kvp;
         }
 
-        public static Dictionary<string, string> ReadDictionaryFromStream(Stream stream, char splitby = '=')
+        public static IEnumerable<string> ReadStreamLinesIter(Stream stream)
+        {
+            foreach (var _line in ReadLines(() => stream, Encoding.UTF8).ToList())
+            {
+                var line = _line.Trim();
+                if (line.StartsWith("#")) continue;
+                if (line.StartsWith("//")) continue;
+                if (line.StartsWith("--")) continue;
+                yield return _line;
+            }
+        }
+
+        public delegate IEnumerable<string> ReadDictionaryIterDelegate();
+
+        public static Dictionary<string, string> ReadDictionaryFromIter(ReadDictionaryIterDelegate iter, char splitby = '=')
         {
             var kvp = new Dictionary<string, string>();
-            foreach (var line in ReadLines(() => stream, Encoding.UTF8).ToList())
+            foreach (var line in iter())
             {
                 var split = line.Split(splitby);
                 if (split.Length < 2) continue;
                 var key = split[0].Trim();
                 var val = String.Join("=", split.Skip(1).ToArray()).Trim();
-                kvp.Add(key, val);
+                kvp[key] = val;
             }
             return kvp;
+        }
+
+        public static Dictionary<string, string> ReadDictionaryFromFile(string file, char splitby = '=')
+        {
+            return ReadDictionaryFromIter(() => ReadFileLinesIter(file), splitby);
+        }
+
+        public static Dictionary<string, string> ReadDictionaryFromText(string text, char splitby = '=')
+        {
+            return ReadDictionaryFromIter(() => ReadTextLinesIter(text), splitby);
+        }
+
+        public static Dictionary<string, string> ReadDictionaryFromStream(Stream stream, char splitby = '=')
+        {
+            return ReadDictionaryFromIter(() => ReadStreamLinesIter(stream), splitby);
         }
 
         public static IEnumerable<string> ReadLines(Func<Stream> streamProvider, Encoding encoding)

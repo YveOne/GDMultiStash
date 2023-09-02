@@ -1,0 +1,171 @@
+tagItemSetC001Name|Uniforme della Guardia
+tagItemSetC001NameB|Armatura della Guardia
+tagItemSetC002Name|Abiti dell'Esploratore
+tagItemSetC003Name|Santuario di Maiven
+tagItemSetC003NameB|Sanctorum di Maiven
+tagItemSetC004Name|Gloria del Mietitore di Sangue
+tagItemSetC004NameB|Massacro del Mietitore di Sangue
+tagItemSetC005Name|Giustizia del Predone
+tagItemSetC005NameB|Giudizio del Predone
+tagItemSetC006Name|Abiti Cerimoniali dell'Araldo
+tagItemSetC006NameB|Insegne dell'Araldo
+tagItemSetC007Name|Lo Speziale
+tagItemSetC007NameB|L'Indovino
+tagItemSetC008Name|Perdizione
+tagItemSetC008NameB|Assoluzione
+tagItemSetC009Name|L'Occhio che non Vede
+tagItemSetC010Name|Simbolo del Franco Tiratore
+tagItemSetC011Name|Empia Congrega
+tagItemSetC012Name|Esuberanza Regale
+tagItemSetC013Name|Spezza Giuramento
+tagItemSetC013NameB|Fiamma dello Spezza Giuramento
+tagItemSetC014Name|Ornamenti del Valore
+tagItemSetC015Name|Massacro
+tagItemSetC016Name|Il Campione dell'Arcano
+tagItemSetC017Name|Guardia dell'Alba
+tagItemSetC018Name|Collera di Alkamos
+tagItemSetC018NameB|Rabbia di Alkamos
+tagItemSetC019Name|Miasma
+tagItemSetC019NameB|Miasma Mortale
+tagItemSetC020Name|Zolfo Fiammeggiante
+tagItemSetC020NameB|Zolfo Bruciante
+tagItemSetC021Name|La Promessa Orientale
+tagItemSetC022Name|Maestro delle Lande
+tagItemSetC022NameB|Vocazione del Maestro delle Lande
+tagItemSetC023Name|Il Pretoriano
+tagItemSetC024Name|Custode della Fiamma
+tagItemSetC025Name|Insegne di Callidor
+tagItemSetC026Name|Armatura del Mirmidone
+tagItemSetC027Name|Tranquillità di Mogdrogen
+tagItemSetC028Name|La Tempesta Arcana
+tagItemSetC029Name|Bilancio Elementale
+tagItemSetD001Name|Armatura del Conciliatore
+tagItemSetD002Name|La Sacra Bilancia
+tagItemSetD003Name|Abiti Cerimoniali dell'Evocatore di Bestie
+tagItemSetD004Name|Luce dello Spezza Alba
+tagItemSetD005Name|L'Araldo
+tagItemSetD006Name|Sigilli del Giudice
+tagItemSetD007Name|Abiti del Cacciatore di Demoni
+tagItemSetD008Name|Gemelle dell'Armiere
+tagItemSetD009Name|Avanguardia Sangue Selvaggio
+tagItemSetD010Name|Il Chiaroveggente
+tagItemSetD011Name|Elementi dell'Invocatore
+tagItemSetD012Name|Fortezza di Markovian
+tagItemSetD013Name|Avatar di Ulzuin
+tagItemSetD014Name|Velo di Dreeg
+tagItemSetD015Name|Il Marchio della Morte
+tagItemSetD016Name|Unità di Iskandra
+tagItemSetD017Name|Tempesta di Ultos
+tagItemSetD018Name|Ascensione di Trozan
+tagItemSetD019Name|Tradimento di Valdun
+tagItemSetD020Name|Il Patto delle Lame Avvelenate
+tagItemSetD021Name|Patto della Nera Fiamma
+tagItemSetD022Name|Difensore della Luce
+tagItemSetD023Name|Il Cavaliere Infernale
+tagItemSetD024Name|Collera di Agrivix
+tagItemSetD025Name|Reliquie della Prima Guerra
+tagItemSetD026Name|Follia della Furia Sanguinaria
+tagItemSetD027Name|Sigillo del Boia
+tagGDX1ItemSetC018CName|Miseria di Alkamos
+tagGDX1ItemSetC101Name|Corruttore di Spiriti
+tagGDX1ItemSetC101BName|Corruttore di Anime
+tagGDX1ItemSetC102Name|Il Guardiano d'Argento
+tagGDX1ItemSetC102BName|La Sentinella d'Argento
+tagGDX1ItemSetC103Name|Veggente della Fiammata
+tagGDX1ItemSetC104Name|Il Lord Mago
+tagGDX1ItemSetC105Name|Camminatore del Terrore
+tagGDX1ItemSetC106Name|Uniforme Luminari
+tagItemSetC009BName|Sguardo del Veggente Cieco
+tagItemSetC010BName|Dovere del Tiratore Scelto
+tagItemSetC011BName|Patto del Profanatore
+tagItemSetC016BName|Il Paradigma di Panetti
+tagItemSetC017BName|Scudo dell'Alba
+tagItemSetC021BName|Giuramento dell'Est
+tagItemSetC024BName|Custode delle Fiamme
+tagItemSetC025BName|Difesa di Callidor
+tagItemSetC026BName|Bastione del Mirmidone
+tagItemSetC027BName|Pace di Mogdrogen
+tagItemSetC028BName|La Tempesta Arcana
+tagItemSetC029BName|Armonia Elementale
+tagGDX1ItemSetD101Name|Armamenti di Krieg
+tagGDX1ItemSetD102Name|Vendicatore della Natura
+tagGDX1ItemSetD103Name|Pastore delle Anime Perse
+tagGDX1ItemSetD104Name|Ardore di Octavius
+tagGDX1ItemSetD105Name|Il Cataclisma
+tagGDX1ItemSetD106Name|Guardia di Pietra
+tagGDX1ItemSetD107Name|Fortezza della Legione
+tagGDX1ItemSetD108Name|Furia di Korba
+tagGDX1ItemSetD109Name|Abito della Fiammata Oscura
+tagGDX1ItemSetD110Name|Il Flagella Magie
+tagGDX1ItemSetD111Name|L'Ammazza Maghi
+tagGDX1ItemSetD112Name|Fame di Valguur
+tagGDX1ItemSetD113Name|Il Vincola Rune
+tagGDX1ItemSetD114Name|Sembianze di Uroboruuk
+tagGDX1ItemSetD115Name|Capolavoro di Allagast
+tagGDX1ItemSetD116Name|Distruzione di Dagallon
+tagGDX1ItemSetD117Name|Paramorte
+tagGDX1ItemSetD118Name|Visione dell'Indovino
+tagGDX1ItemSetD119Name|Dono dell'Oscuro
+tagGDX1ItemSetD120Name|Massacro di Belgothian
+tagGDX1ItemSetD121Name|Follia di Radaggan
+tagGDX1ItemSetD122Name|Lingua di Brina
+tagGDX1ItemSetD123Name|Il Cavaliere del Sangue
+tagItemSetD001BName|Guardia di Justicar
+tagItemSetD002BName|La Sacra Armonia
+tagItemSetD003BName|Uniforme della Chiamata della Natura
+tagItemSetD004BName|Luce del Cercatore dell'Alba
+tagItemSetD005BName|Messaggio dell'Araldo
+tagItemSetD006BName|Sigillo del Giudicatore
+tagItemSetD007BName|Armamenti dell'Ammazza Demoni
+tagItemSetD008BName|Distruttore di Barrelsmith
+tagItemSetD009BName|Avanguardia Cuore Selvaggio
+tagItemSetD010BName|Il Focus del Chiaroveggente
+tagItemSetD011BName|Volontà dell'Invocatore
+tagItemSetD012BName|Bastione di Markovian
+tagItemSetD013BName|Avatar Infernale di Ulzuin
+tagItemSetD014BName|Inganno di Dreeg
+tagItemSetD015BName|Ombra del Marchio Mortale
+tagItemSetD016BName|Unificazione di Iskandra
+tagItemSetD017BName|Tempesta di Ultos
+tagItemSetD018BName|Viola Celo di Trozan
+tagItemSetD019BName|Tradimento di Valdun
+tagItemSetD020BName|Il Patto della Lama Vile
+tagItemSetD021BName|Patto della Nera Fiamma
+tagItemSetD022BName|Guardiano della Luce
+tagItemSetD023BName|Il Campione Infernale
+tagItemSetD024BName|Rabbia di Agrivix
+tagItemSetD025BName|Bastione Nato dalla Guerra
+tagItemSetD026BName|Frenesia Senza Fine della Furia Sanguinaria
+tagItemSetD027BName|Sigillo del Terrore di Alkamos
+tagItemSetC008CName|Amnistia
+tagItemSetC007CName|Il Profeta
+tagItemSetC013CName|Follia del Traditore
+tagItemSetC015BName|Carneficina Sfrenata
+tagGDX2ItemSetC201Name|Piastra di Baldir
+tagGDX2ItemSetC201BName|Abiti Cerimoniali di Baldir
+tagGDX2ItemSetC202Name|Il Serpente della Tempesta
+tagGDX2ItemSetC203Name|Fiamma Incandescente
+tagGDX2ItemSetC204Name|Giuramento di Daega
+tagGDX2ItemSetC205Name|Pietra del Padre
+tagGDX2ItemSetD201Name|Guardiano Infranto
+tagGDX2ItemSetD202Name|Il Conquistatore
+tagGDX2ItemSetD203Name|Sussurro Gelido
+tagGDX2ItemSetD204Name|Orgoglio di Ludrigan
+tagGDX2ItemSetD205Name|Mangiatore d'Ossa
+tagGDX2ItemSetD206Name|Luce della Virtù
+tagGDX2ItemSetD207Name|Sentinella dei Tre
+tagGDX2ItemSetD208Name|Artificio di Harra
+tagGDX2ItemSetD209Name|Il Ciclone
+tagGDX2ItemSetD210Name|Tormento di Rah'Zin
+tagGDX2ItemSetD211Name|Il Signore della Piaga
+tagGDX2ItemSetD212Name|Malizia di Ghol
+tagGDX2ItemSetD213Name|Gingilli di Bysmiel
+tagGDX2ItemSetD214Name|Il Demone delle Dune di Korvan
+tagGDX2ItemSetD215Name|Riflessioni di Pyran
+tagGDX2ItemSetD216Name|Artigianato di Targo
+tagGDX2ItemSetD217Name|L'Anima del Vuoto
+tagGDX2ItemSetD218Name|Rotgheist
+tagGDX2ItemSetD219Name|Armatura della Notte Eterna
+tagGDX2ItemSetD220Name|Guardiano del Velo
+tagGDX2ItemSetD221Name|Bevitore di Sangue
+tagGDX2ItemSetD222Name|Richiamo di Ember
