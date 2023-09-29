@@ -20,7 +20,7 @@ namespace GDMultiStash.Forms
 
         protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
         {
-
+            Text = L.AboutButton();
         }
 
         private void AboutForm_Load(object sender, EventArgs e)

@@ -61,6 +61,8 @@
             this.languageComboBox = new System.Windows.Forms.ComboBox();
             this.cleanupBackupsButton = new System.Windows.Forms.Button();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.startPositionLabel = new System.Windows.Forms.Label();
+            this.startPositionComboBox = new System.Windows.Forms.ComboBox();
             this.behaviorGroupBox = new System.Windows.Forms.GroupBox();
             this.saveExternalChangesCheckBox = new System.Windows.Forms.CheckBox();
             this.saveOverLockedCheckBox = new System.Windows.Forms.CheckBox();
@@ -194,7 +196,7 @@
             // checkVersionCheckBox
             // 
             this.checkVersionCheckBox.AutoSize = true;
-            this.checkVersionCheckBox.Location = new System.Drawing.Point(26, 205);
+            this.checkVersionCheckBox.Location = new System.Drawing.Point(26, 256);
             this.checkVersionCheckBox.Name = "checkVersionCheckBox";
             this.checkVersionCheckBox.Size = new System.Drawing.Size(132, 17);
             this.checkVersionCheckBox.TabIndex = 13;
@@ -216,7 +218,7 @@
             // confirmStashDeleteCheckBox
             // 
             this.confirmStashDeleteCheckBox.AutoSize = true;
-            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(26, 228);
+            this.confirmStashDeleteCheckBox.Location = new System.Drawing.Point(26, 279);
             this.confirmStashDeleteCheckBox.Name = "confirmStashDeleteCheckBox";
             this.confirmStashDeleteCheckBox.Size = new System.Drawing.Size(140, 17);
             this.confirmStashDeleteCheckBox.TabIndex = 2;
@@ -227,7 +229,7 @@
             // closeWithGrimDawnCheckBox
             // 
             this.closeWithGrimDawnCheckBox.AutoSize = true;
-            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(26, 182);
+            this.closeWithGrimDawnCheckBox.Location = new System.Drawing.Point(26, 233);
             this.closeWithGrimDawnCheckBox.Name = "closeWithGrimDawnCheckBox";
             this.closeWithGrimDawnCheckBox.Size = new System.Drawing.Size(238, 17);
             this.closeWithGrimDawnCheckBox.TabIndex = 1;
@@ -238,7 +240,7 @@
             // confirmClosingCheckBox
             // 
             this.confirmClosingCheckBox.AutoSize = true;
-            this.confirmClosingCheckBox.Location = new System.Drawing.Point(26, 159);
+            this.confirmClosingCheckBox.Location = new System.Drawing.Point(26, 210);
             this.confirmClosingCheckBox.Name = "confirmClosingCheckBox";
             this.confirmClosingCheckBox.Size = new System.Drawing.Size(246, 17);
             this.confirmClosingCheckBox.TabIndex = 0;
@@ -441,6 +443,8 @@
             this.panel5.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel5.Controls.Add(this.startPositionLabel);
+            this.panel5.Controls.Add(this.startPositionComboBox);
             this.panel5.Controls.Add(this.behaviorGroupBox);
             this.panel5.Controls.Add(this.overlayWindowGroupBox);
             this.panel5.Controls.Add(this.confirmClosingCheckBox);
@@ -452,6 +456,25 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(866, 491);
             this.panel5.TabIndex = 20;
+            // 
+            // startPositionLabel
+            // 
+            this.startPositionLabel.AutoSize = true;
+            this.startPositionLabel.Location = new System.Drawing.Point(26, 157);
+            this.startPositionLabel.Name = "startPositionLabel";
+            this.startPositionLabel.Size = new System.Drawing.Size(71, 13);
+            this.startPositionLabel.TabIndex = 9;
+            this.startPositionLabel.Text = "Start position:";
+            // 
+            // startPositionComboBox
+            // 
+            this.startPositionComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.startPositionComboBox.FormattingEnabled = true;
+            this.startPositionComboBox.Location = new System.Drawing.Point(26, 173);
+            this.startPositionComboBox.Name = "startPositionComboBox";
+            this.startPositionComboBox.Size = new System.Drawing.Size(224, 21);
+            this.startPositionComboBox.TabIndex = 29;
+            this.startPositionComboBox.SelectionChangeCommitted += new System.EventHandler(this.StartPositionComboBox_SelectionChangeCommitted);
             // 
             // behaviorGroupBox
             // 
@@ -561,7 +584,7 @@
             // 
             this.overlayStashesCountValueLabel.AutoSize = true;
             this.overlayStashesCountValueLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.overlayStashesCountValueLabel.Location = new System.Drawing.Point(399, 104);
+            this.overlayStashesCountValueLabel.Location = new System.Drawing.Point(398, 104);
             this.overlayStashesCountValueLabel.Name = "overlayStashesCountValueLabel";
             this.overlayStashesCountValueLabel.Size = new System.Drawing.Size(46, 18);
             this.overlayStashesCountValueLabel.TabIndex = 24;
@@ -665,5 +688,7 @@
         private System.Windows.Forms.GroupBox overlayWindowGroupBox;
         private System.Windows.Forms.GroupBox behaviorGroupBox;
         private System.Windows.Forms.CheckBox saveExternalChangesCheckBox;
+        private System.Windows.Forms.Label startPositionLabel;
+        private System.Windows.Forms.ComboBox startPositionComboBox;
     }
 }

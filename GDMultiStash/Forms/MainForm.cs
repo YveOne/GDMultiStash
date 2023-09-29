@@ -337,6 +337,28 @@ namespace GDMultiStash.Forms
             // only after cfg has been initialized!
             Width = Global.Configuration.Settings.WindowWidth;
             Height = Global.Configuration.Settings.WindowHeight;
+            StartPosition = FormStartPosition.Manual;
+            Left = Global.Configuration.Settings.WindowX;
+            Top = Global.Configuration.Settings.WindowY;
+
+            switch (Global.Configuration.Settings.StartPositionType)
+            {
+                case 0:
+                    break;
+                case 1:
+                    WindowState = FormWindowState.Minimized;
+                    break;
+                case 2:
+                    bool isInitialShowing = true;
+                    Shown += (o, ee) => {
+                        if (isInitialShowing)
+                        {
+                            isInitialShowing = false;
+                            CloseToTray();
+                        }
+                    };
+                    break;
+            }
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -365,6 +387,8 @@ namespace GDMultiStash.Forms
             base.OnResizeEnd(e);
             Global.Configuration.Settings.WindowWidth = Width;
             Global.Configuration.Settings.WindowHeight = Height;
+            Global.Configuration.Settings.WindowX = Left;
+            Global.Configuration.Settings.WindowY = Top;
             Global.Configuration.Save();
         }
 

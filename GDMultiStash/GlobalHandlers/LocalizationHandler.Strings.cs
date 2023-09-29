@@ -123,6 +123,10 @@ namespace GDMultiStash.GlobalHandlers
             public _Core.StringGetter OverlayWindowLabel => _.Get("lbl_overlay_window");
             public _Core.StringGetter BehaviorLabel => _.Get("lbl_behavior");
             public _Core.StringGetter SaveExternalChangesLabel => _.Get("lbl_save_external_changes");
+            public _Core.StringGetter StartPositionLabel => _.Get("lbl_start_position");
+            public _Core.StringGetter StartPositionNormalLabel => _.Get("lbl_start_position_normal");
+            public _Core.StringGetter StartPositionMinimizedLabel => _.Get("lbl_start_position_minimized");
+            public _Core.StringGetter StartPositionTrayLabel => _.Get("lbl_start_position_tray");
 
 
 

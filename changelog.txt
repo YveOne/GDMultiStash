@@ -1,3 +1,7 @@
+v1.39 (unreleased)
+- Position of main window will now be saved and restored on startup
+- Added config option to set start position state to normal, minimized or tray
+
 v1.38
 - Added new sort criteria "rarity" to sort MI's and DR's
 - Locales directory is back! Languages files getting extracted from resource into that directory.

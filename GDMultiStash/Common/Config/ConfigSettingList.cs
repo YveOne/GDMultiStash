@@ -13,6 +13,8 @@ namespace GDMultiStash.Common.Config
     {
         [XmlElement("WindowWidth")] public int WindowWidth = 650;
         [XmlElement("WindowHeight")] public int WindowHeight = 500;
+        [XmlElement("WindowX")] public int WindowX = 100;
+        [XmlElement("WindowY")] public int WindowY = 100;
 
         [XmlElement("Language")] public string Language = "enUS";
         [XmlElement("GamePath")] public string GamePath = "";
@@ -40,6 +42,7 @@ namespace GDMultiStash.Common.Config
         [XmlElement("AutoStartGame")] public bool AutoStartGame = false;
         [XmlElement("StartGameCommand")] public string StartGameCommand = "";
         [XmlElement("StartGameArguments")] public string StartGameArguments = "";
+        [XmlElement("StartPositionType")] public int StartPositionType = 0;
 
         [XmlElement("CheckForNewVersion")] public bool CheckForNewVersion = true;
 
@@ -54,6 +57,8 @@ namespace GDMultiStash.Common.Config
             {
                 WindowWidth = WindowWidth,
                 WindowHeight = WindowHeight,
+                WindowX = WindowX,
+                WindowY = WindowY,
 
                 Language = Language,
                 GamePath = GamePath,
@@ -80,6 +85,7 @@ namespace GDMultiStash.Common.Config
                 AutoStartGame = AutoStartGame,
                 StartGameCommand = StartGameCommand,
                 StartGameArguments = StartGameArguments,
+                StartPositionType = StartPositionType,
 
                 CheckForNewVersion = CheckForNewVersion,
 
@@ -94,6 +100,8 @@ namespace GDMultiStash.Common.Config
         {
             WindowWidth = s.WindowWidth;
             WindowHeight = s.WindowHeight;
+            WindowX = s.WindowX;
+            WindowY = s.WindowY;
 
             Language = s.Language;
             GamePath = s.GamePath;
@@ -120,6 +128,7 @@ namespace GDMultiStash.Common.Config
             AutoStartGame = s.AutoStartGame;
             StartGameCommand = s.StartGameCommand;
             StartGameArguments = s.StartGameArguments;
+            StartPositionType = s.StartPositionType;
 
             CheckForNewVersion = s.CheckForNewVersion;
 

@@ -59,6 +59,11 @@ namespace GDMultiStash.Forms
             languageComboBox.DataSource = new BindingSource(_languageDataSet, null);
             languageComboBox.SelectedValue = _settings.Language;
 
+            startPositionComboBox.Items.Add("NORMAL");
+            startPositionComboBox.Items.Add("MINIMIZED");
+            startPositionComboBox.Items.Add("TRAY");
+            startPositionComboBox.SelectedIndex = _settings.StartPositionType;
+
             confirmClosingCheckBox.Checked = _settings.ConfirmClosing;
             closeWithGrimDawnCheckBox.Checked = _settings.CloseWithGrimDawn;
             confirmStashDeleteCheckBox.Checked = _settings.ConfirmStashDelete;
@@ -281,6 +286,14 @@ namespace GDMultiStash.Forms
             behaviorGroupBox.Text = L.BehaviorLabel();
             selectFirstStashInGroupCheckBox.Text = L.SelectFirstStashInGroupLabel();
             saveExternalChangesCheckBox.Text = L.SaveExternalChangesLabel();
+
+            startPositionLabel.Text = L.StartPositionLabel();
+            startPositionComboBox.Items[0] = "";
+            startPositionComboBox.Items[1] = "";
+            startPositionComboBox.Items[2] = "";
+            startPositionComboBox.Items[0] = L.StartPositionNormalLabel();
+            startPositionComboBox.Items[1] = L.StartPositionMinimizedLabel();
+            startPositionComboBox.Items[2] = L.StartPositionTrayLabel();
         }
         
 
@@ -433,6 +446,12 @@ namespace GDMultiStash.Forms
             applyButton.Enabled = true;
         }
 
+        private void StartPositionComboBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            _settings.StartPositionType = startPositionComboBox.SelectedIndex;
+            applyButton.Enabled = true;
+        }
+
         private void AutoStartGDArgumentsTextBox_TextChanged(object sender, EventArgs e)
         {
             _settings.StartGameArguments = autoStartGDArgumentsTextBox.Text;
@@ -519,6 +538,7 @@ namespace GDMultiStash.Forms
 
 
         #endregion
+
 
     }
 }

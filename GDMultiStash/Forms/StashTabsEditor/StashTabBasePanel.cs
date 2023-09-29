@@ -17,13 +17,27 @@ namespace GDMultiStash.Forms.StashTabsEditor
         public static int TabsMargin => 5;
 
         public Image HoverImage { get; set; }
-        private bool hover = false;
+        private int highlightCount = 0;
 
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            if (hover)
+            Console.WriteLine(highlightCount);
+            if (highlightCount > 0)
                 e.Graphics.DrawImage(HoverImage, 0, 0, Width, Height);
+
+        }
+
+        public void ShowHighlight()
+        {
+            highlightCount += 1;
+            Invalidate();
+        }
+
+        public void HideHighlight()
+        {
+            highlightCount -= 1;
+            Invalidate();
         }
 
         public StashTabBasePanel(StashObject stashObject)
@@ -42,8 +56,8 @@ namespace GDMultiStash.Forms.StashTabsEditor
             Height = HoverImage.Height;
             BackgroundImageLayout = ImageLayout.Stretch;
 
-            MouseEnter += delegate { hover = true; Invalidate(); };
-            MouseLeave += delegate { hover = false; Invalidate(); };
+            MouseEnter += delegate { ShowHighlight(); };
+            MouseLeave += delegate { HideHighlight(); };
 
             Margin = new Padding(TabsMargin, TabsMargin, TabsMargin, TabsMargin);
             Cursor = Cursors.Hand;

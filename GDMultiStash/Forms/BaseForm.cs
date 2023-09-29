@@ -14,7 +14,11 @@ namespace GDMultiStash.Forms
         public BaseForm() : base()
         {
             Load += delegate {
-                Localize(Global.L);
+                Utils.Funcs.RunThread(1, () => {
+                    Utils.Funcs.Invoke(this, () => {
+                        Localize(Global.L);
+                    });
+                });
             };
         }
 

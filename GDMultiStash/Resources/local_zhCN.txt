@@ -109,6 +109,10 @@ lbl_select_first_stash_in_group = Automatically switch to first Stash in group
 lbl_overlay_window = Overlay window
 lbl_behavior = Behavior
 lbl_save_external_changes = Save changes made by external tools
+lbl_start_position = Start Position:
+lbl_start_position_normal = Normal
+lbl_start_position_minimized = Minimized
+lbl_start_position_tray = Tray
 
 // default colors
 color_default = 默认
