@@ -14,6 +14,7 @@
 #define GAMEINFO_CONSTRUCTOR_ARGS "??0GameInfo@GAME@@QEAA@AEBV01@@Z"
 #define GAMEINFO_CONSTRUCTOR "??0GameInfo@GAME@@QEAA@XZ"
 #define SET_IS_HARDCORE "?SetHardcore@GameInfo@GAME@@QEAAX_N@Z"
+#define SET_MOD_NAME "?SetModName@GameInfo@GAME@@QEAAXAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z"
 #define GET_HARDCORE "?GetHardcore@GameInfo@GAME@@QEBA_NXZ"
 #define GET_LOADED_EXPANSION_ID "?GetLoadedExpansionId@Engine@GAME@@QEBAIXZ"
 #define SAVE_TRANSFER_STASH "?SaveTransferStash@GameEngine@GAME@@QEAAXXZ"

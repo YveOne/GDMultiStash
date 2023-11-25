@@ -46,10 +46,15 @@ namespace GDMultiStash
 
         internal static Color ListViewBackColor { get; } = Color.FromArgb(37, 37, 37);
         internal static Color ListViewItemBackColor { get; } = Color.FromArgb(50, 50, 50);
+        internal static Color ListViewItemBackColorSelected { get; } = Color.Teal;
         internal static Color ListViewCellBorderColor { get; } = Color.FromArgb(37, 37, 37);
         internal static Color ListViewGroupHeaderBackColor { get; } = Color.FromArgb(60, 60, 60);
+        internal static Color ListViewGroupHeaderBackColorEmpty { get; } = Color.FromArgb(45, 45, 45);
+        internal static Color ListViewGroupHeaderBackColorSelected { get; } = SystemColors.Highlight;
         internal static Color ListViewGroupHeaderCountForeColor { get; } = Color.FromArgb(180, 180, 180);
         internal static Color ListViewGroupHeaderForeColor { get; } = Color.FromArgb(245, 245, 245);
+        internal static Color ListViewGroupHeaderForeColorEmpty { get; } = Color.FromArgb(150, 150, 150);
+        
         internal static Color ListViewGroupHeaderSeparatorColor { get; } = Color.FromArgb(50, 50, 50);
 
         internal static Color ScrollBarColor { get; } = Color.FromArgb(100, 100, 100);

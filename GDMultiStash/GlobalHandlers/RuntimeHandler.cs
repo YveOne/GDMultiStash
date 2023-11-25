@@ -16,6 +16,7 @@ namespace GDMultiStash.GlobalHandlers
     {
         protected GrimDawnGameExpansion _activeExpansion = GrimDawnGameExpansion.Unknown;
         protected GrimDawnGameMode _activeMode = GrimDawnGameMode.None;
+        protected string _activeModName = "???";
         protected int _activeStashID = -1;
         protected int _activeGroupID = 0;
         protected bool _stashWasOpened = false; // this is used to trigger NotifyTransferStashSaved() only once
@@ -52,6 +53,19 @@ namespace GDMultiStash.GlobalHandlers
                 _activeMode = value;
                 Console.WriteLine($"active mode changed: {previous} -> {_activeMode}");
                 InvokeActiveModeChanged(_activeMode);
+            }
+        }
+
+        public string ActiveModName
+        {
+            get => _activeModName;
+            set
+            {
+                if (_activeModName == value) return;
+                var previous = _activeModName;
+                _activeModName = value;
+                Console.WriteLine($"active mod name changed: {previous} -> {_activeModName}");
+                InvokeActiveModNameChanged(_activeModName);
             }
         }
 

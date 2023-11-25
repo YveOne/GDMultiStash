@@ -242,7 +242,12 @@ namespace GDMultiStash.Forms.ContextMenues
             foreach (Common.Config.ConfigSortPattern sortPat in Global.Configuration.SortPatterns)
             {
                 sortButton.DropDownItems.Add(X(sortPat.Name), null, delegate {
-                    new SortHandler(selectedStashes).Sort(sortPat.Value);
+                    var sorthandler = new SortHandler(selectedStashes);
+
+                    var sortPatternLines = Utils.Funcs.StringLines(sortPat.Value);
+                    foreach (string l in sortPatternLines)
+                        sorthandler.Sort(l.Trim());
+
                     Console.Alert(Global.L.SortingFinishedMessage());
                     page.StashEnsureVisible(clickedStash);
                     page.SelectStashes(selectedStashes.ToList());

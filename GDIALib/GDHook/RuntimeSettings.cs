@@ -12,6 +12,9 @@ namespace GDIALib.GDHook
         public delegate void ModeChangedEventHandler(object sender, bool isHC);
         public static event ModeChangedEventHandler ModeChanged;
 
+        public delegate void ModNameChangedEventHandler(object sender, string modName);
+        public static event ModNameChangedEventHandler ModNameChanged;
+
         public delegate void ExpansionChangedEventHandler(object sender, int expID);
         public static event ExpansionChangedEventHandler ExpansionChanged;
 
@@ -25,6 +28,7 @@ namespace GDIALib.GDHook
         private static volatile bool _isHC = false;
         private static volatile bool _isHCKnown = false;
         private static volatile int _expID = -1;
+        private static volatile string _modName = "???";
 
         public static void NoticeTransferStashSaved()
         {
@@ -62,6 +66,17 @@ namespace GDIALib.GDHook
                 if (_expID == value) return;
                 _expID = value;
                 ExpansionChanged?.Invoke(null, value);
+            }
+        }
+
+        public static string ModName
+        {
+            get => _modName;
+            set
+            {
+                if (_modName == value) return;
+                _modName = value;
+                ModNameChanged?.Invoke(null, value);
             }
         }
 

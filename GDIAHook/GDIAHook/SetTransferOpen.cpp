@@ -60,20 +60,24 @@ void* __fastcall SetTransferOpen::HookedMethod(void* This, bool isOpen) {
 			SetEvent(_m_hEvent);
 
 			std::wstring modName;
-			int modIndex = fnGetGameInfoMode(gameInfo);
+			//int modIndex = fnGetGameInfoMode(gameInfo);
 
 			fnGetModNameArg(gameInfo, &modName);
-			modName.erase(std::remove(modName.begin(), modName.end(), '\r'), modName.end());
-			modName.erase(std::remove(modName.begin(), modName.end(), '\n'), modName.end());
-			DataItemPtr item3(new DataItem(TYPE_GameInfo_SetModName, modName.size() * sizeof(wchar_t), (char*)modName.c_str()));
+			DataItemPtr item3(new DataItem(TYPE_GameInfo_ModName, modName.size() * sizeof(wchar_t), (char*)modName.c_str()));
 			_m_dataQueue->push(item3);
 			SetEvent(_m_hEvent);
 
-			if (modIndex == 0 || modName == L"survivalmode") {
+			modName = L"LOL";
+			DataItemPtr item4(new DataItem(TYPE_GameInfo_ModName, modName.size() * sizeof(wchar_t), (char*)modName.c_str()));
+			_m_dataQueue->push(item4);
+			SetEvent(_m_hEvent);
+
+
+			//if (modIndex == 0 || modName == L"survivalmode") {
 				char b[1];
 				b[0] = (isOpen ? 1 : 0);
 				g_self->TransferData(1, (char*)b);
-			}
+			//}
 
 	}
 

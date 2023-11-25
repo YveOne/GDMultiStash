@@ -10,10 +10,10 @@
 #include "HookLog.h"
 #include "SetTransferOpen.h"
 #include "SetHardcore.h"
+#include "SetModName.h"
 HookLog g_log;
 
 #include "GrimTypes.h"
-#include "SetHardcore.h"
 
 #pragma region Variables
 // Switches hook logging on/off
@@ -130,12 +130,16 @@ void StartWorkerThread() {
 	GAME::GameInfo* gameInfo = fnGetGameInfo(fnGetEngine());
 	if (gameInfo != nullptr) {
 
+		std::wstring modName;
+		fnGetModNameArg(gameInfo, &modName);
+		DataItemPtr item4(new DataItem(TYPE_GameInfo_ModName, modName.size() * sizeof(wchar_t), (char*)modName.c_str()));
+		g_dataQueue.push(item4);
+		SetEvent(g_hEvent);
 
-			// already called in settarnsferopen
-			//bool isHardcore = fnGetHardcore(gameInfo);
-			//DataItemPtr item(new DataItem(TYPE_GameInfo_IsHardcore, sizeof(isHardcore), (char*)&isHardcore));
-			//g_dataQueue.push(item);
-			//SetEvent(g_hEvent);
+		bool isHardcore = fnGetHardcore(gameInfo);
+		DataItemPtr item(new DataItem(TYPE_GameInfo_IsHardcore, sizeof(isHardcore), (char*)&isHardcore));
+		g_dataQueue.push(item);
+		SetEvent(g_hEvent);
 
 	}
 
@@ -169,6 +173,8 @@ static void ConfigureStashDetectionHooks(std::vector<BaseMethodHook*>& hooks) {
 
 	LogToFile(L"Configuring hc detection hook..");
 	hooks.push_back(new SetHardcore(&g_dataQueue, g_hEvent));
+
+	hooks.push_back(new SetModName(&g_dataQueue, g_hEvent));
 }
 
 

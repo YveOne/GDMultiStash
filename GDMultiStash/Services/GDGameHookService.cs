@@ -33,6 +33,14 @@ namespace GDMultiStash.Services
         public delegate void ExpansionChangedEventHandler(object sender, ExpansionChangedEventArgs e);
         public event ExpansionChangedEventHandler ExpansionChanged;
 
+        public class ModNameChangedEventArgs : EventArgs
+        {
+            public string ModName;
+        }
+
+        public delegate void ModNameChangedEventHandler(object sender, ModNameChangedEventArgs e);
+        public event ModNameChangedEventHandler ModNameChanged;
+
         public delegate void TransferStashSavedEventHandler(object sender, EventArgs e);
         public event TransferStashSavedEventHandler TransferStashSaved;
 
@@ -60,6 +68,13 @@ namespace GDMultiStash.Services
                 ExpansionChanged?.Invoke(sender, new ExpansionChangedEventArgs
                 {
                     ExpansionID = expID,
+                });
+            };
+            RuntimeSettings.ModNameChanged += delegate (object sender, string modName)
+            {
+                ModNameChanged?.Invoke(sender, new ModNameChangedEventArgs
+                {
+                    ModName = modName,
                 });
             };
             RuntimeSettings.TransferStashSaved += delegate (object sender)

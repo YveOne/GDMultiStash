@@ -226,9 +226,13 @@ namespace GDMultiStash.Forms.Controls
 
         #endregion
 
+        #region Properties
         public Color GroupHeadingBackColor { get; set; }
+        public Color GroupHeadingBackColorEmpty { get; set; }
+        public Color GroupHeadingBackColorSelected { get; set; }
 
         public Color GroupHeadingForeColor { get; set; }
+        public Color GroupHeadingForeColorEmpty { get; set; }
 
         public Color GroupHeadingCountForeColor { get; set; }
 
@@ -238,8 +242,39 @@ namespace GDMultiStash.Forms.Controls
 
         public Color SeparatorColor { get; set; }
 
+        #endregion
+
+        #region Events
+
+        public class GroupHeaderClickArgs : EventArgs
+        {
+            private readonly OLVGroup _group;
+            public OLVGroup Group => _group;
+            public GroupHeaderClickArgs(OLVGroup clickedGroup)
+            {
+                _group = clickedGroup;
+            }
+        }
+
+        public EventHandler<GroupHeaderClickArgs> GroupHeaderClicked;
+        public EventHandler<GroupExpandingCollapsingEventArgs> GroupExpandingCollapsing2;
+
+        #endregion
 
 
+
+
+        private OLVGroup lastClickedGroup = null;
+        private Message lastClickedMessage;
+        private DateTime normalClickStartTime = DateTime.Now;
+        private System.Timers.Timer normalClickTimer;
+
+        //private DateTime leftPressStart = DateTime.Now;
+        //private System.Timers.Timer LongClickTimer;
+
+        // fixing bug: collapsing group activates cell edit mode
+        // send dblclick message on btn up, instead of btn down
+        private bool debugDblClick = false;
 
 
 
@@ -250,13 +285,31 @@ namespace GDMultiStash.Forms.Controls
             GroupHeadingFont = this.Font;
             GroupHeadingCountFont = this.Font;
             GroupHeadingBackColor = Color.White;
+            GroupHeadingBackColorSelected = Color.White;
             GroupHeadingForeColor = Color.Black;
             GroupHeadingCountForeColor = Color.Black;
             SeparatorColor = Color.Black;
 
 
+            normalClickTimer = new System.Timers.Timer(800);
+            normalClickTimer.AutoReset = false;
+            normalClickTimer.Elapsed += delegate {
+                Utils.Funcs.Invoke(this, () =>
+                {
 
+                    //var collapsedBefore = lastClickedGroup.Collapsed;
+                    //lastClickedGroup.Collapsed = false;
 
+                    //var y = Native.HIWORD(lastClickedMessage.LParam) + 40;
+                    //lastClickedMessage.LParam = (IntPtr)((int)lastClickedMessage.LParam | y << 16);
+                    //base.WndProc(ref lastClickedMessage);
+
+                    //lastClickedGroup.Collapsed = collapsedBefore;
+
+                    GroupHeaderClickArgs args = new GroupHeaderClickArgs(lastClickedGroup);
+                    GroupHeaderClicked?.Invoke(this, args);
+                });
+            };
 
             //LongClickTimer = new System.Timers.Timer(800);
             //LongClickTimer.AutoReset = false;
@@ -264,6 +317,9 @@ namespace GDMultiStash.Forms.Controls
             //  MessageBox.Show("left button long click");
             //};
         }
+
+
+
 
 
         /*
@@ -282,11 +338,11 @@ namespace GDMultiStash.Forms.Controls
         }
         */
 
-        public EventHandler<GroupExpandingCollapsingEventArgs> GroupExpandingCollapsing2;
 
 
-        public OLVGroup HitTestGroup(Point p)
+        public OLVGroup HitTestGroup(Point p, out bool expandButtonClicked)
         {
+            expandButtonClicked = false;
             foreach (OLVGroup grp in this.OLVGroups)
             {
                 // get group header rect
@@ -298,89 +354,105 @@ namespace GDMultiStash.Forms.Controls
                 // and check if the clicked point is inside rect
                 if (rect.Contains(p))
                 {   // found the group header!!
+                    expandButtonClicked = rectHeader.right - p.X < 30;
                     return grp;
                 }
             }
             return null;
         }
 
-        //private DateTime leftPressStart = DateTime.Now;
-        //private System.Timers.Timer LongClickTimer;
-
-        // fixing bug: collapsing group activates cell edit mode
-        // send dblclick message on btn up, instead of btn down
-        private bool debugDblClick = false;
-
-
         protected override void WndProc(ref Message m)
         {
-
-
-
-
-
-
-
-
-
+            
             Point clickedPoint = new Point(Native.LOWORD(m.LParam), Native.HIWORD(m.LParam));
             OLVGroup clickedGroup = null;
+            bool expandButtonClicked = false;
 
-            switch(m.Msg)
+            switch (m.Msg)
             {
                 case WM_LBUTTONDBLCLK:
                 case WM_LBUTTONDOWN:
                 case WM_LBUTTONUP:
+                case WM_RBUTTONDOWN:
                 case WM_RBUTTONUP:
-                    clickedGroup = HitTestGroup(clickedPoint);
+                    clickedGroup = HitTestGroup(clickedPoint, out expandButtonClicked);
                     break;
             }
 
-            if (m.Msg == WM_LBUTTONDBLCLK)
+            if (clickedGroup != null)
             {
-                if (clickedGroup != null)
+                switch (m.Msg)
                 {
-                    debugDblClick = true;
-                    return;
-                }
-            }
 
-            if (m.Msg == WM_LBUTTONDOWN)
-            {
-                if (clickedGroup != null)
-                {
-                    //LongClickTimer.Start();
-                    //return;
-                }
-            }
-            if (m.Msg == WM_LBUTTONUP)
-            {
-                if (clickedGroup != null)
-                {
-                    if (debugDblClick)
-                    {
-                        debugDblClick = false;
-                        m.Msg = WM_LBUTTONDBLCLK;
-                        base.WndProc(ref m);
-                        GroupExpandingCollapsingEventArgs args = new GroupExpandingCollapsingEventArgs(clickedGroup);
-                        GroupExpandingCollapsing2?.Invoke(this, args);
+                    case WM_LBUTTONDOWN:
+                        // check if the expand/collapse button has been clicked
+                        if (expandButtonClicked)
+                        {
+                            clickedGroup.Collapsed = !clickedGroup.Collapsed;
+                            GroupExpandingCollapsingEventArgs args = new GroupExpandingCollapsingEventArgs(clickedGroup);
+                            GroupExpandingCollapsing2?.Invoke(this, args);
+                            return;
+                        }
+
+
+
+
+
+
+                        if (lastClickedGroup != clickedGroup)
+                        {
+                            normalClickStartTime = DateTime.MinValue;
+                            normalClickTimer.Stop();
+                        }
+                        if ((DateTime.Now - normalClickStartTime).TotalMilliseconds < 800)
+                        {
+                            // double click catched
+                        }
+                        else
+                        {
+                            normalClickStartTime = DateTime.Now;
+                            normalClickTimer.Start();
+                            lastClickedGroup = clickedGroup;
+                            lastClickedMessage = m;
+                        }
                         return;
-                    }
-                    //LongClickTimer.Stop();
-                    //return;
+
+                    case WM_LBUTTONDBLCLK:
+                        debugDblClick = true;
+                        normalClickTimer.Stop();
+                        normalClickStartTime = DateTime.MinValue;
+                        return;
+
+                    case WM_LBUTTONUP:
+                        if (debugDblClick)
+                        {
+                            debugDblClick = false;
+
+                            m.Msg = WM_LBUTTONDBLCLK;
+                            base.WndProc(ref m);
+
+                            GroupExpandingCollapsingEventArgs args = new GroupExpandingCollapsingEventArgs(clickedGroup);
+                            GroupExpandingCollapsing2?.Invoke(this, args);
+
+                            return;
+                        }
+                        //LongClickTimer.Stop();
+                        //return;
+                        return;
+
+                    case WM_RBUTTONDOWN:
+                        break;
+
+                    case WM_RBUTTONUP:
+                        break;
+
                 }
-            }
-            if (m.Msg == WM_RBUTTONUP)
-            {
-                if (clickedGroup != null)
-                {
-                    //MessageBox.Show("right button click");
-                    //base.WndProc(ref m);
-                    //return;
-                }
+                base.WndProc(ref m);
+                return;
             }
 
-            
+
+
 
 
 
@@ -428,45 +500,44 @@ namespace GDMultiStash.Forms.Controls
                                         rect.Height -= 2;
 
 
+                                        var itemsCount = (olvGroup.Items.Count - 1); // -1 because of the dummy
 
-
-                                        SolidBrush BgBrush = new SolidBrush(GroupHeadingBackColor);
+                                        SolidBrush BgBrush = new SolidBrush(GroupHeadingBackColorEmpty);
+                                        if (itemsCount > 0)
+                                        {
+                                            var allSelected = olvGroup.Items.Where(item => item.Selected).Count() == itemsCount && itemsCount != 0;
+                                            BgBrush = new SolidBrush(
+                                                allSelected
+                                                ? GroupHeadingBackColorSelected
+                                                : GroupHeadingBackColor);
+                                        }
                                         g.FillRectangle(BgBrush, rect);
 
-                                        //string sText = olvGroup != null ? olvGroup.Header : "";
+                                        SolidBrush textBrush = new SolidBrush(itemsCount > 0
+                                            ? GroupHeadingForeColor
+                                            : GroupHeadingForeColorEmpty);
+                                        SolidBrush countTextBrush = new SolidBrush(itemsCount > 0
+                                            ? GroupHeadingCountForeColor
+                                            : GroupHeadingForeColorEmpty);
+
                                         string sText = olvGroup.Header;
-
-
-
-
-
-
-
-
-
                                         SizeF textSize = g.MeasureString(sText, GroupHeadingFont);
 
                                         int RectHeightMiddle = (int)((rect.Height - textSize.Height) * 0.5f);
                                         rect.Offset(5, RectHeightMiddle);
                                         rect.Width -= 5;
+                                        g.DrawString(sText, GroupHeadingFont, textBrush, rect);
+  
 
-                                        using (SolidBrush drawBrush = new SolidBrush(GroupHeadingForeColor))
-                                        {
-                                            g.DrawString(sText, GroupHeadingFont, drawBrush, rect);
-                                        }
-
-
-                                        string countHintText = $"({olvGroup.Items.Count-1})"; // -1 because of the dummy
+                                        string countHintText = $"({itemsCount})";
                                         SizeF countHintTextSize = g.MeasureString(countHintText, GroupHeadingCountFont);
-                                        using (SolidBrush drawBrush = new SolidBrush(GroupHeadingCountForeColor))
-                                        {
-                                            g.DrawString(countHintText, GroupHeadingCountFont, drawBrush, new Rectangle() {
-                                                X = rectHeader.right - 35 - (int)countHintTextSize.Width,
-                                                Y = rect.Y + (int)((textSize.Height - countHintTextSize.Height)/2f),
-                                                Width = rect.Width,
-                                                Height = rect.Height,
-                                            });
-                                        }
+                                        g.DrawString(countHintText, GroupHeadingCountFont, countTextBrush, new Rectangle() {
+                                            X = rectHeader.right - 35 - (int)countHintTextSize.Width,
+                                            Y = rect.Y + (int)((textSize.Height - countHintTextSize.Height)/2f),
+                                            Width = rect.Width,
+                                            Height = rect.Height,
+                                        });
+                                        
 
 
 
@@ -486,7 +557,7 @@ namespace GDMultiStash.Forms.Controls
 
 
 
-                                        using (Pen linePen = new Pen(new SolidBrush(GroupHeadingForeColor), 2))
+                                        using (Pen linePen = new Pen(textBrush, 2))
                                         {
                                             if (olvGroup != null)
                                             {
@@ -494,30 +565,30 @@ namespace GDMultiStash.Forms.Controls
                                                 {
                                                     g.DrawLine(linePen,
                                                         rect.X + rect.Width - 20,
-                                                        rect.Y + 7,
+                                                        rect.Y + 10,
                                                         rect.X + rect.Width - 15,
-                                                        rect.Y + 12
+                                                        rect.Y + 15
                                                         );
                                                     g.DrawLine(linePen,
                                                         rect.X + rect.Width - 15 - 1,
-                                                        rect.Y + 12,
+                                                        rect.Y + 15,
                                                         rect.X + rect.Width - 10 - 1,
-                                                        rect.Y + 7
+                                                        rect.Y + 10
                                                         );
                                                 }
                                                 else
                                                 {
                                                     g.DrawLine(linePen,
                                                         rect.X + rect.Width - 20,
-                                                        rect.Y + 12,
+                                                        rect.Y + 15,
                                                         rect.X + rect.Width - 15,
-                                                        rect.Y + 7
+                                                        rect.Y + 10
                                                         );
                                                     g.DrawLine(linePen,
                                                         rect.X + rect.Width - 15 - 1,
-                                                        rect.Y + 7,
+                                                        rect.Y + 10,
                                                         rect.X + rect.Width - 10 - 1,
-                                                        rect.Y + 12
+                                                        rect.Y + 15
                                                         );
                                                 }
                                             }
@@ -531,7 +602,6 @@ namespace GDMultiStash.Forms.Controls
 
                     }
                 }
-                return;
             }
         }
         

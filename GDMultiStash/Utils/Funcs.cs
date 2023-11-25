@@ -18,9 +18,9 @@ namespace Utils
             }).Start();
         }
 
-        public static void Invoke(System.Windows.Forms.Form form, Action action)
+        public static void Invoke(System.Windows.Forms.Control control, Action action)
         {
-            form.Invoke((System.Windows.Forms.MethodInvoker)(() => {
+            control.Invoke((System.Windows.Forms.MethodInvoker)(() => {
                 action();
             }));
         }

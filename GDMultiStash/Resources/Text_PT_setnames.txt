@@ -137,35 +137,35 @@ tagItemSetD024BName|Raiva de Agrivix
 tagItemSetD025BName|Bastião da Guerra
 tagItemSetD026BName|Frenesi sem Fim do Furissangue
 tagItemSetD027BName|Sigilos Pavorosos de Alkamos
-tagItemSetC008CName|Amnesty
-tagItemSetC007CName|The Augur
-tagItemSetC013CName|Oathbreaker's Folly
-tagItemSetC015BName|Wanton Carnage
-tagGDX2ItemSetC201Name|Baldir's Plate
-tagGDX2ItemSetC201BName|Baldir's Regalia
-tagGDX2ItemSetC202Name|The Stormserpent
-tagGDX2ItemSetC203Name|Festerblaze
-tagGDX2ItemSetC204Name|Daega's Oath
-tagGDX2ItemSetC205Name|Stonefather
-tagGDX2ItemSetD201Name|Shattered Guardian
-tagGDX2ItemSetD202Name|The Vanquisher
-tagGDX2ItemSetD203Name|Chillwhisper
-tagGDX2ItemSetD204Name|Ludrigan's Pride
-tagGDX2ItemSetD205Name|Bonemonger
-tagGDX2ItemSetD206Name|Virtue's Light
-tagGDX2ItemSetD207Name|Sentinel of the Three
-tagGDX2ItemSetD208Name|Harra's Artifice
-tagGDX2ItemSetD209Name|The Cyclone
-tagGDX2ItemSetD210Name|Rah'Zin's Torment
-tagGDX2ItemSetD211Name|The Blightlord
-tagGDX2ItemSetD212Name|Ghol's Malice
-tagGDX2ItemSetD213Name|Bysmiel's Trinkets
-tagGDX2ItemSetD214Name|The Korvan Dunefiend
-tagGDX2ItemSetD215Name|Pyran's Ruminations
-tagGDX2ItemSetD216Name|Targo's Craft
-tagGDX2ItemSetD217Name|The Voidsoul
-tagGDX2ItemSetD218Name|Rotgheist
-tagGDX2ItemSetD219Name|Armor of the Eternal Night
-tagGDX2ItemSetD220Name|Veilkeeper
-tagGDX2ItemSetD221Name|Goredrinker
-tagGDX2ItemSetD222Name|Ember's Calling
+tagItemSetC008CName|Anistia
+tagItemSetC007CName|O Áugure
+tagItemSetC013CName|Insensatez do Perjuro
+tagItemSetC015BName|Carnificina Deliberada
+tagGDX2ItemSetC201Name|Placas de Baldir
+tagGDX2ItemSetC201BName|Paramentos de Baldir
+tagGDX2ItemSetC202Name|A Serpente da Tempestade
+tagGDX2ItemSetC203Name|Labareda Purulenta
+tagGDX2ItemSetC204Name|Juramento de Daega
+tagGDX2ItemSetC205Name|Petrarca
+tagGDX2ItemSetD201Name|Guardião Despedaçado
+tagGDX2ItemSetD202Name|O Subjugador
+tagGDX2ItemSetD203Name|Sussurro Frio
+tagGDX2ItemSetD204Name|Orgulho de Ludrigan
+tagGDX2ItemSetD205Name|Negociante de Ossos
+tagGDX2ItemSetD206Name|Luz da Virtude
+tagGDX2ItemSetD207Name|Sentinela dos Três
+tagGDX2ItemSetD208Name|Artifício de Harra
+tagGDX2ItemSetD209Name|O Ciclone
+tagGDX2ItemSetD210Name|Tormento de Rah'Zin
+tagGDX2ItemSetD211Name|O Senhor Infeccioso
+tagGDX2ItemSetD212Name|Malícia de Ghol
+tagGDX2ItemSetD213Name|Quinquilharias de Bysmiel
+tagGDX2ItemSetD214Name|O Demônio das Dunas de Korvan
+tagGDX2ItemSetD215Name|Ruminações de Pyran
+tagGDX2ItemSetD216Name|Ofício de Targo
+tagGDX2ItemSetD217Name|A Alma do Vazio
+tagGDX2ItemSetD218Name|Putregheist
+tagGDX2ItemSetD219Name|Armadura da Noite Eterna
+tagGDX2ItemSetD220Name|Guardião do Véu
+tagGDX2ItemSetD221Name|Bebedor de Sangueira
+tagGDX2ItemSetD222Name|Chamado da Brasa

@@ -24,7 +24,7 @@ namespace GDIALib.GDHook
         TYPE_CloudRead = 12,
         TYPE_CloudWrite = 13,
         TYPE_GameInfo_IsHardcore = 20,
-        TYPE_GameInfo_SetModName = 21,
+        TYPE_GameInfo_ModName = 21,
         TYPE_GameInfo_Expansion = 23,
         TYPE_Stash_Item_BasicInfo = 25,
         TYPE_InventorySack_Sort = 26,

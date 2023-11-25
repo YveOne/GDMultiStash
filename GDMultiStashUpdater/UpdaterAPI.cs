@@ -46,7 +46,7 @@ namespace GDMultiStashUpdater
                 Thread.Sleep(5000);
                 return;
             }
-            
+
             if (latestUrl == null)
                 latestUrl = LatestUrlThis;
 

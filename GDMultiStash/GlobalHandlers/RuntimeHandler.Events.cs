@@ -23,6 +23,16 @@ namespace GDMultiStash.GlobalHandlers
             }
         }
 
+        public class ActiveModNameChangedEventArgs : EventArgs
+        {
+            public string ModName { get => _modName; }
+            private string _modName;
+            public ActiveModNameChangedEventArgs(string modName)
+            {
+                _modName = modName;
+            }
+        }
+
         public class ActiveModeChangedEventArgs : EventArgs
         {
             public GrimDawnGameMode Mode { get => _mode; }
@@ -110,6 +120,7 @@ namespace GDMultiStash.GlobalHandlers
         }
 
         public event EventHandler<ActiveExpansionChangedEventArgs> ActiveExpansionChanged;
+        public event EventHandler<ActiveModNameChangedEventArgs> ActiveModNameChanged;
         public event EventHandler<ActiveModeChangedEventArgs> ActiveModeChanged;
         public event EventHandler<ActiveStashChangedEventArgs> ActiveStashChanged;
         public event EventHandler<ActiveGroupChangedEventArgs> ActiveGroupChanged;
@@ -140,9 +151,11 @@ namespace GDMultiStash.GlobalHandlers
         public event EventHandler<EventArgs> CharacterMovementDisabled;
 
         public event EventHandler<ShownExpansionChangedEventArgs> ShownExpansionChanged;
-        
+
         public void InvokeActiveExpansionChanged(GrimDawnGameExpansion exp)
             => SaveInvoke(() => ActiveExpansionChanged?.Invoke(null, new ActiveExpansionChangedEventArgs(exp)));
+        public void InvokeActiveModNameChanged(string modName)
+             => SaveInvoke(() => ActiveModNameChanged?.Invoke(null, new ActiveModNameChangedEventArgs(modName)));
         public void InvokeActiveModeChanged(GrimDawnGameMode mode)
             => SaveInvoke(() => ActiveModeChanged?.Invoke(null, new ActiveModeChangedEventArgs(mode)));
         public void InvokeActiveStashChanged(int oldId, int newId)

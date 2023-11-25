@@ -9,7 +9,7 @@ namespace GDIALib.GDHook
     internal class SetModNameStatusHandler : IMessageProcessor
     {
         private readonly MessageType[] Relevants = new MessageType[] {
-            MessageType.TYPE_GameInfo_SetModName,
+            MessageType.TYPE_GameInfo_ModName,
         };
 
         private readonly MessageType[] Errors = new MessageType[] {
@@ -26,8 +26,9 @@ namespace GDIALib.GDHook
             {
                 switch (type)
                 {
-                    case MessageType.TYPE_GameInfo_SetModName:
-                        //Console.WriteLine($"--------------------------------------- {dataString.Trim()}");
+                    case MessageType.TYPE_GameInfo_ModName:
+                        //Console.WriteLine($"-------MODNAME: {dataString}");
+                        RuntimeSettings.ModName = dataString;
                         break;
                 }
             }

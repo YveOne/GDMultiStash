@@ -83,6 +83,10 @@ namespace ConsoleApp1
             }
             ExtractFiles();
 
+
+
+
+
             var itemRecordInfos = new Dictionary<string, RecordInfo>();
             var foundBitmaps = new Dictionary<string, bool>();
             var bitmapInfos = new Dictionary<string, BitmapInfo>();
@@ -128,6 +132,11 @@ namespace ConsoleApp1
                     ItemSetName = _itemSetName,
                 };
             }
+
+
+
+
+
 
             Console.WriteLine("Loading image sizes...");
             foreach (string bitmap in foundBitmaps.Keys)
@@ -443,11 +452,15 @@ namespace ConsoleApp1
             }
             if (!Directory.Exists(CWD_RECORDS))
             {
+                // copy custom records
+                CopyFilesRecursively(new DirectoryInfo("custom"), new DirectoryInfo("working"));
+                // copy original records
                 Console.WriteLine("Extracting records ...");
                 RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + GD0_DB + "\" -database \"" + CWD + "\"");
                 RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + GD1_DB + "\" -database \"" + CWD + "\"");
                 RunProcess(GDPATH + "\\ArchiveTool.exe", "\"" + GD2_DB + "\" -database \"" + CWD + "\"");
             }
+
             if (!Directory.Exists(CWD_TEXTURES))
             {
                 Directory.CreateDirectory(CWD_TEXTURES);
@@ -463,6 +476,13 @@ namespace ConsoleApp1
                     }
                 }
             }
+        }
+        public static void CopyFilesRecursively(DirectoryInfo source, DirectoryInfo target)
+        {
+            foreach (DirectoryInfo dir in source.GetDirectories())
+                CopyFilesRecursively(dir, target.CreateSubdirectory(dir.Name));
+            foreach (FileInfo file in source.GetFiles())
+                file.CopyTo(Path.Combine(target.FullName, file.Name));
         }
 
         public static Image ResizeImage(Image img, float f)

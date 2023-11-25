@@ -74,6 +74,8 @@ namespace GDMultiStash.Forms
             pages[currentPageIndex].Button.BackColor = Constants.PageButtonBackColorActive;
             pages[currentPageIndex].Button.ForeColor = Constants.InteractiveForeColorHighlight;
             pages[currentPageIndex].Page.Visible = true;
+
+            pages[currentPageIndex].Page.Focus();
             //PageChanged?.Invoke(this, EventArgs.Empty);
         }
 

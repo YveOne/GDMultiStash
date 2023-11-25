@@ -120,6 +120,7 @@ namespace GDMultiStash.Forms.MainWindow
                 groupsListView.ListViewItemSorter = new ObjectListViewSortComparer<StashGroupObject>(sortComparer);
             };
 
+            GotFocus += delegate { groupsListView.Focus(); };
             Main.SpaceClick += delegate { UnselectAll(); };
             Main.Click += delegate { UnselectAll(); };
             listViewBorderPanel.Click += delegate { UnselectAll(); };

@@ -19,6 +19,7 @@
     <ClInclude Include="GrimTypes.h" />
     <ClInclude Include="HookLog.h" />
     <ClInclude Include="SetHardcore.h" />
+    <ClInclude Include="SetModName.h" />
     <ClInclude Include="SetTransferOpen.h" />
     <ClInclude Include="DataQueue.h" />
     <ClInclude Include="Exports.h" />
@@ -31,6 +32,7 @@
     <ClCompile Include="GrimTypes.cpp" />
     <ClCompile Include="HookLog.cpp" />
     <ClCompile Include="SetHardcore.cpp" />
+    <ClCompile Include="SetModName.cpp" />
     <ClCompile Include="SetTransferOpen.cpp" />
     <ClCompile Include="DataQueue.cpp" />
     <ClCompile Include="dllmain.cpp" />

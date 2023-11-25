@@ -81,7 +81,7 @@ namespace GDMultiStash.Forms.MainWindow
 
             using (Bitmap bmp = new Bitmap(15, 15, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
             using (Graphics gfx = Graphics.FromImage(bmp))
-            using (SolidBrush brush = new SolidBrush(Constants.ListViewItemBackColor))
+            using (SolidBrush brush = new SolidBrush(Constants.ListViewBackColor))
             {
                 gfx.FillRectangle(brush, 0, 0, bmp.Width, bmp.Height);
                 CheckBoxHideDecoration = new ImageDecoration(new Bitmap(bmp), ContentAlignment.MiddleCenter)

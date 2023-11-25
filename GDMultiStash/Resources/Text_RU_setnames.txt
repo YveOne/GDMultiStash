@@ -1,0 +1,171 @@
+tagItemSetC001Name|Гвардейские доспехи
+tagItemSetC001NameB|Доспехи миротворца
+tagItemSetC002Name|Одежды искателя
+tagItemSetC003Name|Святилище Майвен
+tagItemSetC003NameB|Рака Майвен
+tagItemSetC004Name|Слава кровавого жнеца
+tagItemSetC004NameB|Кровавая бойня кровавого жнеца
+tagItemSetC005Name|Правосудие мародёра
+tagItemSetC005NameB|Приговор мародёра
+tagItemSetC006Name|Регалии герольда
+tagItemSetC006NameB|Отличие герольда
+tagItemSetC007Name|Врачеватель
+tagItemSetC007NameB|Знахарь
+tagItemSetC008Name|Погибель
+tagItemSetC008NameB|Отпущение грехов
+tagItemSetC009Name|Невидящий глаз
+tagItemSetC010Name|Метка стрелка
+tagItemSetC011Name|Нечестивый завет
+tagItemSetC012Name|Королевские регалии
+tagItemSetC013Name|Клятвопреступник
+tagItemSetC013NameB|Пламя клятвопреступника
+tagItemSetC014Name|Отличия доблести
+tagItemSetC015Name|Бойня
+tagItemSetC016Name|Мистический Парагон
+tagItemSetC017Name|Стража рассвета
+tagItemSetC018Name|Гнев Алкамоса
+tagItemSetC018NameB|Ярость Алкамоса
+tagItemSetC019Name|Зловоние
+tagItemSetC019NameB|Смертоносное зловоние
+tagItemSetC020Name|Сера
+tagItemSetC020NameB|Неугасимая сера
+tagItemSetC021Name|Восточный обет
+tagItemSetC022Name|Волхв
+tagItemSetC022NameB|Зов волхва
+tagItemSetC023Name|Преторианец
+tagItemSetC024Name|Пламенный владыка
+tagItemSetC025Name|Регалии Каллидора
+tagItemSetC026Name|Доспехи мирмидона
+tagItemSetC027Name|Умиротворение Могдрогена
+tagItemSetC028Name|Мистический шторм
+tagItemSetC029Name|Стихийный баланс
+tagItemSetD001Name|Броня вершителя правосудия
+tagItemSetD002Name|Священный баланс
+tagItemSetD003Name|Регалии укротителя
+tagItemSetD004Name|Разгоняющий тьму
+tagItemSetD005Name|Предвестник
+tagItemSetD006Name|Судьбоносные печати
+tagItemSetD007Name|Наряд демонобойца
+tagItemSetD008Name|Стволы-близнецы
+tagItemSetD009Name|Дикарский авангард
+tagItemSetD010Name|Ясновидец
+tagItemSetD011Name|Элементы Покорителя
+tagItemSetD012Name|Крепость Марковиана
+tagItemSetD013Name|Воплощение Ульзуина
+tagItemSetD014Name|Покров Дрига
+tagItemSetD015Name|Чистильщик
+tagItemSetD016Name|Единство Искандры
+tagItemSetD017Name|Буря Ультоса
+tagItemSetD018Name|Вознесение Трозана
+tagItemSetD019Name|Вероломство Вальдуна
+tagItemSetD020Name|Договор отравителя
+tagItemSetD021Name|Ковенант чёрного пламени
+tagItemSetD022Name|Защитник света
+tagItemSetD023Name|Инфернальный рыцарь
+tagItemSetD024Name|Гнев Агривикса
+tagItemSetD025Name|Доспехи битворождённого
+tagItemSetD026Name|Неистовство Кровожадного
+tagItemSetD027Name|Знаки палача
+tagGDX1ItemSetC018CName|Страдание Алкамоса
+tagGDX1ItemSetC101Name|Развратитель духов
+tagGDX1ItemSetC101BName|Развратитель душ
+tagGDX1ItemSetC102Name|Серебряный часовой
+tagGDX1ItemSetC102BName|Серебряный блюститель
+tagGDX1ItemSetC103Name|Пламенный пророк
+tagGDX1ItemSetC104Name|Верховный маг
+tagGDX1ItemSetC105Name|Воплощённый ужас
+tagGDX1ItemSetC106Name|Регалии люминари
+tagItemSetC009BName|Невидящий взор
+tagItemSetC010BName|Долг стрелка
+tagItemSetC011BName|Оскверняющий завет
+tagItemSetC016BName|Парагон Панетти
+tagItemSetC017BName|Щит рассвета
+tagItemSetC021BName|Клятва востока
+tagItemSetC024BName|Пылающий владыка
+tagItemSetC025BName|Защита Каллидора
+tagItemSetC026BName|Оплот мирмидона
+tagItemSetC027BName|Мир Могдрогена
+tagItemSetC028BName|Мистическая буря
+tagItemSetC029BName|Стихийная гармония
+tagGDX1ItemSetD101Name|Вооружение Крига
+tagGDX1ItemSetD102Name|Мститель природы
+tagGDX1ItemSetD103Name|Пастырь потерянных душ
+tagGDX1ItemSetD104Name|Пыл Октавиуса
+tagGDX1ItemSetD105Name|Катаклизм
+tagGDX1ItemSetD106Name|Каменный страж
+tagGDX1ItemSetD107Name|Твердыня Легиона
+tagGDX1ItemSetD108Name|Ярость Корбы
+tagGDX1ItemSetD109Name|Наряд тёмного зарева
+tagGDX1ItemSetD110Name|Бич магии
+tagGDX1ItemSetD111Name|Убийца магов
+tagGDX1ItemSetD112Name|Жажда Вальгуура
+tagGDX1ItemSetD113Name|Начертатель рун
+tagGDX1ItemSetD114Name|Облачение Уроборуука
+tagGDX1ItemSetD115Name|Шедевр Аллагаста
+tagGDX1ItemSetD116Name|Разрушения Дагаллона
+tagGDX1ItemSetD117Name|Попечитель смерти
+tagGDX1ItemSetD118Name|Видения прорицателя
+tagGDX1ItemSetD119Name|Дар Тёмного
+tagGDX1ItemSetD120Name|Кровопролитие Белготиана
+tagGDX1ItemSetD121Name|Прихоть Радаггана
+tagGDX1ItemSetD122Name|Морозный язык
+tagGDX1ItemSetD123Name|Кровавый рыцарь
+tagItemSetD001BName|Страж правосудия
+tagItemSetD002BName|Священная гармония
+tagItemSetD003BName|Регалии укротителя природы
+tagItemSetD004BName|Преследующий тьму
+tagItemSetD005BName|Послание предвестника
+tagItemSetD006BName|Судьбоносные знаки
+tagItemSetD007BName|Вооружение демоноборца
+tagItemSetD008BName|Близнецы-разрушители
+tagItemSetD009BName|Авангард дикого сердца
+tagItemSetD010BName|Средоточие ясновидца
+tagItemSetD011BName|Воля Покорителя
+tagItemSetD012BName|Бастион Марковиана
+tagItemSetD013BName|Адское воплощение Ульзуина
+tagItemSetD014BName|Обман Дрига
+tagItemSetD015BName|Тень чистильщика
+tagItemSetD016BName|Единение Искандры
+tagItemSetD017BName|Шторм Ультоса
+tagItemSetD018BName|Небеса Трозана
+tagItemSetD019BName|Предательство Вальдуна
+tagItemSetD020BName|Клятва отравителя
+tagItemSetD021BName|Ковенант чёрного ожога
+tagItemSetD022BName|Страж света
+tagItemSetD023BName|Инфернальный чемпион
+tagItemSetD024BName|Ярость Агривикса
+tagItemSetD025BName|Оплот битворождённого
+tagItemSetD026BName|Бесконечное неистовство Кровожадного
+tagItemSetD027BName|Страшные знаки палача
+tagItemSetC008CName|Помилование
+tagItemSetC007CName|Авгур
+tagItemSetC013CName|Безумие клятвопреступника
+tagItemSetC015BName|Разгульная бойня
+tagGDX2ItemSetC201Name|Броня Бальдира
+tagGDX2ItemSetC201BName|Регалии Бальдира
+tagGDX2ItemSetC202Name|Грозовой змей
+tagGDX2ItemSetC203Name|Гнойное пламя
+tagGDX2ItemSetC204Name|Обет Дайги
+tagGDX2ItemSetC205Name|Отец Камня
+tagGDX2ItemSetD201Name|Расколотый страж
+tagGDX2ItemSetD202Name|Завоеватель
+tagGDX2ItemSetD203Name|Леденящий шёпот
+tagGDX2ItemSetD204Name|Гордость Людригана
+tagGDX2ItemSetD205Name|Собиратель костей
+tagGDX2ItemSetD206Name|Свет добродетели
+tagGDX2ItemSetD207Name|Блюститель Троих
+tagGDX2ItemSetD208Name|Уловка Харры
+tagGDX2ItemSetD209Name|Смерч
+tagGDX2ItemSetD210Name|Пытка Ра'Зина
+tagGDX2ItemSetD211Name|Повелитель чумы
+tagGDX2ItemSetD212Name|Злоба Гола
+tagGDX2ItemSetD213Name|Безделушки Бисмиэль
+tagGDX2ItemSetD214Name|Корванский барханный демон
+tagGDX2ItemSetD215Name|Размышления Пирана
+tagGDX2ItemSetD216Name|Творение Тарго
+tagGDX2ItemSetD217Name|Душа пустоты
+tagGDX2ItemSetD218Name|Прокажённый
+tagGDX2ItemSetD219Name|Доспехи Вечной Ночи
+tagGDX2ItemSetD220Name|Хранитель завесы
+tagGDX2ItemSetD221Name|Испивающий битву
+tagGDX2ItemSetD222Name|Янтарный зов

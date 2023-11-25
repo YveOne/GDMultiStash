@@ -70,9 +70,10 @@ namespace GDIALib.GDHook
                 return;
             }
             MessageType type = (MessageType)bt.Type;
+            string stringData = (bt.Data.Length == 0) ? "" : bt.StringData;
             foreach (IMessageProcessor t in _messageProcessors)
             {
-                t.Process(type, bt.Data, bt.StringData);
+                t.Process(type, bt.Data, stringData);
             }
             switch (type)
             {

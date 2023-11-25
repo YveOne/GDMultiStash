@@ -207,18 +207,23 @@ namespace GDMultiStash.Forms.MainWindow
             stashesListView.HasCollapsibleGroups = true;
             stashesListView.SeparatorColor = Constants.ListViewGroupHeaderSeparatorColor;
             stashesListView.GroupHeadingForeColor = Constants.ListViewGroupHeaderForeColor;
+            stashesListView.GroupHeadingForeColorEmpty = Constants.ListViewGroupHeaderForeColorEmpty;
             stashesListView.GroupHeadingBackColor = Constants.ListViewGroupHeaderBackColor;
+            stashesListView.GroupHeadingBackColorEmpty = Constants.ListViewGroupHeaderBackColorEmpty;
+            stashesListView.GroupHeadingBackColorSelected = Constants.ListViewGroupHeaderBackColorSelected;
             stashesListView.GroupHeadingFont = new Font(stashesListView.Font.FontFamily, 10, FontStyle.Regular);
             stashesListView.GroupHeadingCountForeColor = Constants.ListViewGroupHeaderCountForeColor;
             stashesListView.GroupHeadingCountFont = new Font(stashesListView.Font.FontFamily, 8, FontStyle.Regular);
             stashesListView.SpaceBetweenGroups = Constants.ListViewGroupSpaceBetween;
             stashesListView.AlwaysGroupByColumn = columnStashGroup;
 
+
+
             showExpansionComboBox.Items.AddRange(GrimDawnLib.GrimDawn.ExpansionList
                 .Where(exp => exp != GrimDawnLib.GrimDawnGameExpansion.Unknown)
                 .Select(exp => GrimDawnLib.GrimDawn.ExpansionNames[exp]).ToArray());
 
-
+            GotFocus += delegate { stashesListView.Focus(); };
             Main.SpaceClick += delegate { UnselectAll(); };
             Main.Click += delegate { UnselectAll(); };
             listViewBorderPanel.Click += delegate { UnselectAll(); };
@@ -256,11 +261,13 @@ namespace GDMultiStash.Forms.MainWindow
                 stashesListView.SubItemChecking += StashesListView_SubItemChecking;
                 stashesListView.CellEditStarting += StashesListView_CellEditStarting;
                 stashesListView.CellEditFinished += StashesListView_CellEditFinished;
-                stashesListView.SelectedIndexChanged += StashesListView_SelectedIndexChanged;
+                stashesListView.SelectionChanged += StashesListView_SelectionChanged;
+                stashesListView.ItemSelectionChanged += StashesListView_ItemSelectionChanged;
                 stashesListView.FormatCell += StashesListView_FormatCell;
                 stashesListView.FormatRow += StashesListView_FormatRow;
                 stashesListView.GroupExpandingCollapsing += StashesListView_GroupExpandingCollapsing;
                 stashesListView.GroupExpandingCollapsing2 += StashesListView_GroupExpandingCollapsing2;
+                stashesListView.GroupHeaderClicked += StashesListView_GroupHeaderClicked;
                 stashesListView.BeforeCreatingGroups += StashesListView_BeforeCreatingGroups;
                 stashesListView.MouseMove += delegate (object sen, MouseEventArgs eee) {
                     // this is used to refres the item the mouse is over
@@ -525,12 +532,80 @@ namespace GDMultiStash.Forms.MainWindow
             Global.Configuration.Save();
         }
 
-        private void StashesListView_SelectedIndexChanged(object sender, EventArgs e)
+        private bool ignoreSelectionChangedEvent = false;
+        private void StashesListView_GroupHeaderClicked(object s, OLVGroupFeatures.GroupHeaderClickArgs args)
         {
-            foreach (OLVListItem item in stashesListView.Items)
-                if (item.RowObject is StashDummyObject)
-                    item.Selected = false;
+            // dont do anything if group is empty
+            if (args.Group.Items.Count() <= 1)
+                return;
+            
+            stashesListView.Focus();
+            ignoreSelectionChangedEvent = true;
+            StashGroupObject stashGroup = (StashGroupObject)args.Group.Key;
+            if ((Control.ModifierKeys & Keys.Shift) == Keys.Shift)
+            {
+
+                // first find any selected item
+                OLVListItem otherSelectedItem = null;
+                foreach (OLVListItem item in stashesListView.Items)
+                    if (item.Selected)
+                        otherSelectedItem = item;
+                // is there any selected item?
+                if (otherSelectedItem != null)
+                {
+                    // first select all items of clicked group
+                    foreach (OLVListItem item in args.Group.Items)
+                        item.Selected = true;
+                    // next select all items between clicked group and found selected item
+                    var doSelect = false;
+                    var groupFirstItem = args.Group.Items[0];
+
+                    foreach (OLVListItem item in stashesListView.Items)
+                    {
+                        if (item == otherSelectedItem || item == groupFirstItem)
+                            doSelect = !doSelect;
+                        if (doSelect)
+                            item.Selected = true;
+                    }
+                }
+            }
+            else
+            {
+
+                if ((Control.ModifierKeys & Keys.Control) == Keys.Control)
+                {
+                    // ctrl key down.. DONT unselect all
+                }
+                else
+                {
+                    // first unselect all
+                    foreach (OLVListItem item in stashesListView.Items)
+                        item.Selected = false;
+                }
+
+                // now select all stashes inside clicked group
+                foreach (OLVListItem item in args.Group.Items)
+                    item.Selected = true;
+
+            }
+
+            ignoreSelectionChangedEvent = false;
             UpdateStashCountText();
+        }
+
+        private void StashesListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            var item = (OLVListItem)e.Item;
+            if (item.RowObject is StashDummyObject)
+                item.Selected = false;
+        }
+
+        private void StashesListView_SelectionChanged(object sender, EventArgs e)
+        {
+            if (ignoreSelectionChangedEvent)
+                return;
+            UpdateStashCountText();
+            stashesListView.Refresh();
         }
 
         private void StashesListView_FormatCell(object sender, FormatCellEventArgs e)
@@ -555,7 +630,7 @@ namespace GDMultiStash.Forms.MainWindow
 
             if (e.Model is StashDummyObject)
             {
-                e.Item.BackColor = Constants.ListViewItemBackColor;
+                e.Item.BackColor = Constants.ListViewBackColor;
                 e.Item.ForeColor = Constants.PassiveForeColor;
                 e.Item.Font = new Font(stashesListView.Font.FontFamily, Constants.ListViewColumnsFontHeight);
                 subItem = e.Item.GetSubItem(columnSC.Index);
@@ -657,7 +732,7 @@ namespace GDMultiStash.Forms.MainWindow
 
             if (isDragging)
             {
-                e.Item.BackColor = Color.Teal;
+                e.Item.BackColor = Constants.ListViewItemBackColorSelected;
                 e.Item.ForeColor = Color.WhiteSmoke;
             }
             else

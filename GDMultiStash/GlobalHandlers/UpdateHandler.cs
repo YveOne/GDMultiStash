@@ -12,7 +12,7 @@ namespace GDMultiStash.GlobalHandlers
 
         public string NewVersionName => UpdaterAPI.NewVersionName;
 
-        public bool NewVersionAvailable()
+        public bool ShowNewVersionAvailable()
         {
             if (!Global.Configuration.Settings.CheckForNewVersion) return false;
             return UpdaterAPI.NewVersionAvailable();

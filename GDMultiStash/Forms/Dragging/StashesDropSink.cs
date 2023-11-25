@@ -48,7 +48,7 @@ namespace GDMultiStash.Forms.Dragging
             // but maybe cursor is over group header?
             if (args.DropTargetItem == null)
             {
-                targetGroup = (DragHandler.ListView).HitTestGroup(DragHandler.ListView.PointToClient(Cursor.Position));
+                targetGroup = (DragHandler.ListView).HitTestGroup(DragHandler.ListView.PointToClient(Cursor.Position), out bool _);
                 if (targetGroup == null)
                 {
                     args.Effect = DragDropEffects.None;

@@ -31,7 +31,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
 
         public SortHandler(IEnumerable<StashObject> stashes)
         {
-            stashesIn = stashes.ToList();
+            stashesIn = stashes.Where(stash => !stash.Locked && !stash.IsMainStash).ToList();
             foreach (var stash in stashesIn)
             {
                 Global.FileSystem.BackupStashTransferFile(stash.ID);
@@ -43,19 +43,13 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
             if (stashesIn.Count() == 0)
                 return;
 
-            var sortPatternLines = Utils.Funcs.StringLines(sortPattern);
-            if (sortPatternLines.Length > 1)
-            {
-                foreach (string l in sortPatternLines)
-                    Sort(l.Trim());
-                return;
-            }
-
+            sortPattern = sortPattern.Replace(@"\/", "{SLASH}");
             if (sortPattern.Split('/').Length != 2)
             {
-                Console.Error("Invalid sort pattern '" + sortPattern + "'\nNo slash sign found\nValid pattern: '<group pattern>/<stash pattern>'");
+                Console.Warning("Invalid sort pattern '" + sortPattern + "'\nValid pattern: '<group pattern>/<stash pattern>'");
                 return;
             }
+            sortPattern = sortPattern.Replace("{SLASH}", @"\/");
 
             var criteriaKeys = new Dictionary<string, string>();
             foreach (Match match in Regex.Matches(sortPattern, @"{(\w+)}", RegexOptions.IgnoreCase))
@@ -75,7 +69,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
 
             var gdExpansion = stashesIn[0].Expansion;
             var stashWidth = stashesIn[0].Width; // all selected stashes should have same width and hight
-            var stashHeight = stashesIn[1].Height;
+            var stashHeight = stashesIn[0].Height;
             var foundAnyItem = false;
 
             SortingStructureBase sortStruct;
@@ -94,14 +88,18 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
                     foreach (var item in tab.Items)
                     {
                         if (!Global.Database.GetItemInfo(item, out GlobalHandlers.DatabaseHandler.ItemInfo itemInfo))
+                        {
                             continue;
+                        }
 
                         // 1) getting sort uint keys
                         var criteriaValues = new Dictionary<string, uint>();
                         foreach (var criteriaKey in criteriaKeys.Values)
                             criteriaValues[criteriaKey] = criteriaList[criteriaKey].GetKey(itemInfo);
                         if (criteriaValues.Values.ToList().Contains(0))
-                            continue; // contains one ore more ignored keys
+                        {
+                            continue; // contains one or more ignored keys
+                        }
 
                         // 2) convert sortpattern to sortstring
                         string sortString = string.Join("_", criteriaValues.Select(kvp => criteriaList[kvp.Key].FormatKey(kvp.Value)));
@@ -124,9 +122,6 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
             if (!foundAnyItem)
                 return;
 
-
-
-
             // loop sortStringsToDisplayStrings to get groups to create
             //                                   sortStr, grpname 
             var groupNames = new SortedDictionary<string, string>();
@@ -136,9 +131,9 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
             {
                 var sortString = kvp.Key;
                 var displayText = kvp.Value;
-                var displayTextSplits = displayText.Split('/');
-                var groupName = displayTextSplits[0].Trim();
-                var stashName = displayTextSplits[1].Trim();
+                var displayTextSplits = displayText.Replace(@"\/", "{SLASH}").Split('/');
+                var groupName = displayTextSplits[0].Trim().Replace("{SLASH}", @"/");
+                var stashName = displayTextSplits[1].Trim().Replace("{SLASH}", @"/");
 
                 if (!groupsSortedStashes.ContainsKey(groupName))
                 {
@@ -181,19 +176,46 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
                         stash.SaveTransferFile();
                         stash.LoadTransferFile();
                         addedStashes.Add(stash);
-                        
                     }
                 }
             }
 
-            // save at the end! if an error occurs the items wont be lost
+            // first save and load (also to refresh usage of transfer file)
             foreach (var stash in stashesIn)
             {
                 stash.SaveTransferFile();
                 stash.LoadTransferFile();
-                Global.Runtime.InvokeStashesContentChanged(stash, true);
             }
+
+            // delete empty stashes (but not if they are locked!)
+            var deletedStashes = Global.Stashes.DeleteStashes(stashesIn, true); // true = only empty
+            Global.Runtime.InvokeStashesRemoved(deletedStashes);
+
+            // delete empty stash groups
+            var emptyGroups = deletedStashes
+                .Select(stash => stash.GroupID)
+                .Distinct()
+                .Where(grpId => Global.Stashes.GetStashesForGroup(grpId).Length == 0)
+                .Select(grpId => Global.Groups.GetGroup(grpId))
+                .Where(grp => grp != null)
+                .ToArray();
+            if (emptyGroups.Length != 0)
+            {
+                var deletedGroups = Global.Groups.DeleteGroups(emptyGroups);
+                Global.Runtime.InvokeStashGroupsRemoved(deletedGroups);
+            }
+            
+
+            // remove deleted stashes from stashesIn
+            var remainingStashes = stashesIn
+                .Where((s) => Global.Stashes.GetStash(s.ID) != null).ToList();
+            stashesIn.Clear();
+            stashesIn.AddRange(remainingStashes);
+
+            // refresh rest
             Global.Configuration.Save();
+            foreach (var stash in stashesIn)
+                Global.Runtime.InvokeStashesContentChanged(stash, true);
             Global.Runtime.InvokeStashGroupsAdded(addedGroups);
             Global.Runtime.InvokeStashesAdded(addedStashes);
         }

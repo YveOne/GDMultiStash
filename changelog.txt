@@ -1,6 +1,11 @@
-v1.39 (unreleased)
+v1.39
 - Position of main window will now be saved and restored on startup
 - Added config option to set start position state to normal, minimized or tray
+- Selecting stashes (via shift click) in main window now works correctly
+- After soring stashes empty stashes will be deleted (like in earlier versions) but only if the stash is not a main stash or locked
+- Fixed an issue that was causing huge lags when selecting multiple stashes (via shift click)
+- Empty groups will now be displayed a little bit faded
+- Updated database to grim dawn version 1.2.0.2
 
 v1.38
 - Added new sort criteria "rarity" to sort MI's and DR's

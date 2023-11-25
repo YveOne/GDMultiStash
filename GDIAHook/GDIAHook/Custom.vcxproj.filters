@@ -45,6 +45,9 @@
     <ClInclude Include="SetHardcore.h">
       <Filter>CoreHooks\Stash</Filter>
     </ClInclude>
+    <ClInclude Include="SetModName.h">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -72,6 +75,9 @@
       <Filter>CoreHooks\Stash</Filter>
     </ClCompile>
     <ClCompile Include="SetHardcore.cpp">
+      <Filter>CoreHooks\Stash</Filter>
+    </ClCompile>
+    <ClCompile Include="SetModName.cpp">
       <Filter>CoreHooks\Stash</Filter>
     </ClCompile>
   </ItemGroup>

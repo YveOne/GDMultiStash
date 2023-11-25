@@ -15,6 +15,7 @@ public static partial class Native
     {
         return HIWORD(unchecked((int)(long)n));
     }
+
     public static int LOWORD(int n)
     {
         return n & 0xffff;

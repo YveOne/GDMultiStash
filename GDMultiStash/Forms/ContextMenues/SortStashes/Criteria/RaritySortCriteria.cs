@@ -18,6 +18,12 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes.Criteria
         public override string FormatKey(uint k) => k.ToString().PadLeft(2, '0');
         public override uint GetKey(GlobalHandlers.DatabaseHandler.ItemInfo itemInfo)
         {
+            if (!( // only allow weapons, armors and jewels
+                itemInfo.BaseRecordInfo.Class.StartsWith("Weapon")
+                ||
+                itemInfo.BaseRecordInfo.Class.StartsWith("Armor")
+                )) return 0;
+
             uint score = 0;
             if (itemInfo.BaseRecordInfo.Quality == "Rare")
                 score = 3;
@@ -37,7 +43,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes.Criteria
                 case 4: return "DR+";
                 case 5: return "DR++";
             }
-            return "NORMAL RARITY"; // Global.L.ItemQualityUnknown();
+            return "NONE"; // Global.L.ItemQualityUnknown();
         }
     }
 }

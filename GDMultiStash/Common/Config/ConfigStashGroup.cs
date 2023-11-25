@@ -20,7 +20,7 @@ namespace GDMultiStash.Common.Config
 			ID = -1;
 			Name = null;
 			Order = -1;
-			Collapsed = false;
+			Collapsed = true;
 		}
 
 	}
