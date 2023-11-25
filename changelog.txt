@@ -1,3 +1,6 @@
+v1.39.1
+- Hotfix removed debug message when stash is opened
+
 v1.39
 - Position of main window will now be saved and restored on startup
 - Added config option to set start position state to normal, minimized or tray

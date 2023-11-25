@@ -67,12 +67,6 @@ void* __fastcall SetTransferOpen::HookedMethod(void* This, bool isOpen) {
 			_m_dataQueue->push(item3);
 			SetEvent(_m_hEvent);
 
-			modName = L"LOL";
-			DataItemPtr item4(new DataItem(TYPE_GameInfo_ModName, modName.size() * sizeof(wchar_t), (char*)modName.c_str()));
-			_m_dataQueue->push(item4);
-			SetEvent(_m_hEvent);
-
-
 			//if (modIndex == 0 || modName == L"survivalmode") {
 				char b[1];
 				b[0] = (isOpen ? 1 : 0);
