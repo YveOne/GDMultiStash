@@ -169,7 +169,7 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (File.Exists(Global.FileSystem.ConfigFile))
             {
-                File.Copy(Global.FileSystem.ConfigFile, Global.FileSystem.ConfigFile + ".backup");
+                File.Copy(Global.FileSystem.ConfigFile, Global.FileSystem.ConfigFile + ".backup", true);
             }
         }
 
