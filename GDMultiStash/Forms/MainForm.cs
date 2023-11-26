@@ -205,7 +205,7 @@ namespace GDMultiStash.Forms
                     switch (Global.Windows.StartGame())
                     {
                         case GlobalHandlers.WindowsHandler.GameStartResult.AlreadyRunning:
-                            Console.Warning(Global.L.GameAlreadyRunningMessage());
+                            Console.AlertWarning(Global.L.GameAlreadyRunningMessage());
                             break;
                         case GlobalHandlers.WindowsHandler.GameStartResult.Success:
                             break;

@@ -46,7 +46,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
             sortPattern = sortPattern.Replace(@"\/", "{SLASH}");
             if (sortPattern.Split('/').Length != 2)
             {
-                Console.Warning("Invalid sort pattern '" + sortPattern + "'\nValid pattern: '<group pattern>/<stash pattern>'");
+                Console.AlertWarning("Invalid sort pattern '" + sortPattern + "'\nValid pattern: '<group pattern>/<stash pattern>'");
                 return;
             }
             sortPattern = sortPattern.Replace("{SLASH}", @"\/");
@@ -62,7 +62,7 @@ namespace GDMultiStash.Forms.ContextMenues.SortStashes
                 }
                 else
                 {
-                    Console.Warning("Unknown sort criteria '"+ kFound + "'");
+                    Console.AlertWarning("Unknown sort criteria '"+ kFound + "'");
                     return;
                 }
             }

@@ -68,7 +68,7 @@ namespace GDMultiStash.GlobalHandlers
             if (record == "") return 0;
             if (_itemRecordInfos.TryGetValue(record, out ItemRecordInfo recordInfo))
                 return recordInfo.Size;
-            if (record != "") Console.Error($"Unknown item record: {record}");
+            if (record != "") Console.WriteWarning($"Unknown item record: {record}");
             return def;
         }
 
@@ -76,28 +76,32 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (_itemRecordInfos.TryGetValue(record, out recordInfo))
                 return true;
-            if (record != "") Console.Error($"Unknown item record: {record}");
+            if (record != "") Console.WriteWarning($"Unknown item record: {record}");
             return false;
         }
 
-        public bool GetAffixRecordInfo(string record, out AffixRecordInfo recordInfo)
+        public bool GetAffixRecordInfo(string record, out AffixRecordInfo affixRecordInfo)
         {
-            if (_affixRecordInfos.TryGetValue(record, out recordInfo))
+            if (_affixRecordInfos.TryGetValue(record, out affixRecordInfo))
                 return true;
-            if (record != "") Console.Error($"Unknown affix record: {record}");
+            if (_itemRecordInfos.TryGetValue(record, out ItemRecordInfo itemRecordInfo))
+            {
+                affixRecordInfo = new AffixRecordInfo()
+                {
+                    Quality = itemRecordInfo.Quality,
+                    RequiredLevel = itemRecordInfo.RequiredLevel,
+                };
+                return true;
+            }
+            if (record != "") Console.WriteWarning($"Unknown affix record: {record}");
             return false;
-        }
-
-        public IEnumerable<string> GetItemSetRecords()
-        {
-            return _itemSetRecordInfos.Keys;
         }
 
         public bool GetItemSetRecordInfo(string record, out ItemSetRecordInfo recordInfo)
         {
             if (_itemSetRecordInfos.TryGetValue(record, out recordInfo))
                 return true;
-            if (record != "") Console.Error($"Unknown itemset record: {record}");
+            if (record != "") Console.WriteWarning($"Unknown itemset record: {record}");
             return false;
         }
 

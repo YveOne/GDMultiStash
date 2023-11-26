@@ -153,12 +153,12 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (Global.Configuration.IsMainStashID(stash.ID))
             {
-                Console.Warning(Global.L.CannotDeleteStashMessage(stash.Name, Global.L.StashIsMainMessage()));
+                Console.AlertWarning(Global.L.CannotDeleteStashMessage(stash.Name, Global.L.StashIsMainMessage()));
                 return false;
             }
             if (Global.Configuration.IsCurrentStashID(stash.ID))
             {
-                Console.Warning(Global.L.CannotDeleteStashMessage(stash.Name, Global.L.StashIsActiveMessage()));
+                Console.AlertWarning(Global.L.CannotDeleteStashMessage(stash.Name, Global.L.StashIsActiveMessage()));
                 return false;
             }
             Items.Remove(stash.ID);

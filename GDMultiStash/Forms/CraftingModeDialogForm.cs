@@ -82,7 +82,7 @@ namespace GDMultiStash.Forms
             ControlBox = false;
 
             if (Global.Runtime.StashIsOpened) // todo: localize me
-                Console.Warning("Close ingame stash before continue to prevent item loss!");
+                Console.AlertWarning("Close ingame stash before continue to prevent item loss!");
 
             _selectedEnvironment = (GrimDawnGameEnvironment)transferFileComboBox.SelectedValue;
 

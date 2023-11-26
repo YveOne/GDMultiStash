@@ -60,12 +60,12 @@ namespace GDMultiStash.GlobalHandlers
         {
             if (Global.Configuration.IsMainStashGroupID(group.ID))
             {
-                Console.Warning(Global.L.CannotDeleteStashGroupMessage(group.Name, Global.L.StashGroupIsMainMessage()));
+                Console.AlertWarning(Global.L.CannotDeleteStashGroupMessage(group.Name, Global.L.StashGroupIsMainMessage()));
                 return false;
             }
             if (Global.Stashes.GetStashesForGroup(group.ID).Length != 0)
             {
-                Console.Warning(Global.L.CannotDeleteStashGroupMessage(group.Name, Global.L.StashGroupIsNotEmptyMessage()));
+                Console.AlertWarning(Global.L.CannotDeleteStashGroupMessage(group.Name, Global.L.StashGroupIsNotEmptyMessage()));
                 return false;
             }
             Items.Remove(group.ID);

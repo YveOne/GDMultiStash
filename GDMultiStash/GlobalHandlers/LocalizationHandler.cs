@@ -58,7 +58,7 @@ namespace GDMultiStash.GlobalHandlers
             var resourceText = Properties.Resources.ResourceManager.GetString(resourceName);
             if (resourceText == null)
             {
-                Console.Warning($"Failed reading resource {resourceName}");
+                Console.AlertError($"Failed reading resource {resourceName}");
                 return;
             }
             var resourceFile = resourceName.Replace("local_", "");

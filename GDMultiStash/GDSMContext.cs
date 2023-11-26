@@ -66,7 +66,7 @@ namespace GDMultiStash
 
             if (!GrimDawn.ValidateDocumentsPath())
             {
-                Console.Warning(Global.L.DocumentsDirectoryNotFoundMessage());
+                Console.AlertError(Global.L.DocumentsDirectoryNotFoundMessage());
                 Program.Quit();
                 return;
             }
@@ -85,7 +85,7 @@ namespace GDMultiStash
                 // game install path not found? let user choose path
                 if (!GrimDawn.ValidateGamePath(Global.Configuration.Settings.GamePath))
                 {
-                    Console.Warning(Global.L.SelectGameDirectoryMessage());
+                    Console.AlertWarning(Global.L.SelectGameDirectoryMessage());
                     Global.Windows.ShowConfigurationWindow();
                 }
             }
@@ -93,7 +93,7 @@ namespace GDMultiStash
             // game install path still not found? poooor user...
             if (!GrimDawn.ValidateGamePath(Global.Configuration.Settings.GamePath))
             {
-                Console.Warning(Global.L.GameDirectoryNotFoundMessage());
+                Console.AlertError(Global.L.GameDirectoryNotFoundMessage());
                 Program.Quit();
                 return;
             }
@@ -133,7 +133,7 @@ namespace GDMultiStash
             {
                 if (GrimDawn.Options.GetOptionValue("cloudSaving") == "true")
                 {
-                    Console.Warning(Global.L.DisableCloudSyncMessage());
+                    Console.AlertWarning(Global.L.DisableCloudSyncMessage());
                 }
             }
 

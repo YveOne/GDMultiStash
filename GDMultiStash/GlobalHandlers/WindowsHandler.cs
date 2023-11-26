@@ -229,7 +229,7 @@ namespace GDMultiStash.GlobalHandlers
             }
             catch (Exception ex)
             {
-                Console.Error(ex.Message);
+                Console.AlertError(ex.Message);
                 return GameStartResult.Error;
             }
         }

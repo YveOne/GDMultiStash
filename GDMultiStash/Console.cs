@@ -55,10 +55,7 @@ internal class Console
         string msg2 = string.Join(Environment.NewLine, msg.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)
             .ToList()
             .Select((s, i) => (i == 0 ? "" : "    ") + s.Trim()));
-        if (icon == MessageBoxIcon.None)
-            WriteLine($"[MessageBox] {msg2}");
-        else
-            WriteLine($"[MessageBox] [{icon}] {msg2}");
+        WriteLine($"[MessageBox] {msg2}");
         return MessageBox.Show(msg, icon == MessageBoxIcon.None ? "" : $"{icon}", btn, icon);
     }
 
@@ -72,14 +69,24 @@ internal class Console
         return Alert(msg, MessageBoxButtons.OKCancel, icon) == DialogResult.OK;
     }
 
-    public static void Warning(string msg)
+    public static void AlertWarning(string msg)
     {
         Alert(msg, MessageBoxButtons.OK, MessageBoxIcon.Warning);
     }
 
-    public static void Error(string msg)
+    public static void AlertError(string msg)
     {
         Alert(msg, MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    public static void WriteWarning(string msg)
+    {
+        WriteLine($"[WARNING] {msg}");
+    }
+
+    public static void WriteError(string msg)
+    {
+        WriteLine($"[ERROR] {msg}");
     }
 
 }
