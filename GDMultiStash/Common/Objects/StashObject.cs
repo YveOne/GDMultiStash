@@ -294,7 +294,7 @@ namespace GDMultiStash.Common.Objects
             set { _configStash.Locked = value; }
         }
 
-        public bool IsMainStash => !Global.Configuration.IsMainStashID(ID);
+        public bool IsMainStash => Global.Configuration.IsMainStashID(ID);
 
         public int GroupID
         {

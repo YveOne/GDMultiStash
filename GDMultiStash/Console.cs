@@ -55,7 +55,7 @@ internal class Console
         string msg2 = string.Join(Environment.NewLine, msg.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)
             .ToList()
             .Select((s, i) => (i == 0 ? "" : "    ") + s.Trim()));
-        WriteLine($"[MessageBox] {msg2}");
+        WriteLine($"[Alert:{icon}] {msg2}");
         return MessageBox.Show(msg, icon == MessageBoxIcon.None ? "" : $"{icon}", btn, icon);
     }
 

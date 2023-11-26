@@ -1,3 +1,6 @@
+v1.39.3
+- Fixed sorting stashes no more working
+
 v1.39.2
 - Fixed unknown affix record error when an item uses an other item as affix
 
