@@ -40,6 +40,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDMultiStashBuild", "GDMult
 		{27B9CC7C-B4DC-4B2A-A288-55E8E84D20BF} = {27B9CC7C-B4DC-4B2A-A288-55E8E84D20BF}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "D3DHook.Overlay", "D3DHook.Overlay\D3DHook.Overlay.csproj", "{0FE873BC-CA39-414F-8E99-CC82635074E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -112,6 +114,14 @@ Global
 		{B48E7DF8-0E42-408A-8C73-082F5C7788B9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B48E7DF8-0E42-408A-8C73-082F5C7788B9}.Release|x64.ActiveCfg = Release|x64
 		{B48E7DF8-0E42-408A-8C73-082F5C7788B9}.Release|x64.Build.0 = Release|x64
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Debug|x64.Build.0 = Debug|Any CPU
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Release|x64.ActiveCfg = Release|Any CPU
+		{0FE873BC-CA39-414F-8E99-CC82635074E5}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

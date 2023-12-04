@@ -233,6 +233,7 @@ float4 PSMain(PixelIn input) : SV_Target
 
         protected override void DoRender()
         {
+
             var context = this.DeviceManager.Direct3DContext;
 
             //context.InputAssembler.InputLayout = vertexLayout;

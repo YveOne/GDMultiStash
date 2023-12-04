@@ -7,7 +7,7 @@ using System.Drawing;
 
 using GDMultiStash.Common.Objects;
 
-using D3DHook.Overlay;
+using D3DHook.Overlay.Common;
 
 namespace GDMultiStash.Overlay
 {
@@ -29,23 +29,23 @@ namespace GDMultiStash.Overlay
             _stashId2Item = new Dictionary<int, StashListChild>();
             _loadItems = true; // build list on startup
 
-            Global.Runtime.ActiveStashChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ActiveStashChangedEventArgs e) {
+            G.Stashes.ActiveStashChanged += delegate (object sender, Global.Stashes.ActiveStashChangedEventArgs e) {
                 ChangeActiveStash(e.OldID, e.NewID);
             };
-            Global.Runtime.ActiveModeChanged += delegate { _loadItems = true; };
-            Global.Runtime.ActiveExpansionChanged += delegate { _loadItems = true; };
-            Global.Runtime.ActiveGroupChanged += delegate { _loadItems = true; };
-            Global.Runtime.StashesMoved += delegate { _loadItems = true; };
-            Global.Runtime.StashesAdded += delegate { _loadItems = true; };
-            Global.Runtime.StashesRemoved += delegate { _loadItems = true; };
-            Global.Runtime.StashesInfoChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> e)
+            G.Runtime.ActiveModeChanged += delegate { _loadItems = true; };
+            G.Runtime.ActiveExpansionChanged += delegate { _loadItems = true; };
+            G.StashGroups.ActiveGroupChanged += delegate { _loadItems = true; };
+            G.Stashes.StashesMoved += delegate { _loadItems = true; };
+            G.Stashes.StashesAdded += delegate { _loadItems = true; };
+            G.Stashes.StashesRemoved += delegate { _loadItems = true; };
+            G.Stashes.StashesInfoChanged += delegate (object sender, Global.Stashes.StashObjectsEventArgs e)
             {
                 foreach (StashObject stash in e.Items)
                 {
                     UpdateStashItemInfo(stash);
                 }
             };
-            Global.Runtime.StashesContentChanged += delegate (object sender, GlobalHandlers.RuntimeHandler.StashesContentChangedEventArgs e)
+            G.Stashes.StashesContentChanged += delegate (object sender, Global.Stashes.StashesContentChangedEventArgs e)
             {
                 foreach (StashObject stash in e.Items)
                 {
@@ -54,7 +54,7 @@ namespace GDMultiStash.Overlay
                 }
             };
             _updateAppearance = true; // update on startup
-            Global.Configuration.OverlayDesignChanged += delegate {
+            G.Configuration.OverlayDesignChanged += delegate {
                 _updateAppearance = true;
             };
             MouseWheel += delegate (object sender, MouseWheelEventArgs e)
@@ -75,19 +75,19 @@ namespace GDMultiStash.Overlay
                 _stashId2Item.Clear();
                 ClearScrollItems();
 
-                GrimDawnLib.GrimDawnGameMode mode = Global.Runtime.ActiveMode;
-                GrimDawnLib.GrimDawnGameExpansion exp = Global.Runtime.ActiveExpansion;
-                int activeGroupID = Global.Runtime.ActiveGroupID;
-                int activeStashID = Global.Runtime.ActiveStashID;
+                GrimDawnLib.GrimDawnGameMode mode = G.Runtime.ActiveMode;
+                GrimDawnLib.GrimDawnGameExpansion exp = G.Runtime.ActiveExpansion;
+                int activeGroupID = G.StashGroups.ActiveGroupID;
+                int activeStashID = G.Stashes.ActiveStashID;
 
-                List<StashObject> stashes = Global.Stashes.GetAllStashes()
+                List<StashObject> stashes = G.Stashes.GetAllStashes()
                     .Where(stash => stash.Expansion == exp && ((
                         stash.SC == true && mode == GrimDawnLib.GrimDawnGameMode.SC
                     ) || (
                         stash.HC == true && mode == GrimDawnLib.GrimDawnGameMode.HC
                     )) && stash.GroupID == activeGroupID)
                     .ToList();
-                stashes.Sort(new Common.Objects.Sorting.StashesSortComparer());
+                stashes.Sort(new Common.Objects.Sorting.Comparer.StashesSortComparer());
                 foreach (var stash in stashes)
                     AddStashItem(stash);
 
@@ -98,7 +98,7 @@ namespace GDMultiStash.Overlay
             {
                 _updateAppearance = false;
                 foreach(var item in ScrollItems)
-                    item.ShowWorkload = Global.Configuration.Settings.OverlayShowWorkload;
+                    item.ShowWorkload = G.Configuration.Settings.OverlayShowWorkload;
             }
         }
 
@@ -120,7 +120,7 @@ namespace GDMultiStash.Overlay
             item.Locked = stash.Locked;
             item.Color = stash.DisplayColor;
             item.Visible = true;
-            item.ShowWorkload = Global.Configuration.Settings.OverlayShowWorkload;
+            item.ShowWorkload = G.Configuration.Settings.OverlayShowWorkload;
             item.UpdateUsageIndicator();
             _stashId2Item.Add(stash.ID, item);
             AddScrollItem(item);

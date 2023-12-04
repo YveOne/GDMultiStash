@@ -2,7 +2,7 @@
 using System;
 using System.Drawing;
 
-using D3DHook.Overlay;
+using D3DHook.Overlay.Common;
 
 namespace GDMultiStash.Overlay.Controls
 {
@@ -31,14 +31,12 @@ namespace GDMultiStash.Overlay.Controls
             };
             HandleDropDown();
 
-
-
-            Text = Global.Groups.GetGroup(Global.Runtime.ActiveGroupID).Name;
-            Global.Runtime.ActiveGroupChanged += delegate {
-                Text = Global.Groups.GetGroup(Global.Runtime.ActiveGroupID).Name;
+            Text = G.StashGroups.GetGroup(G.StashGroups.ActiveGroupID).Name;
+            G.StashGroups.ActiveGroupChanged += delegate {
+                Text = G.StashGroups.GetGroup(G.StashGroups.ActiveGroupID).Name;
             };
-            Global.Runtime.StashGroupsInfoChanged += delegate {
-                Text = Global.Groups.GetGroup(Global.Runtime.ActiveGroupID).Name;
+            G.StashGroups.StashGroupsInfoChanged += delegate {
+                Text = G.StashGroups.GetGroup(G.StashGroups.ActiveGroupID).Name;
             };
 
         }

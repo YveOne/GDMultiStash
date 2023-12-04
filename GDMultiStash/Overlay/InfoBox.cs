@@ -9,7 +9,7 @@ using GDMultiStash.Common.Objects;
 using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
 
-using D3DHook.Overlay;
+using D3DHook.Overlay.Common;
 
 namespace GDMultiStash.Overlay
 {
@@ -76,10 +76,10 @@ namespace GDMultiStash.Overlay
             };
             AddChild(_reloadButton);
 
-            Global.Runtime.ActiveStashChanged += delegate {
+            G.Stashes.ActiveStashChanged += delegate {
                 UpdateInfoText();
             };
-            Global.Ingame.StashReopenEnd += delegate {
+            G.Ingame.StashReopenEnd += delegate {
                 UpdateInfoText();
             };
 
@@ -88,23 +88,23 @@ namespace GDMultiStash.Overlay
             _reloadButton.MouseClick += ReloadButton_Click;
 
             UpdateButtonText();
-            Global.Configuration.LanguageChanged += delegate {
+            G.Configuration.LanguageChanged += delegate {
                 UpdateButtonText();
             };
-            Global.Runtime.StashesInfoChanged += delegate {
+            G.Stashes.StashesInfoChanged += delegate {
                 UpdateInfoText(); // maybe name changed
             };
         }
 
         private void UpdateButtonText()
         {
-            _saveButton.Text = Global.L.SaveButton();
-            _loadButton.Text = Global.L.LoadButton();
+            _saveButton.Text = G.L.SaveButton();
+            _loadButton.Text = G.L.LoadButton();
         }
 
         private void UpdateInfoText()
         {
-            if (!Global.Stashes.TryGetStash(Global.Runtime.ActiveStashID, out StashObject stash))
+            if (!G.Stashes.TryGetStash(G.Stashes.ActiveStashID, out StashObject stash))
                 return;
             _titleElement.Text = stash.Name;
             _lastChangeIntern.Text = stash.LastWriteTime.ToString();
@@ -112,17 +112,17 @@ namespace GDMultiStash.Overlay
 
         private void CheatSaveButton_Click(object sender, EventArgs e)
         {
-            Global.Ingame.SaveCurrentStash();
+            G.Ingame.SaveCurrentStash();
         }
 
         private void CheatLoadButton_Click(object sender, EventArgs e)
         {
-            Global.Ingame.LoadCurrentStash();
+            G.Ingame.LoadCurrentStash();
         }
 
         private void ReloadButton_Click(object sender, EventArgs e)
         {
-            Global.Ingame.ReloadCurrentStash();
+            G.Ingame.ReloadCurrentStash();
         }
 
 

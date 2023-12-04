@@ -10,10 +10,12 @@ using GDMultiStash.Common;
 using GDMultiStash.Common.Objects;
 
 using BrightIdeasSoftware;
+using System.ComponentModel;
 
 namespace GDMultiStash.Forms.ContextMenues
 {
 
+    [DesignerCategory("code")]
     internal class StashGroupsPageContextMenu : BaseContextMenu
     {
         private readonly MainWindow.StashGroupsPage page;
@@ -38,12 +40,12 @@ namespace GDMultiStash.Forms.ContextMenues
 
         public void AddDeleteOption()
         {
-            Items.Add(X(Global.L.DeleteButton()), null, delegate (object s, EventArgs e) {
-                if (Global.Configuration.Settings.ConfirmStashDelete && MessageBox.Show(Global.L.ConfirmDeleteStashGroupsMessage(), "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK) return;
+            Items.Add(X(G.L.DeleteButton()), null, delegate (object s, EventArgs e) {
+                if (G.Configuration.Settings.ConfirmStashDelete && MessageBox.Show(G.L.ConfirmDeleteStashGroupsMessage(), "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation) != DialogResult.OK) return;
 
-                List<StashGroupObject> deletedItems = Global.Groups.DeleteGroups(selectedGroups);
-                Global.Configuration.Save();
-                Global.Runtime.InvokeStashGroupsRemoved(deletedItems);
+                List<StashGroupObject> deletedItems = G.StashGroups.DeleteGroups(selectedGroups);
+                G.Configuration.Save();
+                G.StashGroups.InvokeStashGroupsRemoved(deletedItems);
                 //Global.Ingame.InvokeStashesRebuild();
             });
         }

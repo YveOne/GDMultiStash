@@ -8,12 +8,14 @@ using BrightIdeasSoftware;
 
 using GDMultiStash.Common;
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Objects.Sorting;
+using GDMultiStash.Common.Objects.Sorting.Comparer;
 
 using GDMultiStash.Forms.Controls;
+using System.ComponentModel;
 
 namespace GDMultiStash.Forms.MainWindow
 {
+    [DesignerCategory("code")]
     internal partial class StashGroupsPage : Page
     {
 
@@ -68,20 +70,16 @@ namespace GDMultiStash.Forms.MainWindow
 
             PseudoScrollBarPanel scrollCover = new PseudoScrollBarPanel(groupsListView)
             {
-                BackColor = Constants.ListViewBackColor,
-                BarColor = Constants.ScrollBarColor,
+                BackColor = C.ListViewBackColor,
+                BarColor = C.ScrollBarColor,
                 BarWidth = SystemInformation.VerticalScrollBarWidth - 5
             };
 
-            listViewBorderPanel.BackColor = Constants.ListViewBackColor;
-            listViewBorderPanel.Padding = Constants.ListViewBorderPadding;
+            listViewBorderPanel.BackColor = C.ListViewBackColor;
+            listViewBorderPanel.Padding = C.ListViewBorderPadding;
 
-            menuStrip.Renderer = new FlatToolStripRenderer();
-            menuStrip.BackColor = Constants.ToolStripBackColor;
-
-            Main.InitializeToolStripButton(createStashGroupButton,
-                Constants.ToolStripButtonBackColor, Constants.ToolStripButtonBackColorHover,
-                Constants.InteractiveForeColor, Constants.InteractiveForeColorHighlight);
+            menuStrip.Renderer = new DefaultContentMenuStripRenderer();
+            menuStrip.BackColor = C.ToolStripBackColor;
 
             sortComparer = new GroupsSortComparer(delegate (StashGroupObject x, StashGroupObject y, out int ret)
             {
@@ -100,16 +98,16 @@ namespace GDMultiStash.Forms.MainWindow
                 return false;
             });
 
-            groupsListView.RowHeight = Constants.ListViewGroupHeaderHeight + 3;
-            groupsListView.BackColor = Constants.ListViewBackColor;
+            groupsListView.RowHeight = C.ListViewGroupHeaderHeight + 3;
+            groupsListView.BackColor = C.ListViewBackColor;
             groupsListView.GridLines = false;
-            groupsListView.HeaderMaximumHeight = Constants.ListViewColumnsHeight;
-            groupsListView.HeaderMinimumHeight = Constants.ListViewColumnsHeight;
+            groupsListView.HeaderMaximumHeight = C.ListViewColumnsHeight;
+            groupsListView.HeaderMinimumHeight = C.ListViewColumnsHeight;
             groupsListView.HeaderUsesThemes = false;
             groupsListView.HeaderFormatStyle = new HeaderFormatStyle();
-            groupsListView.HeaderFormatStyle.SetBackColor(Constants.ListViewBackColor);
-            groupsListView.HeaderFormatStyle.SetForeColor(Constants.PassiveForeColor);
-            groupsListView.HeaderFormatStyle.SetFont(new Font(groupsListView.Font.FontFamily, Constants.ListViewColumnsFontHeight, FontStyle.Regular));
+            groupsListView.HeaderFormatStyle.SetBackColor(C.ListViewBackColor);
+            groupsListView.HeaderFormatStyle.SetForeColor(C.PassiveForeColor);
+            groupsListView.HeaderFormatStyle.SetFont(new Font(groupsListView.Font.FontFamily, C.ListViewColumnsFontHeight, FontStyle.Regular));
             groupsListView.UseCellFormatEvents = true;
             groupsListView.MultiSelect = true;
             groupsListView.FullRowSelect = true;
@@ -137,18 +135,18 @@ namespace GDMultiStash.Forms.MainWindow
                 //stashes_listView.DragEnter += Stashes_Dragging_DragEnter;
                 //stashes_listView.DragDrop += Stashes_Dragging_DragDrop;
 
-                Global.Runtime.StashesAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshStashesObjects(args.Items); };
-                Global.Runtime.StashesRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshAllObjects(); };
-                Global.Runtime.StashesMoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashObject> args) { RefreshAllObjects(); };
-                Global.Runtime.StashGroupsAdded += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) { groupsListView.AddObjects(args.Items); };
-                Global.Runtime.StashGroupsRemoved += delegate (object sender, GlobalHandlers.RuntimeHandler.ListEventArgs<StashGroupObject> args) { groupsListView.RemoveObjects(args.Items); };
+                G.Stashes.StashesAdded += delegate (object sender, Global.Stashes.StashObjectsEventArgs args) { RefreshStashesObjects(args.Items); };
+                G.Stashes.StashesRemoved += delegate (object sender, Global.Stashes.StashObjectsEventArgs args) { RefreshAllObjects(); };
+                G.Stashes.StashesMoved += delegate (object sender, Global.Stashes.StashObjectsEventArgs args) { RefreshAllObjects(); };
+                G.StashGroups.StashGroupsAdded += delegate (object sender, Global.StashGroups.StashGroupObjectsEventArgs args) { groupsListView.AddObjects(args.Items); };
+                G.StashGroups.StashGroupsRemoved += delegate (object sender, Global.StashGroups.StashGroupObjectsEventArgs args) { groupsListView.RemoveObjects(args.Items); };
 
                 ReloadColumns();
                 ReloadList();
             };
         }
 
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected override void Localize(Global.LocalizationManager.StringsHolder L)
         {
             createStashGroupButton.Text = L.CreateGroupButton();
             columnID.Text = L.IdColumn();
@@ -178,7 +176,7 @@ namespace GDMultiStash.Forms.MainWindow
             groupsListView.RefreshObjects(stashes
                 .Select(stash => stash.GroupID)
                 .Distinct() // remove duplicates
-                .Select(id => Global.Groups.GetGroup(id)) // todo: check for !null
+                .Select(id => G.StashGroups.GetGroup(id)) // todo: check for !null
                 .ToArray()
             );
         }
@@ -213,7 +211,7 @@ namespace GDMultiStash.Forms.MainWindow
 
             int scrollY = groupsListView.TopItemIndex;
             groupsListView.ClearObjects();
-            groupsListView.SetObjects(Global.Groups.GetAllGroups());
+            groupsListView.SetObjects(G.StashGroups.GetAllGroups());
             groupsListView.Sort();
             groupsListView.TopItemIndex = scrollY;
         }
@@ -224,7 +222,7 @@ namespace GDMultiStash.Forms.MainWindow
 
         private void CreateStashGroupButton_Click(object sender, EventArgs e)
         {
-            Global.Windows.ShowCreateStashGroupDialog();
+            G.Windows.ShowCreateStashGroupDialog();
         }
 
         private void GroupsListView_FormatCell(object sender, FormatCellEventArgs e)
@@ -259,25 +257,25 @@ namespace GDMultiStash.Forms.MainWindow
             }
             else
             {
-                e.Item.BackColor = Constants.ListViewGroupHeaderBackColor;
-                e.Item.ForeColor = Constants.ListViewGroupHeaderForeColor;
+                e.Item.BackColor = C.ListViewGroupHeaderBackColor;
+                e.Item.ForeColor = C.ListViewGroupHeaderForeColor;
             }
         }
 
         private void GroupsListView_CellEditFinished(object sender, CellEditEventArgs args)
         {
             StashGroupObject group = (StashGroupObject)args.RowObject;
-            if (args.Column == columnName) Global.Runtime.InvokeStashGroupsInfoChanged(group);
+            if (args.Column == columnName) G.StashGroups.InvokeStashGroupsInfoChanged(group);
             else return;
-            Global.Configuration.Save();
+            G.Configuration.Save();
             UnselectAll();
         }
 
         private void DragHandler_DragEnd(object sender, EventArgs e)
         {
             UnselectAll();
-            Global.Configuration.Save();
-            Global.Runtime.InvokeStashGroupsMoved(dragHandler.DragSource.Items);
+            G.Configuration.Save();
+            G.StashGroups.InvokeStashGroupsMoved(dragHandler.DragSource.Items);
         }
 
         private void GroupsListView_CellRightClick(object sender, CellRightClickEventArgs args)

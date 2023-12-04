@@ -18,7 +18,7 @@ namespace GDMultiStash.Forms
             InitializeComponent();
         }
 
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected override void Localize(Global.LocalizationManager.StringsHolder L)
         {
             Text = L.AboutButton();
         }

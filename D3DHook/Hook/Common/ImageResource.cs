@@ -12,8 +12,8 @@ namespace D3DHook.Hook.Common
 
         public int Width { get; private set; }
         public int Height { get; private set; }
-        internal byte[] ImageData { get; private set; }
-        internal bool ReCreate { get; private set; }
+        public byte[] ImageData { get; private set; }
+        public bool ReCreate { get; private set; }
 
         public ImageResource(System.Drawing.Image bitmap, System.Drawing.Imaging.ImageFormat format)
         {
@@ -42,16 +42,13 @@ namespace D3DHook.Hook.Common
             ReCreate = true;
         }
 
-        internal System.Drawing.Bitmap Bitmap
+        public System.Drawing.Bitmap Bitmap
         {
             get
             {
                 if (ImageData == null) return null;
                 ReCreate = false;
                 return ImageData.ToBitmap();
-                //System.Drawing.Bitmap bmp = ImageData.ToBitmap();
-                //ImageData = null;
-                //return bmp;
             }
         }
 

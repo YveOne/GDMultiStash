@@ -67,7 +67,6 @@ namespace D3DHook
 
             try
             {
-
                 // Inject DLL into target process
                 RemoteHooking.Inject(
                     process.Id,

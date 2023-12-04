@@ -3,27 +3,27 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-using GrimDawnLib;
-using GDMultiStash.GlobalHandlers;
-using GDMultiStash.Common.Objects;
-
 namespace GDMultiStash
 {
-    internal static class Global
+    using GrimDawnLib;
+    using GDMultiStash.Common.Objects;
+    using GDMultiStash.Global;
+
+    internal static class G
     {
-        public static ConfigurationHandler Configuration { get; } = new ConfigurationHandler();
-        public static FileSystemHandler FileSystem { get; } = new FileSystemHandler();
-        public static LocalizationHandler Localization { get; } = new LocalizationHandler();
-        public static LocalizationHandler.StringsHolder L { get; } = Localization.Strings;
-        public static DatabaseHandler Database { get; } = new DatabaseHandler();
-        public static StashesHandler Stashes { get; } = new StashesHandler();
-        public static GroupsHandler Groups { get; } = new GroupsHandler();
-        public static UpdateHandler Update { get; } = new UpdateHandler();
-        public static WindowsHandler Windows { get; } = new WindowsHandler();
-        public static ResourceHandler Resources { get; } = new ResourceHandler();
-        public static SoundHandler Sounds { get; } = new SoundHandler();
-        public static RuntimeHandler Runtime { get; } = new RuntimeHandler();
-        public static IngameHandler Ingame { get; } = new IngameHandler();
+        public static FileSystemManager FileSystem { get; } = new FileSystemManager();
+        public static ConfigurationManager Configuration { get; } = new ConfigurationManager();
+        public static LocalizationManager Localization { get; } = new LocalizationManager();
+        public static LocalizationManager.StringsHolder L { get; } = Localization.Strings;
+        public static DatabaseManager Database { get; } = new DatabaseManager();
+        public static StashesManager Stashes { get; } = new StashesManager();
+        public static StashGroupsManager StashGroups { get; } = new StashGroupsManager();
+        public static UpdateManager Update { get; } = new UpdateManager();
+        public static WindowsManager Windows { get; } = new WindowsManager();
+        public static ResourcesManager Resources { get; } = new ResourcesManager();
+        public static SoundsManager Sounds { get; } = new SoundsManager();
+        public static RuntimeManager Runtime { get; } = new RuntimeManager();
+        public static IngameManager Ingame { get; } = new IngameManager();
 
         public static void SetEventHandlers()
         {
@@ -40,7 +40,7 @@ namespace GDMultiStash
                 Console.WriteLine($"- file: {externalFileName}");
                 Console.WriteLine($"- stash is reopening: {Ingame.StashIsReopening}");
                 Console.WriteLine($"- stash is opened: {Runtime.StashIsOpened}");
-                Console.WriteLine($"- active Stash ID: {Runtime.ActiveStashID}");
+                Console.WriteLine($"- active Stash ID: {Stashes.ActiveStashID}");
                 if (!Ingame.StashIsReopening && !Runtime.StashIsOpened)
                 {
                     if (!Utils.Funcs.WaitFor(() => !Utils.FileUtils.FileIsLocked(externalFile), 2000, 33))
@@ -48,15 +48,15 @@ namespace GDMultiStash
                         Console.WriteLine("- file locked");
                         return;
                     }
-                    if (!Runtime.AutoBackToMain())
+                    if (!Stashes.SwitchBackToMainStash())
                     {
-                        Stashes.SwitchToStash(Runtime.ActiveStashID);
+                        Stashes.SwitchToStash(Stashes.ActiveStashID);
                     }
                 }
 
             };
 
-            FileSystem.TransferFileChanged += delegate (object sender, FileSystemHandler.TransferFileChangedEventArgs e) {
+            FileSystem.TransferFileChanged += delegate (object sender, FileSystemManager.TransferFileChangedEventArgs e) {
                 Console.WriteLine($"transfer file changed by external");
                 Console.WriteLine($"- file: {e.FileName}");
                 var externalEnv = GrimDawn.GetEnvironmentByFilename(e.FileName);
@@ -71,10 +71,10 @@ namespace GDMultiStash
                 Ingame.InvokeRequestReopenStash(Stashes.GetStash(stashId));
             };
 
-            Ingame.RequestReopenStash += delegate (object sender, RuntimeHandler.ListEventArgs<StashObject> e) {
+            Ingame.RequestReopenStash += delegate (object sender, Global.Stashes.StashObjectsEventArgs e) {
                 foreach (var s in e.Items)
                 {
-                    if (Runtime.GameInitialized && Runtime.StashIsOpened && s.ID == Runtime.ActiveStashID)
+                    if (Runtime.GameInitialized && Runtime.StashIsOpened && s.ID == Stashes.ActiveStashID)
                     {
                         Console.WriteLine($"requesting reopening stash");
                         if (Runtime.GameWindowFocused)
@@ -90,15 +90,15 @@ namespace GDMultiStash
                 }
             };
 
-            Runtime.ActiveGroupChanged += delegate (object sender, RuntimeHandler.ActiveGroupChangedEventArgs e) {
+            StashGroups.ActiveGroupChanged += delegate (object sender, Global.StashGroups.ActiveStashGroupChangedEventArgs e) {
                 if (Configuration.Settings.AutoSelectFirstStashInGroup)
                 {
                     var stashesInGroup = Stashes.GetStashesForGroup(e.NewID).ToList();
                     if (stashesInGroup.Count != 0)
                     {
-                        stashesInGroup.Sort(new Common.Objects.Sorting.StashesSortComparer());
+                        stashesInGroup.Sort(new Common.Objects.Sorting.Comparer.StashesSortComparer());
                         var stashID = stashesInGroup[0].ID;
-                        if (stashID != Runtime.ActiveStashID)
+                        if (stashID != Stashes.ActiveStashID)
                         {
                             Ingame.SwitchToStash(stashID);
                         }
@@ -106,7 +106,7 @@ namespace GDMultiStash
                 }
             };
 
-            Runtime.StashesContentChanged += delegate (object sender, RuntimeHandler.StashesContentChangedEventArgs args)
+            Stashes.StashesContentChanged += delegate (object sender, Global.Stashes.StashesContentChangedEventArgs args)
             {
                 if (args.NeedExport)
                 {
@@ -130,11 +130,11 @@ namespace GDMultiStash
             };
 
             Runtime.ActiveModeChanged += delegate {
-                Runtime.LoadActiveStashID();
+                Stashes.LoadActiveStashID();
             };
 
             Runtime.ActiveExpansionChanged += delegate {
-                Runtime.LoadActiveStashID();
+                Stashes.LoadActiveStashID();
             };
 
             Runtime.GameWindowConnected += delegate {
@@ -145,7 +145,7 @@ namespace GDMultiStash
             Runtime.GameWindowDisconnected += delegate {
                 // grim dawn closed
                 Runtime.StashIsOpened = false;
-                Runtime.AutoBackToMain();
+                Stashes.SwitchBackToMainStash();
             };
 
         }

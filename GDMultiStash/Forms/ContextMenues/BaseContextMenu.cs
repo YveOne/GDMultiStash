@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Drawing;
+using System.ComponentModel;
 
 namespace GDMultiStash.Forms.ContextMenues
 {
+    [DesignerCategory("code")]
     internal abstract class BaseContextMenu : ContextMenuStrip
     {
         protected bool LastItemIsSeparator => Items.Count != 0 && Items[Items.Count - 1].GetType() == typeof(ToolStripSeparator);

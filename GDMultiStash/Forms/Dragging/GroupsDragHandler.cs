@@ -26,7 +26,7 @@ namespace GDMultiStash.Forms.Dragging
             base.OnDragEnd(sender, args);
             if (DropSink.OverIndex != -1)
             {
-                Global.Groups.ResetOrder(DropSink.OrderedList);
+                G.StashGroups.ResetOrder(DropSink.OrderedList);
             }
             DropSink.Reset();
         }

@@ -1,8 +1,8 @@
 ﻿
 using System.Drawing;
 
-using D3DHook.Overlay;
 using D3DHook.Hook.Common;
+using D3DHook.Overlay.Common;
 
 namespace GDMultiStash.Overlay.Controls.Base
 {

@@ -107,7 +107,7 @@ namespace GDMultiStash.Forms.Dragging
                             if (item.RowObject is StashDummyObject) continue; // do not add dummies ...
                             OrderedList.Add((StashObject)item.RowObject);
                         }
-                        OrderedList.Sort(new Common.Objects.Sorting.StashesSortComparer());
+                        OrderedList.Sort(new Common.Objects.Sorting.Comparer.StashesSortComparer());
                     }
                 }
             }

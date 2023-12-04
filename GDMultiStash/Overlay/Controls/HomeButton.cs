@@ -1,5 +1,5 @@
 ﻿
-using D3DHook.Overlay;
+using D3DHook.Overlay.Common;
 
 namespace GDMultiStash.Overlay.Controls
 {
@@ -18,7 +18,7 @@ namespace GDMultiStash.Overlay.Controls
             };
             AddChild(_homeImage);
             MouseClick += delegate {
-                Global.Ingame.SwitchToMainStash();
+                G.Ingame.SwitchToMainStash();
             };
         }
 

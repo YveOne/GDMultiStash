@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace GDMultiStash
@@ -14,12 +12,13 @@ namespace GDMultiStash
     {
 
         private static GDMSContext context;
+        public static bool IsQuitting { get; private set; }
+
 
         [STAThread]
         static void Main()
         {
             Console.CreateConsole();
-            Console.LogToFile(System.IO.Path.Combine(Application.StartupPath, "log.txt"));
 
             _handler += new EventHandler(Handler);
             SetConsoleCtrlHandler(_handler, true);
@@ -30,8 +29,6 @@ namespace GDMultiStash
             context = new GDMSContext();
             Application.Run(context);
         }
-
-        public static bool IsQuitting { get; private set; }
 
         public static void Quit()
         {

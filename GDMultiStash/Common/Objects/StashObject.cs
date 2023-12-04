@@ -188,7 +188,7 @@ namespace GDMultiStash.Common.Objects
                 if (tab.Items.Count == 0) continue;
                 var item = tab.Items[0];
 
-                if (!Global.Database.GetItemRecordInfo(item.BaseRecord, out GlobalHandlers.DatabaseHandler.ItemRecordInfo itemInfo))
+                if (!G.Database.GetItemRecordInfo(item.BaseRecord, out Global.Database.ItemRecordInfo itemInfo))
                     continue;
 
                 var xCount = (int)(stashWidth / itemInfo.Width);
@@ -234,9 +234,9 @@ namespace GDMultiStash.Common.Objects
 
         public int ID => _configStash.ID;
 
-        public string FilePath => Global.FileSystem.GetStashTransferFile(ID);
+        public string FilePath => G.FileSystem.GetStashTransferFile(ID);
 
-        public string DirPath => Global.FileSystem.GetStashDirectory(ID);
+        public string DirPath => G.FileSystem.GetStashDirectory(ID);
 
         public DateTime LastWriteTime => File.GetLastWriteTime(FilePath);
 
@@ -294,7 +294,7 @@ namespace GDMultiStash.Common.Objects
             set { _configStash.Locked = value; }
         }
 
-        public bool IsMainStash => Global.Configuration.IsMainStashID(ID);
+        public bool IsMainStash => G.Configuration.IsMainStashID(ID);
 
         public int GroupID
         {

@@ -10,6 +10,7 @@ using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
 
 using D3DHook.Overlay;
+using D3DHook.Overlay.Common;
 
 namespace GDMultiStash.Overlay
 {
@@ -45,7 +46,7 @@ namespace GDMultiStash.Overlay
             AddChild(_lockSign);
             AddChild(_usageIndicator);
 
-            MouseClick += delegate { Global.Ingame.SwitchToStash(Model.ID); };
+            MouseClick += delegate { G.Ingame.SwitchToStash(Model.ID); };
         }
 
         public bool Locked
@@ -71,6 +72,7 @@ namespace GDMultiStash.Overlay
         public void UpdateUsageIndicator()
         {
             if (ParentViewport == null) return;
+
             ParentViewport.OverlayResources.DeleteResource(_usageIndicator.Resource);
             ParentViewport.OverlayResources.AsyncCreateImageResource(Model.UsageIndicator, System.Drawing.Imaging.ImageFormat.Png)
                 .ResourceCreated += delegate(object sender, ResourceHandler.ResourceCreatedEventArgs args) {
@@ -78,9 +80,9 @@ namespace GDMultiStash.Overlay
                 };
         }
 
-        protected override void OnViewportConnected()
+        protected override void OnViewportConnected(Element element)
         {
-            base.OnViewportConnected();
+            base.OnViewportConnected(element);
             UpdateUsageIndicator();
         }
 

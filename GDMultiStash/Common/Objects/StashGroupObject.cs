@@ -40,8 +40,8 @@ namespace GDMultiStash.Common.Objects
         {
             get
             {
-                var expansion = Global.Runtime.ShownExpansion;
-                var allStashes = Global.Stashes.GetStashesForGroup(ID).ToList();
+                var expansion = G.Runtime.ShownExpansion;
+                var allStashes = G.Stashes.GetStashesForGroup(ID).ToList();
                 var curStashes = allStashes.Where(s => s.Expansion == expansion);
                 return $"{curStashes.Count()}/{allStashes.Count()}";
             }

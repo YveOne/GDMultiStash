@@ -49,10 +49,10 @@ namespace GDMultiStash.Forms
 
         private void SetupForm_Load(object sender, EventArgs e)
         {
-            _settings = Global.Configuration.GetSettings();
+            _settings = G.Configuration.GetSettings();
 
             _languageDataSet.Clear();
-            foreach (GlobalHandlers.LocalizationHandler.Language lang in Global.Localization.Languages)
+            foreach (Global.LocalizationManager.Language lang in G.Localization.Languages)
                 _languageDataSet.Add(lang.Code, lang.Name);
             languageComboBox.ValueMember = "Key";
             languageComboBox.DisplayMember = "Value";
@@ -142,7 +142,7 @@ namespace GDMultiStash.Forms
             autoStartGDCommandComboBox.DisplayMember = "Value";
             autoStartGDCommandComboBox.ValueMember = "Key";
             autoStartGDCommandComboBox.DataSource = new BindingSource(_autoStartCommandsList, null);
-            autoStartGDCommandComboBox.SelectedIndex = _autoStartCommandsList.Count >= 1 && _autoStartCommandsList.Keys.ElementAt(0) == Global.Configuration.GetStartGameCommand() ? 0 :-1;
+            autoStartGDCommandComboBox.SelectedIndex = _autoStartCommandsList.Count >= 1 && _autoStartCommandsList.Keys.ElementAt(0) == G.Configuration.GetStartGameCommand() ? 0 :-1;
             autoStartGDArgumentsTextBox.Text = _settings.StartGameArguments;
         }
 
@@ -174,31 +174,31 @@ namespace GDMultiStash.Forms
             // add args for command
             _autoStartArgumentsList.Add(command, args);
 
-            if (Global.Configuration.GetStartGameCommand(command) == "steam")
+            if (G.Configuration.GetStartGameCommand(command) == "steam")
             {
                 if (GrimDawn.Steam.SteamClientPath64 == null) return; // not installed
                 if (_settings.GamePath != GrimDawn.Steam.GamePath64) return;
                 _autoStartCommandsList.Add("steam", "Steam Client");
                 return;
             }
-            if (Global.Configuration.GetStartGameCommand(command) == "gog")
+            if (G.Configuration.GetStartGameCommand(command) == "gog")
             {
                 if (GrimDawn.GOG.GalaxyClientPath == null) return; // not installed
                 if (_settings.GamePath != GrimDawn.GOG.GamePath64) return;
                 _autoStartCommandsList.Add("gog", "GOG Galaxy Client");
                 return;
             }
-            if (Global.Configuration.GetStartGameCommand(command) == "grimdawn")
+            if (G.Configuration.GetStartGameCommand(command) == "grimdawn")
             {
                 _autoStartCommandsList.Add("grimdawn", "Grim Dawn.exe");
                 return;
             }
-            if (Global.Configuration.GetStartGameCommand(command) == "griminternals")
+            if (G.Configuration.GetStartGameCommand(command) == "griminternals")
             {
-                _autoStartCommandsList.Add("griminternals", "Grim Internals");
+                _autoStartCommandsList.Add("griminternals", $"Grim Internals ({G.L.NoMoreSupported()})");
                 return;
             }
-            if (Global.Configuration.GetStartGameCommand(command) == "grimcam")
+            if (G.Configuration.GetStartGameCommand(command) == "grimcam")
             {
                 _autoStartCommandsList.Add("grimcam", "GrimCam");
                 return;
@@ -227,7 +227,7 @@ namespace GDMultiStash.Forms
             switch (_settings.MaxBackups)
             {
                 case 0:
-                    maxBackupsValueLabel.Text = Global.L.BackupsOffLabel();
+                    maxBackupsValueLabel.Text = G.L.BackupsOffLabel();
                     break;
                 default:
                     maxBackupsValueLabel.Text = _settings.MaxBackups.ToString();
@@ -255,7 +255,7 @@ namespace GDMultiStash.Forms
             overlayStashesCountValueLabel.Text = $"{_settings.OverlayStashesCount}";
         }
         
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected override void Localize(Global.LocalizationManager.StringsHolder L)
         {
             Text = L.SettingsButton();
 
@@ -372,16 +372,16 @@ namespace GDMultiStash.Forms
             Native.Shortcut link = new Native.Shortcut();
             link.SetDescription(ass.Description);
             link.SetPath(ass.Location);
-            link.SetIconLocation(Path.Combine(Global.Configuration.Settings.GamePath, "Grim Dawn.exe"), 0);
+            link.SetIconLocation(Path.Combine(G.Configuration.Settings.GamePath, "Grim Dawn.exe"), 0);
             link.SetWorkingDirectory(Application.StartupPath);
             string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             link.SaveTo(Path.Combine(desktopPath, "GDMultiStash.lnk"));
-            Console.Alert(Global.L.ShortcutCreatedMessage());
+            Console.Alert(G.L.ShortcutCreatedMessage());
         }
 
         private void CleanupBackupsButton_Click(object sender, EventArgs e)
         {
-            Global.Stashes.CleanupBackups();
+            G.Stashes.CleanupBackups();
         }
 
         private void GamePathSearchButton_Click(object sender, EventArgs e)
@@ -518,8 +518,8 @@ namespace GDMultiStash.Forms
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            Global.Configuration.SetSettings(_settings);
-            Global.Configuration.Save();
+            G.Configuration.SetSettings(_settings);
+            G.Configuration.Save();
             Close(DialogResult.OK);
         }
 
@@ -527,8 +527,8 @@ namespace GDMultiStash.Forms
         {
             languageLabel.Focus(); // just dont focus any other button or input
             applyButton.Enabled = false;
-            Global.Configuration.SetSettings(_settings);
-            Global.Configuration.Save();
+            G.Configuration.SetSettings(_settings);
+            G.Configuration.Save();
         }
 
         public override DialogResult ShowDialog(IWin32Window owner)

@@ -108,7 +108,7 @@ namespace GDMultiStash.Common
 			{
 				uint usedPage = 0;
 				foreach (GDIALib.Parser.Stash.Item item in tab.Items)
-					usedPage += Global.Database.GetItemSize(item.BaseRecord);
+					usedPage += G.Database.GetItemSize(item.BaseRecord);
 				usedTotal += usedPage;
 				_usagePages.Add((float)usedPage / (float)spacePerTab);
 			}

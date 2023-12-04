@@ -27,7 +27,7 @@ namespace GDMultiStash.Forms
             };
         }
 
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected override void Localize(Global.LocalizationManager.StringsHolder L)
         {
             Text = L.CreateGroupButton();
             nameLabel.Text = L.NameLabel();
@@ -36,7 +36,7 @@ namespace GDMultiStash.Forms
 
         private void AddStashDialogForm_Shown(object sender, EventArgs e)
         {
-            nameTextBox.Text = Global.L.DefaultStashGroupName();
+            nameTextBox.Text = G.L.DefaultStashGroupName();
             nameTextBox.SelectAll();
             nameTextBox.Focus();
         }
@@ -49,9 +49,9 @@ namespace GDMultiStash.Forms
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            StashGroupObject group = Global.Groups.CreateGroup(nameTextBox.Text);
-            Global.Configuration.Save();
-            Global.Runtime.InvokeStashGroupsAdded(group);
+            StashGroupObject group = G.StashGroups.CreateGroup(nameTextBox.Text);
+            G.Configuration.Save();
+            G.StashGroups.InvokeStashGroupsAdded(group);
             nameTextBox.SelectAll();
             nameTextBox.Focus();
         }

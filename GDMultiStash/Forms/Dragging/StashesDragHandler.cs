@@ -30,7 +30,7 @@ namespace GDMultiStash.Forms.Dragging
                 {
                     stash.GroupID = DropSink.OverStashGroup.ID;
                 }
-                Global.Stashes.ResetOrder(DropSink.OrderedList);
+                G.Stashes.ResetOrder(DropSink.OrderedList);
             }
             DropSink.Reset();
         }

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Windows.Forms;
+using System.Text;
 
 namespace GDMultiStashStarter
 {
@@ -11,6 +12,8 @@ namespace GDMultiStashStarter
         [DllImport("kernel32.dll")]
         public static extern uint AttachConsole(uint dwProcessId);
         public const uint ATTACH_PARRENT = 0xFFFFFFFF;
+
+        private static TextWriter logWriter = null;
 
         private static void Del(string f)
         {
@@ -23,7 +26,7 @@ namespace GDMultiStashStarter
         }
 
         [STAThread]
-        static void Main()
+        static int Main()
         {
             AttachConsole(ATTACH_PARRENT);
 
@@ -51,8 +54,8 @@ namespace GDMultiStashStarter
             Del("D3DHook.pdb");
             Del("GDMultiStash.exe.config");
             Del("GDMultiStashUpdater.exe.config");
+            Del("sharpdx_direct3d11_1_effects_x86.dll");
 
-            Chk("sharpdx_direct3d11_1_effects_x86.dll");
             Chk("sharpdx_direct3d11_1_effects_x64.dll");
             Chk("SharpDX.Mathematics.dll");
             Chk("SharpDX.DXGI.dll");
@@ -72,11 +75,17 @@ namespace GDMultiStashStarter
             Chk("EasyHook.dll");
             Chk("DllInjector.dll");
             Chk("D3DHook.dll");
+            Chk("D3DHook.Overlay.dll");
             Chk("Listdlls.exe");
             Chk("EasyHook64Svc.exe");
             Chk("EasyHook32Svc.exe");
             Chk("DllInjector64.exe");
             Chk("GDMultiStash.bin");
+
+            var logFile = System.IO.Path.Combine(Application.StartupPath, "log.txt");
+            if (File.Exists(logFile)) File.Delete(logFile);
+            logWriter = new StreamWriter(new FileStream(logFile, FileMode.OpenOrCreate), Encoding.UTF8)
+            { AutoFlush = true, };
 
             process = new Process()
             {
@@ -90,20 +99,29 @@ namespace GDMultiStashStarter
                     CreateNoWindow = true,
                 }
             };
-            
+
             process.OutputDataReceived += new DataReceivedEventHandler(OutputHandler);
-            process.ErrorDataReceived += new DataReceivedEventHandler(OutputHandler);
+            process.EnableRaisingEvents = true;
             process.Start();
             process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
-            process.WaitForExit();
+            using (StreamReader s = process.StandardError)
+            {
+                string error = s.ReadToEnd();
+                logWriter.WriteLine(error);
+                Console.WriteLine(error);
+                process.WaitForExit();
+                if (error != "")
+                    return 1;
+            }
+            return 0;
         }
 
         private static Process process;
 
-        static void OutputHandler(object sendingProcess, DataReceivedEventArgs outLine)
+        static void OutputHandler(object sendingProcess, DataReceivedEventArgs e)
         {
-            Console.WriteLine(outLine.Data);
+            logWriter.WriteLine(e.Data);
+            Console.WriteLine(e.Data);
         }
 
         #region Trap application termination

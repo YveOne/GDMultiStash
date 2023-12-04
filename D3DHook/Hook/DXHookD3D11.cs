@@ -6,7 +6,6 @@ using SharpDX.Direct3D11;
 using SharpDX.DXGI;
 using SharpDX;
 using System.Runtime.InteropServices;
-using EasyHook;
 using System.Threading;
 using System.IO;
 using D3DHook.Interface;

@@ -30,9 +30,9 @@
         {
             this.shownItemsCountLabel = new System.Windows.Forms.Label();
             this.menuFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
-            this.showExpansionComboBox = new GDMultiStash.Forms.Controls.FlatComboBox();
-            this.showSoftCoreCheckbox = new GDMultiStash.Forms.Controls.MyCheckBox();
-            this.showHardCoreCheckbox = new GDMultiStash.Forms.Controls.MyCheckBox();
+            this.showExpansionComboBox = new GDMultiStash.Forms.Controls.DefaultComboBox();
+            this.showSoftCoreCheckbox = new GDMultiStash.Forms.Controls.DefaultCheckBox();
+            this.showHardCoreCheckbox = new GDMultiStash.Forms.Controls.DefaultCheckBox();
             this.listViewBorderPanel = new System.Windows.Forms.Panel();
             this.stashesListView = new GDMultiStash.Forms.Controls.OLVGroupFeatures();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
@@ -189,9 +189,9 @@
 
         private System.Windows.Forms.Label shownItemsCountLabel;
         private System.Windows.Forms.FlowLayoutPanel menuFlowLayoutPanel;
-        private GDMultiStash.Forms.Controls.FlatComboBox showExpansionComboBox;
-        private GDMultiStash.Forms.Controls.MyCheckBox showSoftCoreCheckbox;
-        private GDMultiStash.Forms.Controls.MyCheckBox showHardCoreCheckbox;
+        private GDMultiStash.Forms.Controls.DefaultComboBox showExpansionComboBox;
+        private GDMultiStash.Forms.Controls.DefaultCheckBox showSoftCoreCheckbox;
+        private GDMultiStash.Forms.Controls.DefaultCheckBox showHardCoreCheckbox;
         private System.Windows.Forms.Panel listViewBorderPanel;
         private GDMultiStash.Forms.Controls.OLVGroupFeatures stashesListView;
         private System.Windows.Forms.MenuStrip menuStrip;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 
 namespace GDMultiStashDebug
 {
@@ -24,6 +23,8 @@ namespace GDMultiStashDebug
             {
                 process.Start();
                 process.WaitForExit();
+                if (process.ExitCode == 1)
+                    System.Threading.Thread.Sleep(5000);
             }
         }
 

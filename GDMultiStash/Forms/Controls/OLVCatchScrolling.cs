@@ -20,6 +20,7 @@ using BrightIdeasSoftware;
 
 namespace GDMultiStash.Forms.Controls
 {
+    [DesignerCategory("code")]
     internal class OLVCatchScrolling : ObjectListView
     {   // https://github.com/deveck/Deveck.Utils
 

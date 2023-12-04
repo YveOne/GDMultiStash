@@ -86,7 +86,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cleanup.cs" />
     <Compile Include="Common\Config\ConfigSortPattern.cs" />
     <Compile Include="Common\Config\ConfigColor.cs" />
     <Compile Include="Common\Config\ConfigSortPatternList.cs" />
@@ -112,63 +111,71 @@
     <Compile Include="Common\Config\V5\ConfigStashList.cs" />
     <Compile Include="Common\Config\V5\Config.cs" />
     <Compile Include="Common\Objects\IBaseObject.cs" />
-    <Compile Include="Common\Objects\Sorting\GroupsSortComparer.cs" />
-    <Compile Include="Common\Objects\Sorting\ObjectListViewSortComparer.cs" />
-    <Compile Include="Common\Objects\Sorting\StashesSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\Comparer\GroupsSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\Comparer\ObjectListViewSortComparer.cs" />
+    <Compile Include="Common\Objects\Sorting\Comparer\StashesSortComparer.cs" />
     <Compile Include="Common\TransferFile.Static.cs" />
-    <Compile Include="D3DHook\Overlay\Animations\AnimationValue.cs" />
-    <Compile Include="D3DHook\Overlay\Animations\Animator.cs" />
-    <Compile Include="D3DHook\Overlay\Animations\Animator.Static.cs" />
-    <Compile Include="D3DHook\Overlay\Animations\AnimatorAnimateEventArgs.cs" />
-    <Compile Include="D3DHook\Overlay\Animations\AnimatorEventHandler.cs" />
-    <Compile Include="D3DHook\Overlay\ButtonElement.cs" />
-    <Compile Include="D3DHook\Overlay\CheckableElement.cs" />
-    <Compile Include="D3DHook\Overlay\FontHandler.cs" />
-    <Compile Include="D3DHook\Overlay\PanelElement.cs" />
-    <Compile Include="D3DHook\Overlay\ScrollManager.cs" />
     <Compile Include="Common\StashesZipFile.cs" />
     <Compile Include="Common\Objects\StashGroupObject.cs" />
     <Compile Include="Common\Objects\StashObject.cs" />
-    <Compile Include="Forms\ContextMenues\BaseContextMenu.cs">
-      <SubType>Component</SubType>
+    <Compile Include="Forms\Controls\BaseFormBorderPanel.cs" />
+    <Compile Include="Forms\Controls\BaseFormTitlePanel.cs" />
+    <Compile Include="Forms\Controls\Base\FlatToolStripRenderer.cs" />
+    <Compile Include="Forms\Controls\ControlBoxButton.cs" />
+    <Compile Include="Forms\BaseForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\ClassSortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\NoneSortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\RaritySortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\QualitySortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\SetSortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\SortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\LevelSortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\Criteria\TypeSortCriteria.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\SortingStructures\SizeSortingStructure.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\SortingStructures\SortingStructure.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\SortingStructures\RecordSortingStructure.cs" />
-    <Compile Include="Forms\ContextMenues\SortStashes\SortHandler.cs" />
+    <Compile Include="Forms\BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ContextMenues\BaseContextMenu.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\ClassSortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\NoneSortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\RaritySortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\QualitySortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\SetSortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\SortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\LevelSortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Criteria\TypeSortCriteria.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Structures\SizeSortingStructure.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Structures\SortingStructure.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\Structures\RecordSortingStructure.cs" />
+    <Compile Include="Common\Objects\Sorting\Handler\SortHandler.cs" />
+    <Compile Include="Forms\Controls\DefaultComboBox.cs" />
+    <Compile Include="Forms\Controls\DefaultContentMenuStripRenderer.cs" />
+    <Compile Include="Forms\Controls\DefaultTitleMenuStripRenderer.cs" />
     <Compile Include="Forms\CraftingModeDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\CraftingModeDialogForm.Designer.cs">
       <DependentUpon>CraftingModeDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalHandlers\Base\BaseHandler.cs" />
-    <Compile Include="GlobalHandlers\Base\ObjectsHandler.cs" />
-    <Compile Include="GlobalHandlers\ConfigurationHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\DatabaseHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\FileSystemHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\GroupsHandler.cs" />
-    <Compile Include="GlobalHandlers\GroupsHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\IngameHandler.cs" />
-    <Compile Include="GlobalHandlers\IngameHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\LocalizationHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\LocalizationHandler.Strings.cs" />
-    <Compile Include="GlobalHandlers\ResourceHandler.cs" />
-    <Compile Include="GlobalHandlers\ResourceHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\RuntimeHandler.cs" />
-    <Compile Include="GlobalHandlers\RuntimeHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\SoundHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\StashesHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\UpdateHandler.Events.cs" />
-    <Compile Include="GlobalHandlers\WindowsHandler.Events.cs" />
+    <Compile Include="Forms\SplashForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SplashForm.Designer.cs">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Global\Base\Manager.cs" />
+    <Compile Include="Global\Base\ObjectsManager.cs" />
+    <Compile Include="Global\Base\ObjectsEventArgs.cs" />
+    <Compile Include="Global\ConfigurationManager.Events.cs" />
+    <Compile Include="Global\DatabaseManager.Events.cs" />
+    <Compile Include="Global\FileSystemManager.Events.cs" />
+    <Compile Include="Global\StashGroupsManager.cs" />
+    <Compile Include="Global\StashGroupsManager.Events.cs" />
+    <Compile Include="Global\IngameManager.cs" />
+    <Compile Include="Global\IngameManager.Events.cs" />
+    <Compile Include="Global\LocalizationManager.Events.cs" />
+    <Compile Include="Global\LocalizationManager.Strings.cs" />
+    <Compile Include="Global\ResourcesManager.cs" />
+    <Compile Include="Global\ResourcesManager.Events.cs" />
+    <Compile Include="Global\RuntimeManager.cs" />
+    <Compile Include="Global\RuntimeManager.Events.cs" />
+    <Compile Include="Global\SoundsManager.Events.cs" />
+    <Compile Include="Global\StashesManager.Events.cs" />
+    <Compile Include="Global\UpdateManager.Events.cs" />
+    <Compile Include="Global\WindowsManager.Events.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.Options.cs" />
     <Compile Include="Utils\SimpleFileWatcher.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -178,25 +185,15 @@
     </Compile>
     <Compile Include="Console.cs" />
     <Compile Include="Constants.cs" />
-    <Compile Include="Forms\Controls\DefaultOLVColumn.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Controls\FlatToolStripRenderer.cs" />
-    <Compile Include="Forms\Controls\OLVGroupFeatures.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Forms\Controls\DefaultOLVColumn.cs" />
+    <Compile Include="Forms\Controls\Base\CustomToolStripRenderer.cs" />
+    <Compile Include="Forms\Controls\OLVGroupFeatures.cs" />
     <Compile Include="Forms\Plexiglass\DockingPlexiglass.cs" />
     <Compile Include="Forms\Plexiglass\Plexiglass.cs" />
     <Compile Include="Forms\MainWindow\DecorationCollection.cs" />
-    <Compile Include="Forms\ContextMenues\StashGroupsPageContextMenu.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\ContextMenues\StashesPageContextMenu.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\MainWindow\StashGroupsPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\ContextMenues\StashGroupsPageContextMenu.cs" />
+    <Compile Include="Forms\ContextMenues\StashesPageContextMenu.cs" />
+    <Compile Include="Forms\MainWindow\StashGroupsPage.cs" />
     <Compile Include="Forms\MainWindow\StashGroupsPage.Designer.cs">
       <DependentUpon>StashGroupsPage.cs</DependentUpon>
     </Compile>
@@ -207,18 +204,10 @@
     <Compile Include="Forms\StashTabsEditorWindow.Designer.cs">
       <DependentUpon>StashTabsEditorWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\StashTabsEditor\DragImage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\StashTabsEditor\StashTabAddPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\StashTabsEditor\StashTabBasePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\StashTabsEditor\StashTabPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Forms\StashTabsEditor\DragImage.cs" />
+    <Compile Include="Forms\StashTabsEditor\StashTabAddPanel.cs" />
+    <Compile Include="Forms\StashTabsEditor\StashTabBasePanel.cs" />
+    <Compile Include="Forms\StashTabsEditor\StashTabPanel.cs" />
     <Compile Include="Overlay\Controls\HomeButton.cs" />
     <Compile Include="Utils\Extensions.cs" />
     <Compile Include="Forms\ChangelogDialogForm.cs">
@@ -227,21 +216,11 @@
     <Compile Include="Forms\ChangelogDialogForm.Designer.cs">
       <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Controls\FlatComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Controls\MyCheckBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Controls\OLVCatchScrolling.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Controls\PseudoScrollBarPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Forms\Controls\TransparentControls.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Forms\Controls\Base\FlatComboBox.cs" />
+    <Compile Include="Forms\Controls\DefaultCheckBox.cs" />
+    <Compile Include="Forms\Controls\OLVCatchScrolling.cs" />
+    <Compile Include="Forms\Controls\PseudoScrollBarPanel.cs" />
+    <Compile Include="Forms\Controls\TransparentControls.cs" />
     <Compile Include="Forms\CreateStashGroupDialogForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -254,15 +233,11 @@
     <Compile Include="Forms\Dragging\GroupsDragHandler.cs" />
     <Compile Include="Forms\Dragging\GroupsDragSource.cs" />
     <Compile Include="Forms\Dragging\GroupsDropSink.cs" />
-    <Compile Include="Forms\MainWindow\Page.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\MainWindow\Page.cs" />
     <Compile Include="Forms\MainWindow\Page.Designer.cs">
       <DependentUpon>Page.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MainWindow\StashesPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Forms\MainWindow\StashesPage.cs" />
     <Compile Include="Forms\MainWindow\StashesPage.Designer.cs">
       <DependentUpon>StashesPage.cs</DependentUpon>
     </Compile>
@@ -272,18 +247,18 @@
     <Compile Include="Forms\ProgressDialogForm.Designer.cs">
       <DependentUpon>ProgressDialogForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GlobalHandlers\ConfigurationHandler.cs" />
-    <Compile Include="GlobalHandlers\DatabaseHandler.cs" />
+    <Compile Include="Global\ConfigurationManager.cs" />
+    <Compile Include="Global\DatabaseManager.cs" />
     <Compile Include="Global.cs" />
-    <Compile Include="GlobalHandlers\LocalizationHandler.cs" />
-    <Compile Include="GlobalHandlers\StashesHandler.cs" />
-    <Compile Include="GlobalHandlers\UpdateHandler.cs" />
-    <Compile Include="GlobalHandlers\WindowsHandler.cs" />
+    <Compile Include="Global\LocalizationManager.cs" />
+    <Compile Include="Global\StashesManager.cs" />
+    <Compile Include="Global\UpdateManager.cs" />
+    <Compile Include="Global\WindowsManager.cs" />
     <Compile Include="Forms\Dragging\StashesDragHandler.cs" />
     <Compile Include="Forms\Dragging\StashesDragSource.cs" />
     <Compile Include="Forms\Dragging\StashesDropSink.cs" />
-    <Compile Include="GlobalHandlers\FileSystemHandler.cs" />
-    <Compile Include="GlobalHandlers\SoundHandler.cs" />
+    <Compile Include="Global\FileSystemManager.cs" />
+    <Compile Include="Global\SoundsManager.cs" />
     <Compile Include="GrimDawnLib\GrimDawn.GOG.cs" />
     <Compile Include="Native\Native.Constants.cs" />
     <Compile Include="Overlay\Controls\Base\LargeButton.cs" />
@@ -301,18 +276,8 @@
     <Compile Include="Overlay\StaticResources.cs" />
     <Compile Include="Overlay\Controls\Base\VerticalScrollBar.cs" />
     <Compile Include="Overlay\StashList.cs" />
-    <Compile Include="D3DHook\Overlay\Element.Anchors.cs" />
     <Compile Include="Overlay\OverlayWindow.cs" />
     <Compile Include="Overlay\StashListChild.cs" />
-    <Compile Include="D3DHook\Overlay\Element.Mouse.cs" />
-    <Compile Include="D3DHook\Overlay\ListBoxElement.cs" />
-    <Compile Include="D3DHook\Overlay\ScrollBarElement.cs" />
-    <Compile Include="D3DHook\Overlay\TextElement.cs" />
-    <Compile Include="D3DHook\Overlay\Viewport.cs" />
-    <Compile Include="D3DHook\Overlay\Element.cs" />
-    <Compile Include="D3DHook\Overlay\Element.Properties.cs" />
-    <Compile Include="D3DHook\Overlay\ImageElement.cs" />
-    <Compile Include="D3DHook\Overlay\ResourceHandler.cs" />
     <Compile Include="Common\TransferFile.cs" />
     <Compile Include="Forms\AboutDialogForm.cs">
       <SubType>Form</SubType>
@@ -327,9 +292,6 @@
       <DependentUpon>CreateStashDialogForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\DialogForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\ImportStashDialogForm.cs">
@@ -360,7 +322,6 @@
     <Compile Include="Utils\AssemblyInfo.cs" />
     <Compile Include="Utils\FontLoader.cs" />
     <Compile Include="Utils\FileUtils.cs" />
-    <Compile Include="D3DHook\Overlay\Animations\Easing.cs" />
     <Compile Include="Native\Native.Mouse.Hook.cs" />
     <Compile Include="Native\Native.Hook.cs" />
     <Compile Include="Native\Native.Shortcut.cs" />
@@ -378,6 +339,9 @@
     <Compile Include="Utils\ZipFileWriter.cs" />
     <EmbeddedResource Include="Forms\AboutDialogForm.resx">
       <DependentUpon>AboutDialogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ChangelogDialogForm.resx">
       <DependentUpon>ChangelogDialogForm.cs</DependentUpon>
@@ -415,6 +379,9 @@
     <EmbeddedResource Include="Forms\ProgressDialogForm.resx">
       <DependentUpon>ProgressDialogForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SplashForm.resx">
+      <DependentUpon>SplashForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\StashTabsEditorWindow.resx">
       <DependentUpon>StashTabsEditorWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -442,6 +409,7 @@
     <Resource Include="app.config" CopyToOutputDirectory="Never" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\GDMSSplash.png" />
     <None Include="Resources\Text_FR_setnames.txt" />
     <None Include="Resources\Text_ES_setnames.txt" />
     <None Include="Resources\Text_EN_setnames.txt" />
@@ -510,7 +478,6 @@
     <None Include="Resources\local_zhCN.txt" />
     <None Include="Resources\icon32.ico" />
     <Content Include="icon64.ico" />
-    <None Include="Resources\border.png" />
     <None Include="Resources\buttonCloseGray.png" />
     <None Include="Resources\buttonCloseWhite.png" />
     <None Include="Resources\buttonMinimizeGray.png" />
@@ -539,6 +506,10 @@
     <None Include="Resources\CheckBoxCross.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\D3DHook.Overlay\D3DHook.Overlay.csproj">
+      <Project>{0fe873bc-ca39-414f-8e99-cc82635074e5}</Project>
+      <Name>D3DHook.Overlay</Name>
+    </ProjectReference>
     <ProjectReference Include="..\D3DHook\D3DHook.csproj">
       <Project>{23178a3d-2ac0-419a-b1b6-59ca45191270}</Project>
       <Name>D3DHook</Name>

@@ -10,5 +10,6 @@ namespace D3DHook.Hook.Common
     {
         int Width { get; }
         int Height { get; }
+        void SetImage(System.Drawing.Image bitmap, System.Drawing.Imaging.ImageFormat format);
     }
 }

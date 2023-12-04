@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
-
-using D3DHook.Overlay;
 
 namespace GDMultiStash.Overlay
 {
@@ -19,7 +16,7 @@ namespace GDMultiStash.Overlay
 
         public GroupListChild() : base(StaticResources.GroupListItemFontHandler)
         {
-            MouseClick += delegate { Global.Runtime.ActiveGroupID = Model.ID; };
+            MouseClick += delegate { G.StashGroups.ActiveGroupID = Model.ID; };
         }
 
     }

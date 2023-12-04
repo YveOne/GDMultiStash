@@ -63,16 +63,6 @@ namespace GDMultiStash.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap border {
-            get {
-                object obj = ResourceManager.GetObject("border", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap buttonCloseGray {
             get {
                 object obj = ResourceManager.GetObject("buttonCloseGray", resourceCulture);
@@ -406,6 +396,16 @@ namespace GDMultiStash.Properties {
         internal static System.Drawing.Bitmap GDMSLogo {
             get {
                 object obj = ResourceManager.GetObject("GDMSLogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap GDMSSplash {
+            get {
+                object obj = ResourceManager.GetObject("GDMSSplash", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

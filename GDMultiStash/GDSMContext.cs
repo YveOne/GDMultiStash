@@ -33,131 +33,129 @@ namespace GDMultiStash
             {
                 Native.PostMessage(
                     (IntPtr)Native.HWND.BROADCAST,
-                    Constants.WM_SHOWME,
+                    C.WM_SHOWME,
                     IntPtr.Zero,
                     IntPtr.Zero);
                 Program.Quit();
                 return;
             }
 
-            Global.FileSystem.CreateDirectories();
-            Global.Configuration.SaveBackup();
-            Global.Configuration.Load();
+            G.Windows.ShowSplashScreen();
 
-            Global.Localization.AddLanguageFile("enUS");
-            Global.Localization.AddLanguageFile("deDE");
-            Global.Localization.AddLanguageFile("zhCN");
-            Global.Localization.AddLanguageFilesFrom(Global.FileSystem.LocalesDirectory);
-            Global.Configuration.LanguageChanged += Global_Configuration_LanguageChanged;
+            G.FileSystem.CreateDirectories();
+            G.Configuration.CreateBackup();
+            G.Configuration.Load();
 
-            if (Global.Configuration.IsNewConfiguration)
+            G.Localization.AddLanguageFile("enUS");
+            G.Localization.AddLanguageFile("deDE");
+            G.Localization.AddLanguageFile("zhCN");
+            G.Localization.AddLanguageFilesFrom(C.LocalesPath);
+            G.Configuration.LanguageChanged += Global_Configuration_LanguageChanged;
+
+            if (G.Configuration.IsNewConfiguration)
             {
-                string curLangCode = Global.Localization.CurrentCode;
-                if (Global.Localization.LoadLanguage(curLangCode))
-                    Global.Configuration.Settings.Language = curLangCode;
+                string curLangCode = G.Localization.CurrentCode;
+                if (G.Localization.LoadLanguage(curLangCode))
+                    G.Configuration.Settings.Language = curLangCode;
                 else
-                    Global.Localization.LoadLanguage("enUS");
+                    G.Localization.LoadLanguage("enUS");
             }
             else
             {
-                if (!Global.Localization.LoadLanguage(Global.Configuration.Settings.Language))
-                    Global.Localization.LoadLanguage("enUS");
+                if (!G.Localization.LoadLanguage(G.Configuration.Settings.Language))
+                    G.Localization.LoadLanguage("enUS");
             }
 
             if (!GrimDawn.ValidateDocumentsPath())
             {
-                Console.AlertError(Global.L.DocumentsDirectoryNotFoundMessage());
+                Console.AlertError(G.L.DocumentsDirectoryNotFoundMessage());
                 Program.Quit();
                 return;
             }
 
-            if (!GrimDawn.ValidateGamePath(Global.Configuration.Settings.GamePath))
-                Global.Configuration.Settings.GamePath = GrimDawn.Steam.GamePath64 ?? "";
-            if (!GrimDawn.ValidateGamePath(Global.Configuration.Settings.GamePath))
-                Global.Configuration.Settings.GamePath = GrimDawn.GOG.GamePath64 ?? "";
+            if (!GrimDawn.ValidateGamePath(G.Configuration.Settings.GamePath))
+                G.Configuration.Settings.GamePath = GrimDawn.Steam.GamePath64 ?? "";
+            if (!GrimDawn.ValidateGamePath(G.Configuration.Settings.GamePath))
+                G.Configuration.Settings.GamePath = GrimDawn.GOG.GamePath64 ?? "";
 
-            if (Global.Configuration.IsNewConfiguration)
+            if (G.Configuration.IsNewConfiguration)
             {
-                Global.Windows.ShowConfigurationWindow();
+                G.Windows.ShowConfigurationWindow();
             }
             else
             {
                 // game install path not found? let user choose path
-                if (!GrimDawn.ValidateGamePath(Global.Configuration.Settings.GamePath))
+                if (!GrimDawn.ValidateGamePath(G.Configuration.Settings.GamePath))
                 {
-                    Console.AlertWarning(Global.L.SelectGameDirectoryMessage());
-                    Global.Windows.ShowConfigurationWindow();
+                    Console.AlertWarning(G.L.SelectGameDirectoryMessage());
+                    G.Windows.ShowConfigurationWindow();
                 }
             }
 
             // game install path still not found? poooor user...
-            if (!GrimDawn.ValidateGamePath(Global.Configuration.Settings.GamePath))
+            if (!GrimDawn.ValidateGamePath(G.Configuration.Settings.GamePath))
             {
-                Console.AlertError(Global.L.GameDirectoryNotFoundMessage());
+                Console.AlertError(G.L.GameDirectoryNotFoundMessage());
                 Program.Quit();
                 return;
             }
 
-            // directory gdx3 doesnt exist yet in 1.2
-            if (!File.Exists(Path.Combine(Global.Configuration.Settings.GamePath, "resources", "Text_DE.arc")))
+            if (!File.Exists(Path.Combine(G.Configuration.Settings.GamePath, "resources", "Text_DE.arc")))
             {
-                Global.Configuration.RestoreBackup();
-                string msg = Global.L.OldGDVersionNotSupported();
+                G.Configuration.RestoreBackup();
+                string msg = G.L.OldGDVersionNotSupported();
                 if (Console.Confirm(msg, MessageBoxIcon.Information))
                 {
-                    Global.Update.StartUpdater(GDMultiStashUpdater.UpdaterAPI.LatestUrlLive);
+                    G.Update.StartUpdater(GDMultiStashUpdater.UpdaterAPI.LatestUrlOld);
                 }
                 else
                 {
-                    System.Diagnostics.Process.Start("https://github.com/YveOne/GDMultiStash/releases");
-                    Program.Quit();
+                    System.Diagnostics.Process.Start("https://github.com/YveOne/GDMultiStashOld/releases");
                 }
                 return;
             }
 
             // check for new version
-            if (Global.Update.ShowNewVersionAvailable())
+            if (G.Update.ShowNewVersionAvailable())
             {
-                string msg = Global.L.UpdateAvailableMessage(Global.Update.NewVersionName);
+                string msg = G.L.UpdateAvailableMessage(G.Update.NewVersionName);
                 if (Console.Confirm(msg, MessageBoxIcon.Information))
                 {
-                    Global.Update.StartUpdater();
+                    G.Update.StartUpdater();
                     return;
                 }
             }
 
-            Global.Configuration.UpdateAndCleanup();
-            Global.Configuration.DeleteBackup();
+            G.Configuration.UpdateAndCleanup();
+            G.Configuration.DeleteBackup();
 
             // warn user if cloud saving is enabled in gd settings
+            if (GrimDawn.Options.GetOptionValue("cloudSaving") == "true")
             {
-                if (GrimDawn.Options.GetOptionValue("cloudSaving") == "true")
-                {
-                    Console.AlertWarning(Global.L.DisableCloudSyncMessage());
-                }
+                Console.AlertWarning(G.L.DisableCloudSyncMessage());
             }
 
-            Global.Localization.LoadGameLanguage("Text_DE", "German");
-            Global.Localization.LoadGameLanguage("Text_EN", "English");
-            Global.Localization.LoadGameLanguage("Text_ES", "Spanish");
-            Global.Localization.LoadGameLanguage("Text_FR", "French");
-            Global.Localization.LoadGameLanguage("Text_IT", "Italian");
-            Global.Localization.LoadGameLanguage("Text_CS", "Czech");
-            Global.Localization.LoadGameLanguage("Text_JA", "Japanese");
-            Global.Localization.LoadGameLanguage("Text_KO", "Korean");
-            Global.Localization.LoadGameLanguage("Text_PL", "Polish");
-            Global.Localization.LoadGameLanguage("Text_PT", "Portuguese");
-            Global.Localization.LoadGameLanguage("Text_VI", "Vietnamese");
-            Global.Localization.LoadGameLanguage("Text_ZH", "Chinese");
+            G.Localization.LoadGameLanguage("Text_DE", "German");
+            G.Localization.LoadGameLanguage("Text_EN", "English");
+            G.Localization.LoadGameLanguage("Text_ES", "Spanish");
+            G.Localization.LoadGameLanguage("Text_FR", "French");
+            G.Localization.LoadGameLanguage("Text_IT", "Italian");
+            G.Localization.LoadGameLanguage("Text_CS", "Czech");
+            G.Localization.LoadGameLanguage("Text_JA", "Japanese");
+            G.Localization.LoadGameLanguage("Text_KO", "Korean");
+            G.Localization.LoadGameLanguage("Text_PL", "Polish");
+            G.Localization.LoadGameLanguage("Text_PT", "Portuguese");
+            G.Localization.LoadGameLanguage("Text_VI", "Vietnamese");
+            G.Localization.LoadGameLanguage("Text_ZH", "Chinese");
 
-            Global.Database.LoadItemInfos(Properties.Resources.iteminfos);
-            Global.Database.LoadItemAffixInfos(Properties.Resources.itemaffixes);
-            Global.Database.LoadItemSets(Properties.Resources.itemsets);
-            Global.Database.LoadItemTextures(Properties.Resources.itemtextures);
-            Console.WriteLine($"GD Game Path: {Global.Configuration.Settings.GamePath}");
-            Console.WriteLine($"GD Game Expansion: {GrimDawn.GetInstalledExpansionFromPath(Global.Configuration.Settings.GamePath)}");
-            Global.Stashes.LoadStashes();
-            Global.Groups.LoadGroups();
+            G.Database.LoadItemInfos(Properties.Resources.iteminfos);
+            G.Database.LoadItemAffixInfos(Properties.Resources.itemaffixes);
+            G.Database.LoadItemSets(Properties.Resources.itemsets);
+            G.Database.LoadItemTextures(Properties.Resources.itemtextures);
+            Console.WriteLine($"GD Game Path: {G.Configuration.Settings.GamePath}");
+            Console.WriteLine($"GD Game Expansion: {GrimDawn.GetInstalledExpansionFromPath(G.Configuration.Settings.GamePath)}");
+            G.Stashes.LoadStashes();
+            G.StashGroups.LoadGroups();
 
             _viewport = new Overlay.GDMSViewport();
             _gdOverlayService = new GDOverlayService(_viewport);
@@ -165,9 +163,9 @@ namespace GDMultiStash
             _gdGameHookService = new GDGameHookService();
             _mouseHook = new Native.Mouse.Hook();
 
-            Global.Runtime.StashOpened += Global_Runtime_StashOpened;
-            Global.Runtime.StashClosed += Global_Runtime_StashClosed;
-            Global.SetEventHandlers();
+            G.Runtime.StashOpened += Global_Runtime_StashOpened;
+            G.Runtime.StashClosed += Global_Runtime_StashClosed;
+            G.SetEventHandlers();
 
             StartServices();
 
@@ -176,28 +174,34 @@ namespace GDMultiStash
                 Icon = Properties.Resources.icon32,
                 Visible = false,
                 ContextMenu = new ContextMenu(new MenuItem[] {
-                    new MenuItem(Global.L.SettingsButton(), delegate {
-                        Global.Windows.ShowConfigurationWindow();
+                    new MenuItem(G.L.SettingsButton(), delegate {
+                        G.Windows.ShowConfigurationWindow();
                     }),
-                    new MenuItem(Global.L.ExitButton(), delegate {
+                    new MenuItem(G.L.ExitButton(), delegate {
                         Program.Quit();
                     }),
                 }),
             };
-            trayIcon.DoubleClick += delegate { Global.Windows.ShowMainWindow(); };
+            trayIcon.DoubleClick += delegate { G.Windows.ShowMainWindow(); };
             trayIcon.Visible = true;
 
-            Global.Windows.ShowMainWindow(() => {
-                if (Global.Configuration.Settings.AutoStartGame)
+            // testing crash output to log file
+            //var n = 0;
+            //n = n / n;
+
+            G.Windows.ShowMainWindow(() => {
+
+                G.Windows.HideSplashScreen();
+
+                if (G.Configuration.Settings.AutoStartGame)
                 {
-                    Global.Windows.StartGame();
+                    G.Windows.StartGame();
                 }
                 else
                 {
-                    if (Global.Configuration.AppVersionUpdated)
+                    if (G.Configuration.AppVersionUpdated)
                     {
-                        Cleanup.DoCleanup();
-                        Global.Windows.ShowChangelogWindow();
+                        G.Windows.ShowChangelogWindow();
                     }
                 }
             });
@@ -205,8 +209,8 @@ namespace GDMultiStash
 
         public void Destroy()
         {
-            Global.Windows.CloseMainWindow();
-            Global.Database.Destroy();
+            G.Windows.CloseMainWindow();
+            G.Database.Destroy();
             StopServices();
             if (_gdWindowHookService != null)
                 _gdWindowHookService.Destroy();
@@ -281,7 +285,7 @@ namespace GDMultiStash
 
         private void Global_Configuration_LanguageChanged(object sender, EventArgs args)
         {
-            Global.Windows.LocalizeWindows();
+            G.Windows.LocalizeWindows();
         }
 
         private void Global_Runtime_StashOpened(object sender, EventArgs e)
@@ -311,42 +315,42 @@ namespace GDMultiStash
 
         private void GDWindowHook_HookInstalled(object sender, EventArgs e)
         {
-            Global.Runtime.GameWindowIsConnected = true;
+            G.Runtime.GameWindowIsConnected = true;
         }
 
         private void GDWindowHook_MoveSize(object sender, EventArgs e)
         {
-            Global.Runtime.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
+            G.Runtime.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
         }
 
         private void GDWindowHook_GotFocus(object sender, EventArgs e)
         {
             Console.WriteLine("Grim Dawn window got focus");
-            Global.Runtime.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
-            if (Global.Runtime.StashIsOpened)
+            G.Runtime.SetGameWindowLocSize(_gdWindowHookService.GetLocationSize());
+            if (G.Runtime.StashIsOpened)
                 _mouseHook.SetHook();
         }
 
         private void GDWindowHook_LostFocus(object sender, EventArgs e)
         {
             Console.WriteLine("Grim Dawn window lost focus");
-            Global.Runtime.GameWindowFocused = false;
+            G.Runtime.GameWindowFocused = false;
             _mouseHook.UnHook();
         }
 
         private void GDWindowHook_WindowDestroyed(object sender, EventArgs e)
         {
             Console.WriteLine("Grim Dawn window closed");
-            Global.Runtime.GameWindowFocused = false;
-            Global.Runtime.GameWindowIsConnected = false;
-            if (Global.Configuration.Settings.CloseWithGrimDawn)
+            G.Runtime.GameWindowFocused = false;
+            G.Runtime.GameWindowIsConnected = false;
+            if (G.Configuration.Settings.CloseWithGrimDawn)
             {
                 Console.WriteLine("Quitting...");
                 Program.Quit();
             }
             else
             {
-                Global.Windows.ShowMainWindow();
+                G.Windows.ShowMainWindow();
                 Console.WriteLine("Restarting services...");
                 StopServices();
                 StartServices();
@@ -359,27 +363,27 @@ namespace GDMultiStash
 
         private void GDGameHook_StashStatusChanged(object sender, GDGameHookService.StashStatusChangedEventArgs e)
         {
-            Global.Runtime.StashIsOpened = e.Opened;
+            G.Runtime.StashIsOpened = e.Opened;
         }
 
         private void GDGameHook_ModeStatusChanged(object sender, GDGameHookService.ModeChangedEventArgs e)
         {
-            Global.Runtime.ActiveMode = e.IsHardcore ? GrimDawnGameMode.HC : GrimDawnGameMode.SC;
+            G.Runtime.ActiveMode = e.IsHardcore ? GrimDawnGameMode.HC : GrimDawnGameMode.SC;
         }
 
         private void GDGameHook_ExpansionStatusChanged(object sender, GDGameHookService.ExpansionChangedEventArgs e)
         {
-            Global.Runtime.ActiveExpansion = (GrimDawnGameExpansion)e.ExpansionID;
+            G.Runtime.ActiveExpansion = (GrimDawnGameExpansion)e.ExpansionID;
         }
 
         private void GDGameHook_ModNameChanged(object sender, GDGameHookService.ModNameChangedEventArgs e)
         {
-            Global.Runtime.ActiveModName = e.ModName;
+            G.Runtime.ActiveModName = e.ModName;
         }
 
         private void GDGameHook_TransferStashSaved(object sender, EventArgs e)
         {
-            Global.Runtime.InvokeTransferStashSaved();
+            G.Runtime.InvokeTransferStashSaved();
         }
 
         #endregion
@@ -389,8 +393,8 @@ namespace GDMultiStash
         private void MouseHook_MouseMove(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
-            if (!Global.Runtime.GameWindowFocused) return;
-            bool hit = _viewport.CheckMouseMove(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
+            if (!G.Runtime.GameWindowFocused) return;
+            bool hit = _viewport.CheckMouseMove(e.X - (int)G.Runtime.GameWindowLocation.X, e.Y - (int)G.Runtime.GameWindowLocation.Y);
             if (hit)
             {
             }
@@ -399,8 +403,8 @@ namespace GDMultiStash
         private void MouseHook_MouseDown(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
             //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
-            if (!Global.Runtime.GameWindowFocused) return;
-            bool hit = _viewport.CheckMouseDown(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
+            if (!G.Runtime.GameWindowFocused) return;
+            bool hit = _viewport.CheckMouseDown(e.X - (int)G.Runtime.GameWindowLocation.X, e.Y - (int)G.Runtime.GameWindowLocation.Y);
             if (hit)
             {
                 // this is handled inside overlay mainwindow
@@ -408,10 +412,10 @@ namespace GDMultiStash
         }
         private void MouseHook_MouseUp(object sender, Native.Mouse.Hook.MouseEventArgs e)
         {
-            Global.Runtime.EnableMovement();
+            G.Ingame.EnableMovement();
             //if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashOpened && !Global.Runtime.StashIsReopening)) return;
-            if (!Global.Runtime.GameWindowFocused) return;
-            bool hit = _viewport.CheckMouseUp(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y);
+            if (!G.Runtime.GameWindowFocused) return;
+            bool hit = _viewport.CheckMouseUp(e.X - (int)G.Runtime.GameWindowLocation.X, e.Y - (int)G.Runtime.GameWindowLocation.Y);
             if (hit)
             {
             }
@@ -426,8 +430,8 @@ namespace GDMultiStash
                 isBySys = false;
                 return;
             }
-            if (!Global.Runtime.GameWindowFocused || (!Global.Runtime.StashIsOpened && !Global.Ingame.StashIsReopening)) return;
-            bool hit = _viewport.OnMouseWheel(e.X - (int)Global.Runtime.GameWindowLocation.X, e.Y - (int)Global.Runtime.GameWindowLocation.Y, e.Delta);
+            if (!G.Runtime.GameWindowFocused || (!G.Runtime.StashIsOpened && !G.Ingame.StashIsReopening)) return;
+            bool hit = _viewport.OnMouseWheel(e.X - (int)G.Runtime.GameWindowLocation.X, e.Y - (int)G.Runtime.GameWindowLocation.Y, e.Delta);
             if (hit)
             {
             }

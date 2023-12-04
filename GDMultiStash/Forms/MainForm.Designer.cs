@@ -28,7 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.captionMenuStrip = new System.Windows.Forms.MenuStrip();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.titleMenuStrip = new System.Windows.Forms.MenuStrip();
             this.captionFileButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionImportButton = new System.Windows.Forms.ToolStripMenuItem();
             this.captionImportTransferFilesButton = new System.Windows.Forms.ToolStripMenuItem();
@@ -44,31 +45,26 @@
             this.formPaddingPanel = new System.Windows.Forms.Panel();
             this.stashGroupsPageButton = new System.Windows.Forms.Button();
             this.stashesPageButton = new System.Windows.Forms.Button();
-            this.titlePanel = new GDMultiStash.Forms.Controls.TransparentPanel();
-            this.formBackgroundPanel = new GDMultiStash.Forms.Controls.TransparentPanel();
-            this.captionCloseButton = new System.Windows.Forms.Button();
-            this.captionMinimizeButton = new System.Windows.Forms.Button();
-            this.captionTrayButton = new System.Windows.Forms.Button();
-            this.captionGameButton = new System.Windows.Forms.Button();
-            this.captionMenuStrip.SuspendLayout();
+            this.titlePanelGameButton = new GDMultiStash.Forms.Controls.ControlBoxButton();
+            this.titlePanelTrayButton = new GDMultiStash.Forms.Controls.ControlBoxButton();
+            this.borderPanel = new GDMultiStash.Forms.Controls.BaseFormBorderPanel();
+            this.titlePanel = new GDMultiStash.Forms.Controls.BaseFormTitlePanel();
             this.formPaddingPanel.SuspendLayout();
-            this.formBackgroundPanel.SuspendLayout();
+            this.borderPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // captionMenuStrip
+            // titleMenuStrip
             // 
-            this.captionMenuStrip.BackColor = System.Drawing.Color.DimGray;
-            this.captionMenuStrip.Dock = System.Windows.Forms.DockStyle.None;
-            this.captionMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.captionFileButton,
-            this.captionHelpButton});
-            this.captionMenuStrip.Location = new System.Drawing.Point(141, 2);
-            this.captionMenuStrip.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.captionMenuStrip.Name = "captionMenuStrip";
-            this.captionMenuStrip.Padding = new System.Windows.Forms.Padding(0, 0, 20, 0);
-            this.captionMenuStrip.Size = new System.Drawing.Size(239, 30);
-            this.captionMenuStrip.TabIndex = 0;
-            this.captionMenuStrip.Text = "topMenuStrip";
+            this.titleMenuStrip.BackColor = System.Drawing.Color.DimGray;
+            this.titleMenuStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.titleMenuStrip.Location = new System.Drawing.Point(146, 0);
+            this.titleMenuStrip.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.titleMenuStrip.Name = "titleMenuStrip";
+            this.titleMenuStrip.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.titleMenuStrip.Size = new System.Drawing.Size(80, 30);
+            this.titleMenuStrip.AutoSize = true;
+            this.titleMenuStrip.TabIndex = 0;
+            this.titleMenuStrip.Text = "topMenuStrip";
             // 
             // captionFileButton
             // 
@@ -172,7 +168,7 @@
             this.pagesPaddingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.pagesPaddingPanel.Name = "pagesPaddingPanel";
             this.pagesPaddingPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.pagesPaddingPanel.Size = new System.Drawing.Size(782, 456);
+            this.pagesPaddingPanel.Size = new System.Drawing.Size(657, 464);
             this.pagesPaddingPanel.TabIndex = 2;
             // 
             // formPaddingPanel
@@ -184,11 +180,11 @@
             this.formPaddingPanel.Controls.Add(this.stashGroupsPageButton);
             this.formPaddingPanel.Controls.Add(this.stashesPageButton);
             this.formPaddingPanel.Controls.Add(this.pagesPaddingPanel);
-            this.formPaddingPanel.Location = new System.Drawing.Point(8, 54);
+            this.formPaddingPanel.Location = new System.Drawing.Point(3, 53);
             this.formPaddingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.formPaddingPanel.Name = "formPaddingPanel";
             this.formPaddingPanel.Padding = new System.Windows.Forms.Padding(20);
-            this.formPaddingPanel.Size = new System.Drawing.Size(822, 536);
+            this.formPaddingPanel.Size = new System.Drawing.Size(697, 544);
             this.formPaddingPanel.TabIndex = 28;
             // 
             // stashGroupsPageButton
@@ -215,117 +211,102 @@
             this.stashesPageButton.Text = "Stashes";
             this.stashesPageButton.UseVisualStyleBackColor = true;
             // 
+            // titlePanelGameButton
+            // 
+            this.titlePanelGameButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.titlePanelGameButton.BackColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.titlePanelGameButton.BackColorPressed = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.titlePanelGameButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.titlePanelGameButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.titlePanelGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.titlePanelGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.titlePanelGameButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.titlePanelGameButton.ForeColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.titlePanelGameButton.Image = null;
+            this.titlePanelGameButton.ImageHover = null;
+            this.titlePanelGameButton.Location = new System.Drawing.Point(2, 0);
+            this.titlePanelGameButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.titlePanelGameButton.Name = "titlePanelGameButton";
+            this.titlePanelGameButton.Size = new System.Drawing.Size(150, 30);
+            this.titlePanelGameButton.TabIndex = 5;
+            this.titlePanelGameButton.Text = "GAME";
+            this.titlePanelGameButton.UseVisualStyleBackColor = false;
+            // 
+            // titlePanelTrayButton
+            // 
+            this.titlePanelTrayButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.titlePanelTrayButton.BackColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.titlePanelTrayButton.BackColorPressed = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.titlePanelTrayButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(70)))), ((int)(((byte)(70)))), ((int)(((byte)(70)))));
+            this.titlePanelTrayButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.titlePanelTrayButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.titlePanelTrayButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
+            this.titlePanelTrayButton.ForeColorHover = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
+            this.titlePanelTrayButton.Image = null;
+            this.titlePanelTrayButton.ImageHover = null;
+            this.titlePanelTrayButton.Location = new System.Drawing.Point(154, 0);
+            this.titlePanelTrayButton.Margin = new System.Windows.Forms.Padding(2, 0, 0, 0);
+            this.titlePanelTrayButton.Name = "titlePanelTrayButton";
+            this.titlePanelTrayButton.Size = new System.Drawing.Size(40, 30);
+            this.titlePanelTrayButton.TabIndex = 35;
+            this.titlePanelTrayButton.UseVisualStyleBackColor = false;
+            // 
+            // borderPanel
+            // 
+            this.borderPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(28)))), ((int)(((byte)(28)))));
+            this.borderPanel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("borderPanel.BackgroundImage")));
+            this.borderPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.borderPanel.Controls.Add(this.formPaddingPanel);
+            this.borderPanel.Controls.Add(this.titlePanel);
+            this.borderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.borderPanel.Location = new System.Drawing.Point(0, 0);
+            this.borderPanel.Margin = new System.Windows.Forms.Padding(0);
+            this.borderPanel.Name = "borderPanel";
+            this.borderPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.borderPanel.Size = new System.Drawing.Size(703, 600);
+            this.borderPanel.TabIndex = 31;
+            // 
             // titlePanel
             // 
-            this.titlePanel.Location = new System.Drawing.Point(11, 11);
+            this.titlePanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.titlePanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
+            this.titlePanel.Location = new System.Drawing.Point(3, 3);
+            this.titlePanel.Margin = new System.Windows.Forms.Padding(0);
             this.titlePanel.Name = "titlePanel";
-            this.titlePanel.Size = new System.Drawing.Size(115, 40);
-            this.titlePanel.TabIndex = 29;
-            // 
-            // formBackgroundPanel
-            // 
-            this.formBackgroundPanel.Controls.Add(this.captionCloseButton);
-            this.formBackgroundPanel.Controls.Add(this.captionMinimizeButton);
-            this.formBackgroundPanel.Controls.Add(this.captionTrayButton);
-            this.formBackgroundPanel.Controls.Add(this.captionGameButton);
-            this.formBackgroundPanel.Controls.Add(this.captionMenuStrip);
-            this.formBackgroundPanel.Controls.Add(this.titlePanel);
-            this.formBackgroundPanel.Controls.Add(this.formPaddingPanel);
-            this.formBackgroundPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.formBackgroundPanel.Location = new System.Drawing.Point(1, 1);
-            this.formBackgroundPanel.Margin = new System.Windows.Forms.Padding(0);
-            this.formBackgroundPanel.Name = "formBackgroundPanel";
-            this.formBackgroundPanel.Padding = new System.Windows.Forms.Padding(8);
-            this.formBackgroundPanel.Size = new System.Drawing.Size(838, 598);
-            this.formBackgroundPanel.TabIndex = 30;
-            // 
-            // captionCloseButton
-            // 
-            this.captionCloseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.captionCloseButton.BackColor = System.Drawing.Color.DimGray;
-            this.captionCloseButton.FlatAppearance.BorderSize = 0;
-            this.captionCloseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.captionCloseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.captionCloseButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.captionCloseButton.Location = new System.Drawing.Point(796, 2);
-            this.captionCloseButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.captionCloseButton.Name = "captionCloseButton";
-            this.captionCloseButton.Size = new System.Drawing.Size(40, 30);
-            this.captionCloseButton.TabIndex = 37;
-            this.captionCloseButton.UseVisualStyleBackColor = false;
-            // 
-            // captionMinimizeButton
-            // 
-            this.captionMinimizeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.captionMinimizeButton.BackColor = System.Drawing.Color.DimGray;
-            this.captionMinimizeButton.FlatAppearance.BorderSize = 0;
-            this.captionMinimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.captionMinimizeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.captionMinimizeButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.captionMinimizeButton.Location = new System.Drawing.Point(754, 2);
-            this.captionMinimizeButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.captionMinimizeButton.Name = "captionMinimizeButton";
-            this.captionMinimizeButton.Size = new System.Drawing.Size(40, 30);
-            this.captionMinimizeButton.TabIndex = 36;
-            this.captionMinimizeButton.UseVisualStyleBackColor = false;
-            // 
-            // captionTrayButton
-            // 
-            this.captionTrayButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.captionTrayButton.BackColor = System.Drawing.Color.DimGray;
-            this.captionTrayButton.FlatAppearance.BorderSize = 0;
-            this.captionTrayButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.captionTrayButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.captionTrayButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.captionTrayButton.Location = new System.Drawing.Point(712, 2);
-            this.captionTrayButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.captionTrayButton.Name = "captionTrayButton";
-            this.captionTrayButton.Size = new System.Drawing.Size(40, 30);
-            this.captionTrayButton.TabIndex = 35;
-            this.captionTrayButton.UseVisualStyleBackColor = false;
-            // 
-            // captionGameButton
-            // 
-            this.captionGameButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.captionGameButton.BackColor = System.Drawing.Color.DimGray;
-            this.captionGameButton.FlatAppearance.BorderSize = 0;
-            this.captionGameButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.captionGameButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.captionGameButton.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.captionGameButton.Location = new System.Drawing.Point(567, 2);
-            this.captionGameButton.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.captionGameButton.Name = "captionGameButton";
-            this.captionGameButton.Size = new System.Drawing.Size(143, 30);
-            this.captionGameButton.TabIndex = 5;
-            this.captionGameButton.Text = "Groups";
-            this.captionGameButton.UseVisualStyleBackColor = false;
+            this.titlePanel.Size = new System.Drawing.Size(697, 50);
+            this.titlePanel.TabIndex = 31;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(840, 600);
-            this.Controls.Add(this.formBackgroundPanel);
+            this.BackColor = System.Drawing.Color.Gray;
+            this.ClientSize = new System.Drawing.Size(703, 600);
+            this.Controls.Add(this.borderPanel);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MainMenuStrip = this.captionMenuStrip;
+            this.MainMenuStrip = this.titleMenuStrip;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(600, 600);
             this.Name = "MainForm";
-            this.Padding = new System.Windows.Forms.Padding(1);
-            this.captionMenuStrip.ResumeLayout(false);
-            this.captionMenuStrip.PerformLayout();
             this.formPaddingPanel.ResumeLayout(false);
-            this.formBackgroundPanel.ResumeLayout(false);
-            this.formBackgroundPanel.PerformLayout();
+            this.borderPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip captionMenuStrip;
+        private Controls.BaseFormBorderPanel borderPanel;
+        private Controls.BaseFormTitlePanel titlePanel;
+        private GDMultiStash.Forms.Controls.ControlBoxButton titlePanelTrayButton;
+        private GDMultiStash.Forms.Controls.ControlBoxButton titlePanelGameButton;
+
+
+
+
+        private System.Windows.Forms.MenuStrip titleMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem captionFileButton;
         private System.Windows.Forms.ToolStripMenuItem captionSettingsButton;
         private System.Windows.Forms.ToolStripMenuItem captionHelpButton;
@@ -334,17 +315,11 @@
         private System.Windows.Forms.ToolStripMenuItem captionChangelogButton;
         private System.Windows.Forms.ToolStripMenuItem captionImportButton;
         private System.Windows.Forms.Panel formPaddingPanel;
-        private GDMultiStash.Forms.Controls.TransparentPanel titlePanel;
-        private GDMultiStash.Forms.Controls.TransparentPanel formBackgroundPanel;
         private System.Windows.Forms.ToolStripMenuItem captionImportTransferFilesButton;
         private System.Windows.Forms.ToolStripMenuItem captionExportButton;
         private System.Windows.Forms.ToolStripMenuItem captionExportTransferFilesButton;
         private System.Windows.Forms.Button stashGroupsPageButton;
         private System.Windows.Forms.Button stashesPageButton;
-        private System.Windows.Forms.Button captionGameButton;
-        private System.Windows.Forms.Button captionTrayButton;
-        private System.Windows.Forms.Button captionMinimizeButton;
-        private System.Windows.Forms.Button captionCloseButton;
         private System.Windows.Forms.ToolStripMenuItem captionImportGDSCButton;
         private System.Windows.Forms.ToolStripMenuItem captionImportCraftingModeButton;
     }

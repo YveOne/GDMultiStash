@@ -8,7 +8,8 @@ using System.Drawing;
 using GDMultiStash.Overlay.Controls;
 using GDMultiStash.Overlay.Controls.Base;
 
-using D3DHook.Overlay;
+using D3DHook.Overlay.Scrolling;
+using D3DHook.Overlay.Common;
 using D3DHook.Overlay.Animations;
 
 namespace GDMultiStash.Overlay
@@ -246,7 +247,7 @@ namespace GDMultiStash.Overlay
                 _mouseOver = false;
             };
             MouseDown += (object sender, EventArgs e) => {
-                Global.Runtime.DisableMovement();
+                G.Ingame.DisableMovement();
                 _mouseDown = true;
             };
             MouseWheel += (object sender, MouseWheelEventArgs e) => {
@@ -384,14 +385,14 @@ namespace GDMultiStash.Overlay
 
 
             _updateAppearance = true; // update on startup
-            Global.Configuration.OverlayDesignChanged += delegate {
+            G.Configuration.OverlayDesignChanged += delegate {
                 _updateAppearance = true;
             };
-            Global.Runtime.ActiveGroupChanged += delegate {
+            G.StashGroups.ActiveGroupChanged += delegate {
                 _groupSelectButton.CloseDropDown();
             };
 
-            Global.Ingame.StashReopenStart += delegate {
+            G.Ingame.StashReopenStart += delegate {
                 MouseCheckChildren = false;
                 _infoWindow.Alpha = 0.70f;
                 _stashList.Alpha = 0.70f;
@@ -399,7 +400,7 @@ namespace GDMultiStash.Overlay
                 _groupSelectButton.Alpha = 0.80f;
             };
 
-            Global.Ingame.StashReopenEnd += delegate {
+            G.Ingame.StashReopenEnd += delegate {
                 MouseCheckChildren = true;
                 _infoWindow.Alpha = 1.0f;
                 _stashList.Alpha = 1.0f;
@@ -440,19 +441,19 @@ namespace GDMultiStash.Overlay
             {
                 _updateAppearance = false;
 
-                Scale = (float)Global.Configuration.Settings.OverlayScale / 100f;
-                Width = Global.Configuration.Settings.OverlayWidth;
+                Scale = (float)G.Configuration.Settings.OverlayScale / 100f;
+                Width = G.Configuration.Settings.OverlayWidth;
 
-                _stashList.ScrollHandler.VisibleUnitsY = Global.Configuration.Settings.OverlayStashesCount;
+                _stashList.ScrollHandler.VisibleUnitsY = G.Configuration.Settings.OverlayStashesCount;
                 Height = 222 + _stashList.Height;
 
-                _groupList.ScrollHandler.VisibleUnitsY = Global.Configuration.Settings.OverlayStashesCount + 5;
+                _groupList.ScrollHandler.VisibleUnitsY = G.Configuration.Settings.OverlayStashesCount + 5;
                 _groupListBackground.Height = _groupList.Height + 20;
 
                 _moveValue.Min = -TotalWidth - 5;
-                _moveAnimator.Reset(Global.Runtime.StashIsOpened ? 1f : 0f);
-                _fadeValue.Min = (float)(100 - Global.Configuration.Settings.OverlayTransparency) / 100f;
-                _fadeAnimator.Reset(Global.Runtime.StashIsOpened ? 1f : 0f);
+                _moveAnimator.Reset(G.Runtime.StashIsOpened ? 1f : 0f);
+                _fadeValue.Min = (float)(100 - G.Configuration.Settings.OverlayTransparency) / 100f;
+                _fadeAnimator.Reset(G.Runtime.StashIsOpened ? 1f : 0f);
 
                 Redraw();
             }

@@ -41,7 +41,7 @@ namespace GDMultiStash.Forms
             changelogTextBox.Text = logs.Values.ElementAt(0);
         }
 
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected override void Localize(Global.LocalizationManager.StringsHolder L)
         {
 
         }

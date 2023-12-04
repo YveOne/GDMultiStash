@@ -74,14 +74,14 @@ namespace GDMultiStash.Forms.MainWindow
         public DecorationCollection()
         {
 
-            CellBorderFirstDecoration = new MyCellBorderDecoration(-1, Constants.ListViewCellBorderColor);
-            CellBorderDecoration = new MyCellBorderDecoration(0, Constants.ListViewCellBorderColor);
-            RowBorderFirstDecoration = new MyRowBorderDecoration(-1, Constants.ListViewCellBorderColor);
-            RowBorderDecoration = new MyRowBorderDecoration(0, Constants.ListViewCellBorderColor);
+            CellBorderFirstDecoration = new MyCellBorderDecoration(-1, C.ListViewCellBorderColor);
+            CellBorderDecoration = new MyCellBorderDecoration(0, C.ListViewCellBorderColor);
+            RowBorderFirstDecoration = new MyRowBorderDecoration(-1, C.ListViewCellBorderColor);
+            RowBorderDecoration = new MyRowBorderDecoration(0, C.ListViewCellBorderColor);
 
             using (Bitmap bmp = new Bitmap(15, 15, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
             using (Graphics gfx = Graphics.FromImage(bmp))
-            using (SolidBrush brush = new SolidBrush(Constants.ListViewBackColor))
+            using (SolidBrush brush = new SolidBrush(C.ListViewBackColor))
             {
                 gfx.FillRectangle(brush, 0, 0, bmp.Width, bmp.Height);
                 CheckBoxHideDecoration = new ImageDecoration(new Bitmap(bmp), ContentAlignment.MiddleCenter)

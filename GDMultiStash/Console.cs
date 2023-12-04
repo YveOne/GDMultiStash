@@ -8,26 +8,14 @@ using System.IO;
 internal class Console
 {
 
-    private static TextWriter writer = null;
-
     public static void CreateConsole()
     {
         System.Console.OutputEncoding = Encoding.UTF8;
         Native.AttachConsole(Native.ATTACH_PARRENT);
     }
 
-    public static void LogToFile(string logFile)
-    {
-        if (File.Exists(logFile)) File.Delete(logFile);
-        writer = new StreamWriter(new FileStream(logFile, FileMode.OpenOrCreate), Encoding.UTF8)
-        { AutoFlush = true, };
-    }
-
     public static void DestroyConsole()
     {
-        if (writer == null) return;
-        writer.Close();
-        writer = null;
     }
 
     public static void WriteLine(object text, params object[] args)
@@ -46,8 +34,6 @@ internal class Console
             return m.Value;
         });
         System.Console.WriteLine(s);
-        if (writer != null)
-            writer.WriteLine(s);
     }
 
     public static DialogResult Alert(string msg, MessageBoxButtons btn = MessageBoxButtons.OK, MessageBoxIcon icon = MessageBoxIcon.None)

@@ -194,3 +194,5 @@ sort_by_type = By type
 sort_by_set = By set
 sort_by_aio = AIO
 sorting_finished = Finished sorting
+
+no_more_supported = No longer supported

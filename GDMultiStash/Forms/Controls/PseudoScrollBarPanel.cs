@@ -7,9 +7,11 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
+using System.ComponentModel;
 
 namespace GDMultiStash.Forms.Controls
 {
+    [DesignerCategory("code")]
     internal class PseudoScrollBarPanel : TransparentPanel, IDisposable
     {
 

@@ -8,10 +8,12 @@ using System.Drawing;
 
 using GDMultiStash.Common;
 using GDMultiStash.Common.Objects;
+using System.ComponentModel;
 
 namespace GDMultiStash.Forms.StashTabsEditor
 {
 
+    [DesignerCategory("code")]
     internal class StashTabAddPanel : StashTabBasePanel
     {
         public StashTabAddPanel(StashObject stashObject) : base(stashObject)

@@ -27,7 +27,7 @@ namespace GDMultiStash.Forms
             Load += delegate {
                 groupComboBox.DisplayMember = "Name";
                 groupComboBox.ValueMember = "Key";
-                groupComboBox.DataSource = Global.Groups.GetSortedGroups();
+                groupComboBox.DataSource = G.StashGroups.GetSortedGroups();
                 groupComboBox.SelectedIndex = lastSelectedGroupIndex;
             };
 
@@ -42,7 +42,7 @@ namespace GDMultiStash.Forms
             };
         }
 
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected override void Localize(Global.LocalizationManager.StringsHolder L)
         {
             Text = L.ImportButton();
 
@@ -105,7 +105,7 @@ namespace GDMultiStash.Forms
             GrimDawnGameExpansion exp = Common.TransferFile.GetExpansionByFile(srcFile);
             if (exp == GrimDawnGameExpansion.Unknown)
             {
-                Console.AlertError(Global.L.InvalidTransferFileMessage());
+                Console.AlertError(G.L.InvalidTransferFileMessage());
                 return DialogResult.None;
             }
 
@@ -113,8 +113,8 @@ namespace GDMultiStash.Forms
             nameTextBox.Text = Path.GetFileNameWithoutExtension(srcFile);
             expansionTextBox.Text = GrimDawn.ExpansionNames[exp];
 
-            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState != 0;
-            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState != 0;
+            scCheckBox.Checked = G.Configuration.Settings.ShowSoftcoreState != 0;
+            hcCheckBox.Checked = G.Configuration.Settings.ShowHardcoreState != 0;
 
             DialogResult result = base.ShowDialog(owner);
             if (result != DialogResult.OK) return result;
@@ -122,7 +122,7 @@ namespace GDMultiStash.Forms
             GrimDawnGameMode mode = GrimDawnGameMode.None;
             if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
             if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
-            StashObject stash = Global.Stashes.ImportCreateStash(srcFile, nameTextBox.Text, exp, mode);
+            StashObject stash = G.Stashes.CreateAndImportStash(srcFile, nameTextBox.Text, exp, mode);
 
             if (stash != null)
             {

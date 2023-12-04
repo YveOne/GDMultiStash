@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Objects.Sorting;
+using GDMultiStash.Common.Objects.Sorting.Comparer;
 
 namespace GDMultiStash.Forms.Dragging
 {
@@ -28,7 +28,7 @@ namespace GDMultiStash.Forms.Dragging
                 if (i.RowObject is StashDummyObject) continue;
 
                 StashObject stash = (StashObject)i.RowObject;
-                if (!Global.Configuration.IsMainStashID(stash.ID)) // dont add main stash to list
+                if (!G.Configuration.IsMainStashID(stash.ID)) // dont add main stash to list
                     base.AddItem(stash);
                 draggingCount += 1; // but increase count, even if its main stash, so dragging wont be canceled
             }

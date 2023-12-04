@@ -12,7 +12,7 @@ using GrimDawnLib;
 
 using GDMultiStash.Common;
 using GDMultiStash.Common.Objects;
-using GDMultiStash.GlobalHandlers;
+using GDMultiStash.Global;
 
 namespace GDMultiStash.Forms
 {
@@ -23,12 +23,12 @@ namespace GDMultiStash.Forms
             InitializeComponent();
         }
 
-        protected override void Localize(LocalizationHandler.StringsHolder L)
+        protected override void Localize(LocalizationManager.StringsHolder L)
         {
             Text = L.CraftingModeButton();
 
-            autoFillCheckBox.Text = Global.L.AutoFillButton();
-            autoFillComboBox.Items.Add(Global.L.AutoFillRandomSeedsButton());
+            autoFillCheckBox.Text = G.L.AutoFillButton();
+            autoFillComboBox.Items.Add(G.L.AutoFillRandomSeedsButton());
             autoFillComboBox.SelectedIndex = 0;
 
             transferFileComboBox.ValueMember = "Key";
@@ -48,8 +48,8 @@ namespace GDMultiStash.Forms
         private void UpdateStartButtonText()
         {
             startButton.Text = !_isCrafting
-                ? Global.L.StartButton()
-                : Global.L.FinishButton();
+                ? G.L.StartButton()
+                : G.L.FinishButton();
             startButton.ForeColor = !_isCrafting
                 ? Color.Black
                 : Color.White;
@@ -81,7 +81,7 @@ namespace GDMultiStash.Forms
             autoFillComboBox.Enabled = false;
             ControlBox = false;
 
-            if (Global.Runtime.StashIsOpened) // todo: localize me
+            if (G.Runtime.StashIsOpened) // todo: localize me
                 Console.AlertWarning("Close ingame stash before continue to prevent item loss!");
 
             _selectedEnvironment = (GrimDawnGameEnvironment)transferFileComboBox.SelectedValue;
@@ -90,13 +90,13 @@ namespace GDMultiStash.Forms
             _craftingTransferFile = TransferFile.CreateForExpansion(_selectedEnvironment.GameExpansion);
             _craftingTransferFile.WriteToFile(_selectedEnvironment.TransferFilePath);
 
-            _craftingGroupObject = Global.Groups.CreateGroup(Global.L.CraftingModeButton(), true);
-            Global.Runtime.InvokeStashGroupsAdded(_craftingGroupObject);
-            Global.Configuration.Save();
+            _craftingGroupObject = G.StashGroups.CreateGroup(G.L.CraftingModeButton(), true);
+            G.StashGroups.InvokeStashGroupsAdded(_craftingGroupObject);
+            G.Configuration.Save();
 
             _selectedAutoFillMode = autoFillCheckBox.Checked ? autoFillComboBox.SelectedIndex : -1;
 
-            Global.FileSystem.TransferFileChanged += TransferFileChanged;
+            G.FileSystem.TransferFileChanged += TransferFileChanged;
         }
 
         private void StopCrafting()
@@ -106,12 +106,12 @@ namespace GDMultiStash.Forms
             autoFillComboBox.Enabled = true;
             ControlBox = true;
 
-            Global.FileSystem.TransferFileChanged -= TransferFileChanged;
+            G.FileSystem.TransferFileChanged -= TransferFileChanged;
 
             _originalTransferFile.WriteToFile(_selectedEnvironment.TransferFilePath);
         }
 
-        private void TransferFileChanged(object sender, FileSystemHandler.TransferFileChangedEventArgs e)
+        private void TransferFileChanged(object sender, FileSystemManager.TransferFileChangedEventArgs e)
         {
             if (e.FilePath != _selectedEnvironment.TransferFilePath) return;
             if (_skipNextChange) {
@@ -119,7 +119,7 @@ namespace GDMultiStash.Forms
                 return;
             }
 
-            var stash = Global.Stashes.ImportCreateStash(_selectedEnvironment.TransferFilePath, "Crafted", _selectedEnvironment.GameExpansion, GrimDawnGameMode.Both);
+            var stash = G.Stashes.CreateAndImportStash(_selectedEnvironment.TransferFilePath, "Crafted", _selectedEnvironment.GameExpansion, GrimDawnGameMode.Both);
             stash.GroupID = _craftingGroupObject.ID;
             switch (_selectedAutoFillMode)
             {
@@ -129,8 +129,8 @@ namespace GDMultiStash.Forms
                     stash.LoadTransferFile();
                     break;
             }
-            Global.Runtime.InvokeStashesAdded(stash);
-            Global.Configuration.Save();
+            G.Stashes.InvokeStashesAdded(stash);
+            G.Configuration.Save();
 
             _skipNextChange = true;
             _craftingTransferFile.WriteToFile(_selectedEnvironment.TransferFilePath);

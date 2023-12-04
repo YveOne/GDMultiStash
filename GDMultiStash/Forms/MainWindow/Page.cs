@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace GDMultiStash.Forms.MainWindow
 {
+    [DesignerCategory("code")]
     internal partial class Page : Form
     {
         protected readonly MainForm Main;
@@ -25,7 +26,7 @@ namespace GDMultiStash.Forms.MainWindow
             InitializeComponent();
         }
 
-        protected virtual void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected virtual void Localize(Global.LocalizationManager.StringsHolder L)
         {
         }
 
@@ -36,7 +37,7 @@ namespace GDMultiStash.Forms.MainWindow
                 Invoke(new Action(() => { Localize(); }));
                 return;
             }
-            Localize(Global.L);
+            Localize(G.L);
         }
 
     }

@@ -30,7 +30,7 @@ namespace GDMultiStash.Forms
             Load += delegate {
                 groupComboBox.DisplayMember = "Name";
                 groupComboBox.ValueMember = "Key";
-                groupComboBox.DataSource = Global.Groups.GetSortedGroups();
+                groupComboBox.DataSource = G.StashGroups.GetSortedGroups();
             };
 
             nameTextBox.KeyDown += delegate(object sender, KeyEventArgs e)
@@ -44,7 +44,7 @@ namespace GDMultiStash.Forms
             };
         }
 
-        protected override void Localize(GlobalHandlers.LocalizationHandler.StringsHolder L)
+        protected override void Localize(Global.LocalizationManager.StringsHolder L)
         {
             Text = L.CreateStashButton();
             nameLabel.Text = L.NameLabel();
@@ -68,15 +68,15 @@ namespace GDMultiStash.Forms
 
         private void AddStashDialogForm_Shown(object sender, EventArgs e)
         {
-            nameTextBox.Text = Global.L.DefaultStashName();
+            nameTextBox.Text = G.L.DefaultStashName();
             nameTextBox.SelectAll();
             nameTextBox.Focus();
         }
 
         public DialogResult ShowDialog(IWin32Window owner, GrimDawnGameExpansion exp)
         {
-            scCheckBox.Checked = Global.Configuration.Settings.ShowSoftcoreState != 0;
-            hcCheckBox.Checked = Global.Configuration.Settings.ShowHardcoreState != 0;
+            scCheckBox.Checked = G.Configuration.Settings.ShowSoftcoreState != 0;
+            hcCheckBox.Checked = G.Configuration.Settings.ShowHardcoreState != 0;
             expansionComboBox.SelectedIndex = (int)exp;
             UpdateTabsComboBox();
             base.ShowDialog(owner);
@@ -90,10 +90,10 @@ namespace GDMultiStash.Forms
             if (scCheckBox.Checked) mode |= GrimDawnGameMode.SC;
             if (hcCheckBox.Checked) mode |= GrimDawnGameMode.HC;
             int tabsCount = tabsComboBox.SelectedIndex + 1;
-            StashObject stash = Global.Stashes.CreateStash(nameTextBox.Text, exp, mode, tabsCount);
+            StashObject stash = G.Stashes.CreateStash(nameTextBox.Text, exp, mode, tabsCount);
             stash.GroupID = ((StashGroupObject)groupComboBox.SelectedItem).ID;
-            Global.Configuration.Save();
-            Global.Runtime.InvokeStashesAdded(stash);
+            G.Configuration.Save();
+            G.Stashes.InvokeStashesAdded(stash);
             nameTextBox.SelectAll();
             nameTextBox.Focus();
         }

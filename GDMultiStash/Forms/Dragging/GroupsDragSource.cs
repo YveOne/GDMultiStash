@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using BrightIdeasSoftware;
 
 using GDMultiStash.Common.Objects;
-using GDMultiStash.Common.Objects.Sorting;
+using GDMultiStash.Common.Objects.Sorting.Comparer;
 
 namespace GDMultiStash.Forms.Dragging
 {

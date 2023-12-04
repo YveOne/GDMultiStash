@@ -1,8 +1,10 @@
 ﻿
 using BrightIdeasSoftware;
+using System.ComponentModel;
 
 namespace GDMultiStash.Forms.Controls
 {
+    [DesignerCategory("code")]
     internal class DefaultOLVColumn : OLVColumn
     {
         public DefaultOLVColumn() : base()

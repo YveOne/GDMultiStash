@@ -12,7 +12,6 @@ namespace D3DHook.Hook.DX11
     internal class DXOverlayEngine: Component
     {
         public List<IOverlay> Overlays { get; set; }
-        //public List<IResource> Resources { get; set; }
         public Dictionary<int, IResource> Resources { get; set; }
         public bool DeferredContext
         {
@@ -35,7 +34,6 @@ namespace D3DHook.Hook.DX11
         public DXOverlayEngine()
         {
             Overlays = new List<IOverlay>();
-            //Resources = new List<IResource>();
             Resources = new Dictionary<int, IResource>();
         }
 
@@ -150,24 +148,6 @@ namespace D3DHook.Hook.DX11
                                 imageElement.ZIndex
                             );
                     }
-                    /*
-
-                    var textElement = element as TextElement;
-                    var imageElement = element as ImageElement;
-
-                    if (textElement != null)
-                    {
-                        DXFont font = GetFontForTextElement(textElement);
-                        if (font != null && !String.IsNullOrEmpty(textElement.Text))
-                            _spriteEngine.DrawString(textElement.Location.X, textElement.Location.Y, textElement.Text, textElement.Color, font);
-                    }
-                    else if (imageElement != null)
-                    {
-                        DXImage image = GetImageForImageElement(imageElement);
-                        if (image != null)
-                            _spriteEngine.DrawImage(imageElement.Location.X, imageElement.Location.Y, imageElement.Scale, imageElement.Angle, imageElement.Tint, image);
-                    }
-                    */
                 }
             }
 
