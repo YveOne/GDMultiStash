@@ -3,14 +3,21 @@
 /_misc/tool to get iteminfos/bin/
 /_misc/tool to get iteminfos/obj/
 /D3DHook/obj/
+/D3DHook/bin/
+/D3DHook.Overlay/obj/
+/D3DHook.Overlay/bin/
 /GDIAHook/GDIAHook/x64/*
 /GDIALib/bin/
 /GDIALib/obj/
-/GDMultiStashApp/Connected Services/
-/GDMultiStashApp/obj/
-GDMultiStashDebug/obj/
-GDMultiStashStarter/obj/
-GDMultiStashTest/obj/
+/GDMultiStash/Connected Services/
+/GDMultiStash/obj/
+/GDMultiStash/bin/
+/GDMultiStashBuild/obj/
+/GDMultiStashBuild/bin/
+/GDMultiStashDebug/obj/
+/GDMultiStashDebug/bin/
+/GDMultiStashStarter/bin/
+/GDMultiStashStarter/obj/
 /GDMultiStashUpdater/bin/
 /GDMultiStashUpdater/obj/
 /packages/

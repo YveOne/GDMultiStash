@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections.ObjectModel;
+using Utils;
 
 namespace GrimDawnLib
 {
@@ -117,8 +118,8 @@ namespace GrimDawnLib
         public static GrimDawnGameExpansion GetInstalledExpansionFromPath(string gamePath)
         {
             if (!Directory.Exists(gamePath)) return GrimDawnGameExpansion.Unknown;
-            if (Directory.Exists(Path.Combine(gamePath, "gdx2"))) return GrimDawnGameExpansion.FG;
-            if (Directory.Exists(Path.Combine(gamePath, "gdx1"))) return GrimDawnGameExpansion.AoM;
+            if (!Funcs.IsDirectoryEmpty(Path.Combine(gamePath, "gdx2"))) return GrimDawnGameExpansion.FG;
+            if (!Funcs.IsDirectoryEmpty(Path.Combine(gamePath, "gdx1"))) return GrimDawnGameExpansion.AoM;
             return GrimDawnGameExpansion.Vanilla;
         }
 

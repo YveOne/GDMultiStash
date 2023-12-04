@@ -14,7 +14,6 @@ namespace GDMultiStash
 {
     internal class GDMSContext : ApplicationContext
     {
-
         private readonly Overlay.GDMSViewport _viewport;
         private readonly GDWindowHookService _gdWindowHookService;
         private readonly GDGameHookService _gdGameHookService;
@@ -438,6 +437,7 @@ namespace GDMultiStash
         }
 
         #endregion
+
 
     }
 }

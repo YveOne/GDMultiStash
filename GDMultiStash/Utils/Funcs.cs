@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace Utils
 {
-    internal class Funcs
+    internal static class Funcs
     {
+        public static bool IsDirectoryEmpty(string path)
+        {
+            if (!Directory.Exists(path)) return true;
+            return !Directory.EnumerateFileSystemEntries(path).Any();
+        }
+
         public static void RunThread(int sleep, Action action)
         {
             new System.Threading.Thread(() => {
