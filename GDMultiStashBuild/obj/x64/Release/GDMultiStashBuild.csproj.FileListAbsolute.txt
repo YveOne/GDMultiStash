@@ -1,5 +1,0 @@
-C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashBuild\obj\x64\Release\GDMultiStashBuild.csproj.SuggestedBindingRedirects.cache
-C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashBuild\obj\x64\Release\GDMultiStashBuild.g.resources
-C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashBuild\obj\x64\Release\GDMultiStashBuild.csproj.CoreCompileInputs.cache
-C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\GDMultiStashBuild\obj\x64\Release\GDMultiStashBuild.exe
-C:\Users\Yvonne\Desktop\PROJECTS\Grim Dawn\GDMultiStashProject\_bin\GDMultiStashBuild.exe
